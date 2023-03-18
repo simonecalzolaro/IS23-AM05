@@ -1,4 +1,8 @@
 package model;
 
-public abstract class CommonGoalCard implements Card{
+public class CommonGoalCard implements Card{
+
+    public CommonGoalCard() {
+
+    }
 }
