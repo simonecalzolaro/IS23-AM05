@@ -1,4 +1,4 @@
 package model;
 
-public enum Token {
+public class Token {
 }

@@ -1,4 +1,4 @@
 package model;
 
-public abstract class PersonalGoalCard implements Card{
+public class PersonalGoalCard implements Card{
 }
