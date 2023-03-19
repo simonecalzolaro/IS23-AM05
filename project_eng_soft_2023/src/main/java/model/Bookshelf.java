@@ -58,7 +58,6 @@ public class Bookshelf {
      * @param stream_tiles When the player draw the tiles from the deck the are setted into an array ;
      *                     The position of the tiles in the array is the order on which the player will insert the card on the column:
      *                     stream_tiles lenght must be more than 0 and less than 3
-
      * @param column The player must specifies which column he wants to put the tiles in
      *
      * @return The return statement has been thought for returning feedback codes:
@@ -260,9 +259,9 @@ public class Bookshelf {
 
     public void checkCG1(){
 
-        if(board.getCG1().checkGoal() == true)
+        if(board.getCommonGoalCard1().checkGoal() == true)
 
-            tokenCG1 = board.getCG1().getTopToken();
+            tokenCG1 = board.getCommonGoalCard1().getTopToken();
 
 
     }
@@ -273,9 +272,9 @@ public class Bookshelf {
 
     public void checkCG2(){
 
-        if(board.getCG2().checkGoal() == true)
+        if(board.getCommonGoalCard2().checkGoal() == true)
 
-            tokenCG2 = board.getCG2().getTopToken();
+            tokenCG2 = board.getCommonGoalCard2().getTopToken();
 
 
     }
@@ -285,7 +284,7 @@ public class Bookshelf {
      * @return return the points scored by completing common goal card goals
      */
     public int getScoreCGC()
-        return tokenCG1.getScore()+tokenCG2().getScore();
+        return tokenCG1.getScore()+tokenCG2.getScore();
 
 
     /**
@@ -331,11 +330,6 @@ public class Bookshelf {
             return 1;
         else return 0;
     }
-
-
-
-
-
 
 
 }

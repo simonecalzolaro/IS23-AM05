@@ -1,4 +1,4 @@
 package model;
 
-public class PG1 extends PersonalGoalCard{
+public class PG1 {
 }

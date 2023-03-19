@@ -4,28 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc4ce30e-289e-46cc-a60b-58205a54fb0f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Board.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf_tester.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Card.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Coda.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Coda_tester.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Coordinate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PersonalGoalCard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Tile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Token.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,44 +19,47 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2N9J4T0GSQcD2Ba69m3CkbPrvBN" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="2N5zc7ZawszFy8J660izbL2GoKK" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Mirko/Desktop/poli/anno_III/IdS/progetto_IdS/javaCode/Local_IS23-AM05/project_eng_soft_2023_local",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="cc4ce30e-289e-46cc-a60b-58205a54fb0f" name="Changes" comment="" />
-      <created>1679070172576</created>
+      <changelist id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="" />
+      <created>1678968809288</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1679070172576</updated>
-      <workItem from="1679070174288" duration="900000" />
-      <workItem from="1679071269478" duration="28524000" />
-      <workItem from="1679102409405" duration="3000" />
-      <workItem from="1679139305882" duration="9176000" />
+      <updated>1678968809288</updated>
+      <workItem from="1678968812445" duration="1191000" />
+      <workItem from="1678995660861" duration="680000" />
+      <workItem from="1679147271673" duration="10855000" />
+      <workItem from="1679162248157" duration="23000" />
     </task>
     <servers />
   </component>
@@ -94,5 +76,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>
