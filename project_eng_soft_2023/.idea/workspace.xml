@@ -4,49 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Bag.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Board.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CG1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CG10.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CG11.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CG12.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CG2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CG3.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CG4.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CG5.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CG6.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CG7.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CG8.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CG9.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Card.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/CommonGoalCard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/DeckCards.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG10.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG11.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG12.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG3.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG4.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG5.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG6.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG7.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG8.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PG9.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/PersonalGoalCard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Tile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Token.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,7 +19,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -82,10 +40,12 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Mirko/Desktop/poli/anno_III/IdS/progetto_IdS/javaCode/Local_IS23-AM05/project_eng_soft_2023_local",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -97,6 +57,9 @@
       <option name="presentableId" value="Default" />
       <updated>1678968809288</updated>
       <workItem from="1678968812445" duration="1191000" />
+      <workItem from="1678995660861" duration="680000" />
+      <workItem from="1679147271673" duration="10855000" />
+      <workItem from="1679162248157" duration="23000" />
     </task>
     <servers />
   </component>
