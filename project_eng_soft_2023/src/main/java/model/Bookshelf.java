@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 
 public class Bookshelf {
-
     /**
      * shelf attribute represent the game bookshelf. Here is implemented with a 6x5 matrix
      */
@@ -284,7 +283,7 @@ public class Bookshelf {
      * @return return the points scored by completing common goal card goals
      */
     public int getScoreCGC()
-        return tokenCG1.getScore()+tokenCG2.getScore();
+    return tokenCG1.getScore()+tokenCG2.getScore();
 
 
     /**

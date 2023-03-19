@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    private Tile board [][];
-    private boolean catchableTiles[][];
+    private final Tile[][] board;
+    private final boolean[][] catchableTiles;
 
     private int nPlayers;
     private CommonGoalCard commonGoalCard1;
     private CommonGoalCard commonGoalCard2;
 
     private Token EOG;
-    private Bag bag;
+    private final Bag bag;
     public Board(Bag bag) {
         this.board = new Tile[9][9];
         this.catchableTiles = new boolean[9][9];
@@ -72,7 +72,7 @@ public class Board {
     }
 
     public void fill(){
-        //if i have enough tiles in the bag i fill completely the board
+        //if there are enough tiles in the bag, fill completely the board
         if (getEmptyTilesNum() <= bag.getTilesNum()){
             for (int i = 0; i<9; i++) {
                 for(int j = 0; j<9; j++){
@@ -142,7 +142,7 @@ public class Board {
         //Update "catchableTiles" matrix
         for(int i=0; i<9; i++){
             for(int j=0; j<9;j++){
-                catchableTiles[i][j]=okTiles(i,j);
+                catchableTiles[i][j]=okTile(i,j);
             }
         }
 
@@ -238,7 +238,7 @@ public class Board {
                 (board[i][j - 1] == Tile.NOTAVAILABLE ||
                         board[i][j - 1] == Tile.EMPTY);
     }
-    public boolean okTiles(int i, int j){
+    public boolean okTile(int i, int j){
         //check if tiles have at least one side free and then are catchable
         if(board[i][j]== Tile.NOTAVAILABLE||board[i][j]==Tile.EMPTY) return false;
         if(i==0||i==8||j==0||j==8)  return true;
@@ -365,6 +365,12 @@ public class Board {
 
     public void setnPlayers(int nPlayers) {
         this.nPlayers = nPlayers;
+    }
+
+    public void setTile(int i, int j, Tile tile){
+        if(board[i][j]!=Tile.NOTAVAILABLE){
+            board[i][j]= tile;
+        }
     }
 
 }

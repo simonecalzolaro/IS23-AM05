@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static java.util.Collections.shuffle;
@@ -14,7 +13,7 @@ public class Bag {
 
     }
 
-    public void inizializeBag(){
+    public void initializeBag(){
         for(int i=0; i<132;i++){
             if(i<22){
                 tilesBag.add(Tile.BLUE);
@@ -35,9 +34,12 @@ public class Bag {
     }
     public Tile getTile(){
         Tile temp;
-        temp=tilesBag.get(0);
-        tilesBag.remove(0);
-        return temp;
+        if(getTilesNum()!=0){
+            temp=tilesBag.get(0);
+            tilesBag.remove(0);
+            return temp;
+        }
+        return Tile.EMPTY;
     }
 
     public List<Tile> getTilesBag() {
@@ -47,6 +49,7 @@ public class Bag {
     public int getTilesNum(){
         return tilesBag.size();
     }
+
 
 
 }
