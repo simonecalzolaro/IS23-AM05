@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util. *;
 
 /**
  * Common Goal card n 6

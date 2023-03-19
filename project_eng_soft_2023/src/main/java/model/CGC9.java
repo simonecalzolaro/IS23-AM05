@@ -21,7 +21,7 @@ public class CGC9 extends CommonGoalCard{
      */
     public boolean checkGoal(Tile[][] shelf) {
 
-        ArrayList<Tile> colTiles=new ArrayList<Tile>();
+        ArrayList<Tile> colTiles=new ArrayList<>();
         int nCol=0;
 
         for(int col=0; col< shelf[0].length; col++){

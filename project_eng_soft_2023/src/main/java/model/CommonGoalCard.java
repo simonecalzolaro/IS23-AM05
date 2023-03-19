@@ -7,23 +7,23 @@ import java.util.Stack;
  */
 public abstract class CommonGoalCard implements Card{
 
-    Stack<Tile> stackTiles;
+    Stack<Token> stackTiles;
 
     /**
      * @param np number of players
      */
     public CommonGoalCard(int np){
 
-        stackTiles.push(Tile.ST2);
-        stackTiles.push(Tile.ST4);
+        stackTiles.push(Token.ST2);
+        stackTiles.push(Token.ST4);
         if(np>2){
-            stackTiles.push(Tile.ST6);
-            if(np>3) stackTiles.push(Tile.ST8);
+            stackTiles.push(Token.ST6);
+            if(np>3) stackTiles.push(Token.ST8);
         }
     }
 
 
-    public Tile getTopStack(){
+    public Token getTopStack(){
         return stackTiles.pop();
     }
 
