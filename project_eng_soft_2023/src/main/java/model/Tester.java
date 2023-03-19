@@ -5,8 +5,8 @@ public class Tester {
 
         Tile[][] shelf = new Tile[6][5];
 
-        for(int i=0; i< shelf.length; i++){
-            for (int j=0; j<shelf[i].length; j++){
+        for (int i=0; i< shelf.length; i++){
+            for(int j=0; j< shelf[i].length; j++){
                 shelf[i][j] = Tile.EMPTY;
             }
         }
@@ -16,19 +16,15 @@ public class Tester {
         shelf[3][3] = Tile.WHITE;
         shelf[5][0] = Tile.PINK;
         shelf[2][1] = Tile.YELLOW;
-
-
-        PersonalGoalCard p = new PG1();
-        p.updateScore(shelf);
-        System.out.println(p.getScore());
-        System.out.println(p.checkGoal(shelf));
-
-
-
         shelf[0][2] = Tile.LIGHTBLUE;
-        p.updateScore(shelf);
-        System.out.println(p.getScore());
-        System.out.println(p.checkGoal(shelf));
+
+        DeckCards deck = new DeckCards(4);
+
+        PersonalGoalCard card = deck.getRandPGC();
+
+        card.updateScore(shelf);
+        System.out.println(card.getScore());
+        System.out.println(card.checkGoal(shelf));
 
     }
 }

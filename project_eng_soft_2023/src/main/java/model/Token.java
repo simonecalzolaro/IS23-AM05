@@ -13,10 +13,18 @@ public enum Token {
 
     final int scoreToken;
 
+    /**
+     *
+     * @param scoreToken
+     */
     private Token(int scoreToken){
         this.scoreToken = scoreToken;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getScoreToken(){
         return scoreToken;
     }

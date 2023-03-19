@@ -12,14 +12,27 @@ public abstract class PersonalGoalCard implements Card{
     public int score=0;
     Map<Tile, int[]> map = new HashMap<>();
 
+    /**
+     *
+     * @return
+     */
     public int getScore(){
         return score;
     }
 
+    /**
+     *
+     * @param shelf
+     * @return
+     */
     public boolean checkGoal(Tile shelf[][]){
         return getScore() == 12;
     }
 
+    /**
+     *
+     * @param shelf
+     */
     public void updateScore(Tile[][] shelf) {
         int goal = 0;
         for (int i = 0; i < shelf.length; i++) {
@@ -30,14 +43,14 @@ public abstract class PersonalGoalCard implements Card{
             }
         }
 
-        System.out.println(goal);
+        //System.out.println(goal);
 
-        if(goal ==1) score=1;
-        if(goal ==2) score=2;
-        if(goal ==3) score=3;
-        if(goal ==4) score=6;
-        if(goal ==5) score=9;
-        if(goal ==6) score=12;
+        if(goal == 1) score=1;
+        if(goal == 2) score=2;
+        if(goal == 3) score=3;
+        if(goal == 4) score=6;
+        if(goal == 5) score=9;
+        if(goal == 6) score=12;
     }
 
 }
