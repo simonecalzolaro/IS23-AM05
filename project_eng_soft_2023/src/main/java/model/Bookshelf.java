@@ -28,7 +28,7 @@ public class Bookshelf {
      */
     private Token tokenCG1;
     private Token tokenCG2;
-    private Token tokenEOG;
+    private int tokenEOG; //it's an integer because it's only meant to assign 1 point
 
     /**
      * represents the board used by all the players during the game
@@ -49,6 +49,7 @@ public class Bookshelf {
         this.pgc = pgc;
         tokenCG1 = null;
         tokenCG2 = null;
+        tokenEOG = 0;
 
     }
 
@@ -308,7 +309,7 @@ public class Bookshelf {
      */
 
     public boolean checkEOG(){
-        if(board.getEOG() == null) return true;
+        if(board.getEOG() == true) return true;
         else{
             boolean end = true;
 
@@ -316,8 +317,12 @@ public class Bookshelf {
                 for(int j=0; j<c;j++)
                     if(shelf[i][j] == null) end = false;
 
-            if(end == true)
-                tokenEOG = board.getEOG();
+            if(end == true){
+                tokenEOG = 1;
+                board.setEOG();
+            }
+
+
 
             return end;
         }
@@ -328,9 +333,7 @@ public class Bookshelf {
      */
 
     public int getScoreEOG(){
-        if(tokenEOG != null)
-            return 1;
-        else return 0;
+        return tokenEOG;
     }
 
 
