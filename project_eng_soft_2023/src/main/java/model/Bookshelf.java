@@ -61,7 +61,7 @@ public class Bookshelf {
 
     /**
      *
-     * @param stream_tiles When the player draw the tiles from the deck the are setted into an array ;
+     * @param stream_tiles When the player draw the tiles from the deck they are setted into an array ;
      *                     The position of the tiles in the array is the order on which the player will insert the card on the column:
      *                     stream_tiles lenght must be more than 0 and less than 3
      * @param column The player must specifies which column he wants to put the tiles in

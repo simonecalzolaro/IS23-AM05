@@ -6,13 +6,22 @@ import java.util.List;
 import static java.util.Collections.shuffle;
 
 public class Bag {
+    /**
+     * tiles bag
+     */
     private List<Tile> tilesBag;
 
+    /**
+     * constructor
+     */
     public Bag() {
         tilesBag=new ArrayList<Tile>();
 
     }
 
+    /**
+     * set the correct tiles number and tiles type and shuffle the order of the tiles
+     */
     public void initializeBag(){
         for(int i=0; i<132;i++){
             if(i<22){
@@ -32,6 +41,11 @@ public class Bag {
 
         shuffle(tilesBag);
     }
+
+    /**
+     *
+     * @return return random tile and remove it from the bag
+     */
     public Tile getTile(){
         Tile temp;
         if(getTilesNum()!=0){
@@ -42,10 +56,18 @@ public class Bag {
         return Tile.EMPTY;
     }
 
+    /**
+     *
+     * @return tiles bag
+     */
     public List<Tile> getTilesBag() {
         return tilesBag;
     }
 
+    /**
+     *
+     * @return number of tiles in the bag
+     */
     public int getTilesNum(){
         return tilesBag.size();
     }

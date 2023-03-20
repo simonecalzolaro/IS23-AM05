@@ -14,6 +14,7 @@ public enum Tile {
     private int x;
     private int y;
 
+
     public void setX(int x){
         this.x = x;
     }

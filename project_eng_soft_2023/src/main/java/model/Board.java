@@ -4,17 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
+    /**
+     * Represent the living room board of the game
+     */
     private final Tile[][] board;
+
+    /**
+     * Mark the tiles that can be caught by a player during the round
+     */
     private final boolean[][] catchableTiles;
 
+    /**
+     * number of players in the current game
+     */
     private int nPlayers;
+
+    /**
+     * Common Goal card of the current game
+     */
     private CommonGoalCard commonGoalCard1;
     private CommonGoalCard commonGoalCard2;
 
+    /**
+     * Set as false if the EOGToken is not taken yet
+     */
     private boolean EOG;
+
+    /**
+     * Tiles bag of the current game
+     */
     private final Bag bag;
 
+    /**
+     * Cards deck of the current game
+     */
     public DeckCards deck;
+
+    /**
+     * constructor
+     */
     public Board() {
         this.board = new Tile[9][9];
         this.catchableTiles = new boolean[9][9];
@@ -23,6 +51,14 @@ public class Board {
         EOG=false;
     }
 
+    /**
+     * set number of player
+     * initialize the board by setting N.A. tiles depending on the number of players
+     * fill completely the board
+     * update board
+     * set common goal cards
+     * @param nPlayers
+     */
     public void initializeBoard(int nPlayers){
 
         this.nPlayers=nPlayers;
@@ -73,11 +109,13 @@ public class Board {
         //fill completely the board
 
 
-        fill();
         updateBoard();
         setCommonGoalCard();
     }
 
+    /**
+     * Get tiles from the bag and fill randomly the board
+     */
     public void fill(){
         //if there are enough tiles in the bag, fill completely the board
         if (getEmptyTilesNum() <= bag.getTilesNum()){
@@ -140,25 +178,38 @@ public class Board {
 
     }
 
-    public int RandomInt(int min, int max){
+    /**
+     *
+     * @param min int
+     * @param max int
+     * @return random int between min and max (included)
+     */
+    private int RandomInt(int min, int max){
         return (int) (Math.floor(Math.random() * ( max - min + 1 ) ) + min);
     }
 
+    /**
+     * update board every time a round end
+     * Update "catchableTiles" matrix
+     * check if the matrix is to be filled (if true fill the board)
+     */
     public void updateBoard(){
-        //Update the board every end of round
-        //Update "catchableTiles" matrix
         for(int i=0; i<9; i++){
             for(int j=0; j<9;j++){
                 catchableTiles[i][j]=okTile(i,j);
             }
         }
 
-        //check if the matrix is to be filled
+
         if(emptyBoard()) fill();
     }
 
+    /**
+     * check if there is only tiles with no adjacent tiles
+     * @return true if the board is to be filled
+     */
     public boolean emptyBoard(){
-        //controlla se ci sono solo tiles senza altri tiles adiacenti e quindi la board va riempita di tiles
+
         //check if there is only tiles with no adjacent tiles
         for(int i =0; i<9; i++){
             for(int j=0; j<9; j++){
@@ -171,8 +222,14 @@ public class Board {
         return true;
     }
 
+    /**
+     * A tile is a single tiles if it has no adjacent tiles
+     * @param i row
+     * @param j column
+     * @return if a tile in (i,j) position in the board is a single tile
+     * */
     public boolean singleTile(int i, int j){
-        //check if a tiles have no adjacent tile
+        //check if a tiles has no adjacent tile
         if(i!=0&&i!=8&&j!=0&&j!=8){
             return  (board[i - 1][j] == Tile.NOTAVAILABLE ||
                     board[i - 1][j] == Tile.EMPTY) &&
@@ -245,6 +302,13 @@ public class Board {
                 (board[i][j - 1] == Tile.NOTAVAILABLE ||
                         board[i][j - 1] == Tile.EMPTY);
     }
+
+    /**
+     * check if tiles have at least one side free that means that the tile is catchable
+     * @param i row
+     * @param j column
+     * @return if the tile in (i, j) position is catchable
+     */
     public boolean okTile(int i, int j){
         //check if tiles have at least one side free and then are catchable
         if(board[i][j]== Tile.NOTAVAILABLE||board[i][j]==Tile.EMPTY) return false;
@@ -260,6 +324,13 @@ public class Board {
                 board[i][j + 1] == Tile.EMPTY;
     }
 
+    /**
+     * The player catches 1 tile
+     * @param i1 row
+     * @param j1 column
+     * @return list of tile taken
+     * @throws NotAvailableTiles the tile is not catchable
+     */
     public List<Tile> subTiles(int i1, int j1) throws NotAvailableTiles {
         //catch one tiles
         List<Tile> temp = new ArrayList<>();
@@ -273,6 +344,18 @@ public class Board {
 
     }
 
+    /**
+     * The player catches 2 tiles
+     * @param i1 row first tile
+     * @param j1 column first tile
+     * @param i2 row second tile
+     * @param j2 column second tile
+     * @param shelf bookshelf of the player
+     * @return list of the tiles taken
+     * @throws NotAvailableTiles one or more tiles are not catchable
+     * @throws NotEnoughSpace the player has no enough space in his bookshelf for 2 tiles
+     * @throws NotInLine the tiles are not in line
+     */
     public List<Tile> subTiles(int i1, int j1, int i2, int j2, Bookshelf shelf) throws NotAvailableTiles, NotEnoughSpace, NotInLine {
         //catch two tiles
         List<Tile> temp = new ArrayList<Tile>();
@@ -291,12 +374,34 @@ public class Board {
         }
     }
 
+    /**
+     * the tiles have to be in line and adjacent to be taken
+     * @param i1 row first tile
+     * @param j1 column first tile
+     * @param i2 row second tile
+     * @param j2 column second tile
+     * @return true if the move is allowed
+     */
     public boolean inLine(int i1, int j1, int i2, int j2){
         //check if two tiles are adjacent
         return (i1==i2 && (j1==j2-1||j1==j2+1)) ||
                 (j1 == j2 && (i1 == i2 - 1 || i1 == i2 + 1));
     }
 
+    /**
+     * The player catches 3 tiles
+     * @param i1 row first tile
+     * @param j1 column first tile
+     * @param i2 row second tile
+     * @param j2 column second tile
+     * @param i3 row third tile
+     * @param j3 column third tile
+     * @param shelf bookshelf of the player
+     * @return list of the tiles taken
+     * @throws NotAvailableTiles one or more tiles are not catchable
+     * @throws NotEnoughSpace the player has no enough space in his bookshelf for 3 tiles
+     * @throws NotInLine the tiles are not in line
+     */
     public List<Tile> subTiles(int i1, int j1, int i2, int j2, int i3, int j3, Bookshelf shelf) throws NotAvailableTiles, NotEnoughSpace, NotInLine {
         //catch 3 tiles
         List<Tile> temp = new ArrayList<>();
@@ -317,7 +422,16 @@ public class Board {
         }
     }
 
-
+    /**
+     * the tiles have to be in line and adjacent to be taken
+     * @param i1 row first tile
+     * @param j1 column fist tile
+     * @param i2 row second tile
+     * @param j2 column second tile
+     * @param i3 row third tile
+     * @param j3 column third tile
+     * @return true if the move is allowed
+     */
     public boolean inLine(int i1, int j1, int i2, int j2, int i3, int j3){
         //check if three tiles ar adjacent and in line
         return (i1==i2&&i2==i3&&(j1==j2-1&&j2==j3-1)) ||
@@ -335,6 +449,10 @@ public class Board {
                 (j1==j2&&j2==j3&&(i3==i2-1&&i2==i1-1)) ;
     }
 
+    /**
+     *
+     * @return number of empty tiles
+     */
     public int getEmptyTilesNum(){
         //return number of empty tiles in the board
         int num=0;
@@ -345,39 +463,77 @@ public class Board {
         }
         return num;
     }
+
+    /**
+     *
+     * @return the board
+     */
     public Tile[][] getBoard() {
         return board;
     }
 
+    /**
+     *
+     * @return the number of player of the current game
+     */
     public int getnPlayers() {
         return nPlayers;
     }
 
+    /**
+     * set the common goal cards
+     */
     public void setCommonGoalCard() {
         commonGoalCard1=deck.getRandCGC();
         commonGoalCard2=deck.getRandCGC();
     }
 
+    /**
+     *
+     * @return common goal card 1
+     */
     public CommonGoalCard getCommonGoalCard1() {
         return commonGoalCard1;
     }
+
+    /**
+     *
+     * @return common goal card 2
+     */
 
     public CommonGoalCard getCommonGoalCard2() {
         return commonGoalCard2;
     }
 
+    /**
+     *
+     * @return true if the EOG token is not taken yet
+     */
     public boolean getEOG() {
         return EOG;
     }
 
+    /**
+     * set EOG true if the EOG token is assigned
+     */
     public void setEOG() {
         this.EOG = true;
     }
 
+    /**
+     *
+     * @param nPlayers number of player of the current game
+     */
     public void setnPlayers(int nPlayers) {
         this.nPlayers = nPlayers;
     }
 
+    /**
+     *
+     * @param i row
+     * @param j column
+     * @param tile tile type
+     */
     public void setTile(int i, int j, Tile tile){
         if(board[i][j]!=Tile.NOTAVAILABLE){
             board[i][j]= tile;
