@@ -29,7 +29,7 @@ public class BoardTest extends TestCase {
     public void testInitializeBoard() {
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);
-        //da provare che non sia null CGC1, CGC2
+
 
         Assert.assertEquals(4, board.getnPlayers());
 
