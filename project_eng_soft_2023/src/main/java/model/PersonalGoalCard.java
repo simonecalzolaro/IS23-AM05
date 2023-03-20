@@ -6,15 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * generic representation of a PersonalGoalCard
  */
 public abstract class PersonalGoalCard implements Card{
     public int score=0;
     Map<Tile, int[]> map = new HashMap<>();
 
+
     /**
      *
-     * @return
+     * @return the score achieved related to the PersonalGoalCard
      */
     public int getScore(){
         return score;
@@ -22,16 +23,16 @@ public abstract class PersonalGoalCard implements Card{
 
     /**
      *
-     * @param shelf
-     * @return
+     * @param shelf represents a matrix [6][5] of Tiles
+     * @return true if the PersonalGoalCard goals have been completed
      */
-    public boolean checkGoal(Tile shelf[][]){
+    public boolean checkGoal(Tile[][] shelf){
         return getScore() == 12;
     }
 
     /**
-     *
-     * @param shelf
+     * this method checks how many goals of the PersonalGoalCard have been achieved and gets the score related
+     * @param shelf represents a matrix [6][5] of Tiles
      */
     public void updateScore(Tile[][] shelf) {
         int goal = 0;

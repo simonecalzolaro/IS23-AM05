@@ -1,10 +1,13 @@
 package model;
 
 /**
- *
+ * representation of PersonalGoalCard1
  */
 public class PG1 extends PersonalGoalCard{
 
+    /**
+     * creation of PG1 with all the coordinates related to Tiles color
+     */
     PG1(){
 
         map.put(Tile.GREEN, new int[]{4,4});

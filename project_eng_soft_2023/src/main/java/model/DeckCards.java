@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- *
+ * representation of a deck of cards ( CommonGoalCard and PersonalGoalCard)
  */
 public class DeckCards{
 
@@ -13,7 +13,7 @@ public class DeckCards{
     private final List<PersonalGoalCard> deckPGC;
 
     /**
-     *
+     * creation of a full deck of cards ( CommonGoalCard and PersonalGoalCard)
      */
     DeckCards(int nPlayers){
         CommonGoalCard CG1 = new CGC1(nPlayers);
@@ -76,7 +76,7 @@ public class DeckCards{
 
     /**
      *
-     * @return
+     * @return a random CommonGoalCard from deck
      */
     CommonGoalCard getRandCGC(){
         Random random = new Random();
@@ -85,7 +85,7 @@ public class DeckCards{
 
     /**
      *
-     * @return
+     * @return a random PersonalGoalCard from deck
      */
     PersonalGoalCard getRandPGC(){
         Random random = new Random();
