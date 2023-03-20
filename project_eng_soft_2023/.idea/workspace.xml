@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,8 +64,16 @@
       <workItem from="1679147271673" duration="10855000" />
       <workItem from="1679162248157" duration="23000" />
       <workItem from="1679318938631" duration="2222000" />
-      <workItem from="1679328095189" duration="971000" />
+      <workItem from="1679328095189" duration="2045000" />
     </task>
+    <task id="LOCAL-00001" summary="Bookshelf + Board update">
+      <created>1679329137279</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1679329137279</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -83,5 +92,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Bookshelf + Board update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bookshelf + Board update" />
   </component>
 </project>

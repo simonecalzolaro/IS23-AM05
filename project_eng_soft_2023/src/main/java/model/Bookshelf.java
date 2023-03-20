@@ -45,6 +45,11 @@ public class Bookshelf {
      */
     public Bookshelf(Board board, PersonalGoalCard pgc){
         shelf = new Tile[r][c];
+        for(int i=0;i<r;i++){
+            for(int j=0; j<c;j++){
+                shelf[i][j] = Tile.EMPTY;
+            }
+        }
         this.board = board;
         this.pgc = pgc;
         tokenCG1 = null;
@@ -76,14 +81,14 @@ public class Bookshelf {
             int count_col = 0;
 
             for(int i=0; i<r;i++){
-                if(shelf[i][column] == null) count_col++;
+                if(shelf[i][column] == Tile.EMPTY) count_col++;
             }
 
             if(count_col < stream_tiles.size()) return -1; //codice -1 rappresenta una colonna invalida
 
             int stream_tiles_pointer = 0;
             for(int i = 0; i<r; i++){
-                if(shelf[i][column] == null){
+                if(shelf[i][column] == Tile.EMPTY){
                     shelf[i][column] = stream_tiles.get(stream_tiles_pointer);
                     stream_tiles_pointer++;
                     if(stream_tiles_pointer == stream_tiles.size()) i=r; //break
@@ -117,7 +122,7 @@ public class Bookshelf {
         int max=0; int count=0;
         for(int j=0;j<c;j++){
             for(int i=5; i>=0;i--){
-                if(shelf[i][j] == null) count++;
+                if(shelf[i][j] == Tile.EMPTY) count++;
                 else break;
             }
 
@@ -166,7 +171,7 @@ public class Bookshelf {
 
         for(int i=0;i<r;i++){
             for(int j=0; j<c; j++){
-                if(shelf[i][j] != null && shelf_checker[i][j] == false){
+                if(shelf[i][j] != Tile.EMPTY && shelf_checker[i][j] == false){
 
 
                     Coda queue = new Coda();
@@ -208,7 +213,7 @@ public class Bookshelf {
         //NORTH
         if(point.getX()+1 < r)
             if(shelf[point.getX()][point.getY()] == shelf[point.getX()+1][point.getY()] && shelf_checker[point.getX()+1][point.getY()] == false)
-                if(shelf[point.getX()+1][point.getY()] != null){
+                if(shelf[point.getX()+1][point.getY()] != Tile.EMPTY){
                     shelf_checker[point.getX()+1][point.getY()]  = true;
                     queue.enqueue(new Coordinate(point.getX()+1, point.getY() ));
                     recursiveChecker(queue.tail(),shelf_checker,queue);
@@ -218,7 +223,7 @@ public class Bookshelf {
         //SOUTH
         if(point.getX()-1 >= 0)
             if(shelf[point.getX()][point.getY()] == shelf[point.getX()-1][point.getY()] && shelf_checker[point.getX()-1][point.getY()] == false)
-                if(shelf[point.getX()-1][point.getY()] != null){
+                if(shelf[point.getX()-1][point.getY()] != Tile.EMPTY){
                     shelf_checker[point.getX()-1][point.getY()]  = true;
                     queue.enqueue(new Coordinate(point.getX()-1, point.getY() ));
                     recursiveChecker(queue.tail(),shelf_checker,queue);
@@ -228,7 +233,7 @@ public class Bookshelf {
         //EAST
         if(point.getY()+1 < c)
             if(shelf[point.getX()][point.getY()] == shelf[point.getX()][point.getY()+1] && shelf_checker[point.getX()][point.getY()+1] == false)
-                if(shelf[point.getX()][point.getY()+1] != null){
+                if(shelf[point.getX()][point.getY()+1] != Tile.EMPTY){
                     shelf_checker[point.getX()][point.getY()+1]  = true;
                     queue.enqueue(new Coordinate(point.getX(), point.getY()+1));
                     recursiveChecker(queue.tail(),shelf_checker,queue);
@@ -238,7 +243,7 @@ public class Bookshelf {
         //WEST
         if(point.getY()-1 >= 0)
             if(shelf[point.getX()][point.getY()] == shelf[point.getX()][point.getY()-1] && shelf_checker[point.getX()][point.getY()-1] == false)
-                if(shelf[point.getX()][point.getY()-1] != null){
+                if(shelf[point.getX()][point.getY()-1] != Tile.EMPTY){
                     shelf_checker[point.getX()][point.getY()-1]  = true;
                     queue.enqueue(new Coordinate(point.getX(), point.getY()-1 ));
                     recursiveChecker(queue.tail(),shelf_checker,queue);
@@ -309,13 +314,14 @@ public class Bookshelf {
      */
 
     public boolean checkEOG(){
-        if(board.getEOG() == true) return true;
+
+        if(board.getEOG() == true) return true; //gioco finito
         else{
             boolean end = true;
 
             for(int i=0; i<r;i++)
                 for(int j=0; j<c;j++)
-                    if(shelf[i][j] == null) end = false;
+                    if(shelf[i][j] == Tile.EMPTY) end = false;
 
             if(end == true){
                 tokenEOG = 1;
