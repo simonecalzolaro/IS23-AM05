@@ -14,6 +14,7 @@ public abstract class CommonGoalCard implements Card{
      */
     public CommonGoalCard(int np){
 
+        stackTiles=new Stack<Token>();
         stackTiles.push(Token.ST2);
         stackTiles.push(Token.ST4);
         if(np>2){

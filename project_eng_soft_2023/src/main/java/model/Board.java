@@ -1,6 +1,5 @@
 package model;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,17 +11,23 @@ public class Board {
     private CommonGoalCard commonGoalCard1;
     private CommonGoalCard commonGoalCard2;
 
-    private Token EOG;
+    private boolean EOG;
     private final Bag bag;
-    public Board(Bag bag) {
+
+    public DeckCards deck;
+    public Board() {
         this.board = new Tile[9][9];
         this.catchableTiles = new boolean[9][9];
-        this.bag=bag;
+        this.bag=new Bag();
+        bag.initializeBag();
+        EOG=false;
     }
 
-    public void initializeBoard(int nPlayers, DeckCards deck){
+    public void initializeBoard(int nPlayers){
 
         this.nPlayers=nPlayers;
+
+        deck=new DeckCards(nPlayers);
         //initialize the board by setting N.A. tiles depending on the number of players
         //4 players setting
 
@@ -47,7 +52,7 @@ public class Board {
             //3 players settings
             board[0][4]=Tile.NOTAVAILABLE;
             board[1][5]=Tile.NOTAVAILABLE;
-            board[3][1]=Tile.NOTAVAILABLE;
+            board[3][1]= Tile.NOTAVAILABLE;
             board[4][0]=Tile.NOTAVAILABLE;
             board[4][8]=Tile.NOTAVAILABLE;
             board[5][7]=Tile.NOTAVAILABLE;
@@ -66,9 +71,11 @@ public class Board {
         }
 
         //fill completely the board
+
+
         fill();
         updateBoard();
-        setCommonGoalCard(deck);
+        setCommonGoalCard();
     }
 
     public void fill(){
@@ -346,7 +353,7 @@ public class Board {
         return nPlayers;
     }
 
-    public void setCommonGoalCard(DeckCards deck) {
+    public void setCommonGoalCard() {
         commonGoalCard1=deck.getRandCGC();
         commonGoalCard2=deck.getRandCGC();
     }
@@ -359,8 +366,12 @@ public class Board {
         return commonGoalCard2;
     }
 
-    public Token getEOG() {
+    public boolean getEOG() {
         return EOG;
+    }
+
+    public void setEOG() {
+        this.EOG = true;
     }
 
     public void setnPlayers(int nPlayers) {

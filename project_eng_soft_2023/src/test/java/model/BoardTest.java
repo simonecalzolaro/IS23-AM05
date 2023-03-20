@@ -18,7 +18,7 @@ public class BoardTest extends TestCase {
 
         bag = new Bag();
         bag.initializeBag();
-        board = new Board(bag);
+        board = new Board();
     }
 
     @After
@@ -27,8 +27,8 @@ public class BoardTest extends TestCase {
         board=null;
     }
     public void testInitializeBoard() {
-        DeckCards deck= new DeckCards();
-        board.initializeBoard(4, deck);
+        DeckCards deck= new DeckCards(4);
+        board.initializeBoard(4);
         //da provare che non sia null CGC1, CGC2
 
         Assert.assertEquals(4, board.getnPlayers());
@@ -36,8 +36,8 @@ public class BoardTest extends TestCase {
     }
 
     public void testFill() {
-        DeckCards deck= new DeckCards();
-        board.initializeBoard(4, deck);
+        DeckCards deck= new DeckCards(4);
+        board.initializeBoard(4);
         for(int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 Assert.assertNotEquals(null, board.getBoard()[i][j]);
@@ -50,8 +50,8 @@ public class BoardTest extends TestCase {
 
 
     public void testFill2() {
-        DeckCards deck= new DeckCards();
-        board.initializeBoard(4, deck);
+        DeckCards deck= new DeckCards(4);
+        board.initializeBoard(4);
         for(int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 if(board.getBoard()[i][j]!=Tile.NOTAVAILABLE){
@@ -80,8 +80,8 @@ public class BoardTest extends TestCase {
 
 
     public void testEmptyBoard1() {
-        DeckCards deck= new DeckCards();
-        board.initializeBoard(4, deck);
+        DeckCards deck= new DeckCards(4);
+        board.initializeBoard(4);
         for(int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 if(board.getBoard()[i][j]!=Tile.NOTAVAILABLE){
@@ -103,8 +103,8 @@ public class BoardTest extends TestCase {
     }
 
     public void testEmptyBoard2() {
-        DeckCards deck= new DeckCards();
-        board.initializeBoard(4, deck);
+        DeckCards deck= new DeckCards(4);
+        board.initializeBoard(4);
         for(int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 if(board.getBoard()[i][j]!=Tile.NOTAVAILABLE){
@@ -122,8 +122,8 @@ public class BoardTest extends TestCase {
     }
 
     public void testSingleTile() {
-        DeckCards deck= new DeckCards();
-        board.initializeBoard(4, deck);
+        DeckCards deck= new DeckCards(4);
+        board.initializeBoard(4);
         for(int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 if(board.getBoard()[i][j]!=Tile.NOTAVAILABLE){
@@ -145,8 +145,8 @@ public class BoardTest extends TestCase {
     }
 
     public void testOkTiles() {
-        DeckCards deck= new DeckCards();
-        board.initializeBoard(4, deck);
+        DeckCards deck= new DeckCards(4);
+        board.initializeBoard(4);
         for(int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 if(board.getBoard()[i][j]!=Tile.NOTAVAILABLE){
@@ -181,8 +181,8 @@ public class BoardTest extends TestCase {
 
     public void testSubTiles() throws NotAvailableTiles, NotEnoughSpace, NotInLine {
 
-        DeckCards deck= new DeckCards();
-        board.initializeBoard(4, deck);
+        DeckCards deck= new DeckCards(4);
+        board.initializeBoard(4);
         for(int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 if(board.getBoard()[i][j]!=Tile.NOTAVAILABLE){
@@ -211,8 +211,8 @@ public class BoardTest extends TestCase {
 
 
     public void testInLine() {
-        DeckCards deck= new DeckCards();
-        board.initializeBoard(4, deck);
+        DeckCards deck= new DeckCards(4);
+        board.initializeBoard(4);
         for(int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 if(board.getBoard()[i][j]!=Tile.NOTAVAILABLE){
