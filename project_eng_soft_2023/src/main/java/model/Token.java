@@ -19,7 +19,7 @@ public enum Token {
      *
      * @param scoreToken represents the value of every Token
      */
-    private Token(int scoreToken){
+    Token(int scoreToken){
         this.scoreToken = scoreToken;
     }
 

@@ -43,8 +43,8 @@ public class DeckCards{
         PersonalGoalCard PG12 = new PG12();
 
 
-        deckCGC = new ArrayList<CommonGoalCard>();
-        deckPGC = new ArrayList<PersonalGoalCard>();
+        deckCGC = new ArrayList<>();
+        deckPGC = new ArrayList<>();
 
         deckCGC.add(CG1);
         deckCGC.add(CG2);
