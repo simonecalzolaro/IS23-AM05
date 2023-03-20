@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="" />
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +44,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Mirko/Desktop/poli/anno_III/IdS/progetto_IdS/javaCode/Local_IS23-AM05/project_eng_soft_2023_local",
+    "last_opened_file_path": "C:/Users/Mirko/Documents/GitHub/IS23-AM05/IS23-AM05/project_eng_soft_2023",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -60,6 +64,7 @@
       <workItem from="1678995660861" duration="680000" />
       <workItem from="1679147271673" duration="10855000" />
       <workItem from="1679162248157" duration="23000" />
+      <workItem from="1679317690749" duration="395000" />
     </task>
     <servers />
   </component>
@@ -79,5 +84,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
   </component>
 </project>
