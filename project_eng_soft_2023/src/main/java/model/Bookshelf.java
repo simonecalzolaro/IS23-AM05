@@ -300,7 +300,7 @@ public class Bookshelf {
      * @return return the point scored by completing personal goal card goal
      */
     public int getScorePGC(){
-
+        pgc.updateScore(shelf);
         return pgc.getScore();
 
     }
