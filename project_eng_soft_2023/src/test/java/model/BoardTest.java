@@ -197,7 +197,7 @@ public class BoardTest  {
             }
         }
 
-        PersonalGoalCard pgc= new PG2() ;
+        PersonalGoalCard pgc= new PersonalGoalCard(2) ;
 
         Bookshelf bookshelf= new Bookshelf(board, pgc);
         board.setTile(6,5,Tile.LIGHTBLUE);

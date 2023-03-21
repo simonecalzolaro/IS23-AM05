@@ -6,9 +6,112 @@ import java.util.Map;
 /**
  * generic representation of a PersonalGoalCard
  */
-public abstract class PersonalGoalCard implements Card{
+public class PersonalGoalCard implements Card{
     public int score=0;
+
     Map<Tile, int[]> map = new HashMap<>();
+
+    PersonalGoalCard(int card){
+        switch (card) {
+            case 1 -> {
+                map.put(Tile.GREEN, new int[]{4, 4});
+                map.put(Tile.BLUE, new int[]{5, 2});
+                map.put(Tile.WHITE, new int[]{3, 3});
+                map.put(Tile.PINK, new int[]{5, 0});
+                map.put(Tile.YELLOW, new int[]{2, 1});
+                map.put(Tile.LIGHTBLUE, new int[]{0, 2});
+            }
+            case 2 -> {
+                map.put(Tile.GREEN, new int[]{3, 0});
+                map.put(Tile.BLUE, new int[]{0, 4});
+                map.put(Tile.WHITE, new int[]{2, 4});
+                map.put(Tile.PINK, new int[]{4, 1});
+                map.put(Tile.YELLOW, new int[]{3, 2});
+                map.put(Tile.LIGHTBLUE, new int[]{1, 3});
+            }
+            case 3 -> {
+                map.put(Tile.GREEN, new int[]{2, 1});
+                map.put(Tile.BLUE, new int[]{4, 0});
+                map.put(Tile.WHITE, new int[]{0, 0});
+                map.put(Tile.PINK, new int[]{3, 2});
+                map.put(Tile.YELLOW, new int[]{4, 3});
+                map.put(Tile.LIGHTBLUE, new int[]{2, 4});
+            }
+            case 4 -> {
+                map.put(Tile.GREEN, new int[]{1, 2});
+                map.put(Tile.BLUE, new int[]{3, 2});
+                map.put(Tile.WHITE, new int[]{1, 1});
+                map.put(Tile.PINK, new int[]{2, 3});
+                map.put(Tile.YELLOW, new int[]{5, 4});
+                map.put(Tile.LIGHTBLUE, new int[]{3, 2});
+            }
+            case 5 -> {
+                map.put(Tile.GREEN, new int[]{0, 3});
+                map.put(Tile.BLUE, new int[]{2, 1});
+                map.put(Tile.WHITE, new int[]{2, 2});
+                map.put(Tile.PINK, new int[]{1, 4});
+                map.put(Tile.YELLOW, new int[]{0, 0});
+                map.put(Tile.LIGHTBLUE, new int[]{4, 1});
+            }
+            case 6 -> {
+                map.put(Tile.GREEN, new int[]{5, 4});
+                map.put(Tile.BLUE, new int[]{1, 3});
+                map.put(Tile.WHITE, new int[]{3, 3});
+                map.put(Tile.PINK, new int[]{0, 0});
+                map.put(Tile.YELLOW, new int[]{1, 1});
+                map.put(Tile.LIGHTBLUE, new int[]{5, 2});
+            }
+            case 7 -> {
+                map.put(Tile.GREEN, new int[]{5, 0});
+                map.put(Tile.BLUE, new int[]{4, 3});
+                map.put(Tile.WHITE, new int[]{0, 2});
+                map.put(Tile.PINK, new int[]{3, 1});
+                map.put(Tile.YELLOW, new int[]{1, 4});
+                map.put(Tile.LIGHTBLUE, new int[]{2, 0});
+            }
+            case 8 -> {
+                map.put(Tile.GREEN, new int[]{4, 1});
+                map.put(Tile.BLUE, new int[]{5, 4});
+                map.put(Tile.WHITE, new int[]{1, 3});
+                map.put(Tile.PINK, new int[]{2, 0});
+                map.put(Tile.YELLOW, new int[]{0, 3});
+                map.put(Tile.LIGHTBLUE, new int[]{3, 2});
+            }
+            case 9 -> {
+                map.put(Tile.GREEN, new int[]{3, 2});
+                map.put(Tile.BLUE, new int[]{0, 0});
+                map.put(Tile.WHITE, new int[]{2, 4});
+                map.put(Tile.PINK, new int[]{1, 4});
+                map.put(Tile.YELLOW, new int[]{5, 2});
+                map.put(Tile.LIGHTBLUE, new int[]{1, 1});
+            }
+            case 10 -> {
+                map.put(Tile.GREEN, new int[]{2, 3});
+                map.put(Tile.BLUE, new int[]{1, 1});
+                map.put(Tile.WHITE, new int[]{3, 0});
+                map.put(Tile.PINK, new int[]{0, 3});
+                map.put(Tile.YELLOW, new int[]{4, 1});
+                map.put(Tile.LIGHTBLUE, new int[]{5, 4});
+            }
+            case 11 -> {
+                map.put(Tile.GREEN, new int[]{1, 4});
+                map.put(Tile.BLUE, new int[]{2, 2});
+                map.put(Tile.WHITE, new int[]{4, 1});
+                map.put(Tile.PINK, new int[]{5, 2});
+                map.put(Tile.YELLOW, new int[]{3, 0});
+                map.put(Tile.LIGHTBLUE, new int[]{0, 3});
+            }
+            case 12 -> {
+                map.put(Tile.GREEN, new int[]{0, 0});
+                map.put(Tile.BLUE, new int[]{3, 2});
+                map.put(Tile.WHITE, new int[]{5, 2});
+                map.put(Tile.PINK, new int[]{4, 1});
+                map.put(Tile.YELLOW, new int[]{1, 4});
+                map.put(Tile.LIGHTBLUE, new int[]{2, 3});
+            }
+        }
+
+    }
 
 
     /**
@@ -35,12 +138,9 @@ public abstract class PersonalGoalCard implements Card{
      */
     public void updateScore(Tile[][] shelf) {
         int goal = 0;
-        for (int i = 0; i < shelf.length; i++) {
-            for (int j = 0; j < shelf[i].length; j++) {
-                for (Map.Entry<Tile, int[]> entry : map.entrySet()) {
-                    if (entry.getValue()[0] == i && entry.getValue()[1] == j && shelf[i][j].equals(entry.getKey())) goal++;
-                }
-            }
+
+        for (Map.Entry<Tile, int[]> entry : map.entrySet()) {
+            if (shelf[entry.getValue()[0]][entry.getValue()[1]].equals(entry.getKey())) goal++;
         }
 
         //System.out.println(goal);

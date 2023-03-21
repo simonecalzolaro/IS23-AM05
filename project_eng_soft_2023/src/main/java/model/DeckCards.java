@@ -29,18 +29,18 @@ public class DeckCards{
         CommonGoalCard CG11 = new CGC11(nPlayers);
         CommonGoalCard CG12 = new CGC12(nPlayers);
 
-        PersonalGoalCard PG1 = new PG1();
-        PersonalGoalCard PG2 = new PG2();
-        PersonalGoalCard PG3 = new PG3();
-        PersonalGoalCard PG4 = new PG4();
-        PersonalGoalCard PG5 = new PG5();
-        PersonalGoalCard PG6 = new PG6();
-        PersonalGoalCard PG7 = new PG7();
-        PersonalGoalCard PG8 = new PG8();
-        PersonalGoalCard PG9 = new PG9();
-        PersonalGoalCard PG10 = new PG10();
-        PersonalGoalCard PG11 = new PG11();
-        PersonalGoalCard PG12 = new PG12();
+        PersonalGoalCard PG1 = new PersonalGoalCard(1);
+        PersonalGoalCard PG2 = new PersonalGoalCard(2);
+        PersonalGoalCard PG3 = new PersonalGoalCard(3);
+        PersonalGoalCard PG4 = new PersonalGoalCard(4);
+        PersonalGoalCard PG5 = new PersonalGoalCard(5);
+        PersonalGoalCard PG6 = new PersonalGoalCard(6);
+        PersonalGoalCard PG7 = new PersonalGoalCard(7);
+        PersonalGoalCard PG8 = new PersonalGoalCard(8);
+        PersonalGoalCard PG9 = new PersonalGoalCard(9);
+        PersonalGoalCard PG10 = new PersonalGoalCard(10);
+        PersonalGoalCard PG11 = new PersonalGoalCard(11);
+        PersonalGoalCard PG12 = new PersonalGoalCard(12);
 
 
         deckCGC = new ArrayList<>();
@@ -79,8 +79,11 @@ public class DeckCards{
      * @return a random CommonGoalCard from deck
      */
     CommonGoalCard getRandCGC(){
+        CommonGoalCard Cgc;
         Random random = new Random();
-        return deckCGC.get(random.nextInt(deckCGC.size()));
+        Cgc = deckCGC.get(random.nextInt(deckCGC.size()));
+        deckCGC.remove(Cgc);
+        return Cgc;
     }
 
     /**
@@ -88,8 +91,11 @@ public class DeckCards{
      * @return a random PersonalGoalCard from deck
      */
     PersonalGoalCard getRandPGC(){
+        PersonalGoalCard Pgc;
         Random random = new Random();
-        return deckPGC.get(random.nextInt(deckPGC.size()));
+        Pgc = deckPGC.get(random.nextInt(deckPGC.size()));
+        deckPGC.remove(Pgc);
+        return Pgc;
     }
 
 }
