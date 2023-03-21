@@ -75,7 +75,7 @@ public class DeckCards{
     }
 
     /**
-     *
+     * after you get that card is removed from deck
      * @return a random CommonGoalCard from deck
      */
     CommonGoalCard getRandCGC(){
@@ -87,7 +87,7 @@ public class DeckCards{
     }
 
     /**
-     *
+     * after you get that card is removed from deck
      * @return a random PersonalGoalCard from deck
      */
     PersonalGoalCard getRandPGC(){

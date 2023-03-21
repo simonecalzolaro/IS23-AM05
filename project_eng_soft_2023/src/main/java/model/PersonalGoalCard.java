@@ -8,9 +8,12 @@ import java.util.Map;
  */
 public class PersonalGoalCard implements Card{
     public int score=0;
-
     Map<Tile, int[]> map = new HashMap<>();
 
+    /**
+     * creation of a specific PersonalGoalCard
+     * @param card indicates the type of PersonalGoalCard you want to create
+     */
     PersonalGoalCard(int card){
         switch (card) {
             case 1 -> {
@@ -116,7 +119,8 @@ public class PersonalGoalCard implements Card{
 
     /**
      *
-     * @return the score achieved related to the PersonalGoalCard
+     * @param shelf represents a matrix [6][5] of Tiles
+     * @return the score achieved in that PersonalGoalCard
      */
     public int getScore(Tile[][] shelf){
         updateScore(shelf);
