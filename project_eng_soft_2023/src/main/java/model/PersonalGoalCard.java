@@ -15,7 +15,8 @@ public abstract class PersonalGoalCard implements Card{
      *
      * @return the score achieved related to the PersonalGoalCard
      */
-    public int getScore(){
+    public int getScore(Tile[][] shelf){
+        updateScore(shelf);
         return score;
     }
 
@@ -25,7 +26,7 @@ public abstract class PersonalGoalCard implements Card{
      * @return true if the PersonalGoalCard goals have been completed
      */
     public boolean checkGoal(Tile[][] shelf){
-        return getScore() == 12;
+        return getScore(shelf) == 12;
     }
 
     /**
