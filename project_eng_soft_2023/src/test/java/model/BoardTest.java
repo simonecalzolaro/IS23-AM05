@@ -1,55 +1,51 @@
 package model;
 
-import junit.framework.TestCase;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class BoardTest  {
 
     private Board board;
     private Bag bag;
 
-    @Before
-    public void setUp(){
-
-        bag = new Bag();
-        bag.initializeBag();
-        board = new Board();
-    }
-
-    @After
-    public void tearDown(){
-        bag=null;
-        board=null;
-    }
+    @Test
     public void testInitializeBoard() {
+
+        board = new Board();
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);
 
 
-        Assert.assertEquals(4, board.getnPlayers());
-
+        assertEquals(4, board.getnPlayers());
+        bag=null;
+        board=null;
     }
 
+    @Test
     public void testFill() {
+
+        board = new Board();
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);
         for(int i=0; i<9; i++){
             for (int j=0; j<9; j++){
-                Assert.assertNotEquals(null, board.getBoard()[i][j]);
-                Assert.assertNotEquals(Tile.EMPTY, board.getBoard()[i][j]);
+                assertNotEquals(null, board.getBoard()[i][j]);
+                assertNotEquals(Tile.EMPTY, board.getBoard()[i][j]);
             }
         }
 
 
+        board=null;
     }
 
-
+    @Test
     public void testFill2() {
+        board = new Board();
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);
         for(int i=0; i<9; i++){
@@ -70,16 +66,18 @@ public class BoardTest extends TestCase {
         int oldEmpty= board.getEmptyTilesNum();
 
         for(int i = 0; i<122; i++){
-            bag.getTile();
+            board.getBag().getTile();
         }
 
-        int tile= bag.getTilesNum();
+        int tile= board.getBag().getTilesNum();
         board.fill();
-        Assert.assertEquals(oldEmpty-tile, board.getEmptyTilesNum());
+        assertEquals(oldEmpty-tile, board.getEmptyTilesNum());
+        board=null;
     }
 
-
+    @Test
     public void testEmptyBoard1() {
+        board = new Board();
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);
         for(int i=0; i<9; i++){
@@ -98,11 +96,13 @@ public class BoardTest extends TestCase {
         board.setTile(5,3,Tile.LIGHTBLUE);
         board.setTile(7,5,Tile.LIGHTBLUE);
 
-        Assert.assertTrue(board.emptyBoard());
-
+        assertTrue(board.emptyBoard());
+        board=null;
     }
 
+    @Test
     public void testEmptyBoard2() {
+        board = new Board();
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);
         for(int i=0; i<9; i++){
@@ -117,11 +117,13 @@ public class BoardTest extends TestCase {
         board.setTile(1,4,Tile.LIGHTBLUE);
 
 
-        Assert.assertFalse(board.emptyBoard());
-
+        assertFalse(board.emptyBoard());
+        board=null;
     }
 
+    @Test
     public void testSingleTile() {
+        board = new Board();
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);
         for(int i=0; i<9; i++){
@@ -137,14 +139,16 @@ public class BoardTest extends TestCase {
         board.setTile(7,5,Tile.LIGHTBLUE);
         board.setTile(6,5,Tile.LIGHTBLUE);
 
-        Assert.assertTrue(board.singleTile(0,3));
-        Assert.assertTrue(board.singleTile(1,5));
-        Assert.assertTrue(board.singleTile(3,2));
-        Assert.assertFalse(board.singleTile(7,5));
-
+        assertTrue(board.singleTile(0,3));
+        assertTrue(board.singleTile(1,5));
+        assertTrue(board.singleTile(3,2));
+        assertFalse(board.singleTile(7,5));
+        board=null;
     }
 
+    @Test
     public void testOkTiles() {
+        board = new Board();
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);
         for(int i=0; i<9; i++){
@@ -167,20 +171,22 @@ public class BoardTest extends TestCase {
         board.setTile(6,4,Tile.LIGHTBLUE);
         board.setTile(6,3,Tile.LIGHTBLUE);
 
-        Assert.assertTrue(board.okTile(0,3));
-        Assert.assertTrue(board.okTile(1,5));
-        Assert.assertTrue(board.okTile(3,2));
+        assertTrue(board.okTile(0,3));
+        assertTrue(board.okTile(1,5));
+        assertTrue(board.okTile(3,2));
 
-        Assert.assertTrue(board.okTile(7,5));
-        Assert.assertTrue(board.okTile(7,4));
-        Assert.assertTrue(board.okTile(6,5));
-        Assert.assertTrue(board.okTile(8,5));
+        assertTrue(board.okTile(7,5));
+        assertTrue(board.okTile(7,4));
+        assertTrue(board.okTile(6,5));
+        assertTrue(board.okTile(8,5));
 
-        Assert.assertFalse(board.okTile(6,4));
+        assertFalse(board.okTile(6,4));
+        board=null;
     }
 
+    @Test
     public void testSubTiles() throws NotAvailableTiles, NotEnoughSpace, NotInLine {
-
+        board = new Board();
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);
         for(int i=0; i<9; i++){
@@ -204,13 +210,15 @@ public class BoardTest extends TestCase {
 
         int i = 6;
         for(int j=3; j<=5; j++){
-            Assert.assertEquals(board.getBoard()[i][j], Tile.EMPTY);
+            assertEquals(board.getBoard()[i][j], Tile.EMPTY);
         }
-        Assert.assertEquals(3, temp.size());
+        assertEquals(3, temp.size());
+        board=null;
     }
 
-
+    @Test
     public void testInLine() {
+        board = new Board();
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);
         for(int i=0; i<9; i++){
@@ -221,24 +229,35 @@ public class BoardTest extends TestCase {
             }
         }
 
-
+        board=null;
     }
 
-
+    @Test
     public void testInLine1() {
 
-        Assert.assertTrue(board.inLine(6,5,6,4));
+        board = new Board();
+        assertTrue(board.inLine(6,5,6,4));
     }
 
+    @Test
     public void testInLine2() {
-        Assert.assertFalse(board.inLine(6,5,5,4));
+
+        board = new Board();
+        assertFalse(board.inLine(6,5,5,4));
     }
 
-
+    @Test
     public void testInLine3() {
-        Assert.assertTrue(board.inLine(6,5,6,4, 6,3));
+
+
+        board = new Board();
+        assertTrue(board.inLine(6,5,6,4, 6,3));
     }
+
+    @Test
     public void testInLine4() {
-        Assert.assertFalse(board.inLine(6,5,6,4, 6,2));
+
+        board = new Board();
+        assertFalse(board.inLine(6,5,6,4, 6,2));
     }
 }

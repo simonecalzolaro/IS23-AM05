@@ -38,7 +38,7 @@ public class Board {
     /**
      * Cards deck of the current game
      */
-    public DeckCards deck;
+    private DeckCards deck;
 
     /**
      * constructor
@@ -540,4 +540,19 @@ public class Board {
         }
     }
 
+    /**
+     *
+     * @return bag
+     */
+    public Bag getBag() {
+        return bag;
+    }
+
+    /**
+     *
+     * @return deck
+     */
+    public DeckCards getDeck() {
+        return deck;
+    }
 }
