@@ -20,8 +20,9 @@ public class CGC2 extends CommonGoalCard{
      */
     public boolean checkGoal(Tile[][] shelf) {
 
-        return shelf[0][0].equals(shelf[0][shelf[0].length - 1])
+        return     shelf[0][0].equals(shelf[0][shelf[0].length - 1])
                 && shelf[0][0].equals(shelf[shelf.length - 1][shelf[0].length - 1])
-                && shelf[0][0].equals(shelf[shelf[0].length - 1][0]);
+                && shelf[0][0].equals(shelf[shelf.length - 1][0])
+                && !shelf[0][0].equals(Tile.EMPTY);
     }
 }

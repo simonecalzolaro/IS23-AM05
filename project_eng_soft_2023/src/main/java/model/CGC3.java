@@ -64,7 +64,7 @@ public class CGC3 extends CommonGoalCard{
                     if (!visited[row][col]) {
 
                         nElem = countElem(row, col, 0);
-                        nGroups = (int) nElem / 4;
+                        nGroups = nGroups + (int) nElem / 4;
 
                         if (nGroups == 4) return true;
 

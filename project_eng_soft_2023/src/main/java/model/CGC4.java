@@ -1,7 +1,5 @@
 package model;
 
-
-
 import java.util.ArrayList;
 
 /**
@@ -12,6 +10,9 @@ import java.util.ArrayList;
 public class CGC4 extends CommonGoalCard{
 
     ArrayList<Tile> tiles;
+
+    private static boolean [][] visited;
+    private static boolean [][] booleShelf;
     int nGroups;
     /**
      * @param np number of players
@@ -27,8 +28,16 @@ public class CGC4 extends CommonGoalCard{
         tiles.add(Tile.YELLOW);
         tiles.add(Tile.WHITE);
 
-        nGroups=0;
+        visited = new boolean[6][5];
+        for(int row=0; row < 6; row++){
+            for(int col=0; col< 5; col++){
+                visited[row][col]=false;
+            }
+        }
 
+        booleShelf=new boolean[6][5];
+
+        nGroups=0;
     }
 
     /**
@@ -42,12 +51,29 @@ public class CGC4 extends CommonGoalCard{
 
             nGroups=0;
 
+            for (int row = 0; row < shelf.length; row++) {
+                for (int col = 0; col < shelf[0].length; col++) {
+                    booleShelf[row][col]=shelf[row][col].equals(t);
+                }
+            }
+
             for(int row=0; row < shelf.length-1; row++){
                 for(int col=0; col< shelf[0].length-1 ; col++){
 
-                    if(shelf[row][col].equals(shelf[row][col+1])
-                       && shelf[row][col].equals(shelf[row+1][col+1])
-                       && shelf[row][col].equals(shelf[row+1][col]) ) nGroups++;
+                    if( !visited[row][col]
+                       && booleShelf[row][col]
+                       && booleShelf[row][col+1]
+                       && booleShelf[row+1][col+1]
+                       && booleShelf[row+1][col] ) {
+
+                        visited[row][col]=true;
+                        visited[row+1][col]=true;
+                        visited[row][col+1]=true;
+                        visited[row+1][col+1]=true;
+
+                        nGroups++;
+
+                    }
 
                     if (nGroups==2) return true;
 

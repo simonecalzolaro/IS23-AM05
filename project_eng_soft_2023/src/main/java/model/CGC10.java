@@ -37,7 +37,7 @@ public class CGC10 extends CommonGoalCard{
             if( rowTiles.stream().count()==5
                     && rowTiles.stream().distinct().count()==5) nRow++;
 
-            if(nRow==4) return true;
+            if(nRow==2) return true;
         }
 
         return false;

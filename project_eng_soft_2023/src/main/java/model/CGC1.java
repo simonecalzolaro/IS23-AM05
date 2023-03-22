@@ -64,7 +64,7 @@ public class CGC1 extends CommonGoalCard{
                     if (!visited[row][col]) {
 
                         nElem = countElem(row, col, 0);
-                        nGrups = (int) nElem / 2;
+                        nGrups = nGrups + (int) nElem / 2;
 
                         if (nGrups == 6) return true;
 

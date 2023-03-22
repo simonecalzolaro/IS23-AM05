@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 /**
  * Common Goal card n 12
- * Goal:
+ * Goal: five columns in ascendant or descendent order with a difference of height of max one tile
  */
 public class CGC12 extends CommonGoalCard{
 
