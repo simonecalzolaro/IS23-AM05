@@ -41,9 +41,8 @@ public class Bookshelf {
     /**
      *
      * @param board constructor instantiate the board described above
-     * @param pgc constructor instantiate the pgc described above
      */
-    public Bookshelf(Board board, PersonalGoalCard pgc){
+    public Bookshelf(Board board){
         shelf = new Tile[r][c];
         for(int i=0;i<r;i++){
             for(int j=0; j<c;j++){
@@ -55,7 +54,14 @@ public class Bookshelf {
         tokenCG1 = null;
         tokenCG2 = null;
         tokenEOG = 0;
+        pgc = board.getDeck().getRandPGC();
 
+    }
+
+
+    //CLASS USED FOR TESTING : IT MUSTN'T BE USED DURING THE GAME
+    public void setPGC(PersonalGoalCard pgc){
+        this.pgc = pgc;
     }
 
 
@@ -70,33 +76,42 @@ public class Bookshelf {
      *          return 0 --> successfully insertion
      *          return -1 --> there isn't enough space in the column selected
      *          return -2 --> array stream tiles doesn't have an acceptable lenght
+     *          return -3 --> columns assigned out-of-bounds
+     *
      *
      */
-    public int putTiles(ArrayList<Tile> stream_tiles, int column) /*throws InvalidColumnException*/ {
+    public int putTiles(ArrayList<Tile> stream_tiles, int column) throws IndexOutOfBoundsException {
 
         if(stream_tiles.size() > 3 || stream_tiles.size() <=0) return -2;
         else{
-            //controllo a priori che ci sia spazio a sufficienza nelle colonna selezionata
 
-            int count_col = 0;
+           try{
+               //controllo a priori che ci sia spazio a sufficienza nelle colonna selezionata
 
-            for(int i=0; i<r;i++){
-                if(shelf[i][column] == Tile.EMPTY) count_col++;
-            }
+               int count_col = 0;
 
-            if(count_col < stream_tiles.size()) return -1; //codice -1 rappresenta una colonna invalida
+               for(int i=0; i<r;i++){
+                   if(shelf[i][column] == Tile.EMPTY) count_col++;
+               }
 
-            int stream_tiles_pointer = 0;
-            for(int i = 0; i<r; i++){
-                if(shelf[i][column] == Tile.EMPTY){
-                    shelf[i][column] = stream_tiles.get(stream_tiles_pointer);
-                    stream_tiles_pointer++;
-                    if(stream_tiles_pointer == stream_tiles.size()) i=r; //break
-                }
-            }
+               if(count_col < stream_tiles.size()) return -1; //codice -1 rappresenta una colonna invalida
 
-            return 0;
-        }
+               int stream_tiles_pointer = 0;
+               for(int i = 0; i<r; i++){
+                   if(shelf[i][column] == Tile.EMPTY && stream_tiles.get(stream_tiles_pointer) != Tile.EMPTY && stream_tiles.get(stream_tiles_pointer) != Tile.NOTAVAILABLE){
+                       shelf[i][column] = stream_tiles.get(stream_tiles_pointer);
+                       stream_tiles_pointer++;
+                       if(stream_tiles_pointer == stream_tiles.size()) i=r; //break
+                   }
+               }
+
+               return 0;
+           }catch (IndexOutOfBoundsException e){
+               System.out.println(e);
+               return -3;
+           }
+           }
+
     }
 
 
@@ -265,8 +280,7 @@ public class Bookshelf {
 
     public void checkCG1(){
 
-        if(board.getCommonGoalCard1().checkGoal(shelf) == true)
-
+        if(board.getCommonGoalCard1().checkGoal(shelf) == true && tokenCG1 == null)
             tokenCG1 = board.getCommonGoalCard1().getTopStack();
 
 
@@ -278,8 +292,7 @@ public class Bookshelf {
 
     public void checkCG2(){
 
-        if(board.getCommonGoalCard2().checkGoal(shelf) == true)
-
+        if(board.getCommonGoalCard2().checkGoal(shelf) == true && tokenCG2 == null)
             tokenCG2 = board.getCommonGoalCard2().getTopStack();
 
 
@@ -290,7 +303,11 @@ public class Bookshelf {
      * @return return the points scored by completing common goal card goals
      */
     public int getScoreCGC(){
-        return tokenCG1.getScoreToken()+tokenCG2.getScoreToken();
+        int points = 0;
+        if(tokenCG1 != null) points = points + tokenCG1.getScoreToken();
+        if(tokenCG2 != null) points = points +tokenCG2.getScoreToken();
+
+        return points;
     }
 
 

@@ -520,6 +520,8 @@ public class Board {
         this.EOG = true;
     }
 
+
+
     /**
      *
      * @param nPlayers number of player of the current game
