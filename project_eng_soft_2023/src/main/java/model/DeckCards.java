@@ -9,8 +9,8 @@ import java.util.Random;
  */
 public class DeckCards{
 
-    private final List<CommonGoalCard> deckCGC;
-    private final List<PersonalGoalCard> deckPGC;
+    public final List<CommonGoalCard> deckCGC;
+    public final List<PersonalGoalCard> deckPGC;
 
     /**
      * creation of a full deck of cards ( CommonGoalCard and PersonalGoalCard)
