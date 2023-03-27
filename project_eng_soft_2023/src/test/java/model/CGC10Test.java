@@ -93,9 +93,9 @@ class CGC10Test {
         CGC10 cgc=new CGC10(4);
 
         Tile matr[][]=
-                {{Tile.BLUE   ,Tile.EMPTY   ,Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   },
+                {{Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   },
                 {Tile.BLUE   ,Tile.WHITE   ,Tile.GREEN   ,Tile.YELLOW   ,Tile.LIGHTBLUE   },
-                {Tile.WHITE   ,Tile.LIGHTBLUE   ,Tile.GREEN   ,Tile.YELLOW   ,Tile.BLUE   },
+                {Tile.WHITE   ,Tile.EMPTY   ,Tile.GREEN   ,Tile.YELLOW   ,Tile.BLUE   },
                 {Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   },
                 {Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   },
                 {Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   }};

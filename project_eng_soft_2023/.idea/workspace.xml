@@ -4,12 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="Comment">
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="Model implementation ver 2">
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/Controller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/GameStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/PlayerStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/BookshelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BookshelfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC10.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC10.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC11.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC11.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC12.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC12.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC5.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC6.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC7.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC7.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC8.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC8.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC9.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC9.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CommonGoalCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CommonGoalCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/CGC10Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/CGC10Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/CGC1Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/CGC1Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/CGC2Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/CGC2Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/CGC7Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/CGC7Test.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +48,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2N5zc7ZawszFy8J660izbL2GoKK" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -54,6 +75,9 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
   }
 }</component>
@@ -65,65 +89,17 @@
       <recent name="model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BookshelfTest">
-    <configuration name="BagTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager">
+    <configuration name="App test" type="JUnit" factoryName="JUnit">
       <module name="project_eng_soft_2023" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="model" />
-      <option name="MAIN_CLASS_NAME" value="model.BagTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BoardTest.testFill2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project_eng_soft_2023" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="model" />
-      <option name="MAIN_CLASS_NAME" value="model.BoardTest" />
-      <option name="METHOD_NAME" value="testFill2" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BookshelfTest" type="JUnit" factoryName="JUnit">
-      <module name="project_eng_soft_2023" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="model" />
-      <option name="MAIN_CLASS_NAME" value="model.BookshelfTest" />
+      <option name="MAIN_CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="category" />
+      <category value="org.example.AppTest" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue="JUnit.BookshelfTest" />
-      <item itemvalue="JUnit.BagTest" />
-      <item itemvalue="JUnit.BoardTest.testFill2" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.BoardTest.testFill2" />
-        <item itemvalue="JUnit.BagTest" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -138,8 +114,22 @@
       <workItem from="1679147271673" duration="10855000" />
       <workItem from="1679162248157" duration="23000" />
       <workItem from="1679318938631" duration="2222000" />
-      <workItem from="1679665231040" duration="9532000" />
+      <workItem from="1679401956191" duration="597000" />
+      <workItem from="1679402711774" duration="318000" />
+      <workItem from="1679404582493" duration="225000" />
+      <workItem from="1679405054232" duration="301000" />
+      <workItem from="1679421122061" duration="2144000" />
+      <workItem from="1679429159090" duration="5089000" />
+      <workItem from="1679471720159" duration="2533000" />
     </task>
+    <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
+      <created>1679347133576</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1679347133576</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -158,5 +148,41 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Correzione metodi EOGToken" />
+    <option name="LAST_COMMIT_MESSAGE" value="Correzione metodi EOGToken" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/Bookshelf.java</url>
+          <line>282</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/model/Bookshelf.java</url>
+          <line>294</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/model/Bookshelf.java</url>
+          <line>120</line>
+          <properties class="model.Bookshelf" method="getBookshelf">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/model/Bookshelf.java</url>
+          <line>304</line>
+          <properties class="model.Bookshelf" method="getScoreCGC">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

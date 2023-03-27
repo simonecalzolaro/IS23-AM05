@@ -22,6 +22,8 @@ public class CGC10 extends CommonGoalCard{
      */
     public boolean checkGoal(Tile[][] shelf) {
 
+        goodShelf(shelf);
+
         ArrayList<Tile> rowTiles = new ArrayList<>();
         int nRow=0;
 

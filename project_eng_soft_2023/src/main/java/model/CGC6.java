@@ -33,6 +33,8 @@ public class CGC6 extends CommonGoalCard{
      */
     public boolean checkGoal(Tile[][] shelf) {
 
+        goodShelf(shelf);
+
         ArrayList<Tile> allTiles = new ArrayList<>();
 
         //collecting all the tiles in a single ArrayList

@@ -47,6 +47,8 @@ public class CGC4 extends CommonGoalCard{
      */
     public boolean checkGoal(Tile[][] shelf) {
 
+        goodShelf(shelf);
+
         for(Tile t : tiles){
 
             nGroups=0;

@@ -19,6 +19,8 @@ public class CGC11 extends CommonGoalCard{
      */
     public boolean checkGoal(Tile[][] shelf) {
 
+        goodShelf(shelf);
+
         for(int row=1; row < shelf.length-1; row++){
 
             for(int col=1; col < shelf[0].length-1 ; col++){

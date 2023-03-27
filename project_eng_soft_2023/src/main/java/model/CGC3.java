@@ -45,6 +45,8 @@ public class CGC3 extends CommonGoalCard{
      */
     public boolean checkGoal(Tile[][] shelf) {
 
+        goodShelf(shelf);
+
         int nElem;
         int nGroups=0;
 

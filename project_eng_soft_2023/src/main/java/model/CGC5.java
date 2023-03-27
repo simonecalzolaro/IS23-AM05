@@ -23,6 +23,8 @@ public class CGC5 extends CommonGoalCard{
      */
     public boolean checkGoal(Tile[][] shelf) {
 
+        goodShelf(shelf);
+
         ArrayList<Tile> colTiles=new ArrayList<>();
         int nCol=0;
 

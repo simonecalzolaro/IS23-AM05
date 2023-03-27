@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 /**
  * Common Goal card n 12
@@ -23,21 +25,40 @@ public class CGC12 extends CommonGoalCard{
      */
     public boolean checkGoal(Tile[][] shelf) {
 
+        goodShelf(shelf);
+
         ArrayList<Integer> nTiles= new ArrayList<>();
+        int nTileCol, min=10, max=0;
+
 
         for(int col=0; col < shelf[0].length ; col++){
-            nTiles.add(0);
+            nTileCol=0;
             for(int row=0; row < shelf.length; row++){
                 if(shelf[row][col].equals(Tile.EMPTY)) break;
-                else nTiles.set( nTiles.size()-1 , nTiles.get(nTiles.size()-1)+1 );//always updating the last position
+                else nTileCol++;
             }
+            if(nTileCol > max) max=nTileCol;
+            if(nTileCol < min) min=nTileCol;
+
+            nTiles.add(nTileCol);
         }
 
-        if(  ( nTiles.stream().sorted().equals(nTiles.stream()) //ascending order
-               || nTiles.stream().sorted(Comparator.reverseOrder()).equals(nTiles.stream()) ) //descending order
-           && nTiles.stream().distinct().count()==nTiles.stream().count() //no columns of the same height
-           &&  nTiles.stream().min(Integer::compareTo).equals(nTiles.stream().max(Integer::compareTo).orElse(0)-shelf[0].length)
-              ) return true;
+        if(max==0 || min==0 ) return false;
+
+
+
+        if( ( (   nTiles.stream().sorted().collect(Collectors.toList()).equals(nTiles.stream().collect(Collectors.toList()))
+                 && nTiles.stream().findFirst().orElse(-1)==min
+                 && nTiles.stream().reduce((first, second) -> second).orElse(-1)==max ) //ascending order
+               ||
+              (   nTiles.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()).equals(nTiles.stream().collect(Collectors.toList()))
+                 && nTiles.stream().findFirst().orElse(-1)==max
+                 && nTiles.stream().reduce((first, second) -> second).orElse(-1)==min ) //descending order
+            )
+            && nTiles.stream().distinct().count() == shelf[0].length //no columns of the same height
+            && shelf[0].length==max-min+1
+
+          ) return true;
 
         return false;
     }

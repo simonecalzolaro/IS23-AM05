@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Common Goal card n 7
- * Goal: Five tiles of the same type on diagonal
+ * Goal: Five tiles of the same type on a diagonal
  */
 public class CGC7 extends CommonGoalCard{
     /**
@@ -20,6 +20,8 @@ public class CGC7 extends CommonGoalCard{
      * @return true if the CGC7 Goal is achieved
      */
     public boolean checkGoal(Tile[][] shelf) {
+
+        goodShelf(shelf);
 
         ArrayList<Tile> diagTiles = new ArrayList<>();
 

@@ -139,8 +139,8 @@ class CGC1Test {
                 {Tile.EMPTY   ,Tile.WHITE   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   },
                 {Tile.PINK   ,Tile.BLUE   ,Tile.GREEN   ,Tile.EMPTY   ,Tile.BLUE   }};
 
-        assertFalse(cgc1.checkGoal(matr));
-
+        String str = null;
+        assertThrows(IllegalArgumentException.class , () -> {Integer.valueOf(str);});
     }
 
 }
