@@ -4,30 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="Model implementation ver 2">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/Controller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/GameStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/PlayerStatus.java" afterDir="false" />
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="tested all 12 CGC and fixed some bugs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC10.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC10.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC11.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC11.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC12.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC12.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC4.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC5.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC6.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC7.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC7.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC8.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC8.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CGC9.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CGC9.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Controller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PlayerStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PlayerStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/CommonGoalCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CommonGoalCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/CGC10Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/CGC10Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/CGC1Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/CGC1Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/CGC2Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/CGC2Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/CGC7Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/CGC7Test.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,6 +106,8 @@
       <workItem from="1679421122061" duration="2144000" />
       <workItem from="1679429159090" duration="5089000" />
       <workItem from="1679471720159" duration="2533000" />
+      <workItem from="1680120955743" duration="2377000" />
+      <workItem from="1680184224372" duration="27000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
@@ -129,7 +116,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679347133576</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="tested all 12 CGC and fixed some bugs">
+      <created>1679944507245</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679944507245</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -149,7 +143,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Correzione metodi EOGToken" />
-    <option name="LAST_COMMIT_MESSAGE" value="Correzione metodi EOGToken" />
+    <MESSAGE value="tested all 12 CGC and fixed some bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="tested all 12 CGC and fixed some bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -164,6 +159,11 @@
           <line>294</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/controller/Game.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/model/Bookshelf.java</url>
           <line>120</line>
@@ -175,7 +175,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/model/Bookshelf.java</url>
-          <line>304</line>
+          <line>303</line>
           <properties class="model.Bookshelf" method="getScoreCGC">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

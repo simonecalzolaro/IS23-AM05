@@ -295,7 +295,6 @@ public class Bookshelf {
         if(board.getCommonGoalCard2().checkGoal(shelf) == true && tokenCG2 == null)
             tokenCG2 = board.getCommonGoalCard2().getTopStack();
 
-
     }
 
     /**

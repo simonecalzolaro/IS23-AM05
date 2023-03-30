@@ -27,7 +27,9 @@ public abstract class CommonGoalCard implements Card{
         }else throw new IllegalArgumentException(" Number of players must be greater than 1 ");
     }
 
-
+    /**
+     * @return the top Token on the stack, if EmptyStackException occurs it returns always the smallest token
+     */
     public Token getTopStack() {
         try{
             return stackTiles.pop();
@@ -38,6 +40,10 @@ public abstract class CommonGoalCard implements Card{
     }
 
 
+    /**
+     * check if the shelf is correctly filled, it means that is impossible to have "floating" Tiles
+     * @param shelf
+     */
     public void goodShelf(Tile[][] shelf){
 
         //for each column I check that "EMPTY" tiles are ONLY at the end;
