@@ -6,10 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CGC9Test {
 
+    CommonGoalCard cgc = new CommonGoalCard(9, 4);
     @Test
     public void checkGoal_empty() {
-
-        CGC9 cgc=new CGC9(4);
 
         Tile matr[][]=
                 {{Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   },
@@ -27,8 +26,6 @@ class CGC9Test {
     @Test
     void checkGoal_1ColOk() {
 
-        CGC9 cgc=new CGC9(4);
-
         Tile matr[][]=
                 {{Tile.PINK   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   },
                 {Tile.BLUE  ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   },
@@ -45,8 +42,6 @@ class CGC9Test {
     @Test
     void checkGoal_2ColOk() {
 
-        CGC9 cgc=new CGC9(4);
-
         Tile matr[][]=
                 {{Tile.PINK   ,Tile.EMPTY   ,Tile.YELLOW   ,Tile.EMPTY   ,Tile.EMPTY   },
                 {Tile.BLUE  ,Tile.EMPTY   ,Tile.PINK   ,Tile.EMPTY   ,Tile.EMPTY   },
@@ -62,8 +57,6 @@ class CGC9Test {
     @Test
     void checkGoal_2ColOk_1fake() {
 
-        CGC9 cgc=new CGC9(4);
-
         Tile matr[][]=
                 {{Tile.PINK   ,Tile.EMPTY   ,Tile.YELLOW   ,Tile.EMPTY   ,Tile.EMPTY   },
                 {Tile.BLUE  ,Tile.EMPTY   ,Tile.PINK   ,Tile.EMPTY   ,Tile.EMPTY   },
@@ -78,8 +71,6 @@ class CGC9Test {
 
     @Test
     void checkGoal_2fake() {
-
-        CGC9 cgc=new CGC9(4);
 
         Tile matr[][]=
                 {{Tile.WHITE   ,Tile.EMPTY   ,Tile.YELLOW   ,Tile.EMPTY   ,Tile.EMPTY   },

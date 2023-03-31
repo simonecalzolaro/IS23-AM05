@@ -7,11 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CGC2Test {
 
+    CommonGoalCard cgc2 = new CommonGoalCard(2, 4);
 
     @Test
     public void checkGoal_empty() {
-
-        CGC1 cgc1=new CGC1(4);
 
         Tile matr[][]=
                 {{Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   },
@@ -21,14 +20,12 @@ class CGC2Test {
                 {Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   },
                 {Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   }};
 
-        assertFalse(cgc1.checkGoal(matr));
+        assertFalse(cgc2.checkGoal(matr));
 
     }
 
     @Test
     public void checkGoal_1() {
-
-        CGC2 cgc2=new CGC2(4);
 
         Tile matr[][]=
                 {{Tile.PINK   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.PINK   },
@@ -45,8 +42,6 @@ class CGC2Test {
     @Test
     public void checkGoal_2() {
 
-        CGC2 cgc2=new CGC2(4);
-
         Tile matr[][]=
                 {{Tile.PINK   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.PINK   },
                 {Tile.BLUE   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.BLUE   },
@@ -62,8 +57,6 @@ class CGC2Test {
     @Test
     public void checkGoal_3() {
 
-        CGC2 cgc2=new CGC2(4);
-
         Tile matr[][]=
                 {{Tile.PINK   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.PINK   },
                 {Tile.BLUE   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.BLUE   },
@@ -78,8 +71,7 @@ class CGC2Test {
 
     @Test
     public void checkGoal_4() {
-
-        CGC2 cgc2=new CGC2(4);
+        
 
         Tile matr[][]=
                 {{Tile.PINK   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.PINK   },

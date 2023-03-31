@@ -6,11 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CGC4Test {
 
+    CommonGoalCard cgc = new CommonGoalCard(4, 4);
 
     @Test
     public void checkGoal_empty() {
-
-        CGC4 cgc=new CGC4(4);
 
         Tile matr[][]=
                 {{Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   },
@@ -27,8 +26,6 @@ class CGC4Test {
     @Test
     void checkGoal_1() {
 
-        CGC4 cgc=new CGC4(4);
-
         Tile matr[][]=
                 {{Tile.BLUE   ,Tile.BLUE   ,Tile.WHITE   ,Tile.WHITE   ,Tile.EMPTY   },
                 {Tile.BLUE   ,Tile.BLUE   ,Tile.WHITE   ,Tile.WHITE   ,Tile.EMPTY   },
@@ -43,8 +40,6 @@ class CGC4Test {
     @Test
     void checkGoal_2() {
 
-        CGC4 cgc=new CGC4(4);
-
         Tile matr[][]=
                 {{Tile.BLUE   ,Tile.BLUE   ,Tile.WHITE   ,Tile.WHITE   ,Tile.EMPTY   },
                 {Tile.BLUE   ,Tile.BLUE   ,Tile.WHITE   ,Tile.WHITE   ,Tile.EMPTY   },
@@ -58,8 +53,6 @@ class CGC4Test {
 
     @Test
     void checkGoal_3() {
-
-        CGC4 cgc=new CGC4(4);
 
         Tile matr[][]=
                 {{Tile.BLUE   ,Tile.BLUE   ,Tile.WHITE   ,Tile.WHITE   ,Tile.EMPTY   },

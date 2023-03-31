@@ -6,10 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CGC10Test {
 
+    CommonGoalCard cgc = new CommonGoalCard(10, 4);
     @Test
     public void checkGoal_empty() {
-
-        CGC10 cgc=new CGC10(4);
 
         Tile matr[][]=
                 {{Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   },
@@ -25,7 +24,6 @@ class CGC10Test {
 
     @Test
     void checkGoal_allBlue() {
-        CGC10 cgc=new CGC10(4);
 
         Tile matr[][]=
                 {{Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   },
@@ -42,7 +40,6 @@ class CGC10Test {
 
     @Test
     void checkGoal_4typeTiles() {
-        CGC10 cgc=new CGC10(4);
 
         Tile matr[][]=
                 {{Tile.BLUE   ,Tile.WHITE   ,Tile.GREEN   ,Tile.YELLOW   ,Tile.LIGHTBLUE   },
@@ -58,7 +55,6 @@ class CGC10Test {
 
     @Test
     void checkGoal_5typeTiles1() {
-        CGC10 cgc=new CGC10(4);
 
         Tile matr[][]=
                 {{Tile.BLUE   ,Tile.WHITE   ,Tile.GREEN   ,Tile.YELLOW   ,Tile.LIGHTBLUE   },
@@ -74,7 +70,6 @@ class CGC10Test {
 
     @Test
     void checkGoal_5typeTiles2() {
-        CGC10 cgc=new CGC10(4);
 
         Tile matr[][]=
                 {{Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   },
@@ -90,7 +85,6 @@ class CGC10Test {
 
     @Test
     void checkGoal_5typeTiles3_fake() {
-        CGC10 cgc=new CGC10(4);
 
         Tile matr[][]=
                 {{Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   },

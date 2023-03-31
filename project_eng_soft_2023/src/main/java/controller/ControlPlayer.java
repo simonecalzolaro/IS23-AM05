@@ -26,6 +26,7 @@ public class ControlPlayer {
         return playerStatus;
     }
 
+
     public Bookshelf getBookshelf() {
         return bookshelf;
     }

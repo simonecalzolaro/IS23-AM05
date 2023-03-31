@@ -9,25 +9,20 @@ import java.util.Random;
  */
 public class DeckCards{
 
-    public final List<CommonGoalCard> deckCGC;
+    final private int deckPGCsize=12;
+    final private int deckCGCsize=12;
+
+    final private int nPlayers;
+
+    private final List<Integer> cgcAlreadyReturned= new ArrayList<>();
     public final List<PersonalGoalCard> deckPGC;
 
     /**
      * creation of a full deck of cards ( CommonGoalCard and PersonalGoalCard)
      */
-    DeckCards(int nPlayers){
-        CommonGoalCard CG1 = new CGC1(nPlayers);
-        CommonGoalCard CG2 = new CGC2(nPlayers);
-        CommonGoalCard CG3 = new CGC3(nPlayers);
-        CommonGoalCard CG4 = new CGC4(nPlayers);
-        CommonGoalCard CG5 = new CGC5(nPlayers);
-        CommonGoalCard CG6 = new CGC6(nPlayers);
-        CommonGoalCard CG7 = new CGC7(nPlayers);
-        CommonGoalCard CG8 = new CGC8(nPlayers);
-        CommonGoalCard CG9 = new CGC9(nPlayers);
-        CommonGoalCard CG10 = new CGC10(nPlayers);
-        CommonGoalCard CG11 = new CGC11(nPlayers);
-        CommonGoalCard CG12 = new CGC12(nPlayers);
+    public DeckCards(int nPlayers){
+
+        this.nPlayers=nPlayers;
 
         PersonalGoalCard PG1 = new PersonalGoalCard(1);
         PersonalGoalCard PG2 = new PersonalGoalCard(2);
@@ -43,22 +38,7 @@ public class DeckCards{
         PersonalGoalCard PG12 = new PersonalGoalCard(12);
 
 
-        deckCGC = new ArrayList<>();
         deckPGC = new ArrayList<>();
-
-        deckCGC.add(CG1);
-        deckCGC.add(CG2);
-        deckCGC.add(CG3);
-        deckCGC.add(CG4);
-        deckCGC.add(CG5);
-        deckCGC.add(CG6);
-        deckCGC.add(CG7);
-        deckCGC.add(CG8);
-        deckCGC.add(CG9);
-        deckCGC.add(CG10);
-        deckCGC.add(CG11);
-        deckCGC.add(CG12);
-
         deckPGC.add(PG1);
         deckPGC.add(PG2);
         deckPGC.add(PG3);
@@ -78,24 +58,37 @@ public class DeckCards{
      * after you get that card is removed from deck
      * @return a random CommonGoalCard from deck
      */
-    CommonGoalCard getRandCGC(){
-        CommonGoalCard Cgc;
+    public CommonGoalCard getRandCGC(){
+
+        int cardNumb;
         Random random = new Random();
-        Cgc = deckCGC.get(random.nextInt(deckCGC.size()));
-        deckCGC.remove(Cgc);
-        return Cgc;
+
+        do{
+            cardNumb= random.nextInt() % deckCGCsize;
+        }while(cgcAlreadyReturned.contains(cardNumb));
+
+        cgcAlreadyReturned.add(cardNumb);
+
+        return new CommonGoalCard(cardNumb, this.nPlayers );
     }
 
     /**
      * after you get that card is removed from deck
      * @return a random PersonalGoalCard from deck
      */
-    PersonalGoalCard getRandPGC(){
+    public PersonalGoalCard getRandPGC(){
         PersonalGoalCard Pgc;
         Random random = new Random();
         Pgc = deckPGC.get(random.nextInt(deckPGC.size()));
         deckPGC.remove(Pgc);
         return Pgc;
+    }
+    public int getDeckPGCsize() {
+        return deckPGCsize;
+    }
+
+    public int getDeckCGCsize() {
+        return deckCGCsize;
     }
 
 }

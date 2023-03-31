@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CGC8Test {
 
+    CommonGoalCard cgc = new CommonGoalCard(8, 4);
+
     @Test
     public void checkGoal_empty() {
-
-        CGC8 cgc=new CGC8(4);
 
         Tile matr[][]=
                 {{Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   },
@@ -26,8 +26,6 @@ class CGC8Test {
     @Test
     public void checkGoal_oneType() {
 
-        CGC8 cgc=new CGC8(4);
-
         Tile matr[][]=
                 {{Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   },
                 {Tile.PINK   ,Tile.PINK   ,Tile.PINK   ,Tile.PINK   ,Tile.PINK   },
@@ -42,8 +40,6 @@ class CGC8Test {
 
     @Test
     public void checkGoal_twoType() {
-
-        CGC8 cgc=new CGC8(4);
 
         Tile matr[][]=
                 {{Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.GREEN   },
@@ -60,8 +56,6 @@ class CGC8Test {
     @Test
     public void checkGoal_threeType() {
 
-        CGC8 cgc=new CGC8(4);
-
         Tile matr[][]=
                 {{Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.YELLOW   ,Tile.GREEN   },
                         {Tile.PINK   ,Tile.PINK   ,Tile.PINK   ,Tile.YELLOW   ,Tile.GREEN   },
@@ -76,8 +70,6 @@ class CGC8Test {
 
     @Test
     public void checkGoal_emptyCol() {
-
-        CGC8 cgc=new CGC8(4);
 
         Tile matr[][]=
                 {{Tile.BLUE   ,Tile.BLUE   ,Tile.BLUE   ,Tile.YELLOW   ,Tile.GREEN   },

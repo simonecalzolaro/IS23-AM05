@@ -9,8 +9,8 @@ class DeckCardsTest {
     public void checkDeckCards(){
         DeckCards deckCards = new DeckCards(4);
 
-        assertEquals(12, deckCards.deckCGC.size());
-        assertEquals(12, deckCards.deckPGC.size());
+        assertEquals(12, deckCards.getDeckCGCsize());
+        assertEquals(12, deckCards.getDeckPGCsize());
     }
 
     @Test
@@ -19,8 +19,8 @@ class DeckCardsTest {
 
         CommonGoalCard Cgc = deckCards.getRandCGC();
 
-        for(int i=0; i<deckCards.deckCGC.size(); i++){
-            assertNotEquals(Cgc, deckCards.deckCGC.get(i));
+        for(int i=0; i<deckCards.getDeckCGCsize()-1; i++){
+            assertNotEquals(Cgc, deckCards.getRandCGC());
         }
 
     }
@@ -31,8 +31,8 @@ class DeckCardsTest {
 
         PersonalGoalCard Pgc = deckCards.getRandPGC();
 
-        for(int i=0; i<deckCards.deckPGC.size(); i++){
-            assertNotEquals(Pgc, deckCards.deckPGC.get(i));
+        for(int i=0; i<deckCards.getDeckPGCsize(); i++){
+            assertNotEquals(Pgc, deckCards.getRandPGC());
         }
     }
 }
