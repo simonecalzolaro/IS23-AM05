@@ -16,9 +16,11 @@ public class Game {
 
     private final Board board;
 
-    public Game() {
-        this.gameID = 0; // come determino il gameID?
-        this.board = null;
+    public Game(int gameID, int numOfPlayer) {
+        this.gameID = gameID;
+        this.board = new Board();
+        board.initializeBoard(numOfPlayer);
+
     }
 
 

@@ -1,5 +1,6 @@
 package controller;
 
+import model.Board;
 import model.Bookshelf;
 
 public class ControlPlayer {
@@ -11,11 +12,11 @@ public class ControlPlayer {
     final private Bookshelf bookshelf;
 
 
-    public ControlPlayer() {
 
-
+    public ControlPlayer(Board board, int playerID) {
+        bookshelf=new Bookshelf(board);
+        this.playerID=playerID;
     }
-
 
 
     public int getPlayerID() {
@@ -34,4 +35,5 @@ public class ControlPlayer {
     public void setPlayerStatus(PlayerStatus playerStatus) {
         this.playerStatus = playerStatus;
     }
+
 }

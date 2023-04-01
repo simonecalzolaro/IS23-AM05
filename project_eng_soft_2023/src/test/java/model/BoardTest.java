@@ -19,7 +19,7 @@ public class BoardTest  {
         board.initializeBoard(4);
 
 
-        assertEquals(4, board.getnPlayers());
+        assertEquals(4, board.getNPlayers());
         bag=null;
         board=null;
     }

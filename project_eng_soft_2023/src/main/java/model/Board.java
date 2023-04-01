@@ -57,7 +57,7 @@ public class Board {
      * fill completely the board
      * update board
      * set common goal cards
-     * @param nPlayers
+     * @param nPlayers number of player
      */
     public void initializeBoard(int nPlayers){
 
@@ -173,9 +173,6 @@ public class Board {
             }
 
         }
-
-
-
     }
 
     /**
@@ -208,7 +205,7 @@ public class Board {
      * check if there is only tiles with no adjacent tiles
      * @return true if the board is to be filled
      */
-    public boolean emptyBoard(){
+    protected boolean emptyBoard(){
 
         //check if there is only tiles with no adjacent tiles
         for(int i =0; i<9; i++){
@@ -228,7 +225,7 @@ public class Board {
      * @param j column
      * @return if a tile in (i,j) position in the board is a single tile
      * */
-    public boolean singleTile(int i, int j){
+    protected boolean singleTile(int i, int j){
         //check if a tiles has no adjacent tile
         if(i!=0&&i!=8&&j!=0&&j!=8){
             return  (board[i - 1][j] == Tile.NOTAVAILABLE ||
@@ -309,7 +306,7 @@ public class Board {
      * @param j column
      * @return if the tile in (i, j) position is catchable
      */
-    public boolean okTile(int i, int j){
+    protected boolean okTile(int i, int j){
         //check if tiles have at least one side free and then are catchable
         if(board[i][j]== Tile.NOTAVAILABLE||board[i][j]==Tile.EMPTY) return false;
         if(i==0||i==8||j==0||j==8)  return true;
@@ -358,7 +355,7 @@ public class Board {
      */
     public List<Tile> subTiles(int i1, int j1, int i2, int j2, Bookshelf shelf) throws NotAvailableTiles, NotEnoughSpace, NotInLine {
         //catch two tiles
-        List<Tile> temp = new ArrayList<Tile>();
+        List<Tile> temp = new ArrayList<>();
         if(!catchableTiles[i1][j1]||!catchableTiles[i2][j2]){
             throw new NotAvailableTiles();
         } else if(shelf.maxShelfSpace()<2){
@@ -382,7 +379,7 @@ public class Board {
      * @param j2 column second tile
      * @return true if the move is allowed
      */
-    public boolean inLine(int i1, int j1, int i2, int j2){
+    protected boolean inLine(int i1, int j1, int i2, int j2){
         //check if two tiles are adjacent
         return (i1==i2 && (j1==j2-1||j1==j2+1)) ||
                 (j1 == j2 && (i1 == i2 - 1 || i1 == i2 + 1));
@@ -432,7 +429,7 @@ public class Board {
      * @param j3 column third tile
      * @return true if the move is allowed
      */
-    public boolean inLine(int i1, int j1, int i2, int j2, int i3, int j3){
+    protected boolean inLine(int i1, int j1, int i2, int j2, int i3, int j3){
         //check if three tiles ar adjacent and in line
         return (i1==i2&&i2==i3&&(j1==j2-1&&j2==j3-1)) ||
                 (i1==i2&&i2==i3&&(j3==j1-1&&j1==j2-1)) ||
@@ -453,7 +450,7 @@ public class Board {
      *
      * @return number of empty tiles
      */
-    public int getEmptyTilesNum(){
+    protected int getEmptyTilesNum(){
         //return number of empty tiles in the board
         int num=0;
         for(int i=0; i<9; i++){
@@ -476,14 +473,14 @@ public class Board {
      *
      * @return the number of player of the current game
      */
-    public int getnPlayers() {
+    protected int getNPlayers() {
         return nPlayers;
     }
 
     /**
      * set the common goal cards
      */
-    public void setCommonGoalCard() {
+    private void setCommonGoalCard() {
         commonGoalCard1=deck.getRandCGC();
         commonGoalCard2=deck.getRandCGC();
     }
@@ -516,7 +513,7 @@ public class Board {
     /**
      * set EOG true if the EOG token is assigned
      */
-    public void setEOG() {
+    protected void setEOG() {
         this.EOG = true;
     }
 
@@ -526,7 +523,7 @@ public class Board {
      *
      * @param nPlayers number of player of the current game
      */
-    public void setnPlayers(int nPlayers) {
+    private void setNPlayers(int nPlayers) {
         this.nPlayers = nPlayers;
     }
 
@@ -536,7 +533,7 @@ public class Board {
      * @param j column
      * @param tile tile type
      */
-    public void setTile(int i, int j, Tile tile){
+    protected void setTile(int i, int j, Tile tile){
         if(board[i][j]!=Tile.NOTAVAILABLE){
             board[i][j]= tile;
         }
