@@ -358,4 +358,7 @@ public class Bookshelf {
     }
 
 
+    public static Board getBoard() {
+        return board;
+    }
 }

@@ -111,7 +111,6 @@ public class Board {
 
         updateBoard();
         setCommonGoalCard();
-
     }
 
     /**
@@ -169,10 +168,8 @@ public class Board {
                             if (tempNum != bag.getTilesNum()) break;
                         }
                     }
-
                 }
             }
-
         }
     }
 
@@ -329,7 +326,7 @@ public class Board {
      * @return list of tile taken
      * @throws NotAvailableTiles the tile is not catchable
      */
-    public List<Tile> subTiles(int i1, int j1) throws NotAvailableTiles {
+    public List<Tile> subTiles(Integer i1, Integer j1) throws NotAvailableTiles {
         //catch one tiles
         List<Tile> temp = new ArrayList<>();
         if(!catchableTiles[i1][j1]){
@@ -354,7 +351,7 @@ public class Board {
      * @throws NotEnoughSpace the player has no enough space in his bookshelf for 2 tiles
      * @throws NotInLine the tiles are not in line
      */
-    public List<Tile> subTiles(int i1, int j1, int i2, int j2, Bookshelf shelf) throws NotAvailableTiles, NotEnoughSpace, NotInLine {
+    public List<Tile> subTiles(Integer i1, Integer j1, Integer i2, Integer j2, Bookshelf shelf) throws NotAvailableTiles, NotEnoughSpace, NotInLine {
         //catch two tiles
         List<Tile> temp = new ArrayList<>();
         if(!catchableTiles[i1][j1]||!catchableTiles[i2][j2]){
@@ -400,7 +397,7 @@ public class Board {
      * @throws NotEnoughSpace the player has no enough space in his bookshelf for 3 tiles
      * @throws NotInLine the tiles are not in line
      */
-    public List<Tile> subTiles(int i1, int j1, int i2, int j2, int i3, int j3, Bookshelf shelf) throws NotAvailableTiles, NotEnoughSpace, NotInLine {
+    public List<Tile> subTiles(Integer i1, Integer j1, Integer i2, Integer j2, Integer i3, Integer j3, Bookshelf shelf) throws NotAvailableTiles, NotEnoughSpace, NotInLine {
         //catch 3 tiles
         List<Tile> temp = new ArrayList<>();
         if(!catchableTiles[i1][j1]||!catchableTiles[i2][j2]||!catchableTiles[i3][j3]){
