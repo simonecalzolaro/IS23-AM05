@@ -111,6 +111,7 @@ public class Board {
 
         updateBoard();
         setCommonGoalCard();
+
     }
 
     /**
@@ -481,6 +482,7 @@ public class Board {
      * set the common goal cards
      */
     private void setCommonGoalCard() {
+
         commonGoalCard1=deck.getRandCGC();
         commonGoalCard2=deck.getRandCGC();
     }

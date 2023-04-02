@@ -2,6 +2,9 @@ package controller;
 
 import model.Board;
 import model.Bookshelf;
+import model.Tile;
+
+import java.util.List;
 
 public class ControlPlayer {
 

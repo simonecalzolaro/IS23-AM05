@@ -61,15 +61,18 @@ public class DeckCards{
     public CommonGoalCard getRandCGC(){
 
         int cardNumb;
-        Random random = new Random();
-
         do{
-            cardNumb= random.nextInt() % deckCGCsize;
+            cardNumb= RandomInt(1,12);
+
         }while(cgcAlreadyReturned.contains(cardNumb));
 
         cgcAlreadyReturned.add(cardNumb);
 
         return new CommonGoalCard(cardNumb, this.nPlayers );
+    }
+
+    private int RandomInt(int min, int max){
+        return (int) (Math.floor(Math.random() * ( max - min + 1 ) ) + min);
     }
 
     /**
