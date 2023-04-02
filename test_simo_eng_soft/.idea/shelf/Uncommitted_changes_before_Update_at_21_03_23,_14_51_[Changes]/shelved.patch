@@ -1,0 +1,17 @@
+Index: src/main/java/model/Bookshelf.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/model/Bookshelf.java b/src/main/java/model/Bookshelf.java
+--- a/src/main/java/model/Bookshelf.java	
++++ b/src/main/java/model/Bookshelf.java	
+@@ -300,7 +300,7 @@
+      * @return return the point scored by completing personal goal card goal
+      */
+     public int getScorePGC(){
+-        pgc.updateScore(shelf);
++        ;
+         return pgc.getScore();
+ 
+     }
