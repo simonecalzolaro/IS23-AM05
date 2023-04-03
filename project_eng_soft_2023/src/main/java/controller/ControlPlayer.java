@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 
+import java.nio.channels.NotYetConnectedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,20 +12,47 @@ public class ControlPlayer {
 
     private PlayerStatus playerStatus;
 
-    final private Bookshelf bookshelf;
+    private Bookshelf bookshelf;
+
+    private int score;
 
 
 
     public ControlPlayer(Board board, int playerID) {
-        bookshelf=new Bookshelf(board);
+
         this.playerID=playerID;
+        score = 0;
+        playerStatus = PlayerStatus.NOT_MY_TURN;
+    }
+
+    public void insertTiles(ArrayList<Tile> stream_tiles, int column) throws NotMyTurn, NotConnectedException {
+
+        if(playerStatus == PlayerStatus.NOT_MY_TURN){
+            throw new NotMyTurn();
+        }
+        else if(playerStatus == PlayerStatus.NOT_ONLINE){
+            throw new NotConnectedException();
+        }
+        else{
+            bookshelf.putTiles(stream_tiles,column);
+            updateScore();
+        }
+
+
+    }
+
+    private void updateScore(){
+        score = bookshelf.getMyScore();
     }
 
 
-    public List<Tile> catchTile(List<Integer> coord) throws InvalidParameters, NotAvailableTiles, NotEnoughSpace, NotInLine, NotMyTurn {
+    public List<Tile> catchTile(List<Integer> coord) throws InvalidParameters, NotAvailableTiles, NotEnoughSpace, NotInLine, NotMyTurn, NotConnectedException {
         List<Tile> temp= new ArrayList<>();
         if(playerStatus==PlayerStatus.NOT_MY_TURN) {
             throw new NotMyTurn();
+        }
+        if(playerStatus == PlayerStatus.NOT_ONLINE){
+            throw new NotConnectedException();
         }
         if(coord.size()!=2&&coord.size()!=4&&coord.size()!=6) {
              throw new InvalidParameters();
@@ -49,6 +77,12 @@ public class ControlPlayer {
     public void setPlayerStatus(PlayerStatus playerStatus) {
         this.playerStatus = playerStatus;
     }
+
+    public void setBookshelf(Board board){
+        bookshelf = new Bookshelf(board);
+    }
+
+
 
 
 }

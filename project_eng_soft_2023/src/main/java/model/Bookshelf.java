@@ -14,8 +14,8 @@ public class Bookshelf {
     /**
      * dimension of the shelf's matrix
      */
-    private int r= 6; //rows
-    private int c = 5; //columns
+    private final int r= 6; //rows
+    private final int c = 5; //columns
 
     /**
      * represents the PersonalGoalCard assigned at the beginning of the game

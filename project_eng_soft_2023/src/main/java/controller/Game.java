@@ -18,7 +18,7 @@ public class Game {
 
     private final Board board;
 
-    public Game( List<ControlPlayer> players) {
+    public Game(List<ControlPlayer> players) {
         this.gameID = counterID;
         counterID++;
         this.board = new Board();
@@ -39,6 +39,7 @@ public class Game {
     }
 
 
+
     public void endTurn(){
         board.updateBoard();
         players.get(currPlayer).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
@@ -57,6 +58,7 @@ public class Game {
 
         if(gameStatus!=GameStatus.END_GAME) players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
     }
+
     public int getGameID() {
         return gameID;
     }
@@ -65,12 +67,22 @@ public class Game {
         return players;
     }
 
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+
+
     public int getCurrPlayer() {
         return currPlayer;
     }
 
-    public void addPlayer(ControlPlayer player) {
+    public void addPlayer(ControlPlayer player){
+        player.setBookshelf(board);
+        players.add(player);
+
     }
+
 
     public Board getBoard() {
         return board;
