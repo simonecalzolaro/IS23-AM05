@@ -44,6 +44,7 @@ public class Game {
         players.get(currPlayer).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
         if (currPlayer<players.size()-1){
             currPlayer++;
+            players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
         }
         else if (board.getEOG()){
                 gameStatus=GameStatus.END_GAME;
