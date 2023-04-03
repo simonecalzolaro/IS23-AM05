@@ -21,9 +21,12 @@ public class ControlPlayer {
     }
 
 
-    public List<Tile> catchTile(List<Integer> coord) throws InvalidParameters, NotAvailableTiles, NotEnoughSpace, NotInLine {
+    public List<Tile> catchTile(List<Integer> coord) throws InvalidParameters, NotAvailableTiles, NotEnoughSpace, NotInLine, NotMyTurn {
         List<Tile> temp= new ArrayList<>();
-         if(coord.size()!=2&&coord.size()!=4&&coord.size()!=6) {
+        if(playerStatus==PlayerStatus.NOT_MY_TURN) {
+            throw new NotMyTurn();
+        }
+        if(coord.size()!=2&&coord.size()!=4&&coord.size()!=6) {
              throw new InvalidParameters();
          }
         else if (coord.size()==2) return bookshelf.getBoard().subTiles(coord.get(0), coord.get(1));

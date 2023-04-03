@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="Deck debug">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/InvalidParameters.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/Main.java" afterDir="false" />
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="catch tile">
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/NotMyTurn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,6 +180,9 @@
       <workItem from="1679471720159" duration="2533000" />
       <workItem from="1680120955743" duration="2377000" />
       <workItem from="1680184224372" duration="27000" />
+      <workItem from="1680499023195" duration="1213000" />
+      <workItem from="1680515742616" duration="75000" />
+      <workItem from="1680523878056" duration="1809000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
@@ -211,7 +212,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680424729870</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="catch tile">
+      <created>1680454857282</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1680454857282</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,7 +242,8 @@
     <MESSAGE value="tested all 12 CGC and fixed some bugs" />
     <MESSAGE value="Board update" />
     <MESSAGE value="Deck debug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deck debug" />
+    <MESSAGE value="catch tile" />
+    <option name="LAST_COMMIT_MESSAGE" value="catch tile" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

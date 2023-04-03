@@ -262,7 +262,6 @@ public class Board {
                     (board[i][j - 1] == Tile.NOTAVAILABLE ||
                             board[i][j - 1] == Tile.EMPTY);
         }
-
         if(i==0){
             return (board[i + 1][j] == Tile.NOTAVAILABLE ||
                     board[i + 1][j] == Tile.EMPTY) &&

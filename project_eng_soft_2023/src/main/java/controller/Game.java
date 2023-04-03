@@ -3,6 +3,7 @@ package controller;
 import model.Board;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
 
@@ -13,28 +14,47 @@ public class Game {
 
     private GameStatus gameStatus;
 
-    private ControlPlayer currPlayer;
+    private int currPlayer;
 
     private final Board board;
 
-    public Game( int numOfPlayer) {
+    public Game( List<ControlPlayer> players) {
         this.gameID = counterID;
         counterID++;
         this.board = new Board();
-        board.initializeBoard(numOfPlayer);
-        gameStatus=GameStatus.WAIT_PLAYERS;
+        board.initializeBoard(players.size());
+        for(int i=0; i<players.size(); i++){
+            addPlayer(players.get(i));
+        }
+
     }
 
     public void startGame(){
-        currPlayer=players.get(0); //si potrebbe anche fare con int
-        currPlayer.setPlayerStatus(PlayerStatus.MY_TURN);
-        for (int i =1; i<players.size(); i++){
+        currPlayer=0;
+        players.get(0).setPlayerStatus(PlayerStatus.MY_TURN);
+        for (int i=1; i<players.size(); i++){
             players.get(i).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
         }
         gameStatus=GameStatus.PLAYING;
-
     }
 
+
+    public void endTurn(){
+        board.updateBoard();
+        players.get(currPlayer).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
+        if (currPlayer<players.size()-1){
+            currPlayer++;
+        }
+        else if (board.getEOG()){
+                gameStatus=GameStatus.END_GAME;
+
+            }
+            else {
+                currPlayer=0;
+                players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
+        }
+
+    }
     public int getGameID() {
         return gameID;
     }
@@ -43,7 +63,7 @@ public class Game {
         return players;
     }
 
-    public ControlPlayer getCurrPlayer() {
+    public int getCurrPlayer() {
         return currPlayer;
     }
 
