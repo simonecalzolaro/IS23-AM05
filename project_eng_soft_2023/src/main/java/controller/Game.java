@@ -42,19 +42,20 @@ public class Game {
     public void endTurn(){
         board.updateBoard();
         players.get(currPlayer).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
-        if (currPlayer<players.size()-1){
-            currPlayer++;
-            players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
-        }
-        else if (board.getEOG()){
+        do{
+            if (currPlayer<players.size()-1){
+                currPlayer++;
+            }
+            else if (board.getEOG()){
                 gameStatus=GameStatus.END_GAME;
 
             }
             else {
                 currPlayer=0;
-                players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
-        }
+            }
+        } while(gameStatus!=GameStatus.END_GAME&&players.get(currPlayer).getPlayerStatus()==PlayerStatus.NOT_ONLINE);
 
+        if(gameStatus!=GameStatus.END_GAME) players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
     }
     public int getGameID() {
         return gameID;
