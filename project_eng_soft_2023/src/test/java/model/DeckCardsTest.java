@@ -3,25 +3,22 @@ package model;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class DeckCardsTest {
-
-    @Test
-    public void checkDeckCards(){
-        DeckCards deckCards = new DeckCards(4);
-
-        assertEquals(12, deckCards.getDeckCGCsize());
-        assertEquals(12, deckCards.getDeckPGCsize());
-    }
 
     @Test
     public void checkGetRandCGC(){
         DeckCards deckCards = new DeckCards(4);
 
-        CommonGoalCard Cgc = deckCards.getRandCGC();
+        List<CommonGoalCard> CGC = new ArrayList<>();
 
-        for(int i=0; i<deckCards.getDeckCGCsize()-1; i++){
-            assertNotEquals(Cgc, deckCards.getRandCGC());
+        for(int i=0; i<12; i++){
+            CGC.add(deckCards.getRandCGC());
         }
+
+        assertEquals(12,CGC.stream().distinct().count());
 
     }
 
@@ -29,10 +26,13 @@ class DeckCardsTest {
     public void checkGetRandPGC(){
         DeckCards deckCards = new DeckCards(4);
 
-        PersonalGoalCard Pgc = deckCards.getRandPGC();
+        List<PersonalGoalCard> PGC = new ArrayList<>();
 
-        for(int i=0; i<deckCards.getDeckPGCsize(); i++){
-            assertNotEquals(Pgc, deckCards.getRandPGC());
+        for(int i=0; i<12; i++){
+            PGC.add(deckCards.getRandPGC());
         }
+
+        assertEquals(12,PGC.stream().distinct().count());
+
     }
 }

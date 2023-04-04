@@ -133,6 +133,7 @@ public class PersonalGoalCard implements Card{
      * @return true if the PersonalGoalCard goals have been completed
      */
     public boolean checkGoal(Tile[][] shelf){
+        goodShelf(shelf);
         return getScore(shelf) == 12;
     }
 
@@ -157,4 +158,23 @@ public class PersonalGoalCard implements Card{
         if(goal == 6) score=12;
     }
 
+    public void goodShelf(Tile[][] shelf){
+
+        //for each column I check that "EMPTY" tiles are ONLY at the end;
+
+        boolean emptyTilesFound;
+
+        for(int col=0; col< shelf[0].length; col++){//columns
+
+            emptyTilesFound=false;
+
+            for(int row=0; row< shelf.length; row++){//columns
+
+                if (shelf[row][col].equals(Tile.EMPTY)) emptyTilesFound=true ;
+                else{
+                    if ( emptyTilesFound ) throw new IllegalArgumentException(" The shelf is not filled properly ");;
+                }
+            }
+        }
+    }
 }

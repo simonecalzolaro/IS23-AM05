@@ -11,11 +11,13 @@ class PersonalGoalCardTest {
     public void checkPGC1(){
         PersonalGoalCard personalGoalCard = new PersonalGoalCard(1);
 
-        Tile[][] matr = new Tile[6][5];
+        Tile[][] matr = {{Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE},
+                        {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.LIGHTBLUE},
+                        {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.PINK},
+                        {Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE},
+                        {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.LIGHTBLUE},
+                        {Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE}};
 
-        for (Tile[] tiles : matr) {
-            Arrays.fill(tiles, Tile.EMPTY);
-        }
 
         matr[4][4] = Tile.GREEN;
         matr[5][2] = Tile.BLUE;
@@ -23,6 +25,7 @@ class PersonalGoalCardTest {
         matr[5][0] = Tile.PINK;
         matr[2][1] = Tile.YELLOW;
         matr[0][2] = Tile.LIGHTBLUE;
+
 
         assertEquals(12, personalGoalCard.getScore(matr));
         assertTrue(personalGoalCard.checkGoal(matr));
@@ -33,11 +36,12 @@ class PersonalGoalCardTest {
     public void checkPGC1_2(){
         PersonalGoalCard personalGoalCard = new PersonalGoalCard(1);
 
-        Tile[][] matr = new Tile[6][5];
-
-        for (Tile[] tiles : matr) {
-            Arrays.fill(tiles, Tile.EMPTY);
-        }
+        Tile[][] matr = {{Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.LIGHTBLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.PINK},
+                {Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.LIGHTBLUE},
+                {Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE}};
 
         matr[4][4] = Tile.BLUE;
         matr[5][2] = Tile.BLUE;
@@ -54,11 +58,12 @@ class PersonalGoalCardTest {
     public void checkPGC1_3(){
         PersonalGoalCard personalGoalCard = new PersonalGoalCard(1);
 
-        Tile[][] matr = new Tile[6][5];
-
-        for (Tile[] tiles : matr) {
-            Arrays.fill(tiles, Tile.EMPTY);
-        }
+        Tile[][] matr = {{Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.LIGHTBLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.PINK},
+                {Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.LIGHTBLUE},
+                {Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE}};
 
         matr[4][4] = Tile.BLUE;
         matr[5][2] = Tile.BLUE;
@@ -75,11 +80,12 @@ class PersonalGoalCardTest {
     public void checkPGC1_4(){
         PersonalGoalCard personalGoalCard = new PersonalGoalCard(1);
 
-        Tile[][] matr = new Tile[6][5];
-
-        for (Tile[] tiles : matr) {
-            Arrays.fill(tiles, Tile.EMPTY);
-        }
+        Tile[][] matr = {{Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.LIGHTBLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.PINK},
+                {Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.LIGHTBLUE},
+                {Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE}};
 
         matr[4][4] = Tile.BLUE;
         matr[5][2] = Tile.BLUE;
@@ -96,11 +102,12 @@ class PersonalGoalCardTest {
     public void checkPGC1_5(){
         PersonalGoalCard personalGoalCard = new PersonalGoalCard(1);
 
-        Tile[][] matr = new Tile[6][5];
-
-        for (Tile[] tiles : matr) {
-            Arrays.fill(tiles, Tile.EMPTY);
-        }
+        Tile[][] matr = {{Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.LIGHTBLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.PINK},
+                {Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.LIGHTBLUE},
+                {Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE}};
 
         matr[4][4] = Tile.BLUE;
         matr[5][2] = Tile.BLUE;
@@ -117,11 +124,12 @@ class PersonalGoalCardTest {
     public void checkPGC1_6(){
         PersonalGoalCard personalGoalCard = new PersonalGoalCard(1);
 
-        Tile[][] matr = new Tile[6][5];
-
-        for (Tile[] tiles : matr) {
-            Arrays.fill(tiles, Tile.EMPTY);
-        }
+        Tile[][] matr = {{Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.LIGHTBLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.PINK},
+                {Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE},
+                {Tile.BLUE, Tile.PINK, Tile.GREEN, Tile.WHITE, Tile.LIGHTBLUE},
+                {Tile.PINK, Tile.BLUE, Tile.BLUE, Tile.GREEN, Tile.BLUE}};
 
         matr[4][4] = Tile.BLUE;
         matr[5][2] = Tile.BLUE;
