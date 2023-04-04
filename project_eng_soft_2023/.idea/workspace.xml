@@ -4,10 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="catch tile">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/NotMyTurn.java" afterDir="false" />
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="Update Controller Implementation">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_04_23__22_36__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_04_23__22_36__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_03_04_23__14_59__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_03_04_23__14_59__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/InvalidParameters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/InvalidParametersException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/NotMyTurn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/NotMyTurnException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/NotAvailableTiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/NotAvailableTilesException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/NotEnoughSpace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/NotEnoughSpaceException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/NotInLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/NotInLineException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +34,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -180,7 +188,7 @@
       <workItem from="1680184224372" duration="27000" />
       <workItem from="1680499023195" duration="1213000" />
       <workItem from="1680515742616" duration="75000" />
-      <workItem from="1680523878056" duration="1809000" />
+      <workItem from="1680523878056" duration="2608000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
@@ -217,7 +225,21 @@
       <option name="project" value="LOCAL" />
       <updated>1680454857282</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Controller Implementation">
+      <created>1680526688966</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1680526688966</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Controller Implementation">
+      <created>1680526752422</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1680526752422</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,7 +263,8 @@
     <MESSAGE value="Board update" />
     <MESSAGE value="Deck debug" />
     <MESSAGE value="catch tile" />
-    <option name="LAST_COMMIT_MESSAGE" value="catch tile" />
+    <MESSAGE value="Controller Implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Controller Implementation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

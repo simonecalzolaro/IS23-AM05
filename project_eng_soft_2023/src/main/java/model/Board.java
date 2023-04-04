@@ -323,13 +323,13 @@ public class Board {
      * @param i1 row
      * @param j1 column
      * @return list of tile taken
-     * @throws NotAvailableTiles the tile is not catchable
+     * @throws NotAvailableTilesException the tile is not catchable
      */
-    public List<Tile> subTiles(Integer i1, Integer j1) throws NotAvailableTiles {
+    public List<Tile> subTiles(Integer i1, Integer j1) throws NotAvailableTilesException {
         //catch one tiles
         List<Tile> temp = new ArrayList<>();
         if(!catchableTiles[i1][j1]){
-            throw new NotAvailableTiles();
+            throw new NotAvailableTilesException();
         } else {
             temp.add(board[i1][j1]);
             board[i1][j1]=Tile.EMPTY;
@@ -346,19 +346,19 @@ public class Board {
      * @param j2 column second tile
      * @param shelf bookshelf of the player
      * @return list of the tiles taken
-     * @throws NotAvailableTiles one or more tiles are not catchable
-     * @throws NotEnoughSpace the player has no enough space in his bookshelf for 2 tiles
-     * @throws NotInLine the tiles are not in line
+     * @throws NotAvailableTilesException one or more tiles are not catchable
+     * @throws NotEnoughSpaceException the player has no enough space in his bookshelf for 2 tiles
+     * @throws NotInLineException the tiles are not in line
      */
-    public List<Tile> subTiles(Integer i1, Integer j1, Integer i2, Integer j2, Bookshelf shelf) throws NotAvailableTiles, NotEnoughSpace, NotInLine {
+    public List<Tile> subTiles(Integer i1, Integer j1, Integer i2, Integer j2, Bookshelf shelf) throws NotAvailableTilesException, NotEnoughSpaceException, NotInLineException {
         //catch two tiles
         List<Tile> temp = new ArrayList<>();
         if(!catchableTiles[i1][j1]||!catchableTiles[i2][j2]){
-            throw new NotAvailableTiles();
+            throw new NotAvailableTilesException();
         } else if(shelf.maxShelfSpace()<2){
-            throw new NotEnoughSpace();
+            throw new NotEnoughSpaceException();
         } else if(!inLine(i1,j1,i2,j2)){
-            throw new NotInLine();
+            throw new NotInLineException();
         } else {
             temp.add(board[i1][j1]);
             board[i1][j1]=Tile.EMPTY;
@@ -392,19 +392,19 @@ public class Board {
      * @param j3 column third tile
      * @param shelf bookshelf of the player
      * @return list of the tiles taken
-     * @throws NotAvailableTiles one or more tiles are not catchable
-     * @throws NotEnoughSpace the player has no enough space in his bookshelf for 3 tiles
-     * @throws NotInLine the tiles are not in line
+     * @throws NotAvailableTilesException one or more tiles are not catchable
+     * @throws NotEnoughSpaceException the player has no enough space in his bookshelf for 3 tiles
+     * @throws NotInLineException the tiles are not in line
      */
-    public List<Tile> subTiles(Integer i1, Integer j1, Integer i2, Integer j2, Integer i3, Integer j3, Bookshelf shelf) throws NotAvailableTiles, NotEnoughSpace, NotInLine {
+    public List<Tile> subTiles(Integer i1, Integer j1, Integer i2, Integer j2, Integer i3, Integer j3, Bookshelf shelf) throws NotAvailableTilesException, NotEnoughSpaceException, NotInLineException {
         //catch 3 tiles
         List<Tile> temp = new ArrayList<>();
         if(!catchableTiles[i1][j1]||!catchableTiles[i2][j2]||!catchableTiles[i3][j3]){
-            throw new NotAvailableTiles();
+            throw new NotAvailableTilesException();
         } else if(shelf.maxShelfSpace()<3){
-            throw new NotEnoughSpace();
+            throw new NotEnoughSpaceException();
         } else if(!inLine(i1,j1,i2,j2,i3,j3)) {
-            throw new NotInLine();
+            throw new NotInLineException();
         } else{
             temp.add(board[i1][j1]);
             board[i1][j1]=Tile.EMPTY;

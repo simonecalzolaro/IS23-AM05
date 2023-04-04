@@ -183,7 +183,7 @@ public class BoardTest  {
     }
 
     @Test
-    public void testSubTiles() throws NotAvailableTiles, NotEnoughSpace, NotInLine {
+    public void testSubTiles() throws NotAvailableTilesException, NotEnoughSpaceException, NotInLineException {
         board = new Board();
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);

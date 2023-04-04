@@ -7,42 +7,81 @@ import java.util.List;
 
 public class Game {
 
+    /**
+     * Unique Game ID
+     */
     private final int gameID;
 
+    /**
+     * Created game counter
+     */
     private static int counterID=1;
+
+    /**
+     * Sorted list of player
+     */
     private ArrayList<ControlPlayer> players;
 
+    /**
+     * Game status (PLAYING, END_GAME)
+     */
     private GameStatus gameStatus;
 
+    /**
+     * Index of the player who is in his turn to play
+     */
     private int currPlayer;
 
+    /**
+     * Game Board
+     */
     private final Board board;
 
+    /**
+     * Assign GameID and increase game count
+     * Create the game board and initialize it
+     * Add the player to the game
+     * Invoke startGame
+     * @param players list of the player joining the game
+     */
     public Game(List<ControlPlayer> players) {
         this.gameID = counterID;
         counterID++;
         this.board = new Board();
         board.initializeBoard(players.size());
-        for(int i=0; i<players.size(); i++){
-            addPlayer(players.get(i));
+        for (ControlPlayer player : players) {
+            addPlayer(player);
         }
-
+        startGame();
     }
 
+    /**
+     * Set the first connected player as the currPlayer and his status as MY_TURN
+     * Set the Game Status as PLAYING
+     */
     public void startGame(){
         currPlayer=0;
-        players.get(0).setPlayerStatus(PlayerStatus.MY_TURN);
-        for (int i=1; i<players.size(); i++){
-            players.get(i).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
+        while (players.get(currPlayer).getPlayerStatus()==PlayerStatus.NOT_ONLINE) {
+            if(currPlayer==players.size()-1){
+                currPlayer=0;
+            } else {
+                currPlayer++;
+            }
         }
+        players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
         gameStatus=GameStatus.PLAYING;
     }
 
-
-
+    /**
+     * Fill the board if necessary
+     * Set the currPlayer status as NOT_MY_TURN (if still connected)
+     * set the currPlayer on the next connected player
+     * If the currPlayer were the last of the player list, check if the game is over
+     * If the game is not over yet set the currPlayer status as MY_TURN
+     */
     public void endTurn(){
         board.updateBoard();
-        players.get(currPlayer).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
+        if(players.get(currPlayer).getPlayerStatus()!=PlayerStatus.NOT_ONLINE) players.get(currPlayer).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
         do{
             if (currPlayer<players.size()-1){
                 currPlayer++;
@@ -59,30 +98,52 @@ public class Game {
         if(gameStatus!=GameStatus.END_GAME) players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
     }
 
+    /**
+     *
+     * @return gameID
+     */
     public int getGameID() {
         return gameID;
     }
 
+    /**
+     *
+     * @return list of players
+     */
     public ArrayList<ControlPlayer> getPlayers() {
         return players;
     }
 
+    /**
+     *
+     * @return gameStatus
+     */
     public GameStatus getGameStatus() {
         return gameStatus;
     }
 
-
+    /**
+     *
+     * @return currPlayer index
+     */
 
     public int getCurrPlayer() {
         return currPlayer;
     }
 
-    public void addPlayer(ControlPlayer player){
+    /**
+     * set the player bookshelf
+     * @param player to be added to the game
+     */
+    public void addPlayer(ControlPlayer player) {
         player.setBookshelf(board);
         players.add(player);
-
     }
 
+    /**
+     *
+     * @return game board
+     */
 
     public Board getBoard() {
         return board;
