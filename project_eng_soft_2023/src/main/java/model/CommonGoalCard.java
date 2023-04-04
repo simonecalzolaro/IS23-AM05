@@ -72,40 +72,15 @@ public class CommonGoalCard implements Card{
              * Different columns may have different combinations of tile's types.
              */
             case 5:
-                return maxDiffTyles(3, 3, true, shelf);
+                return maxDiffTiles(3, 3, true, shelf);
 
             /**
              * Common Goal card n 6
              * Goal: Eight tiles of the same type.
              * There are no restrictions on the location of these tiles.
              */
-            case 6:{
-                ArrayList<Tile> tiles = new ArrayList<Tile>();
-                tiles.add(Tile.BLUE);
-                tiles.add(Tile.PINK);
-                tiles.add(Tile.LIGHTBLUE);
-                tiles.add(Tile.GREEN);
-                tiles.add(Tile.YELLOW);
-                tiles.add(Tile.WHITE);
-
-                ArrayList<Tile> allTiles = new ArrayList<>();
-
-                //collecting all the tiles in a single ArrayList
-                for (int row = 0; row < shelf.length; row++) {
-                    for (int col = 0; col < shelf[0].length; col++) {
-                        if (!shelf[row][col].equals(Tile.EMPTY)) allTiles.add(shelf[row][col]);
-                    }
-                }
-
-                //checking ho many elements ar present for each type of tile
-                for (Tile t : tiles) {
-
-                    if (allTiles.stream().filter(x -> x.equals(t)).count() == 8) return true;
-
-                }
-
-                return false;
-            }
+            case 6:
+                return check_CGC6(shelf);
 
             /**
              * Common Goal card n 7
@@ -120,70 +95,35 @@ public class CommonGoalCard implements Card{
              * Different lines may have different combinations of tile types.
              */
             case 8:
-                return maxDiffTyles(4, 3, false, shelf);
+                return maxDiffTiles(4, 3, false, shelf);
 
             /**
              * Common Goal card n
              * Goal: two columns each formed by 6 different type of tile
              */
             case 9:
-                return allDiffTyles(2, true, shelf);
+                return allDiffTiles(2, true, shelf);
 
             /**
              * Common Goal card n 10
              * Goal: Two rows each formed by 5 different type of tile
              */
             case 10:
-                return allDiffTyles(2, false, shelf);
+                return allDiffTiles(2, false, shelf);
 
             /**
              * Common Goal card n 11
              * Goal: Five identical tiles forming an X shape
              */
             case 11:
-                return checkShape(this.CGCnumber, shelf);
+                return checkShape( this.CGCnumber, shelf );
 
             /**
              * Common Goal card n 12
              * Goal: five columns in ascendant or descendent order with a difference of height of max one tile
              */
-            case 12:{
-
-                ArrayList<Integer> nTiles= new ArrayList<>();
-                int nTileCol, min=10, max=0;
-
-
-                for(int col=0; col < shelf[0].length ; col++){
-                    nTileCol=0;
-                    for(int row=0; row < shelf.length; row++){
-                        if(shelf[row][col].equals(Tile.EMPTY)) break;
-                        else nTileCol++;
-                    }
-                    if(nTileCol > max) max=nTileCol;
-                    if(nTileCol < min) min=nTileCol;
-
-                    nTiles.add(nTileCol);
-                }
-
-                if(max==0 || min==0 ) return false;
-
-
-
-                if( ( (   nTiles.stream().sorted().collect(Collectors.toList()).equals(nTiles.stream().collect(Collectors.toList()))
-                        && nTiles.stream().findFirst().orElse(-1)==min
-                        && nTiles.stream().reduce((first, second) -> second).orElse(-1)==max ) //ascending order
-                        ||
-                        (   nTiles.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()).equals(nTiles.stream().collect(Collectors.toList()))
-                                && nTiles.stream().findFirst().orElse(-1)==max
-                                && nTiles.stream().reduce((first, second) -> second).orElse(-1)==min ) //descending order
-                )
-                        && nTiles.stream().distinct().count() == shelf[0].length //no columns of the same height
-                        && shelf[0].length==max-min+1
-
-                ) return true;
-
-                return false;
-            }
+            case 12:
+                return check_CGC12( shelf );
 
         }
 
@@ -211,7 +151,7 @@ public class CommonGoalCard implements Card{
      * check if the shelf is correctly filled, it means that is impossible to have "floating" Tiles
      * @param shelf
      */
-    protected void goodShelf(Tile[][] shelf){
+    protected static void goodShelf(Tile[][] shelf){
 
         //for each column I check that "EMPTY" tiles are ONLY at the end;
 
@@ -238,7 +178,7 @@ public class CommonGoalCard implements Card{
      * @param shelf is the shelf to check
      * @return true if the goals set by the parameters are achieved
      */
-    protected boolean checkGroups(int nubOfGroups, int elemPerGroup, Tile[][] shelf ){
+    protected static boolean checkGroups(int nubOfGroups, int elemPerGroup, Tile[][] shelf ){
 
         boolean [][] visited;
         boolean [][] booleShelf;
@@ -300,7 +240,7 @@ public class CommonGoalCard implements Card{
      * @param nElem number of elements founded
      * @return the number of elements in a group
      */
-    private int countElem(int row, int col, int nElem, boolean[][] booleShelf, boolean[][] visited){
+    private static int countElem(int row, int col, int nElem, boolean[][] booleShelf, boolean[][] visited){
 
         if(booleShelf[row][col] && !visited[row][col]) {
 
@@ -339,7 +279,7 @@ public class CommonGoalCard implements Card{
      * @param shelf shelf of tiles
      * @return true in the shape has been found
      */
-    private boolean checkShape(int nShape, Tile[][] shelf ){
+    private static boolean checkShape(int nShape, Tile[][] shelf ){
 
         switch(nShape){
 
@@ -481,7 +421,7 @@ public class CommonGoalCard implements Card{
      * @param shelf the shelf[][] of tiles
      * @return true if the request is satisfied
      */
-    private boolean maxDiffTyles(int totNumbOfLines, int maxNumbOfDiffTypes, boolean verticalLine, Tile[][] shelf ){
+    private static boolean maxDiffTiles(int totNumbOfLines, int maxNumbOfDiffTypes, boolean verticalLine, Tile[][] shelf ){
 
         int numRow;
         int numCol;
@@ -526,7 +466,7 @@ public class CommonGoalCard implements Card{
      * @param shelf the shelf[][] of tiles
      * @return true if the request is satisfied
      */
-    private boolean allDiffTyles(int totNumbOfLines, boolean verticalLine, Tile[][] shelf){
+    private static boolean allDiffTiles(int totNumbOfLines, boolean verticalLine, Tile[][] shelf){
 
         int numRow;
         int numCol;
@@ -562,4 +502,82 @@ public class CommonGoalCard implements Card{
     }
 
 
+    /**
+     * verify the common goal card number 6
+     * @param shelf
+     * @return true if the request is satisfied
+     */
+    private static boolean check_CGC6(Tile[][] shelf){
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
+        tiles.add(Tile.BLUE);
+        tiles.add(Tile.PINK);
+        tiles.add(Tile.LIGHTBLUE);
+        tiles.add(Tile.GREEN);
+        tiles.add(Tile.YELLOW);
+        tiles.add(Tile.WHITE);
+
+        ArrayList<Tile> allTiles = new ArrayList<>();
+
+        //collecting all the tiles in a single ArrayList
+        for (int row = 0; row < shelf.length; row++) {
+            for (int col = 0; col < shelf[0].length; col++) {
+                if (!shelf[row][col].equals(Tile.EMPTY)) allTiles.add(shelf[row][col]);
+            }
+        }
+
+        //checking ho many elements ar present for each type of tile
+        for (Tile t : tiles) {
+
+            if (allTiles.stream().filter(x -> x.equals(t)).count() == 8) return true;
+
+        }
+
+        return false;
+    }
+
+
+    /**
+     * verify the common goal card number 12
+     * @param shelf
+     * @return true if the request is satisfied
+     */
+    private static boolean check_CGC12(Tile[][] shelf){
+        {
+
+            ArrayList<Integer> nTiles= new ArrayList<>();
+            int nTileCol, min=10, max=0;
+
+
+            for(int col=0; col < shelf[0].length ; col++){
+                nTileCol=0;
+                for(int row=0; row < shelf.length; row++){
+                    if(shelf[row][col].equals(Tile.EMPTY)) break;
+                    else nTileCol++;
+                }
+                if(nTileCol > max) max=nTileCol;
+                if(nTileCol < min) min=nTileCol;
+
+                nTiles.add(nTileCol);
+            }
+
+            if(max==0 || min==0 ) return false;
+
+
+
+            if( ( (   nTiles.stream().sorted().collect(Collectors.toList()).equals(nTiles.stream().collect(Collectors.toList()))
+                    && nTiles.stream().findFirst().orElse(-1)==min
+                    && nTiles.stream().reduce((first, second) -> second).orElse(-1)==max ) //ascending order
+                    ||
+                    (   nTiles.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()).equals(nTiles.stream().collect(Collectors.toList()))
+                            && nTiles.stream().findFirst().orElse(-1)==max
+                            && nTiles.stream().reduce((first, second) -> second).orElse(-1)==min ) //descending order
+                )
+                    && nTiles.stream().distinct().count() == shelf[0].length //no columns of the same height
+                    && shelf[0].length==max-min+1
+
+            ) return true;
+
+            return false;
+        }
+    }
 }

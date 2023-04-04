@@ -44,14 +44,17 @@ public class Game {
      * Invoke startGame
      * @param players list of the player joining the game
      */
-    public Game(List<ControlPlayer> players) {
+    public Game(List<ControlPlayer> players, Board board) {
+
         this.gameID = counterID;
         counterID++;
-        this.board = new Board();
+
+        this.board = board;
+
         board.initializeBoard(players.size());
-        for (ControlPlayer player : players) {
-            addPlayer(player);
-        }
+        this.players = new ArrayList<>();
+        (this.players).addAll(players);
+
         startGame();
     }
 
@@ -131,14 +134,6 @@ public class Game {
         return currPlayer;
     }
 
-    /**
-     * set the player bookshelf
-     * @param player to be added to the game
-     */
-    public void addPlayer(ControlPlayer player) {
-        player.setBookshelf(board);
-        players.add(player);
-    }
 
     /**
      *

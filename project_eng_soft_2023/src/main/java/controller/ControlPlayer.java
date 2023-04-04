@@ -2,7 +2,6 @@ package controller;
 
 import model.*;
 
-import java.nio.channels.NotYetConnectedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,7 @@ public class ControlPlayer {
     /**
      *Player id
      */
-    private final int playerID;
+    private final String nickname;
 
     /**
      * player status
@@ -22,7 +21,7 @@ public class ControlPlayer {
     /**
      * player bookshelf
      */
-    private Bookshelf bookshelf;
+    private final Bookshelf bookshelf;
 
     /**
      * player score
@@ -32,14 +31,15 @@ public class ControlPlayer {
 
     /**
      * Assign player id
-     * Inizialize score
+     * Initialize score
      * Set player status as NOT_MY_TURN
-     * @param playerID: unique player id
+     * @param nickname: unique player nickname
+     * @param board: unique board
      */
+    public ControlPlayer(String nickname, Board board) {
 
-    public ControlPlayer(int playerID) {
-
-        this.playerID=playerID;
+        this.nickname=nickname;
+        bookshelf = new Bookshelf(board);
         score = 0;
         playerStatus = PlayerStatus.NOT_MY_TURN;
     }
@@ -103,8 +103,8 @@ public class ControlPlayer {
      *
      * @return playerID
      */
-    public int getPlayerID() {
-        return playerID;
+    public String getPlayerNickname() {
+        return nickname;
     }
 
     /**
@@ -133,14 +133,6 @@ public class ControlPlayer {
         this.playerStatus = playerStatus;
     }
 
-    /**
-     *
-     * @param board: game board
-     */
-
-    public void setBookshelf(Board board){
-        bookshelf = new Bookshelf(board);
-    }
 
 
 
