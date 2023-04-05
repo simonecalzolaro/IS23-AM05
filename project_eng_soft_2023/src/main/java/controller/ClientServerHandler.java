@@ -16,11 +16,10 @@ public interface ClientServerHandler extends Remote {
     GameHandler login(String nickname, ClientHandler ch);
 
 
-
     /**
      * a player ask to leave the game he is playing
      * @return true if the request is approved
      */
-    boolean leaveGame();
+    boolean leaveGame(ClientHandler ch);
 
 }

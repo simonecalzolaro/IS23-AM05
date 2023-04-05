@@ -73,7 +73,7 @@ public class ControlPlayer {
 
 
     /**
-     * if everything it's ok, remove the selected tiles frome the board
+     * if everything it's ok, remove the selected tiles from the board
      * @param coord list
      * @return List of catch tiles
      * @throws InvalidParametersException the list of coordinates is not compliant
@@ -84,16 +84,21 @@ public class ControlPlayer {
      * @throws NotConnectedException the player is not connected
      */
     public List<Tile> catchTile(List<Integer> coord) throws InvalidParametersException, NotAvailableTilesException, NotEnoughSpaceException, NotInLineException, NotMyTurnException, NotConnectedException {
+
         List<Tile> temp= new ArrayList<>();
+
         if(playerStatus==PlayerStatus.NOT_MY_TURN) {
             throw new NotMyTurnException();
         }
+
         if(playerStatus == PlayerStatus.NOT_ONLINE){
             throw new NotConnectedException();
         }
-        if(coord.size()!=2&&coord.size()!=4&&coord.size()!=6) {
+
+        if(coord.size()!=2 && coord.size()!=4 && coord.size()!=6) {
              throw new InvalidParametersException();
          }
+
         else if (coord.size()==2) return bookshelf.getBoard().subTiles(coord.get(0), coord.get(1));
         else if (coord.size()==4) return bookshelf.getBoard().subTiles(coord.get(0), coord.get(1), coord.get(2), coord.get(3), bookshelf);
         else return bookshelf.getBoard().subTiles(coord.get(0), coord.get(1), coord.get(2), coord.get(3),coord.get(4), coord.get(5), bookshelf);

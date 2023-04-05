@@ -136,12 +136,26 @@ public class Game {
 
 
     /**
-     *
      * @return game board
      */
 
     public Board getBoard() {
         return board;
+    }
+
+    /**
+     * remove a specific ControlPlayer from the game
+     * @param player to exclude from the game
+     * @return true if the player is present in the game and is correctly deleted
+     */
+    public boolean removePlayer(ControlPlayer player){
+
+        try{
+            return players.remove(player);
+        }catch (Exception e){
+            return false;
+        }
+
     }
 
 

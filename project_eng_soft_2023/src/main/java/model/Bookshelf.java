@@ -154,7 +154,7 @@ public class Bookshelf {
      * @return sum of all the points accumulated by the player during the game
      */
     public int getMyScore(){
-        return getScoreGroups()+ getScorePGC()+getScoreCGC()+getScoreEOG();
+        return getScoreGroups() + getScorePGC() + getScoreCGC() + getScoreEOG();
     }
 
 
@@ -275,9 +275,6 @@ public class Bookshelf {
     /**
      * assign the tokenCG1 if it has been completed
      */
-
-
-
     public void checkCG1(){
 
         if(board.getCommonGoalCard1().checkGoal(shelf) == true && tokenCG1 == null)
@@ -286,10 +283,10 @@ public class Bookshelf {
 
     }
 
+
     /**
      * assign the tokenCG2 if it has been completed
      */
-
     public void checkCG2(){
 
         if(board.getCommonGoalCard2().checkGoal(shelf) == true && tokenCG2 == null)
@@ -297,11 +294,13 @@ public class Bookshelf {
 
     }
 
+
     /**
      *
      * @return return the points scored by completing common goal card goals
      */
     public int getScoreCGC(){
+
         int points = 0;
         if(tokenCG1 != null) points = points + tokenCG1.getScoreToken();
         if(tokenCG2 != null) points = points +tokenCG2.getScoreToken();

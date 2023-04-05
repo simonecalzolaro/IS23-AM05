@@ -1,17 +1,19 @@
 package controller;
 
+import client.ClientHandler;
 import model.Tile;
 
 import java.rmi.Remote;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface GameHandler extends Remote {
 
-    boolean chooseBoardTiles(Map< Tile, ArrayList<Integer>> choosenTiles );
+    boolean chooseBoardTiles(List<Tile> choosenTiles, List<Integer> coord, ClientHandler ch);
 
-    boolean insertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn );
+    int insertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn , ClientHandler ch);
 
-    int getMyScore();
+    int getMyScore(ClientHandler ch );
 
 }

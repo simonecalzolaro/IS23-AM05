@@ -1,11 +1,11 @@
 package client;
 
-import model.Board;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ClientApp extends UnicastRemoteObject implements ClientHandler {
+
 
 
     protected ClientApp() throws RemoteException {
@@ -28,7 +28,7 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
     }
 
     @Override
-    public boolean updateBoard(Board board) {
+    public boolean updateBoard() {
         return false;
     }
 
