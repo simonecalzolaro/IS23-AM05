@@ -50,7 +50,7 @@ public class Bookshelf {
             }
         }
         this.board = board;
-        this.pgc = pgc;
+
         tokenCG1 = null;
         tokenCG2 = null;
         tokenEOG = 0;
@@ -300,6 +300,10 @@ public class Bookshelf {
      * @return return the points scored by completing common goal card goals
      */
     public int getScoreCGC(){
+
+        checkCG1();
+        checkCG2();
+
 
         int points = 0;
         if(tokenCG1 != null) points = points + tokenCG1.getScoreToken();

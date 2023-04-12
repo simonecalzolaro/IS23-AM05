@@ -5,15 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="creation of ServerApp and ClientApp with RMI and adjustments on ControlPlayer and Game">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PlayerStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PlayerStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +67,7 @@
       <recent name="model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BoardTest">
+  <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="controller.Main" />
       <module name="project_eng_soft_2023" />
