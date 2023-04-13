@@ -134,7 +134,7 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
     }
 
     @Override
-    public boolean insertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn , ClientHandler ch) throws NotEnoughSpaceException, InvalidLenghtException {
+    public int insertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn , ClientHandler ch) throws NotEnoughSpaceException, InvalidLenghtException {
 
         return clients.get(ch).getBookshelf().putTiles(choosenTiles, choosenColumn);
 

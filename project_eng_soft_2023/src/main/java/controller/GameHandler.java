@@ -14,7 +14,7 @@ public interface GameHandler extends Remote {
 
     boolean chooseBoardTiles(List<Tile> choosenTiles, List<Integer> coord, ClientHandler ch);
 
-    boolean insertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn , ClientHandler ch) throws NotEnoughSpaceException, InvalidLenghtException;
+    int insertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn , ClientHandler ch) throws NotEnoughSpaceException, InvalidLenghtException;
 
     int getMyScore(ClientHandler ch );
 
