@@ -48,9 +48,7 @@ public class Game {
 
         this.gameID = counterID;
         counterID++;
-
         this.board = board;
-
         board.initializeBoard(players.size());
         this.players = new ArrayList<>();
         (this.players).addAll(players);

@@ -1,5 +1,8 @@
 package model;
 
+
+import junit.framework.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +13,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class BookshelfTest {
 
 
-
-
+    /**
+     * This test analyze all possible cases of inserting tiles into the shelf, here there are 4 main cases:
+     * 1)method receive an array of invalid lenght (<0 or >3)
+     * 2)method receive a columns with not enough space for the tiles
+     * 3)method receive an index of ouf bounds
+     * 4)method receives valid parameters so the insertion is valid
+     * @throws InvalidLenghtException
+     * @throws NotEnoughSpaceException
+     */
 
     @Test
-    void putTiles() {
+    void putTiles() throws InvalidLenghtException, NotEnoughSpaceException {
         Board board = new Board();
         board.initializeBoard(4);
         Bookshelf b = new Bookshelf(board);
@@ -25,35 +35,47 @@ class BookshelfTest {
         ArrayList<Tile> arrEx= new ArrayList<>(){{add(Tile.BLUE); add(Tile.GREEN); add(Tile.WHITE);add(Tile.GREEN);}};
 
         //inserimento di stream_tiles di lunghezza non accettabile
-        assertEquals(-2,b.putTiles(arr0,1));
-        assertEquals(-2,b.putTiles(arrEx,1));
+        Assertions.assertThrows(InvalidLenghtException.class, ()->{
+            b.putTiles(arr0,1);
+        });
 
-        //inserimento corretto di tiles
-        assertEquals(0,b.putTiles(arr1,2));
-        b.putTiles(arr1,3);
-        assertEquals(0,b.putTiles(arr1,3));
+        Assertions.assertThrows(InvalidLenghtException.class, ()->{
+            b.putTiles(arrEx,0);
+        });
 
-        //inserimento in colonna senza abbastanza spazio
-        b.putTiles(arr1,3);
-        assertEquals(-1,b.putTiles(arr1,3));
+        //caso colonna selezionata piena
+        Assertions.assertThrows(NotEnoughSpaceException.class, ()->{
+            b.putTiles(arr1,3);
+            b.putTiles(arr1,3);
+            b.putTiles(arr1,3);
+        });
 
-        //inserimento in colonna non accettabile
-        assertEquals(-3,b.putTiles(arr1,5));
-        assertEquals(-3,b.putTiles(arr1,-1));
+        //caso colonna di indice non valido
+        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+            b.putTiles(arr1,-1);
+        });
 
+        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+            b.putTiles(arr1,5);
+        });
 
+        //inserimento corretto
 
-
-
-
-
+        assertTrue(b.putTiles(arr1,4));
 
     }
 
 
-
+    /**
+     * This test analyzes 3 main cases:
+     * 1)empty shelf
+     * 2)full shelf
+     * 3)randomly filled shelf
+     * @throws InvalidLenghtException
+     * @throws NotEnoughSpaceException
+     */
     @Test
-    void maxShelfSpace() {
+    void maxShelfSpace() throws InvalidLenghtException, NotEnoughSpaceException {
         Board board = new Board();
         board.initializeBoard(4);
         Bookshelf b = new Bookshelf(board);
@@ -99,8 +121,17 @@ class BookshelfTest {
     void getMyScore() {
     }
 
+    /**
+     * This test analyzes 3 main case:
+     * 1)Scored points having an empty shelf
+     * 2)Scored points having a full shelf with tiles with the same color
+     * 3)Scored points having a randomly filled shelf
+     * @throws InvalidLenghtException
+     * @throws NotEnoughSpaceException
+     */
+
     @Test
-    void getScoreGroups() {
+    void getScoreGroups() throws InvalidLenghtException, NotEnoughSpaceException {
         Board board = new Board();
         board.initializeBoard(4);
         Bookshelf b = new Bookshelf(board);
@@ -167,8 +198,17 @@ class BookshelfTest {
     void getScoreCGC() {
     }
 
+
+    /**
+     * NB: this test requires an additional method setPGC() on the reference code because otherwise there's no way
+     * to assing a pre-established PersonalGoalCard
+     * This test analyze all the cases for receiving points (from 0 to 12 points)
+     * @throws InvalidLenghtException
+     * @throws NotEnoughSpaceException
+     */
+
     @Test
-    void getScorePGC() {
+    void getScorePGC() throws InvalidLenghtException, NotEnoughSpaceException {
         Board board = new Board();
         board.initializeBoard(4);
         Bookshelf b = new Bookshelf(board);
@@ -225,8 +265,17 @@ class BookshelfTest {
 
     }
 
+    /**
+     * This test analyze 3 cases:
+     * 1)Game's not ended
+     * 2)Game's ended but current player doesn't win
+     * 3)Game's ended and current player win
+     * @throws InvalidLenghtException
+     * @throws NotEnoughSpaceException
+     */
+
     @Test
-    void checkEOG() {
+    void checkEOG() throws InvalidLenghtException, NotEnoughSpaceException {
         Board board = new Board();
         board.initializeBoard(4);
         Bookshelf b = new Bookshelf(board);
@@ -262,8 +311,14 @@ class BookshelfTest {
 
     }
 
+    /**
+     * Similar to the previous test
+     * @throws InvalidLenghtException
+     * @throws NotEnoughSpaceException
+     */
+
     @Test
-    void getScoreEOG() {
+    void getScoreEOG() throws InvalidLenghtException, NotEnoughSpaceException {
         Board board = new Board();
         board.initializeBoard(4);
         Bookshelf b = new Bookshelf(board);

@@ -18,19 +18,4 @@ class ControlPlayerTest {
     void getPlayerID() {
     }
 
-    @Test
-    void getPlayerStatus() {
-    }
-
-    @Test
-    void getBookshelf() {
-    }
-
-    @Test
-    void setPlayerStatus() {
-    }
-
-    @Test
-    void setBookshelf() {
-    }
 }

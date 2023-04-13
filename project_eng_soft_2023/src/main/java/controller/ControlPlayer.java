@@ -36,7 +36,7 @@ public class ControlPlayer {
      * @param nickname: unique player nickname
      * @param board: unique board
      */
-    public ControlPlayer(String nickname, Board board) {
+    public ControlPlayer(String nickname,Board board) {
 
         this.nickname=nickname;
         bookshelf = new Bookshelf(board);
@@ -50,18 +50,35 @@ public class ControlPlayer {
      * @param column column where to insert the tiles
      * @throws NotMyTurnException: the player status is NOT_MY_TURN
      * @throws NotConnectedException: the player is not connected
+     * @return always true when
      */
-    public void insertTiles(ArrayList<Tile> stream_tiles, int column) throws NotMyTurnException, NotConnectedException {
+    public boolean insertTiles(ArrayList<Tile> stream_tiles, int column) throws NotMyTurnException, NotConnectedException, NotEnoughSpaceException, InvalidLenghtException {
 
-        if(playerStatus == PlayerStatus.NOT_MY_TURN){
-            throw new NotMyTurnException();
+        try{
+            if(playerStatus == PlayerStatus.NOT_MY_TURN){
+                throw new NotMyTurnException();
+            }
+            else if(playerStatus == PlayerStatus.NOT_ONLINE){
+                throw new NotConnectedException();
+            }
+            else{
+                bookshelf.putTiles(stream_tiles,column);
+                updateScore();
+                return true;
+            }
+
         }
-        else if(playerStatus == PlayerStatus.NOT_ONLINE){
-            throw new NotConnectedException();
+        catch(InvalidLenghtException e){
+            e.printStackTrace();
+            return false;
         }
-        else{
-            bookshelf.putTiles(stream_tiles,column);
-            updateScore();
+        catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+            return false;
+        }
+        catch(NotEnoughSpaceException e){
+            e.printStackTrace();
+            return false;
         }
 
 
@@ -91,11 +108,11 @@ public class ControlPlayer {
             throw new NotMyTurnException();
         }
 
-        if(playerStatus == PlayerStatus.NOT_ONLINE){
+        else if(playerStatus == PlayerStatus.NOT_ONLINE){
             throw new NotConnectedException();
         }
 
-        if(coord.size()!=2 && coord.size()!=4 && coord.size()!=6) {
+        else if(coord.size()!=2 && coord.size()!=4 && coord.size()!=6) {
              throw new InvalidParametersException();
          }
 
