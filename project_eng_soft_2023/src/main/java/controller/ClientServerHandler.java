@@ -16,7 +16,6 @@ public interface ClientServerHandler extends Remote {
      */
     void login(String nickname, ClientHandler ch) throws RemoteException;
 
-
     /**
      * a player ask to leave the game he is playing
      * @return true if the request is approved

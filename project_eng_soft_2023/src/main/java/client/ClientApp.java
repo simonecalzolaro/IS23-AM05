@@ -159,7 +159,9 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
             }
         }
         try {
+
             gameHandler.getMyScore(this);
+
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
