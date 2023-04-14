@@ -8,7 +8,7 @@ public class Bookshelf {
     /**
      * shelf attribute represent the game bookshelf. Here is implemented with a 6x5 matrix
      */
-    private final Tile[][] shelf;
+    private Tile[][] shelf;
 
 
     /**
@@ -39,18 +39,19 @@ public class Bookshelf {
 
 
     /**
-     *
      * @param board constructor instantiate the board described above
      */
     public Bookshelf(Board board){
+
         shelf = new Tile[r][c];
         for(int i=0;i<r;i++){
             for(int j=0; j<c;j++){
                 shelf[i][j] = Tile.EMPTY;
             }
         }
-        this.board = board;
 
+        this.board = board;
+     //   this.pgc = pgc;
         tokenCG1 = null;
         tokenCG2 = null;
         tokenEOG = 0;
@@ -72,37 +73,44 @@ public class Bookshelf {
      *                     stream_tiles lenght must be more than 0 and less than 3
      * @param column The player must specifies which column he wants to put the tiles in
      *
-     * @return always true if the operation is correct, in all other cases an exception in thrown
+     * @return The return statement has been thought for returning feedback codes:
+     *          return 0 --> successfully insertion
+     *          return -1 --> there isn't enough space in the column selected
+     *          return -2 --> array stream tiles doesn't have an acceptable lenght
+     *          return -3 --> columns assigned out-of-bounds
      *
      *
      */
-    public boolean putTiles(ArrayList<Tile> stream_tiles, int column) throws IndexOutOfBoundsException, InvalidLenghtException,NotEnoughSpaceException {
+    public int putTiles(ArrayList<Tile> stream_tiles, int column) throws IndexOutOfBoundsException {
 
-        if(stream_tiles.size() > 3 || stream_tiles.size() <=0) throw new InvalidLenghtException();
-        else if (column <0 || column >=5) throw new IndexOutOfBoundsException();
+        if(stream_tiles.size() > 3 || stream_tiles.size() <=0 ) return -2;
         else{
-            //controllo a priori che ci sia spazio a sufficienza nelle colonna selezionata
 
-            int count_col = 0;
+           try{
+               //controllo a priori che ci sia spazio a sufficienza nelle colonna selezionata
+               int count_col = 0;
 
-            for(int i=0; i<r;i++){
-                if(shelf[i][column] == Tile.EMPTY) count_col++;
-            }
+               for(int i=0; i<r;i++){
+                   if(shelf[i][column] == Tile.EMPTY) count_col++;
+               }
 
-            if(count_col < stream_tiles.size()) throw new NotEnoughSpaceException(); //codice -1 rappresenta una colonna invalida
+               if(count_col < stream_tiles.size()) return -1; //codice -1 rappresenta una colonna invalida
 
-            int stream_tiles_pointer = 0;
-            for(int i = 0; i<r; i++){
-                if(shelf[i][column] == Tile.EMPTY && stream_tiles.get(stream_tiles_pointer) != Tile.EMPTY && stream_tiles.get(stream_tiles_pointer) != Tile.NOTAVAILABLE){
-                    shelf[i][column] = stream_tiles.get(stream_tiles_pointer);
-                    stream_tiles_pointer++;
-                    if(stream_tiles_pointer == stream_tiles.size()) i=r; //break
-                }
-            }
+               int stream_tiles_pointer = 0;
+               for(int i = 0; i<r; i++){
+                   if(shelf[i][column] == Tile.EMPTY && stream_tiles.get(stream_tiles_pointer) != Tile.EMPTY && stream_tiles.get(stream_tiles_pointer) != Tile.NOTAVAILABLE){
+                       shelf[i][column] = stream_tiles.get(stream_tiles_pointer);
+                       stream_tiles_pointer++;
+                       if(stream_tiles_pointer == stream_tiles.size()) i=r; //break
+                   }
+               }
 
-            return true;
+               return 0;
+           }catch (IndexOutOfBoundsException e){
+               System.out.println(e);
+               return -3;
+           }
         }
-
     }
 
 
@@ -161,7 +169,7 @@ public class Bookshelf {
      */
     public int getScoreGroups(){
 
-        ArrayList<ArrayList<Coordinate>> groups= new ArrayList<ArrayList<Coordinate>>();
+        ArrayList<Coda> groups= new ArrayList<Coda>();
 
         int points=0;
 
@@ -179,13 +187,13 @@ public class Bookshelf {
             for(int j=0; j<c; j++){
                 if(shelf[i][j] != Tile.EMPTY && shelf_checker[i][j] == false){
 
-                    ArrayList<Coordinate> coda = new ArrayList<>();
 
-                    coda.add(new Coordinate(i,j));
+                    Coda queue = new Coda();
+                    queue.enqueue(new Coordinate(i,j));
                     shelf_checker[i][j] = true;
-                    recursiveChecker(coda.get(0), shelf_checker,coda);
+                    recursiveChecker(queue.head(), shelf_checker,queue);
 
-                    groups.add(coda);
+                    groups.add(queue);
 
 
                 }
@@ -193,10 +201,10 @@ public class Bookshelf {
         }
 
         for(int i=0; i<groups.size(); i++){
-            if(groups.get(i).size() == 3) points = points+2;
-            if(groups.get(i).size() == 4) points = points+3;
-            if(groups.get(i).size() == 5) points = points+5;
-            if(groups.get(i).size() >= 6) points = points+8;
+            if(groups.get(i).getCoda().size() == 3) points = points+2;
+            if(groups.get(i).getCoda().size() == 4) points = points+3;
+            if(groups.get(i).getCoda().size() == 5) points = points+5;
+            if(groups.get(i).getCoda().size() >= 6) points = points+8;
 
         }
 
@@ -209,11 +217,11 @@ public class Bookshelf {
      *
      * @param point point indicates the coordinates of the Tile that I want to start inspecting
      * @param shelf_checker shelf_checker is the addition boolean matrix which indicates if the tiles has been already visited
-     * @param coda is the structure where the single groups is stored
+     * @param queue is the structure where the single groups is stored
      *              then the queue is stores into an array of queues which stores all the groups found
      */
 
-    private void recursiveChecker(Coordinate point,boolean[][] shelf_checker,ArrayList<Coordinate> coda){
+    private void recursiveChecker(Coordinate point,boolean[][] shelf_checker,Coda queue){
 
 
         //NORTH
@@ -221,8 +229,8 @@ public class Bookshelf {
             if(shelf[point.getX()][point.getY()] == shelf[point.getX()+1][point.getY()] && shelf_checker[point.getX()+1][point.getY()] == false)
                 if(shelf[point.getX()+1][point.getY()] != Tile.EMPTY){
                     shelf_checker[point.getX()+1][point.getY()]  = true;
-                    coda.add(new Coordinate(point.getX()+1, point.getY() ));
-                    recursiveChecker(coda.get(coda.size()-1),shelf_checker,coda);
+                    queue.enqueue(new Coordinate(point.getX()+1, point.getY() ));
+                    recursiveChecker(queue.tail(),shelf_checker,queue);
 
                 }
 
@@ -231,8 +239,8 @@ public class Bookshelf {
             if(shelf[point.getX()][point.getY()] == shelf[point.getX()-1][point.getY()] && shelf_checker[point.getX()-1][point.getY()] == false)
                 if(shelf[point.getX()-1][point.getY()] != Tile.EMPTY){
                     shelf_checker[point.getX()-1][point.getY()]  = true;
-                    coda.add(new Coordinate(point.getX()-1, point.getY() ));
-                    recursiveChecker(coda.get(coda.size()-1),shelf_checker,coda);
+                    queue.enqueue(new Coordinate(point.getX()-1, point.getY() ));
+                    recursiveChecker(queue.tail(),shelf_checker,queue);
 
                 }
 
@@ -241,8 +249,8 @@ public class Bookshelf {
             if(shelf[point.getX()][point.getY()] == shelf[point.getX()][point.getY()+1] && shelf_checker[point.getX()][point.getY()+1] == false)
                 if(shelf[point.getX()][point.getY()+1] != Tile.EMPTY){
                     shelf_checker[point.getX()][point.getY()+1]  = true;
-                    coda.add(new Coordinate(point.getX(), point.getY()+1));
-                    recursiveChecker(coda.get(coda.size()-1),shelf_checker,coda);
+                    queue.enqueue(new Coordinate(point.getX(), point.getY()+1));
+                    recursiveChecker(queue.tail(),shelf_checker,queue);
 
                 }
 
@@ -251,8 +259,8 @@ public class Bookshelf {
             if(shelf[point.getX()][point.getY()] == shelf[point.getX()][point.getY()-1] && shelf_checker[point.getX()][point.getY()-1] == false)
                 if(shelf[point.getX()][point.getY()-1] != Tile.EMPTY){
                     shelf_checker[point.getX()][point.getY()-1]  = true;
-                    coda.add(new Coordinate(point.getX(), point.getY()-1 ));
-                    recursiveChecker(coda.get(coda.size()-1),shelf_checker,coda);
+                    queue.enqueue(new Coordinate(point.getX(), point.getY()-1 ));
+                    recursiveChecker(queue.tail(),shelf_checker,queue);
 
                 }
 
@@ -291,10 +299,6 @@ public class Bookshelf {
      * @return return the points scored by completing common goal card goals
      */
     public int getScoreCGC(){
-
-        checkCG1();
-        checkCG2();
-
 
         int points = 0;
         if(tokenCG1 != null) points = points + tokenCG1.getScoreToken();
@@ -351,8 +355,44 @@ public class Bookshelf {
         return tokenEOG;
     }
 
-
     public static Board getBoard() {
         return board;
     }
+
+    private class Coda {
+        ArrayList<Coordinate> queue = new ArrayList<Coordinate>();
+
+        public void enqueue(Coordinate o){
+            queue.add(o);
+        }
+
+        public void dequeue(){
+            if(queue.size() > 0){
+                queue.remove(0);
+            }
+        }
+
+        public int size(){
+            return queue.size();
+        }
+
+        public Coordinate head(){
+            if(queue.size() > 0){
+                return queue.get(0);
+            }else return null;
+        }
+
+        public Coordinate tail(){
+            if(queue.size() > 0){
+                return queue.get(queue.size()-1);
+            }else return null;
+        }
+
+        public ArrayList<Coordinate> getCoda(){
+            return queue;
+        }
+
+    }
+
+
 }

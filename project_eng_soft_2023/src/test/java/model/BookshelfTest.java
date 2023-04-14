@@ -61,7 +61,7 @@ class BookshelfTest {
 
         //inserimento corretto
 
-        assertTrue(b.putTiles(arr1,4));
+        assertEquals(0, b.putTiles(arr1,4));
 
     }
 

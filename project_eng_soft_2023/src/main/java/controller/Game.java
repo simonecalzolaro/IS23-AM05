@@ -49,7 +49,7 @@ public class Game {
         this.gameID = counterID;
         counterID++;
         this.board = board;
-        board.initializeBoard(players.size());
+        //board.initializeBoard(players.size());
         this.players = new ArrayList<>();
         (this.players).addAll(players);
 
@@ -81,10 +81,12 @@ public class Game {
      * If the game is not over yet set the currPlayer status as MY_TURN
      */
     public void endTurn(){
+
         board.updateBoard();
+
         if(players.get(currPlayer).getPlayerStatus()!=PlayerStatus.NOT_ONLINE) players.get(currPlayer).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
         do{
-            if (currPlayer<players.size()-1){
+            if (currPlayer < players.size()-1){
                 currPlayer++;
             }
             else if (board.getEOG()){
@@ -94,7 +96,8 @@ public class Game {
             else {
                 currPlayer=0;
             }
-        } while(gameStatus!=GameStatus.END_GAME&&players.get(currPlayer).getPlayerStatus()==PlayerStatus.NOT_ONLINE);
+
+        } while(gameStatus!=GameStatus.END_GAME && players.get(currPlayer).getPlayerStatus()==PlayerStatus.NOT_ONLINE);
 
         if(gameStatus!=GameStatus.END_GAME) players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
     }

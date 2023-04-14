@@ -52,7 +52,7 @@ public class ControlPlayer {
      * @throws NotConnectedException: the player is not connected
      * @return always true when
      */
-    public boolean insertTiles(ArrayList<Tile> stream_tiles, int column) throws NotMyTurnException, NotConnectedException, NotEnoughSpaceException, InvalidLenghtException {
+    public boolean insertTiles(ArrayList<Tile> stream_tiles, int column) throws NotMyTurnException, NotConnectedException, NotEnoughSpaceException {
 
         try{
             if(playerStatus == PlayerStatus.NOT_MY_TURN){
@@ -68,19 +68,12 @@ public class ControlPlayer {
             }
 
         }
-        catch(InvalidLenghtException e){
-            e.printStackTrace();
-            return false;
-        }
-        catch (IndexOutOfBoundsException e){
-            e.printStackTrace();
-            return false;
-        }
-        catch(NotEnoughSpaceException e){
-            e.printStackTrace();
-            return false;
-        }
+        catch (Exception e){
 
+            e.printStackTrace();
+            return false;
+
+        }
 
     }
 
