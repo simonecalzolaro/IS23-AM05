@@ -225,76 +225,62 @@ public class Board {
      * */
     protected boolean singleTile(int i, int j){
         //check if a tiles has no adjacent tile
-        if(i!=0&&i!=8&&j!=0&&j!=8){
-            return  (board[i - 1][j] == Tile.NOTAVAILABLE ||
-                    board[i - 1][j] == Tile.EMPTY) &&
-                    (board[i + 1][j] == Tile.NOTAVAILABLE ||
-                            board[i + 1][j] == Tile.EMPTY) &&
-                    (board[i][j - 1] == Tile.NOTAVAILABLE ||
-                            board[i][j - 1] == Tile.EMPTY) &&
-                    (board[i][j + 1] == Tile.NOTAVAILABLE ||
-                            board[i][j + 1] == Tile.EMPTY);
-        }
-
-        if (i==0&&j==0){
-            return (board[i + 1][j] == Tile.NOTAVAILABLE ||
-                    board[i + 1][j] == Tile.EMPTY) &&
-                    (board[i][j + 1] == Tile.NOTAVAILABLE ||
-                            board[i][j + 1] == Tile.EMPTY);
-        }
-
-        if (i==0&&j==8){
-            return (board[i + 1][j] == Tile.NOTAVAILABLE ||
-                    board[i + 1][j] == Tile.EMPTY) &&
-                    (board[i][j - 1] == Tile.NOTAVAILABLE ||
-                            board[i][j - 1] == Tile.EMPTY);
-        }
-
-        if(i==8&&j==0){
-            return (board[i - 1][j] == Tile.NOTAVAILABLE ||
-                    board[i - 1][j] == Tile.EMPTY) &&
-                    (board[i][j + 1] == Tile.NOTAVAILABLE ||
-                            board[i][j + 1] == Tile.EMPTY);
-        }
-        if (i==8&&j==8){
-            return (board[i - 1][j] == Tile.NOTAVAILABLE ||
-                    board[i - 1][j] == Tile.EMPTY) &&
-                    (board[i][j - 1] == Tile.NOTAVAILABLE ||
-                            board[i][j - 1] == Tile.EMPTY);
-        }
-        if(i==0){
-            return (board[i + 1][j] == Tile.NOTAVAILABLE ||
-                    board[i + 1][j] == Tile.EMPTY) &&
-                    (board[i][j - 1] == Tile.NOTAVAILABLE ||
-                            board[i][j - 1] == Tile.EMPTY) &&
-                    (board[i][j + 1] == Tile.NOTAVAILABLE ||
-                            board[i][j + 1] == Tile.EMPTY);
-        }
-
-        if (j==0){
-            return (board[i - 1][j] == Tile.NOTAVAILABLE ||
-                    board[i - 1][j] == Tile.EMPTY) &&
-                    (board[i + 1][j] == Tile.NOTAVAILABLE ||
-                            board[i + 1][j] == Tile.EMPTY) &&
-                    (board[i][j + 1] == Tile.NOTAVAILABLE ||
-                            board[i][j + 1] == Tile.EMPTY);
-        }
-
-        if(i==8){
-            return (board[i - 1][j] == Tile.NOTAVAILABLE ||
-                    board[i - 1][j] == Tile.EMPTY) &&
-                    (board[i][j - 1] == Tile.NOTAVAILABLE ||
-                            board[i][j - 1] == Tile.EMPTY) &&
-                    (board[i][j + 1] == Tile.NOTAVAILABLE ||
-                            board[i][j + 1] == Tile.EMPTY);
-        }
-
-        return (board[i - 1][j] == Tile.NOTAVAILABLE ||
-                board[i - 1][j] == Tile.EMPTY) &&
-                (board[i + 1][j] == Tile.NOTAVAILABLE ||
+        return switch (i) {
+            case 0 -> switch (j) {
+                case 0 -> (board[i + 1][j] == Tile.NOTAVAILABLE ||
                         board[i + 1][j] == Tile.EMPTY) &&
-                (board[i][j - 1] == Tile.NOTAVAILABLE ||
-                        board[i][j - 1] == Tile.EMPTY);
+                        (board[i][j + 1] == Tile.NOTAVAILABLE ||
+                                board[i][j + 1] == Tile.EMPTY);
+                case 8 -> (board[i + 1][j] == Tile.NOTAVAILABLE ||
+                        board[i + 1][j] == Tile.EMPTY) &&
+                        (board[i][j - 1] == Tile.NOTAVAILABLE ||
+                                board[i][j - 1] == Tile.EMPTY);
+                default -> (board[i + 1][j] == Tile.NOTAVAILABLE ||
+                        board[i + 1][j] == Tile.EMPTY) &&
+                        (board[i][j - 1] == Tile.NOTAVAILABLE ||
+                                board[i][j - 1] == Tile.EMPTY) &&
+                        (board[i][j + 1] == Tile.NOTAVAILABLE ||
+                                board[i][j + 1] == Tile.EMPTY);
+            };
+            case 8 -> switch (j) {
+                case 0 -> (board[i - 1][j] == Tile.NOTAVAILABLE ||
+                        board[i - 1][j] == Tile.EMPTY) &&
+                        (board[i][j + 1] == Tile.NOTAVAILABLE ||
+                                board[i][j + 1] == Tile.EMPTY);
+                case 8 -> (board[i - 1][j] == Tile.NOTAVAILABLE ||
+                        board[i - 1][j] == Tile.EMPTY) &&
+                        (board[i][j - 1] == Tile.NOTAVAILABLE ||
+                                board[i][j - 1] == Tile.EMPTY);
+                default -> (board[i - 1][j] == Tile.NOTAVAILABLE ||
+                        board[i - 1][j] == Tile.EMPTY) &&
+                        (board[i][j - 1] == Tile.NOTAVAILABLE ||
+                                board[i][j - 1] == Tile.EMPTY) &&
+                        (board[i][j + 1] == Tile.NOTAVAILABLE ||
+                                board[i][j + 1] == Tile.EMPTY);
+            };
+            default -> switch (j) {
+                case 0 -> (board[i - 1][j] == Tile.NOTAVAILABLE ||
+                        board[i - 1][j] == Tile.EMPTY) &&
+                        (board[i + 1][j] == Tile.NOTAVAILABLE ||
+                                board[i + 1][j] == Tile.EMPTY) &&
+                        (board[i][j + 1] == Tile.NOTAVAILABLE ||
+                                board[i][j + 1] == Tile.EMPTY);
+                case 8 -> (board[i - 1][j] == Tile.NOTAVAILABLE ||
+                        board[i - 1][j] == Tile.EMPTY) &&
+                        (board[i + 1][j] == Tile.NOTAVAILABLE ||
+                                board[i + 1][j] == Tile.EMPTY) &&
+                        (board[i][j - 1] == Tile.NOTAVAILABLE ||
+                                board[i][j - 1] == Tile.EMPTY);
+                default -> (board[i - 1][j] == Tile.NOTAVAILABLE ||
+                        board[i - 1][j] == Tile.EMPTY) &&
+                        (board[i + 1][j] == Tile.NOTAVAILABLE ||
+                                board[i + 1][j] == Tile.EMPTY) &&
+                        (board[i][j - 1] == Tile.NOTAVAILABLE ||
+                                board[i][j - 1] == Tile.EMPTY) &&
+                        (board[i][j + 1] == Tile.NOTAVAILABLE ||
+                                board[i][j + 1] == Tile.EMPTY);
+            };
+        };
     }
 
     /**
@@ -428,19 +414,25 @@ public class Board {
      */
     protected boolean inLine(int i1, int j1, int i2, int j2, int i3, int j3){
         //check if three tiles ar adjacent and in line
-        return (i1==i2&&i2==i3&&(j1==j2-1&&j2==j3-1)) ||
-                (i1==i2&&i2==i3&&(j3==j1-1&&j1==j2-1)) ||
-                (i1==i2&&i2==i3&&(j2==j3-1&&j3==j1-1)) ||
-                (i1==i2&&i2==i3&&(j1==j3-1&&j3==j2-1)) ||
-                (i1==i2&&i2==i3&&(j2==j1-1&&j1==j3-1)) ||
-                (i1==i2&&i2==i3&&(j3==j2-1&&j2==j1-1)) ||
+        if((i1!=i2||i2!=i3)&&(j1!=j2&&j2!=j3)) return false;
+        int a, b, c;
+        if(i1==i2&&i2==i3){
+            a=j1;
+            b=j2;
+            c=j3;
+        }
+        else {
+            a=i1;
+            b=i2;
+            c=i3;
+        }
 
-                (j1==j2&&j2==j3&&(i1==i2-1&&i2==i3-1)) ||
-                (j1==j2&&j2==j3&&(i3==i1-1&&i1==i2-1)) ||
-                (j1==j2&&j2==j3&&(i2==i3-1&&i3==i1-1)) ||
-                (j1==j2&&j2==j3&&(i1==i3-1&&i3==i2-1)) ||
-                (j1==j2&&j2==j3&&(i2==i1-1&&i1==i3-1)) ||
-                (j1==j2&&j2==j3&&(i3==i2-1&&i2==i1-1)) ;
+        return (a==b-1&&b==c-1) ||
+                    (c==a-1&&a==b-1) ||
+                    (b==c-1&&c==a-1) ||
+                    (a==c-1&&c==b-1) ||
+                    (b==a-1&&a==c-1) ||
+                    (c==b-1&&b==a-1);
     }
 
     /**

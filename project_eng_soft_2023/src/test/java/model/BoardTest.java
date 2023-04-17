@@ -215,22 +215,6 @@ public class BoardTest  {
     }
 
     @Test
-    public void testInLine() {
-        board = new Board();
-        DeckCards deck= new DeckCards(4);
-        board.initializeBoard(4);
-        for(int i=0; i<9; i++){
-            for (int j=0; j<9; j++){
-                if(board.getBoard()[i][j]!=Tile.NOTAVAILABLE){
-                    board.setTile(i, j, Tile.EMPTY);
-                }
-            }
-        }
-
-        board=null;
-    }
-
-    @Test
     public void testInLine1() {
 
         board = new Board();
@@ -258,4 +242,11 @@ public class BoardTest  {
         board = new Board();
         assertFalse(board.inLine(6,5,6,4, 6,2));
     }
+    @Test
+    public void testInLine5() {
+
+        board = new Board();
+        assertFalse(board.inLine(2,6,3,6, 3,6));
+    }
+
 }
