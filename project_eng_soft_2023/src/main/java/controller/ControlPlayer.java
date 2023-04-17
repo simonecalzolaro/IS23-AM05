@@ -52,28 +52,20 @@ public class ControlPlayer {
      * @throws NotConnectedException: the player is not connected
      * @return always true when
      */
-    public boolean insertTiles(ArrayList<Tile> stream_tiles, int column) throws NotMyTurnException, NotConnectedException, NotEnoughSpaceException {
+    public boolean insertTiles(ArrayList<Tile> stream_tiles, int column) throws NotMyTurnException, NotConnectedException, NotEnoughSpaceException, InvalidLenghtException {
 
-        try{
-            if(playerStatus == PlayerStatus.NOT_MY_TURN){
-                throw new NotMyTurnException();
-            }
-            else if(playerStatus == PlayerStatus.NOT_ONLINE){
-                throw new NotConnectedException();
-            }
-            else{
-                bookshelf.putTiles(stream_tiles,column);
-                updateScore();
-                return true;
-            }
-
+        if(playerStatus == PlayerStatus.NOT_MY_TURN){
+            throw new NotMyTurnException();
         }
-        catch (Exception e){
-
-            e.printStackTrace();
-            return false;
-
+        else if(playerStatus == PlayerStatus.NOT_ONLINE){
+            throw new NotConnectedException();
         }
+        else{
+            bookshelf.putTiles(stream_tiles,column);
+            updateScore();
+            return true;
+        }
+
 
     }
 

@@ -3,6 +3,7 @@ package controller;
 import client.ClientHandler;
 import model.*;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -89,7 +90,7 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
      * @throws RemoteException
      */
     @Override
-    public void login(String nickname, ClientHandler ch) throws RemoteException{
+    public void login(String nickname, ClientHandler ch) throws IOException {
 
         if( clients.values().stream().map(x -> x.getPlayerNickname()).toList().contains(nickname) ) throw new IllegalArgumentException("this nickname is not available at the moment");
 
@@ -224,6 +225,8 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
         try {
             if( ! clients.get(ch).insertTiles(chosenTiles, choosenColumn)) return ;
         } catch (NotEnoughSpaceException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidLenghtException e) {
             throw new RuntimeException(e);
         }
 

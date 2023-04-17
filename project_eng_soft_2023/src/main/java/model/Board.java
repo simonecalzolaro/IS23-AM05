@@ -552,4 +552,12 @@ public class Board {
     public DeckCards getDeck() {
         return deck;
     }
+
+    public void setCGC1(int num,int np){
+        commonGoalCard1 =new CommonGoalCard(num,np);
+    }
+
+    public void setCGC2(int num,int np){
+        commonGoalCard2 =new CommonGoalCard(num,np);
+    }
 }

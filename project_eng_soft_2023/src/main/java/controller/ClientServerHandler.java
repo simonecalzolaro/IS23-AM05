@@ -2,6 +2,7 @@ package controller;
 
 import client.ClientHandler;
 
+import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -14,7 +15,7 @@ public interface ClientServerHandler extends Remote {
      * @param nickname
      * @return true if the login request is approved
      */
-    void login(String nickname, ClientHandler ch) throws RemoteException;
+    void login(String nickname, ClientHandler ch) throws IOException;
 
     /**
      * a player ask to leave the game he is playing

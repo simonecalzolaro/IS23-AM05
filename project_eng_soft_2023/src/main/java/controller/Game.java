@@ -2,14 +2,21 @@ package controller;
 
 import model.Board;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.simple.*;
 
 public class Game {
 
     /**
      * Unique Game ID
+     *
      */
+
+    private JSONObject backupJSON;
     private final int gameID;
 
     /**
@@ -44,12 +51,11 @@ public class Game {
      * Invoke startGame
      * @param players list of the player joining the game
      */
-    public Game(List<ControlPlayer> players, Board board) {
-
+    public Game(List<ControlPlayer> players, Board board) throws IOException {
         this.gameID = counterID;
         counterID++;
         this.board = board;
-        //board.initializeBoard(players.size());
+        board.initializeBoard(players.size());
         this.players = new ArrayList<>();
         (this.players).addAll(players);
 
@@ -84,6 +90,7 @@ public class Game {
 
         board.updateBoard();
 
+
         if(players.get(currPlayer).getPlayerStatus()!=PlayerStatus.NOT_ONLINE) players.get(currPlayer).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
         do{
             if (currPlayer < players.size()-1){
@@ -100,6 +107,10 @@ public class Game {
         } while(gameStatus!=GameStatus.END_GAME && players.get(currPlayer).getPlayerStatus()==PlayerStatus.NOT_ONLINE);
 
         if(gameStatus!=GameStatus.END_GAME) players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
+
+
+
+
     }
 
     /**
@@ -158,6 +169,11 @@ public class Game {
         }
 
     }
+
+
+
+
+
 
 
 }

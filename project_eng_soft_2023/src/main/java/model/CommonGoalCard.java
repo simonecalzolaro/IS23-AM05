@@ -27,6 +27,8 @@ public class CommonGoalCard implements Card{
 
     }
 
+
+
     @Override
     public boolean checkGoal(Tile[][] shelf) {
 

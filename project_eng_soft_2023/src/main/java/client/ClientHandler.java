@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface ClientHandler extends Remote {
     int enterNumberOfPlayers() throws RemoteException;
-    void updateBoard(Tile[][] shelf)throws RemoteException;
+    void updateBoard(Tile[][] shelf) throws RemoteException;
     void showResults(Map<Integer, String> results)throws RemoteException;
     void theGameEnd()throws RemoteException;
     void startYourTurn()throws RemoteException;

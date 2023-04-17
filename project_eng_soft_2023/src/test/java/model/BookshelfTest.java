@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -175,7 +176,7 @@ class BookshelfTest {
         b1.putTiles(arrF,3);
         b1.putTiles(arrG,4);
 
-        b1.getBookshelf();
+
 
         assertEquals(18,b1.getScoreGroups());
 
@@ -192,10 +193,58 @@ class BookshelfTest {
     }
 
 
-
+    /**
+     * This test check if the points scored by reaching the common goal cards goal
+     */
 
     @Test
     void getScoreCGC() {
+        Board board = new Board();
+        board.initializeBoard(4);
+
+        Bookshelf bookshelf = new Bookshelf(board);
+
+        board.setCGC1(1,4);
+
+        board.setCGC2(2,4);
+
+        //caso shelf vuota
+        assertEquals(0,bookshelf.getScoreCGC());
+
+        //caso shelf 1
+        Tile[][] matr=
+                {{Tile.PINK, Tile.BLUE, Tile.GREEN, Tile.WHITE, Tile.BLUE},
+                        {Tile.PINK, Tile.BLUE, Tile.GREEN, Tile.YELLOW, Tile.BLUE},
+                        {Tile.WHITE, Tile.WHITE, Tile.EMPTY, Tile.GREEN, Tile.WHITE},
+                        {Tile.EMPTY, Tile.WHITE, Tile.EMPTY, Tile.GREEN, Tile.WHITE},
+                        {Tile.EMPTY, Tile.WHITE, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY},
+                        {Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY, Tile.EMPTY}};
+
+        bookshelf.setShelf(matr);
+
+        bookshelf.getBookshelf();
+
+
+        assertEquals(8,bookshelf.getScoreCGC());
+
+        Tile matr1[][]=
+                {{Tile.PINK   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.PINK   },
+                        {Tile.BLUE   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.BLUE   },
+                        {Tile.BLUE   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.BLUE   },
+                        {Tile.BLUE   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.BLUE   },
+                        {Tile.BLUE   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.BLUE   },
+                        {Tile.PINK   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.EMPTY   ,Tile.PINK   }};
+
+        bookshelf.setShelf(matr1);
+
+        assertEquals(16,bookshelf.getScoreCGC());
+
+
+
+
+
+
+
     }
 
 
@@ -352,13 +401,8 @@ class BookshelfTest {
 
     }
 
-    @Test
-    void checkCG1(){
 
-    }
 
-    @Test
-    void checkCG2(){
 
-    }
+
 }

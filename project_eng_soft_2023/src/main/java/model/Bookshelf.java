@@ -8,7 +8,7 @@ public class Bookshelf {
     /**
      * shelf attribute represent the game bookshelf. Here is implemented with a 6x5 matrix
      */
-    private final Tile[][] shelf;
+    private Tile[][] shelf;
 
 
     /**
@@ -295,7 +295,6 @@ public class Bookshelf {
         checkCG1();
         checkCG2();
 
-
         int points = 0;
         if(tokenCG1 != null) points = points + tokenCG1.getScoreToken();
         if(tokenCG2 != null) points = points +tokenCG2.getScoreToken();
@@ -354,5 +353,12 @@ public class Bookshelf {
 
     public static Board getBoard() {
         return board;
+    }
+
+
+
+    public void setShelf(Tile[][] shelf){
+
+        this.shelf = shelf;
     }
 }
