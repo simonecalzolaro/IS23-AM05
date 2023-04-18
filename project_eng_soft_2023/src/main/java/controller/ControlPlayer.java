@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import myShelfieException.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +49,8 @@ public class ControlPlayer {
      *
      * @param stream_tiles ordered list of tiles to insert
      * @param column column where to insert the tiles
-     * @throws NotMyTurnException: the player status is NOT_MY_TURN
-     * @throws NotConnectedException: the player is not connected
+     * @throws NotMyTurnException : the player status is NOT_MY_TURN
+     * @throws NotConnectedException : the player is not connected
      * @return always true when
      */
     public boolean insertTiles(ArrayList<Tile> stream_tiles, int column) throws NotMyTurnException, NotConnectedException, NotEnoughSpaceException, InvalidLenghtException {

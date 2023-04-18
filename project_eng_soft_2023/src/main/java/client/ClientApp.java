@@ -83,7 +83,6 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
         // Looking up the registry for the remote object
         try {
             this.clientServerHandler = (ClientServerHandler) registry.lookup("ServerAppService");
-            this.gameHandler= (GameHandler) registry.lookup("ServerAppService");
 
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
@@ -93,12 +92,39 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
 
             try {
 
-                System.out.println("nickname: ");
-                BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
-                nickName = br.readLine ();
-                System.out.println("-------------------");
-                //login of the new player
-                clientServerHandler.login(nickName, this );
+                int num;
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+                //-------questa parte andrà migliorata in GUI e TUI
+
+                do {
+                    System.out.println("0 --> start a new game");
+                    System.out.println("1 --> continue a Game");
+                    Scanner scan = new Scanner(System.in);
+                    num = scan.nextInt();
+
+                }while (num!=0 &&  num!=1);
+
+                switch (num) {
+
+                    case 0:
+                        System.out.println("nickname: ");
+                        nickName = br.readLine();
+                        System.out.println("-------------------");
+
+                        //login of the new player
+                        this.gameHandler = clientServerHandler.login(nickName, this);
+                        break;
+
+                    case 1:
+                        System.out.println("nickname: ");
+                        nickName = br.readLine();
+                        System.out.println("-------------------");
+
+                        //login of the new player
+                        this.gameHandler = clientServerHandler.continueGame(nickName, this);
+                        break;
+                }
 
             }catch (Exception e) {
 
@@ -151,7 +177,7 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      * @throws RemoteException
      */
     @Override
-    public void updateBoard(Tile[][] board) throws RemoteException{
+    public boolean updateBoard(Tile[][] board) throws RemoteException{
 
         for(int row=0; row< board.length; row++){
             for(int col=0; col< board[0].length; col++){
@@ -165,30 +191,27 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+
+        return true;
+
     }
+
 
     /**
      * method called by the server to show the user an ordered rank of players
-     * @param results rank of players and their scores
+     * and to end the match
      * @throws RemoteException
      */
     @Override
-    public void showResults(Map< Integer, String> results) throws RemoteException{
+    public boolean theGameEnd(Map< Integer, String> results) throws RemoteException{
 
         for(Integer key: results.keySet()){
             System.out.println(key + " ->   "+ results.get(key));
         }
 
-    }
-
-    /**
-     * method called by the server to end the match
-     * @throws RemoteException
-     */
-    @Override
-    public void theGameEnd() throws RemoteException{
-
         gameEnded=true;
+
+        return true;
 
     }
 
@@ -197,8 +220,11 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      * @throws RemoteException
      */
     @Override
-    public void startYourTurn() throws RemoteException{
+    public boolean startYourTurn() throws RemoteException{
+
         myTurn=true;
+        return true;
+
     }
 
     /**
@@ -206,8 +232,11 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      * @throws RemoteException
      */
     @Override
-    public void endYourTurn() throws RemoteException{
+    public boolean endYourTurn() throws RemoteException{
+
         myTurn=false;
+        return true;
+
     }
 
     /**
@@ -215,11 +244,15 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      * @throws RemoteException
      */
     @Override
-    public void startPlaying() throws RemoteException {
+    public boolean startPlaying() throws RemoteException {
 
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         System.out.println("let's go!! The game has started ! ");
         System.out.println("is your turn? make a move =) ");
         //qua dentro verrà poi lanciata la gui o la cli
+
+        return true;
 
     }
 

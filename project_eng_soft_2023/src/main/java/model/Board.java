@@ -1,5 +1,9 @@
 package model;
 
+import myShelfieException.NotAvailableTilesException;
+import myShelfieException.NotEnoughSpaceException;
+import myShelfieException.NotInLineException;
+
 import java.util.ArrayList;
 import java.util.List;
 

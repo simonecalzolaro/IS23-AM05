@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import myShelfieException.NotAvailableTilesException;
+import myShelfieException.NotEnoughSpaceException;
+import myShelfieException.NotInLineException;
 import org.junit.jupiter.api.Test;
 
 public class BoardTest  {

@@ -1,12 +1,11 @@
 package model;
 
 
-import junit.framework.Assert;
+import myShelfieException.InvalidLenghtException;
+import myShelfieException.NotEnoughSpaceException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;

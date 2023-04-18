@@ -1,6 +1,7 @@
 package controller;
 
 import client.ClientHandler;
+import myShelfieException.LoginException;
 
 import java.io.IOException;
 import java.rmi.Remote;
@@ -15,7 +16,11 @@ public interface ClientServerHandler extends Remote {
      * @param nickname
      * @return true if the login request is approved
      */
-    void login(String nickname, ClientHandler ch) throws IOException;
+    GameHandler login(String nickname, ClientHandler ch) throws IOException, LoginException;
+
+
+    GameHandler continueGame(String nickname, ClientHandler ch) throws RemoteException, LoginException;
+
 
     /**
      * a player ask to leave the game he is playing

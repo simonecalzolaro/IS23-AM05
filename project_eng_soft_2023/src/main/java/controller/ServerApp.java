@@ -2,6 +2,7 @@ package controller;
 
 import client.ClientHandler;
 import model.*;
+import myShelfieException.*;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -90,9 +91,9 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
      * @throws RemoteException
      */
     @Override
-    public void login(String nickname, ClientHandler ch) throws IOException {
+    public GameHandler login(String nickname, ClientHandler ch) throws IOException, LoginException {
 
-        if( clients.values().stream().map(x -> x.getPlayerNickname()).toList().contains(nickname) ) throw new IllegalArgumentException("this nickname is not available at the moment");
+        if( clients.values().stream().map(x -> x.getPlayerNickname()).toList().contains(nickname) ) throw new LoginException("this nickname is not available at the moment");
 
         else {
 
@@ -141,7 +142,7 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
                     try {
 
                         ClientHandler clih=getKey(clients, player);
-                        clih.updateBoard(g.getBoard().getBoard());
+                        clih.updateBoard(g.getBoard().getBoard()); //----------timer che aspetta il return true
                         clih.startPlaying();
 
                     } catch (RemoteException e) { throw new RuntimeException(e); }
@@ -151,7 +152,45 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
 
             }
         }
+
+        return this;
+
     }
+
+    /**
+     * Method called by a client who wants to continue a game he was playing before the disconnection/client's crash
+     * @param nickname
+     * @param ch ClientHandler of the remote User
+     * @return GameHandler remote interface
+     * @throws RemoteException
+     */
+    @Override
+    public GameHandler continueGame(String nickname, ClientHandler ch) throws RemoteException, LoginException {
+
+        //checking if exists a player called "nickname" now offline
+
+
+        Stream<ControlPlayer> cp= null;
+        cp = clients.values().stream()
+                    .filter(x -> x.getPlayerNickname().equals(nickname));
+
+        if(cp.count()<1) throw new LoginException("This nickname does not exists");
+
+        if(cp.count()!=1) throw new LoginException("This nickname is used more than once");
+
+        ControlPlayer controlPlayer = cp.toList().get(0);
+
+        if( controlPlayer.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE) ) throw new LoginException("This nickname results to be still online");
+
+        //if exists i'll create a new one and remove the current ClientHandler-ControlPlayer pair from the map
+        clients.remove(getKey(clients, controlPlayer));
+        clients.put(ch, controlPlayer);
+
+
+        //searching the correspondent Game and return the GameHandler interface
+        return this;
+    }
+
 
     /**
      * method called by a client to leave the game he is playing
@@ -190,19 +229,22 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
     @Override
     public boolean chooseBoardTiles(List<Tile> chosenTiles, List<Integer> coord, ClientHandler ch) throws RemoteException, NotConnectedException, NotEnoughSpaceException, NotAvailableTilesException, InvalidParametersException, NotMyTurnException, NotInLineException {
 
-        if (clients.get(ch).catchTile(coord).equals(chosenTiles)){
+        if (clients.get(ch).catchTile(coord).equals(chosenTiles)){ //------chiedi a Simo!
+
+            /* updating the Board of all clients is not necessary here, i can do it in insertShelfTiles() only
 
             Game g= (Game)games.stream().filter(x->x.getPlayers().contains(clients.get(ch)));
 
             for (ControlPlayer cp: g.getPlayers() ) {
 
                 try{
-                    getKey(clients, cp).updateBoard(g.getBoard().getBoard());
-                }catch (Exception e){
+                    getKey(clients, cp).updateBoard(g.getBoard().getBoard()); //----------timer che aspetta il return true
+                }catch (RemoteException e){
+                    e.printStackTrace();
                     return false;
                 }
 
-            }
+            } */
             return true;
         }
         else return false;
@@ -219,16 +261,12 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
      * @throws NotMyTurnException
      */
     @Override
-    public void insertShelfTiles(ArrayList<Tile> chosenTiles, int choosenColumn , ClientHandler ch) throws RemoteException, NotConnectedException, NotMyTurnException{
+    public boolean insertShelfTiles(ArrayList<Tile> chosenTiles, int choosenColumn , ClientHandler ch) throws RemoteException, NotConnectedException, NotMyTurnException, NotEnoughSpaceException, InvalidLenghtException {
 
         //inserting the tiles in the bookshelf
-        try {
-            if( ! clients.get(ch).insertTiles(chosenTiles, choosenColumn)) return ;
-        } catch (NotEnoughSpaceException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidLenghtException e) {
-            throw new RuntimeException(e);
-        }
+
+        if( ! clients.get(ch).insertTiles(chosenTiles, choosenColumn)) return false;
+
 
         //tell to ch that his turn is completed
         try {
@@ -237,7 +275,7 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
 
         //Game.endTurn() is called to update the turn to the next player and the game status
         Game g= (Game)games.stream().filter(x->x.getPlayers().contains(clients.get(ch)));
-        g.endTurn();
+        g.endTurn(); //----------non mi convince
 
 
         ControlPlayer nextPlayer= g.getPlayers().get(g.getCurrPlayer());
@@ -246,7 +284,7 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
         //notify the updated board to all the clients participating in the same game of ch
         for(ControlPlayer player: g.getPlayers()){
             try {
-                getKey(clients, player).updateBoard(g.getBoard().getBoard());
+                getKey(clients, player).updateBoard(g.getBoard().getBoard()); //----------timer che aspetta il return true
             } catch (RemoteException e) { throw new RuntimeException(e); }
         }
 
@@ -256,9 +294,10 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
             for(ControlPlayer player: g.getPlayers()){
                 try {
                     ClientHandler clih=getKey(clients, player);
-                    assert clih != null;//-------------
-                    clih.theGameEnd();
-                    clih.showResults(getGameResults(g));
+
+                    //assert clih != null;//-------------
+                    clih.theGameEnd(getGameResults(g));//----------timer che aspetta il return true
+
                 } catch (RemoteException e) { throw new RuntimeException(e); }
             }
         }
@@ -266,6 +305,8 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
         try {
             nextClient.startYourTurn();
         } catch (RemoteException e) { throw new RuntimeException(e); }
+
+        return true;
 
     }
 
@@ -299,6 +340,33 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
         return null;
     }
 
+    private static int getKeyIndex( Map<ClientHandler, ControlPlayer> map, ClientHandler ch){
+
+        Set<ClientHandler> keys = map.keySet();
+
+        //get an iterator
+        Iterator<ClientHandler> iterator = keys.iterator();
+
+        int i = 0;
+        ClientHandler currentKey = null;
+
+        while(iterator.hasNext()){
+
+            //get the current key
+            currentKey = iterator.next();
+
+            //if current key is equal to the key to find
+            if(currentKey.equals(ch)){
+                return i;
+            }
+
+            //increase the index counter
+            i++;
+        }
+
+        return -1;
+    }
+
     /**
      * @param game
      * @return a map of ordered players from the player with the highest score to the player with the lowest
@@ -330,5 +398,6 @@ public class ServerApp extends UnicastRemoteObject implements GameHandler, Clien
 
 
     }
+
 
 }

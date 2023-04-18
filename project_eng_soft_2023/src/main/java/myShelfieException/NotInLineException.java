@@ -1,4 +1,4 @@
-package model;
+package myShelfieException;
 
 public class NotInLineException extends Exception{
     public NotInLineException() {

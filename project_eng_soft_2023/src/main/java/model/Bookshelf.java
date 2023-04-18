@@ -1,6 +1,9 @@
 
 package model;
 
+import myShelfieException.InvalidLenghtException;
+import myShelfieException.NotEnoughSpaceException;
+
 import java.util.ArrayList;
 
 
@@ -76,7 +79,7 @@ public class Bookshelf {
      *
      *
      */
-    public boolean putTiles(ArrayList<Tile> stream_tiles, int column) throws IndexOutOfBoundsException, InvalidLenghtException,NotEnoughSpaceException {
+    public boolean putTiles(ArrayList<Tile> stream_tiles, int column) throws IndexOutOfBoundsException, InvalidLenghtException, NotEnoughSpaceException {
 
         if(stream_tiles.size() > 3 || stream_tiles.size() <=0) throw new InvalidLenghtException();
         else if (column <0 || column >=5) throw new IndexOutOfBoundsException();

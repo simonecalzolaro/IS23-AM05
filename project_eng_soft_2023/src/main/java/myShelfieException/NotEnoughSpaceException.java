@@ -1,4 +1,4 @@
-package model;
+package myShelfieException;
 
 public class NotEnoughSpaceException extends Exception{
     public NotEnoughSpaceException() {

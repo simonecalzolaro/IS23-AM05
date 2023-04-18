@@ -1,9 +1,11 @@
 package controller;
 
 import model.Board;
-import model.InvalidLenghtException;
-import model.NotEnoughSpaceException;
+import myShelfieException.InvalidLenghtException;
+import myShelfieException.NotConnectedException;
+import myShelfieException.NotEnoughSpaceException;
 import model.Tile;
+import myShelfieException.NotMyTurnException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

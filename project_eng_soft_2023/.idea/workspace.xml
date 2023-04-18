@@ -4,10 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="Controller comments and some fixes">
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="second implementation of RMI and adjustments on model and controller methods">
+      <change afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/LoginException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/InvalidParametersException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/InvalidParametersException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/NotConnectedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/NotConnectedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/NotMyTurnException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/NotMyTurnException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/InvalidLenghtException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/InvalidLenghtException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/NotAvailableTilesException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/NotAvailableTilesException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/NotEnoughSpaceException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/NotEnoughSpaceException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/NotInLineException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/NotInLineException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/model/BookshelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BookshelfTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +95,7 @@
       <module name="project_eng_soft_2023" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="controller.*" />
+          <option name="PATTERN" value="myShelfieException.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -100,7 +117,7 @@
       <module name="project_eng_soft_2023" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="model.*" />
+          <option name="PATTERN" value="myShelfieException.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -115,7 +132,7 @@
       <module name="project_eng_soft_2023" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="model.*" />
+          <option name="PATTERN" value="myShelfieException.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -131,7 +148,7 @@
       <module name="project_eng_soft_2023" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="model.*" />
+          <option name="PATTERN" value="myShelfieException.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -186,6 +203,7 @@
       <workItem from="1680635883376" duration="6663000" />
       <workItem from="1680694164595" duration="9215000" />
       <workItem from="1681450407280" duration="4751000" />
+      <workItem from="1681805805202" duration="6579000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
