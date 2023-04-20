@@ -10,6 +10,7 @@ public class PersonalGoalCard implements Card{
     public int score=0;
     Map<Tile, int[]> map = new HashMap<>();
 
+    private int cardNumber;
     /**
      * creation of a specific PersonalGoalCard
      * @param card indicates the type of PersonalGoalCard you want to create
@@ -125,6 +126,13 @@ public class PersonalGoalCard implements Card{
     public int getScore(Tile[][] shelf){
         updateScore(shelf);
         return score;
+    }
+
+    /**
+     * @return this.cardNumber
+     */
+    public int getCardNumber(){
+        return this.cardNumber;
     }
 
     /**

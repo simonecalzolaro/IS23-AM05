@@ -67,6 +67,9 @@ public class Bookshelf {
         this.pgc = pgc;
     }
 
+    public PersonalGoalCard getPgc(){
+        return this.pgc;
+    }
 
     /**
      *
@@ -304,7 +307,6 @@ public class Bookshelf {
 
         return points;
     }
-
 
 
     /**

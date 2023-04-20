@@ -4,27 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="second implementation of RMI and adjustments on model and controller methods">
-      <change afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/LoginException.java" afterDir="false" />
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="creation of myShelfieException package, method continueGame() added to ClientServerHandler interface, implementation of double choice in ClientApp (start a game, enter an old one)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/InvalidParametersException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/InvalidParametersException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/NotConnectedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/NotConnectedException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/NotMyTurnException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/NotMyTurnException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/InvalidLenghtException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/InvalidLenghtException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/NotAvailableTilesException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/NotAvailableTilesException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/NotEnoughSpaceException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/NotEnoughSpaceException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/NotInLineException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/NotInLineException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/PersonalGoalCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/PersonalGoalCard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/BookshelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BookshelfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/controller/GameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/GameTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +64,7 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
@@ -89,7 +82,7 @@
       <recent name="client" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="controller.Main" />
       <module name="project_eng_soft_2023" />
@@ -203,7 +196,11 @@
       <workItem from="1680635883376" duration="6663000" />
       <workItem from="1680694164595" duration="9215000" />
       <workItem from="1681450407280" duration="4751000" />
-      <workItem from="1681805805202" duration="6579000" />
+      <workItem from="1681805805202" duration="6889000" />
+      <workItem from="1681827373135" duration="3612000" />
+      <workItem from="1681844258686" duration="2291000" />
+      <workItem from="1681913361003" duration="12911000" />
+      <workItem from="1681982365135" duration="7455000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
@@ -261,7 +258,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680642204030</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="creation of myShelfieException package, method continueGame() added to ClientServerHandler interface, implementation of double choice in ClientApp (start a game, enter an old one)">
+      <created>1681812573636</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1681812573636</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,6 +291,7 @@
     <MESSAGE value="catch tile" />
     <MESSAGE value="Controller Implementation" />
     <MESSAGE value="creation of ServerApp and ClientApp with RMI and adjustments on ControlPlayer and Game" />
-    <option name="LAST_COMMIT_MESSAGE" value="creation of ServerApp and ClientApp with RMI and adjustments on ControlPlayer and Game" />
+    <MESSAGE value="creation of myShelfieException package, method continueGame() added to ClientServerHandler interface, implementation of double choice in ClientApp (start a game, enter an old one)" />
+    <option name="LAST_COMMIT_MESSAGE" value="creation of myShelfieException package, method continueGame() added to ClientServerHandler interface, implementation of double choice in ClientApp (start a game, enter an old one)" />
   </component>
 </project>

@@ -1,6 +1,8 @@
 package client;
 
 import model.Board;
+import model.CommonGoalCard;
+import model.PersonalGoalCard;
 import model.Tile;
 
 import java.rmi.Remote;
@@ -13,6 +15,6 @@ public interface ClientHandler extends Remote {
     boolean theGameEnd(Map<Integer, String> results)throws RemoteException;
     boolean startYourTurn()throws RemoteException;
     boolean endYourTurn()throws RemoteException;
-    boolean startPlaying() throws RemoteException;
+    boolean startPlaying(int pgc, int cgc1, int cgc2) throws RemoteException;
 
 }

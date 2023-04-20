@@ -5,18 +5,15 @@ import model.Board;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import org.json.simple.*;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 public class Game {
 
     /**
      * Unique Game ID
-     *
      */
-
-    private JSONObject backupJSON;
     private final int gameID;
 
     /**
@@ -171,7 +168,36 @@ public class Game {
     }
 
 
+    /**
+     * @return a map of ordered players from the player with the highest score to the player with the lowest
+     */
+    public  Map<Integer, String> getGameResults(){
 
+        ArrayList<Integer> scores = players.stream()
+                .map(x->x.getBookshelf().getMyScore())
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        ArrayList<String> nicks = players.stream()
+                .map(x->x.getPlayerNickname())
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        Map<Integer, String> res= new HashMap<>();
+
+        for(int i=0; i<scores.size(); i++){
+            res.put(scores.get(i), nicks.get(i));
+        }
+
+        return res.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors
+                        .toMap(
+                                Map.Entry::getKey,
+                                Map.Entry::getValue,
+                                (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+
+
+    }
 
 
 

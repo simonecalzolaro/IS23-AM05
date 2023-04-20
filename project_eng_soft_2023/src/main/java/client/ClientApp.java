@@ -4,15 +4,21 @@ package client;
 import controller.ClientServerHandler;
 import controller.GameHandler;
 
+import model.CommonGoalCard;
+import model.PersonalGoalCard;
 import model.Tile;
+import myShelfieException.*;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -24,12 +30,22 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
     private Tile board[][];
     private Tile shelf[][];
 
+    private  int pgc;
+    private int cgc1;
+    private int cgc2;
+
     private String nickName;
     private boolean myTurn;
     private boolean gameEnded;
+    private boolean connectionType;
 
+    //-------------- RMI attributes --------------
     private ClientServerHandler clientServerHandler;
     private GameHandler gameHandler;
+
+    //-------------- socket attributes --------------
+    //... ----SimoSocket
+
 
     /**
      * constructor of ClientApp
@@ -89,31 +105,36 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
         }
 
         do {
-
-            try {
-
                 int num;
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
                 //-------questa parte andrà migliorata in GUI e TUI
 
+                System.out.println("0 --> socket");
+                System.out.println("1 --> RMI");
+                Scanner scan = new Scanner(System.in);
+                connectionType = (scan.nextInt()%2 == 0) ? false : true;
+
                 do {
                     System.out.println("0 --> start a new game");
                     System.out.println("1 --> continue a Game");
-                    Scanner scan = new Scanner(System.in);
                     num = scan.nextInt();
 
                 }while (num!=0 &&  num!=1);
+
+            try {
 
                 switch (num) {
 
                     case 0:
                         System.out.println("nickname: ");
                         nickName = br.readLine();
-                        System.out.println("-------------------");
+                        System.out.println("-----------------------");
 
                         //login of the new player
-                        this.gameHandler = clientServerHandler.login(nickName, this);
+                        this.gameHandler = askLogin();
+                        System.out.println("-----login successfully");
+
                         break;
 
                     case 1:
@@ -122,7 +143,8 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
                         System.out.println("-------------------");
 
                         //login of the new player
-                        this.gameHandler = clientServerHandler.continueGame(nickName, this);
+                        this.gameHandler = askContinueGame();
+                        System.out.println("-----login successfully");
                         break;
                 }
 
@@ -136,7 +158,6 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
 
         }while(nickName.equals(""));
 
-        System.out.println("...you are now in the waiting room..." );
 
     }
 
@@ -184,13 +205,9 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
                 this.board[row][col]= board[row][col]; //------------- gli elementi sono oggetti, facendo così copio il puntatore, devo usare una clone
             }
         }
-        try {
 
-            gameHandler.getMyScore(this);
-
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+         //   gameHandler.getMyScore();
+        System.out.println("the board has been updated...");
 
         return true;
 
@@ -222,6 +239,7 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
     @Override
     public boolean startYourTurn() throws RemoteException{
 
+        System.out.println(" make a move "+ nickName + " is your turn");
         myTurn=true;
         return true;
 
@@ -244,16 +262,132 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      * @throws RemoteException
      */
     @Override
-    public boolean startPlaying() throws RemoteException {
+    public boolean startPlaying( int pgc, int cgc1, int cgc2) throws RemoteException {
 
         System.out.print("\033[H\033[2J");
         System.out.flush();
         System.out.println("let's go!! The game has started ! ");
         System.out.println("is your turn? make a move =) ");
-        //qua dentro verrà poi lanciata la gui o la cli
+
+        this.pgc=pgc;
+        this.cgc1=cgc1;
+        this.cgc2=cgc2;
+
+        //----qua dentro verrà poi lanciata la gui o la cli
 
         return true;
 
     }
+
+
+
+    //-------------------------------------- RMI vs Socket layer --------------------------------------
+
+
+    /**
+     * asks the server to log in, is divided in RMI and socket
+     * @return GameHandler interface
+     * @throws LoginException
+     * @throws IOException
+     * @throws RemoteException
+     */
+    public GameHandler askLogin() throws LoginException, IOException, RemoteException{
+
+        if(connectionType){
+            //RMI calling
+            return clientServerHandler.login(nickName, this, true);
+        }
+        else{
+            //socket calling
+            return null; //----SimoSocket
+        }
+    }
+
+    /**
+     * asks the server to continue a game, is divided in RMI and socket
+     * @return GameHandler interface
+     * @throws LoginException
+     * @throws RemoteException
+     */
+    public GameHandler askContinueGame() throws LoginException, RemoteException {
+
+        if(connectionType){
+            //RMI calling
+            return clientServerHandler.continueGame(nickName, this, true);
+        }
+        else{
+            //socket calling
+            return null; //----SimoSocket
+        }
+    }
+
+    /**
+     * asks the server to leave the game I'm playing, is divided in RMI and socket
+     * @return true if everything went fine
+     * @throws RemoteException
+     */
+    public boolean askLeaveGame() throws RemoteException {
+
+        if(this.connectionType){
+            //RMI calling
+            return clientServerHandler.leaveGame(this);
+        }
+        else{
+            //socket calling
+            return false; //----SimoSocket
+        }
+    }
+
+    /**
+     * asks the server to leave the game I'm playing, is divided in RMI and socket
+     * @param chosenTiles
+     * @param coord
+     * @return true if everything went fine
+     * @throws NotInLineException
+     * @throws NotConnectedException
+     * @throws NotEnoughSpaceException
+     * @throws NotAvailableTilesException
+     * @throws InvalidParametersException
+     * @throws RemoteException
+     * @throws NotMyTurnException
+     */
+    public boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws NotInLineException, NotConnectedException, NotEnoughSpaceException, NotAvailableTilesException, InvalidParametersException, RemoteException, NotMyTurnException {
+
+        if(this.connectionType){
+            //RMI calling
+            return gameHandler.choseBoardTiles(chosenTiles, coord);
+        }
+        else{
+            //socket calling
+            return false; //----SimoSocket
+        }
+    }
+
+    boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn ) throws RemoteException, NotConnectedException, NotMyTurnException, NotEnoughSpaceException, InvalidLenghtException{
+
+        if(this.connectionType){
+            //RMI calling
+            return gameHandler.insertShelfTiles(choosenTiles, choosenColumn);
+        }
+        else{
+            //socket calling
+            return false; //----SimoSocket
+        }
+
+    }
+
+    int askGetMyScore() throws RemoteException{
+
+        if(this.connectionType){
+            //RMI calling
+            return gameHandler.getMyScore();
+        }
+        else{
+            //socket calling
+            return -1; //----SimoSocket
+        }
+    }
+
+
 
 }
