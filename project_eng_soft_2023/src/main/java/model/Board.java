@@ -1,8 +1,6 @@
 package model;
 
-import myShelfieException.NotAvailableTilesException;
-import myShelfieException.NotEnoughSpaceException;
-import myShelfieException.NotInLineException;
+import myShelfieException.InvalidChoiceException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,31 +86,34 @@ public class Board {
             }
         }
 
-        if(nPlayers==3){
-            //3 players settings
-            board[0][4]=Tile.NOTAVAILABLE;
-            board[1][5]=Tile.NOTAVAILABLE;
-            board[3][1]= Tile.NOTAVAILABLE;
-            board[4][0]=Tile.NOTAVAILABLE;
-            board[4][8]=Tile.NOTAVAILABLE;
-            board[5][7]=Tile.NOTAVAILABLE;
-            board[7][3]=Tile.NOTAVAILABLE;
-            board[8][4]=Tile.NOTAVAILABLE;
-        } else if(nPlayers==2){
-            //2 players settings
-            board[0][3]=Tile.NOTAVAILABLE;
-            board[2][2]=Tile.NOTAVAILABLE;
-            board[2][6]=Tile.NOTAVAILABLE;
-            board[3][8]=Tile.NOTAVAILABLE;
-            board[5][0]=Tile.NOTAVAILABLE;
-            board[6][2]=Tile.NOTAVAILABLE;
-            board[6][6]=Tile.NOTAVAILABLE;
-            board[8][5]=Tile.NOTAVAILABLE;
+        switch (nPlayers) {
+            case 3 -> {
+                //3 players settings
+                board[0][4] = Tile.NOTAVAILABLE;
+                board[1][5] = Tile.NOTAVAILABLE;
+                board[3][1] = Tile.NOTAVAILABLE;
+                board[4][0] = Tile.NOTAVAILABLE;
+                board[4][8] = Tile.NOTAVAILABLE;
+                board[5][7] = Tile.NOTAVAILABLE;
+                board[7][3] = Tile.NOTAVAILABLE;
+                board[8][4] = Tile.NOTAVAILABLE;
+
+            }
+            case 2 -> {
+                //2 players settings
+                board[0][3] = Tile.NOTAVAILABLE;
+                board[2][2] = Tile.NOTAVAILABLE;
+                board[2][6] = Tile.NOTAVAILABLE;
+                board[3][8] = Tile.NOTAVAILABLE;
+                board[5][0] = Tile.NOTAVAILABLE;
+                board[6][2] = Tile.NOTAVAILABLE;
+                board[6][6] = Tile.NOTAVAILABLE;
+                board[8][5] = Tile.NOTAVAILABLE;
+
+            }
         }
 
         //fill completely the board
-
-
         updateBoard();
         setCommonGoalCard();
     }
@@ -193,14 +194,13 @@ public class Board {
      * check if the matrix is to be filled (if true fill the board)
      */
     public void updateBoard(){
-        for(int i=0; i<9; i++){
-            for(int j=0; j<9;j++){
-                catchableTiles[i][j]=okTile(i,j);
-            }
-        }
-
 
         if(emptyBoard()) fill();
+        for(int i=0; i<9; i++) {
+            for (int j = 0; j < 9; j++) {
+                catchableTiles[i][j] = okTile(i, j);
+            }
+        }
     }
 
     /**
@@ -309,51 +309,47 @@ public class Board {
     }
 
     /**
-     * The player catches 1 tile
+     * The player catches 1 tile, check if the move is allowed
      * @param i1 row
      * @param j1 column
      * @return list of tile taken
-     * @throws NotAvailableTilesException the tile is not catchable
+     * @throws InvalidChoiceException the tile is not catchable
      */
-    public List<Tile> subTiles(Integer i1, Integer j1) throws NotAvailableTilesException {
+    public List<Tile> chooseTiles(Integer i1, Integer j1) throws InvalidChoiceException {
         //catch one tiles
         List<Tile> temp = new ArrayList<>();
         if(!catchableTiles[i1][j1]){
-            throw new NotAvailableTilesException();
+            throw new InvalidChoiceException("These tiles are not catchable");
         } else {
             temp.add(board[i1][j1]);
-            board[i1][j1]=Tile.EMPTY;
             return temp;
         }
 
     }
 
+
     /**
-     * The player catches 2 tiles
+     * The player catches 2 tiles, check if the move is allowed
      * @param i1 row first tile
      * @param j1 column first tile
      * @param i2 row second tile
      * @param j2 column second tile
      * @param shelf bookshelf of the player
      * @return list of the tiles taken
-     * @throws NotAvailableTilesException one or more tiles are not catchable
-     * @throws NotEnoughSpaceException the player has no enough space in his bookshelf for 2 tiles
-     * @throws NotInLineException the tiles are not in line
+     * @throws InvalidChoiceException one or more tiles are not catchable, the player has no enough space in his bookshelf for 2 tiles or the tiles are not in line
      */
-    public List<Tile> subTiles(Integer i1, Integer j1, Integer i2, Integer j2, Bookshelf shelf) throws NotAvailableTilesException, NotEnoughSpaceException, NotInLineException {
+    public List<Tile> chooseTiles(Integer i1, Integer j1, Integer i2, Integer j2, Bookshelf shelf) throws InvalidChoiceException {
         //catch two tiles
         List<Tile> temp = new ArrayList<>();
         if(!catchableTiles[i1][j1]||!catchableTiles[i2][j2]){
-            throw new NotAvailableTilesException();
+            throw new InvalidChoiceException("These tiles are not catchable");
         } else if(shelf.maxShelfSpace()<2){
-            throw new NotEnoughSpaceException();
+            throw new InvalidChoiceException("You don't have enough space in your board");
         } else if(!inLine(i1,j1,i2,j2)){
-            throw new NotInLineException();
+            throw new InvalidChoiceException("Invalid salection");
         } else {
             temp.add(board[i1][j1]);
-            board[i1][j1]=Tile.EMPTY;
             temp.add(board[i2][j2]);
-            board[i2][j2]=Tile.EMPTY;
             return temp;
         }
     }
@@ -373,7 +369,7 @@ public class Board {
     }
 
     /**
-     * The player catches 3 tiles
+     * The player catches 3 tiles, check if the move is allowed
      * @param i1 row first tile
      * @param j1 column first tile
      * @param i2 row second tile
@@ -382,26 +378,21 @@ public class Board {
      * @param j3 column third tile
      * @param shelf bookshelf of the player
      * @return list of the tiles taken
-     * @throws NotAvailableTilesException one or more tiles are not catchable
-     * @throws NotEnoughSpaceException the player has no enough space in his bookshelf for 3 tiles
-     * @throws NotInLineException the tiles are not in line
+     * @throws InvalidChoiceException one or more tiles are not catchable, the player has no enough space in his bookshelf for 3 tiles or tiles are not in line
      */
-    public List<Tile> subTiles(Integer i1, Integer j1, Integer i2, Integer j2, Integer i3, Integer j3, Bookshelf shelf) throws NotAvailableTilesException, NotEnoughSpaceException, NotInLineException {
+    public List<Tile> chooseTiles(Integer i1, Integer j1, Integer i2, Integer j2, Integer i3, Integer j3, Bookshelf shelf) throws InvalidChoiceException {
         //catch 3 tiles
         List<Tile> temp = new ArrayList<>();
         if(!catchableTiles[i1][j1]||!catchableTiles[i2][j2]||!catchableTiles[i3][j3]){
-            throw new NotAvailableTilesException();
+            throw new InvalidChoiceException("These tiles are not catchable");
         } else if(shelf.maxShelfSpace()<3){
-            throw new NotEnoughSpaceException();
+            throw new InvalidChoiceException("You don't have enough space in your board");
         } else if(!inLine(i1,j1,i2,j2,i3,j3)) {
-            throw new NotInLineException();
+            throw new InvalidChoiceException("Invalid salection");
         } else{
             temp.add(board[i1][j1]);
-            board[i1][j1]=Tile.EMPTY;
             temp.add(board[i2][j2]);
-            board[i2][j2]=Tile.EMPTY;
             temp.add(board[i3][j3]);
-            board[i3][j3]=Tile.EMPTY;
             return temp;
         }
     }
@@ -439,6 +430,26 @@ public class Board {
                     (c==b-1&&b==a-1);
     }
 
+    /**
+     *clear the tiles taken from the board
+     * @param coord: tile coordinates
+     */
+    public void subTiles(List<Integer> coord){
+        switch (coord.size()) {
+            case 2 -> board[coord.get(0)][coord.get(1)] = Tile.EMPTY;
+            case 4 -> {
+                board[coord.get(0)][coord.get(1)] = Tile.EMPTY;
+                board[coord.get(2)][coord.get(3)] = Tile.EMPTY;
+            }
+            case 6 -> {
+                board[coord.get(0)][coord.get(1)] = Tile.EMPTY;
+                board[coord.get(2)][coord.get(3)] = Tile.EMPTY;
+                board[coord.get(4)][coord.get(5)] = Tile.EMPTY;
+            }
+            default -> throw new IllegalArgumentException();
+        }
+
+    }
     /**
      *
      * @return number of empty tiles
@@ -507,7 +518,7 @@ public class Board {
     /**
      * set EOG true if the EOG token is assigned
      */
-    protected void setEOG() {
+    public void setEOG() {
         this.EOG = true;
     }
 

@@ -1,8 +1,8 @@
 package model;
 
 
+import myShelfieException.InvalidChoiceException;
 import myShelfieException.InvalidLenghtException;
-import myShelfieException.NotEnoughSpaceException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -20,11 +20,11 @@ class BookshelfTest {
      * 3)method receive an index of ouf bounds
      * 4)method receives valid parameters so the insertion is valid
      * @throws InvalidLenghtException
-     * @throws NotEnoughSpaceException
+     * @throws InvalidChoiceException
      */
 
     @Test
-    void putTiles() throws InvalidLenghtException, NotEnoughSpaceException {
+    void putTiles() throws InvalidLenghtException, InvalidChoiceException {
         Board board = new Board();
         board.initializeBoard(4);
         Bookshelf b = new Bookshelf(board);
@@ -44,7 +44,7 @@ class BookshelfTest {
         });
 
         //caso colonna selezionata piena
-        Assertions.assertThrows(NotEnoughSpaceException.class, ()->{
+        Assertions.assertThrows(InvalidChoiceException.class, ()->{
             b.putTiles(arr1,3);
             b.putTiles(arr1,3);
             b.putTiles(arr1,3);
@@ -72,10 +72,10 @@ class BookshelfTest {
      * 2)full shelf
      * 3)randomly filled shelf
      * @throws InvalidLenghtException
-     * @throws NotEnoughSpaceException
+     * @throws InvalidChoiceException
      */
     @Test
-    void maxShelfSpace() throws InvalidLenghtException, NotEnoughSpaceException {
+    void maxShelfSpace() throws InvalidLenghtException, InvalidChoiceException {
         Board board = new Board();
         board.initializeBoard(4);
         Bookshelf b = new Bookshelf(board);
@@ -127,11 +127,11 @@ class BookshelfTest {
      * 2)Scored points having a full shelf with tiles with the same color
      * 3)Scored points having a randomly filled shelf
      * @throws InvalidLenghtException
-     * @throws NotEnoughSpaceException
+     * @throws InvalidChoiceException
      */
 
     @Test
-    void getScoreGroups() throws InvalidLenghtException, NotEnoughSpaceException {
+    void getScoreGroups() throws InvalidLenghtException, InvalidChoiceException {
         Board board = new Board();
         board.initializeBoard(4);
         Bookshelf b = new Bookshelf(board);
@@ -178,16 +178,6 @@ class BookshelfTest {
 
 
         assertEquals(18,b1.getScoreGroups());
-
-
-
-
-
-
-
-
-
-
 
     }
 
@@ -252,11 +242,11 @@ class BookshelfTest {
      * to assing a pre-established PersonalGoalCard
      * This test analyze all the cases for receiving points (from 0 to 12 points)
      * @throws InvalidLenghtException
-     * @throws NotEnoughSpaceException
+     * @throws InvalidChoiceException
      */
 
     @Test
-    void getScorePGC() throws InvalidLenghtException, NotEnoughSpaceException {
+    void getScorePGC() throws InvalidLenghtException, InvalidChoiceException {
         Board board = new Board();
         board.initializeBoard(4);
         Bookshelf b = new Bookshelf(board);
@@ -319,11 +309,11 @@ class BookshelfTest {
      * 2)Game's ended but current player doesn't win
      * 3)Game's ended and current player win
      * @throws InvalidLenghtException
-     * @throws NotEnoughSpaceException
+     * @throws InvalidChoiceException
      */
 
     @Test
-    void checkEOG() throws InvalidLenghtException, NotEnoughSpaceException {
+    void checkEOG() throws InvalidLenghtException, InvalidChoiceException {
         Board board = new Board();
         board.initializeBoard(4);
         Bookshelf b = new Bookshelf(board);
@@ -362,11 +352,11 @@ class BookshelfTest {
     /**
      * Similar to the previous test
      * @throws InvalidLenghtException
-     * @throws NotEnoughSpaceException
+     * @throws InvalidChoiceException
      */
 
     @Test
-    void getScoreEOG() throws InvalidLenghtException, NotEnoughSpaceException {
+    void getScoreEOG() throws InvalidLenghtException, InvalidChoiceException {
         Board board = new Board();
         board.initializeBoard(4);
         Bookshelf b = new Bookshelf(board);

@@ -19,7 +19,7 @@ public class BagTest {
 
     @Test
     public void testGetTilesFullBag(){
-
+        bag = new Bag();
         assertEquals(0, bag.getTilesNum());
         bag.initializeBag();
         Tile tile;

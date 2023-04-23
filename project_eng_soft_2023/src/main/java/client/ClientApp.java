@@ -343,15 +343,13 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      * @param chosenTiles
      * @param coord
      * @return true if everything went fine
-     * @throws NotInLineException
+     * @throws InvalidChoiceException
      * @throws NotConnectedException
-     * @throws NotEnoughSpaceException
-     * @throws NotAvailableTilesException
      * @throws InvalidParametersException
      * @throws RemoteException
      * @throws NotMyTurnException
      */
-    public boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws NotInLineException, NotConnectedException, NotEnoughSpaceException, NotAvailableTilesException, InvalidParametersException, RemoteException, NotMyTurnException {
+    public boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
 
         if(this.connectionType){
             //RMI calling
@@ -363,11 +361,11 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
         }
     }
 
-    boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn ) throws RemoteException, NotConnectedException, NotMyTurnException, NotEnoughSpaceException, InvalidLenghtException{
+    boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
 
         if(this.connectionType){
             //RMI calling
-            return gameHandler.insertShelfTiles(choosenTiles, choosenColumn);
+            return gameHandler.insertShelfTiles(choosenTiles, choosenColumn, coord);
         }
         else{
             //socket calling

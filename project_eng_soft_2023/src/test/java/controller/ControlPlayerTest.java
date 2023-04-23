@@ -1,10 +1,10 @@
 package controller;
 
 import model.Board;
+import model.Tile;
+import myShelfieException.InvalidChoiceException;
 import myShelfieException.InvalidLenghtException;
 import myShelfieException.NotConnectedException;
-import myShelfieException.NotEnoughSpaceException;
-import model.Tile;
 import myShelfieException.NotMyTurnException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,14 +21,14 @@ class ControlPlayerTest {
      * and the exception thrown by the model
      *
      * @throws NotConnectedException
-     * @throws NotEnoughSpaceException
+     * @throws InvalidChoiceException
      * @throws NotMyTurnException
      * @throws InvalidLenghtException
      */
 
 
     @Test
-    void insertTiles() throws NotConnectedException, NotEnoughSpaceException, NotMyTurnException, InvalidLenghtException, RemoteException {
+    void insertTiles() throws NotConnectedException, InvalidChoiceException, NotMyTurnException, InvalidLenghtException, RemoteException {
         Board board = new Board();
         board.initializeBoard(4);
         ControlPlayer cp = new ControlPlayer("Tony", board);
@@ -66,7 +66,7 @@ class ControlPlayerTest {
         });
 
         //caso colonna selezionata piena
-        Assertions.assertThrows(NotEnoughSpaceException.class, ()->{
+        Assertions.assertThrows(InvalidChoiceException.class, ()->{
             cp.insertTiles(arr1,3);
             cp.insertTiles(arr1,3);
             cp.insertTiles(arr1,3);

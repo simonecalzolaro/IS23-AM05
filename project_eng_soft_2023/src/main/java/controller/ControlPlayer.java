@@ -74,7 +74,7 @@ public class ControlPlayer extends UnicastRemoteObject implements GameHandler{
      * @throws NotConnectedException : the player is not connected
      * @return always true when
      */
-    public boolean insertTiles(ArrayList<Tile> stream_tiles, int column) throws NotMyTurnException, NotConnectedException, NotEnoughSpaceException, InvalidLenghtException {
+    public boolean insertTiles(ArrayList<Tile> stream_tiles, int column) throws NotMyTurnException, NotConnectedException, InvalidLenghtException, InvalidChoiceException {
 
         if(playerStatus == PlayerStatus.NOT_MY_TURN){
             throw new NotMyTurnException();
@@ -101,31 +101,27 @@ public class ControlPlayer extends UnicastRemoteObject implements GameHandler{
      * @param coord list
      * @return List of catch tiles
      * @throws InvalidParametersException the list of coordinates is not compliant
-     * @throws NotAvailableTilesException the tiles selected are not catchable
-     * @throws NotEnoughSpaceException the player does not have enough space in the bookshelf
-     * @throws NotInLineException the tiles selected are not in line
+     * @throws InvalidChoiceException the tiles selected are not catchable, the player have no enough space in his bookshelf or tiles are not in line
      * @throws NotMyTurnException the player status is NOT_MY_TURN (the move is not allowed)
      * @throws NotConnectedException the player is not connected
      */
-    public List<Tile> catchTile(List<Integer> coord) throws InvalidParametersException, NotAvailableTilesException, NotEnoughSpaceException, NotInLineException, NotMyTurnException, NotConnectedException {
+    public List<Tile> catchTile(List<Integer> coord) throws InvalidParametersException, InvalidChoiceException, NotMyTurnException, NotConnectedException {
 
-        List<Tile> temp= new ArrayList<>();
 
-        if(playerStatus==PlayerStatus.NOT_MY_TURN) {
+        if (playerStatus == PlayerStatus.NOT_MY_TURN) {
             throw new NotMyTurnException();
-        }
-
-        else if(playerStatus == PlayerStatus.NOT_ONLINE){
+        } else if (playerStatus == PlayerStatus.NOT_ONLINE) {
             throw new NotConnectedException();
+        } else {
+            return switch (coord.size()) {
+                case 2 -> bookshelf.getBoard().chooseTiles(coord.get(0), coord.get(1));
+                case 4 ->
+                        bookshelf.getBoard().chooseTiles(coord.get(0), coord.get(1), coord.get(2), coord.get(3), bookshelf);
+                case 6 ->
+                        bookshelf.getBoard().chooseTiles(coord.get(0), coord.get(1), coord.get(2), coord.get(3), coord.get(4), coord.get(5), bookshelf);
+                default -> throw new InvalidParametersException();
+            };
         }
-
-        else if(coord.size()!=2 && coord.size()!=4 && coord.size()!=6) {
-             throw new InvalidParametersException();
-         }
-
-        else if (coord.size()==2) return bookshelf.getBoard().subTiles(coord.get(0), coord.get(1));
-        else if (coord.size()==4) return bookshelf.getBoard().subTiles(coord.get(0), coord.get(1), coord.get(2), coord.get(3), bookshelf);
-        else return bookshelf.getBoard().subTiles(coord.get(0), coord.get(1), coord.get(2), coord.get(3),coord.get(4), coord.get(5), bookshelf);
     }
 
 
@@ -141,11 +137,11 @@ public class ControlPlayer extends UnicastRemoteObject implements GameHandler{
      * @return true if the chosen tiles are valid
      */
     @Override
-    public boolean choseBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws RemoteException, NotConnectedException, NotEnoughSpaceException, NotAvailableTilesException, InvalidParametersException, NotMyTurnException, NotInLineException {
+    public boolean choseBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws RemoteException, NotConnectedException, InvalidParametersException, NotMyTurnException, InvalidChoiceException {
 
         if ( catchTile(coord).equals(chosenTiles)){
 
-            /* updating the Board of all clients is not necessary here, i can do it in insertShelfTiles() only
+            /* updating the Board of all clients is not necessary here, I can do it in insertShelfTiles() only
 
             Game g= (Game)games.stream().filter(x->x.getPlayers().contains(clients.get(ch)));
 
@@ -170,16 +166,17 @@ public class ControlPlayer extends UnicastRemoteObject implements GameHandler{
      * method called by clients to insert the tiles they choose from the board into their bookshelf
      * @param chosenTiles ordered list of tiles, from the lowest one to the top one
      * @param choosenColumn column where to insert the tiles
+     * @param coord tile coordinates
      * @throws NotConnectedException
      * @throws NotMyTurnException
      */
     @Override
-    public boolean insertShelfTiles(ArrayList<Tile> chosenTiles, int choosenColumn ) throws RemoteException, NotConnectedException, NotMyTurnException, NotEnoughSpaceException, InvalidLenghtException {
+    public boolean insertShelfTiles(ArrayList<Tile> chosenTiles, int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidLenghtException, InvalidChoiceException {
 
         //inserting the tiles in the bookshelf
 
         if( ! insertTiles(chosenTiles, choosenColumn)) return false;
-
+        game.getBoard().subTiles(coord);
         //tell to ch that his turn is completed
         try {
             notifyEndYourTurn();
@@ -323,7 +320,6 @@ public class ControlPlayer extends UnicastRemoteObject implements GameHandler{
     public String getPlayerNickname() {
         return nickname;
     }
-
     /**
      *
      * @return playerStatus

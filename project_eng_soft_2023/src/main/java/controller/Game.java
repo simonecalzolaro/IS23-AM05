@@ -13,7 +13,9 @@ public class Game {
 
     /**
      * Unique Game ID
+     *
      */
+
     private final int gameID;
 
     /**
@@ -171,7 +173,7 @@ public class Game {
     /**
      * @return a map of ordered players from the player with the highest score to the player with the lowest
      */
-    public  Map<Integer, String> getGameResults(){
+    public Map<Integer, String> getGameResults(){
 
         ArrayList<Integer> scores = players.stream()
                 .map(x->x.getBookshelf().getMyScore())

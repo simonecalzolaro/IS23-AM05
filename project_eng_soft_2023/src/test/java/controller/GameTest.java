@@ -4,7 +4,7 @@ import model.Board;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -40,7 +40,34 @@ class GameTest {
     }
 
     @Test
-    void endTurn() {
+    void endTurn() throws IOException {
+        Board board = new Board();
+        board.initializeBoard(4);
+        ArrayList<ControlPlayer> players = new ArrayList<>();
+        players.add(new ControlPlayer("Ciro",board));
+        players.add(new ControlPlayer("Milo",board));
+        players.add(new ControlPlayer("Gino",board));
+        players.add(new ControlPlayer("Luis",board));
+        Game game = new Game(players,board);
+
+        Assertions.assertEquals(0,game.getCurrPlayer());
+        game.endTurn();
+        Assertions.assertEquals(1,game.getCurrPlayer());
+        game.endTurn();
+        Assertions.assertEquals(2,game.getCurrPlayer());
+        game.endTurn();
+        Assertions.assertEquals(3,game.getCurrPlayer());
+        game.endTurn();
+        Assertions.assertEquals(0,game.getCurrPlayer());
+        game.getPlayers().get(1).setPlayerStatus(PlayerStatus.NOT_ONLINE);
+        game.endTurn();
+        Assertions.assertEquals(2,game.getCurrPlayer());
+        game.getPlayers().get(1).setPlayerStatus(PlayerStatus.NOT_ONLINE);
+        board.setEOG();
+        game.endTurn();
+        Assertions.assertEquals(3,game.getCurrPlayer());
+        game.endTurn();
+        Assertions.assertEquals(PlayerStatus.NOT_MY_TURN,game.getPlayers().get(game.getCurrPlayer()).getPlayerStatus());
 
     }
 

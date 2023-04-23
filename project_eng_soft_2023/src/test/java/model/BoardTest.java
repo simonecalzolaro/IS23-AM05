@@ -5,15 +5,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import myShelfieException.NotAvailableTilesException;
-import myShelfieException.NotEnoughSpaceException;
-import myShelfieException.NotInLineException;
+import myShelfieException.InvalidChoiceException;
 import org.junit.jupiter.api.Test;
 
 public class BoardTest  {
 
     private Board board;
-    private Bag bag;
 
     @Test
     public void testInitializeBoard() {
@@ -24,7 +21,7 @@ public class BoardTest  {
 
 
         assertEquals(4, board.getNPlayers());
-        bag=null;
+        Bag bag = null;
         board=null;
     }
 
@@ -187,10 +184,11 @@ public class BoardTest  {
     }
 
     @Test
-    public void testSubTiles() throws NotAvailableTilesException, NotEnoughSpaceException, NotInLineException {
+    public void testSubTiles() throws InvalidChoiceException{
         board = new Board();
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);
+
         for(int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 if(board.getBoard()[i][j]!=Tile.NOTAVAILABLE){
@@ -199,17 +197,22 @@ public class BoardTest  {
             }
         }
 
-        PersonalGoalCard pgc= new PersonalGoalCard(2) ;
-
         Bookshelf bookshelf= new Bookshelf(board);
         board.setTile(6,5,Tile.LIGHTBLUE);
         board.setTile(6,4,Tile.LIGHTBLUE);
         board.setTile(6,3,Tile.LIGHTBLUE);
 
         board.updateBoard();
-        List<Tile> temp=new ArrayList<>();
-        temp=board.subTiles(6,5,6,4,6,3, bookshelf);
-
+        List<Tile> temp;
+        temp=board.chooseTiles(6,5,6,4,6,3, bookshelf);
+        List<Integer> coord=new ArrayList<>();
+        coord.add(6);
+        coord.add(5);
+        coord.add(6);
+        coord.add(4);
+        coord.add(6);
+        coord.add(3);
+        board.subTiles(coord);
         int i = 6;
         for(int j=3; j<=5; j++){
             assertEquals(board.getBoard()[i][j], Tile.EMPTY);

@@ -1,8 +1,8 @@
 
 package model;
 
+import myShelfieException.InvalidChoiceException;
 import myShelfieException.InvalidLenghtException;
-import myShelfieException.NotEnoughSpaceException;
 
 import java.util.ArrayList;
 
@@ -38,7 +38,7 @@ public class Bookshelf {
      * every update on the board must be visible to every player and so,  to everyone using a bookshelf
      * this motivates the choice of the static method for the attribute
      */
-    private static Board board;
+    private Board board;
 
 
     /**
@@ -82,7 +82,7 @@ public class Bookshelf {
      *
      *
      */
-    public boolean putTiles(ArrayList<Tile> stream_tiles, int column) throws IndexOutOfBoundsException, InvalidLenghtException, NotEnoughSpaceException {
+    public boolean putTiles(ArrayList<Tile> stream_tiles, int column) throws IndexOutOfBoundsException, InvalidLenghtException, InvalidChoiceException {
 
         if(stream_tiles.size() > 3 || stream_tiles.size() <=0) throw new InvalidLenghtException();
         else if (column <0 || column >=5) throw new IndexOutOfBoundsException();
@@ -95,8 +95,7 @@ public class Bookshelf {
                 if(shelf[i][column] == Tile.EMPTY) count_col++;
             }
 
-            if(count_col < stream_tiles.size()) throw new NotEnoughSpaceException(); //codice -1 rappresenta una colonna invalida
-
+            if(count_col < stream_tiles.size()) throw new InvalidChoiceException("Invalid salection"); //codice -1 rappresenta una colonna invalida
             int stream_tiles_pointer = 0;
             for(int i = 0; i<r; i++){
                 if(shelf[i][column] == Tile.EMPTY && stream_tiles.get(stream_tiles_pointer) != Tile.EMPTY && stream_tiles.get(stream_tiles_pointer) != Tile.NOTAVAILABLE){
@@ -356,7 +355,7 @@ public class Bookshelf {
     }
 
 
-    public static Board getBoard() {
+    public Board getBoard() {
         return board;
     }
 
