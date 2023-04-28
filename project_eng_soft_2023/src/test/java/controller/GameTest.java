@@ -19,10 +19,10 @@ class GameTest {
         ArrayList<ControlPlayer> players = new ArrayList<>();
         Board board = new Board();
         board.initializeBoard(4);
-        players.add(new ControlPlayer("Ciro",board));
-        players.add(new ControlPlayer("Milo",board));
-        players.add(new ControlPlayer("Gino",board));
-        players.add(new ControlPlayer("Luis",board));
+        players.add(new RMIControlPlayer("Ciro",board));
+        players.add(new RMIControlPlayer("Milo",board));
+        players.add(new RMIControlPlayer("Gino",board));
+        players.add(new RMIControlPlayer("Luis",board));
 
         Game game1 = new Game(players,board);
 
@@ -44,10 +44,10 @@ class GameTest {
         Board board = new Board();
         board.initializeBoard(4);
         ArrayList<ControlPlayer> players = new ArrayList<>();
-        players.add(new ControlPlayer("Ciro",board));
-        players.add(new ControlPlayer("Milo",board));
-        players.add(new ControlPlayer("Gino",board));
-        players.add(new ControlPlayer("Luis",board));
+        players.add(new RMIControlPlayer("Ciro",board));
+        players.add(new RMIControlPlayer("Milo",board));
+        players.add(new RMIControlPlayer("Gino",board));
+        players.add(new RMIControlPlayer("Luis",board));
         Game game = new Game(players,board);
 
         Assertions.assertEquals(0,game.getCurrPlayer());

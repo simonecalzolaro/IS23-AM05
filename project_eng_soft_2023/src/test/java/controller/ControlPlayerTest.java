@@ -31,7 +31,7 @@ class ControlPlayerTest {
     void insertTiles() throws NotConnectedException, InvalidChoiceException, NotMyTurnException, InvalidLenghtException, RemoteException {
         Board board = new Board();
         board.initializeBoard(4);
-        ControlPlayer cp = new ControlPlayer("Tony", board);
+        ControlPlayer cp = new RMIControlPlayer("Tony", board);
 
         ArrayList<Tile> arr1= new ArrayList<>(){{add(Tile.BLUE); add(Tile.GREEN); add(Tile.WHITE);}};
 

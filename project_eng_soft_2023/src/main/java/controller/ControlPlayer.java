@@ -4,44 +4,40 @@ import client.ClientHandler;
 import model.*;
 import myShelfieException.*;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControlPlayer extends UnicastRemoteObject implements GameHandler{
+public abstract class ControlPlayer extends UnicastRemoteObject implements GameHandler{
 
     /**
      *Player id
      */
-    private final String nickname;
+    protected final String nickname;
 
     /**
      * player status
      */
 
-    private PlayerStatus playerStatus;
+    protected PlayerStatus playerStatus;
 
     /**
      * player bookshelf
      */
-    private final Bookshelf bookshelf;
+    protected final Bookshelf bookshelf;
 
     /**
      * player score
      */
-    private int score;
+    protected int score;
 
-    /**
-     * connectionType is:
-     * true if RMI,
-     * false if socket
-     */
-    private boolean connectionType;
+
 
     //RMI attributes-----------------------------
-    private Game game;
-    private ClientHandler ch;
+    protected Game game;
+    protected ClientHandler ch;
 
 
     //soket attributes--------------------------
@@ -180,7 +176,7 @@ public class ControlPlayer extends UnicastRemoteObject implements GameHandler{
         //tell to ch that his turn is completed
         try {
             notifyEndYourTurn();
-        } catch (RemoteException e) { throw new RuntimeException(e); }
+        } catch (IOException e) { throw new RuntimeException(e); }
 
         //Game.endTurn() is called to update the turn to the next player and update the game status
 
@@ -204,7 +200,7 @@ public class ControlPlayer extends UnicastRemoteObject implements GameHandler{
         try {
             ControlPlayer nextPlayer= game.getPlayers().get(game.getCurrPlayer());
             notifyStartYourTurn(nextPlayer.getClientHandler());
-        } catch (RemoteException e) { throw new RuntimeException(e); }
+        } catch (IOException e) { throw new RuntimeException(e); }
 
         return true;
 
@@ -233,80 +229,26 @@ public class ControlPlayer extends UnicastRemoteObject implements GameHandler{
      * @return true if everything went fine
      * @throws RemoteException
      */
-    public Boolean notifyStartYourTurn(ClientHandler nextClient) throws RemoteException {
-
-        if(connectionType){
-            //RMI calling
-            return nextClient.startYourTurn();
-        }
-        else{
-            //socket calling
-            return false; //----SimoSocket
-        }
-    }
+    public abstract Boolean notifyStartYourTurn(ClientHandler nextClient) throws IOException;
 
     /**
      * this method tells to the current user that his turn is finished, is divided in RMI and socket
      * @return true if everything went fine
      * @throws RemoteException
      */
-    public Boolean notifyEndYourTurn() throws RemoteException {
-
-        if(connectionType){
-            //RMI calling
-            return ch.endYourTurn();
-        }
-        else{
-            //socket calling
-            return false; //----SimoSocket
-        }
-    }
+    public abstract Boolean notifyEndYourTurn() throws IOException;
 
     /**
      * this method tells to all users to update their board to the new one, is divided in RMI and socket
      * @throws RemoteException
      */
-    public void notifyUpdatedBoard() throws RemoteException{
-
-        //for each client in the game I push the updated board
-        for(ControlPlayer player: game.getPlayers()) {
-
-            if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
-
-                if (connectionType) {
-                    //RMI calling
-                    while (!player.getClientHandler().updateBoard(game.getBoard().getBoard())); //----poco elegante
-
-                } else {
-                    //socket calling
-                    //----SimoSocket
-                }
-            }
-        }
-    }
+    public abstract void notifyUpdatedBoard() throws RemoteException;
 
     /**
      * this method tells to all users that the game they're playing is ended, is divided in RMI and socket
      * @throws RemoteException
      */
-    public void notifyEndGame() throws RemoteException{
-
-        //for each client in the game I notify the end of the game with the results of the match
-        for(ControlPlayer player: game.getPlayers()) {
-
-            if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
-
-                if (connectionType) {
-                    //RMI calling
-                    while( player.getClientHandler().theGameEnd(game.getGameResults()) ); //----poco elegante
-
-                } else {
-                    //socket calling
-                    //----SimoSocket
-                }
-            }
-        }
-    }
+    public abstract void notifyEndGame() throws RemoteException;
 
 
 
@@ -349,9 +291,7 @@ public class ControlPlayer extends UnicastRemoteObject implements GameHandler{
     /**
      * @return true if it's used RMI connection, false otherwise
      */
-    public boolean getConnectionType() {
-        return connectionType;
-    }
+
 
     /**
      * @param g of tupe Game
@@ -377,8 +317,6 @@ public class ControlPlayer extends UnicastRemoteObject implements GameHandler{
     /**
      * @param RMIconnection type boolean
      */
-    public void setConnectionType(boolean RMIconnection) {
-        this.connectionType = RMIconnection;
-    }
+
 
 }

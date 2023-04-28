@@ -4,6 +4,7 @@ import client.ClientHandler;
 import myShelfieException.LoginException;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -16,7 +17,7 @@ public interface ClientServerHandler extends Remote {
      * @param nickname
      * @return true if the login request is approved
      */
-    GameHandler login(String nickname, ClientHandler ch, Boolean connectionType) throws RemoteException, IOException, LoginException;
+    GameHandler login(String nickname, ClientHandler ch, Socket socket) throws RemoteException, IOException, LoginException;
 
     /**
      * Method called by a user who wants tu continue a game after a web or client's server crash
@@ -26,7 +27,7 @@ public interface ClientServerHandler extends Remote {
      * @throws RemoteException
      * @throws LoginException
      */
-    GameHandler continueGame(String nickname, ClientHandler ch, Boolean connectionType) throws RemoteException, LoginException;
+    GameHandler continueGame(String nickname, ClientHandler ch) throws RemoteException, LoginException;
 
 
     /**

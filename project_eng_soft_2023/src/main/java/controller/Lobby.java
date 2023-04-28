@@ -5,24 +5,24 @@ import model.*;
 import myShelfieException.*;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 /**
  * ServerApp is the running program of the server, it handles the remote clients and
  * all the actions each client wants to take
  */
-public class Lobby extends UnicastRemoteObject implements ClientServerHandler {
+public abstract class Lobby implements ClientServerHandler {
 
-    private Map<ClientHandler, ControlPlayer> clients;
-    private ArrayList< Game > games;
-    private static int attendedPlayers;
-    private Board tempBoard;
-    private ArrayList<ControlPlayer> tempPlayers;
+
+    protected static Map<ClientHandler, ControlPlayer> clients;
+    protected static ArrayList< Game > games;
+    protected static int attendedPlayers;
+    protected static Board tempBoard;
+    protected ArrayList<ControlPlayer> tempPlayers;
 
     /**
      * constructor for the ServerApp
@@ -32,7 +32,7 @@ public class Lobby extends UnicastRemoteObject implements ClientServerHandler {
 
         super();
 
-        clients = new HashMap<>();
+        clients = new ConcurrentHashMap<>(); //thread-safe
         games = new ArrayList<>();
         tempPlayers= new ArrayList<>();
         attendedPlayers = -1;
@@ -49,7 +49,8 @@ public class Lobby extends UnicastRemoteObject implements ClientServerHandler {
 
         try {
 
-            new Lobby().startServer();
+            new RMIServer().startServer();
+            new TCPHandlerLobby().startServer();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,25 +62,14 @@ public class Lobby extends UnicastRemoteObject implements ClientServerHandler {
      * start the server app and create a registry "ServerAppService" bound with "this" object
      * @throws RemoteException
      */
-    private void startServer() throws RemoteException {
 
-        Registry register = LocateRegistry.createRegistry(Settings.PORT);
-
-        try {
-            register.bind("ServerAppService", this);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("Server ready");
-
-    }
 
     public static class Settings {
         static int PORT = 1234;
         static String SERVER_NAME = "127.0.0.1";
     }
+
+    public abstract void startServer() throws RemoteException;
 
     /**
      * Method called by the client to log into the server to start a new game.
@@ -87,63 +77,8 @@ public class Lobby extends UnicastRemoteObject implements ClientServerHandler {
      * @param ch is the client interface. I need it to associate each client interface to a ControlPlayer
      * @throws RemoteException
      */
-    @Override
-    public GameHandler login(String nickname, ClientHandler ch, Boolean connectionType) throws RemoteException, IOException, LoginException {
 
-        if( clients.values().stream().map(x -> x.getPlayerNickname()).toList().contains(nickname) ) throw new LoginException("this nickname is not available at the moment");
-
-        else {
-
-            if(attendedPlayers==-1){ //if the isn't any waiting room it means that ch is the first player
-
-                tempBoard = new Board();
-                System.out.println("...a new board has been created...");
-
-                do{
-                    try {
-                        //server asks client how many players he wants in his match
-                        attendedPlayers=askNumberOfPlayers(ch, connectionType );
-                    } catch (RemoteException e) {
-                        attendedPlayers = -1;
-                        throw new RuntimeException(e);
-                    }
-                } while(attendedPlayers<2 || attendedPlayers>4);
-
-                //initializing the board with the chosen number of players
-                tempBoard.initializeBoard(attendedPlayers);
-                System.out.println("...player "+ nickname+ " created a game with "+ attendedPlayers+" players...");
-
-            }
-
-            //create a ControlPlayer
-            ControlPlayer pl= new ControlPlayer(nickname, tempBoard);
-            pl.setClientHandler(ch);
-            pl.setConnectionType(connectionType);
-            System.out.println("...player "+ nickname+ " entered the game ");
-
-            //add to the map "clients" the ClientHandler interface and the associated ControlPlayer
-            clients.put(ch, pl);
-            //tempPlayers is like a waiting room
-            tempPlayers.add(pl);
-
-            //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
-            if(tempPlayers.size() == attendedPlayers){
-
-                attendedPlayers = -1;
-                Game g = new Game( tempPlayers , tempBoard );
-                games.add( g );
-                tempPlayers.clear();
-
-
-                notifyStartPlaying(g, connectionType);
-
-                System.out.println("...The game has been created, participants: "+ g.getPlayers());
-
-            }
-
-            return pl;
-        }
-    }
+    public abstract GameHandler login(String nickname, ClientHandler ch , Socket socketCP) throws RemoteException, IOException, LoginException ;
 
     /**
      * Method called by a client who wants to continue a game he was playing before the disconnection/client's crash
@@ -153,7 +88,7 @@ public class Lobby extends UnicastRemoteObject implements ClientServerHandler {
      * @throws RemoteException
      */
     @Override
-    public GameHandler continueGame(String nickname, ClientHandler ch, Boolean connectionType) throws RemoteException, LoginException {
+    public GameHandler continueGame(String nickname, ClientHandler ch) throws RemoteException, LoginException {
 
         //checking if exists a player called "nickname" now offline
 
@@ -171,7 +106,6 @@ public class Lobby extends UnicastRemoteObject implements ClientServerHandler {
 
         //if exists I'll create a new one, remove the current ClientHandler-ControlPlayer pair from the map, set a new ClientHandler on the ControlPlayer
         controlPlayer.setClientHandler(ch);
-        controlPlayer.setConnectionType(connectionType);
         clients.remove(getKey(clients, controlPlayer));
         clients.put(ch, controlPlayer);
 
@@ -228,57 +162,17 @@ public class Lobby extends UnicastRemoteObject implements ClientServerHandler {
     /**
      * this method tells asks a user how many players he wants in his game, is divided in RMI and socket
      * @param ch
-     * @param connectionType
      * @return the chosen number of players
      * @throws RemoteException
      */
-    public int askNumberOfPlayers(ClientHandler ch, Boolean connectionType) throws RemoteException {
-
-        if(connectionType){ //if RMI connection type
-            //RMI calling
-            return ch.enterNumberOfPlayers();
-
-        }
-        else{
-            //socket calling
-            return -1; //---SimoSocket,  metodo per chiedere all'utente
-
-        }
-
-    }
+    public abstract int askNumberOfPlayers(ClientHandler ch) throws IOException;
 
     /**
      * this method tells to all users that the game has started and that they aren't anymore in the waiting room, is divided in RMI and socket
      * @param g
-     * @param connectionType
      * @throws RemoteException
      */
-    public void notifyStartPlaying(Game g, Boolean connectionType) throws RemoteException {
-
-        for(ControlPlayer player: g.getPlayers()){
-            try {
-                if(connectionType){ //if RMI connection type
-                    //RMI calling
-                    player.setGame(g);
-                    ClientHandler clih=player.getClientHandler();
-
-                    clih.startPlaying(player.getBookshelf().getPgc().getCardNumber(), g.getBoard().getCommonGoalCard1().getCGCnumber(), g.getBoard().getCommonGoalCard2().getCGCnumber());
-                    clih.updateBoard(g.getBoard().getBoard()); //----------timer che aspetta il return true
-
-                    if(g.getPlayers().get(g.getCurrPlayer()).equals(player)) clih.startYourTurn();
-                }
-                else{
-
-                    //socket calling
-                    //---SimoSocket,  metodo per chiedere all'utente
-
-                }
-
-            } catch (RemoteException e) { throw new RuntimeException(e); }
-        }
-
-
-    }
+    public  abstract void notifyStartPlaying(Game g) throws RemoteException;
 
 
 }

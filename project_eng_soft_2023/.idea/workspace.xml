@@ -9,22 +9,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="Board update">
-      <change afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/InvalidChoiceException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/header.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/ClientSocketInputCP.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/ClientSocketInputLobby.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/RMIServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/SocketServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/TCPHandlerLobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/myShelfieException/NotAvailableTilesException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/myShelfieException/NotEnoughSpaceException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/myShelfieException/NotInLineException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/controller/GameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/GameTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/BagTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BagTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BoardTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/BookshelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BookshelfTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +49,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2N5zc7ZawszFy8J660izbL2GoKK" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -227,6 +229,12 @@
       <workItem from="1682067401404" duration="3723000" />
       <workItem from="1682093394862" duration="339000" />
       <workItem from="1682152983568" duration="3394000" />
+      <workItem from="1682617193766" duration="1428000" />
+      <workItem from="1682620170215" duration="96000" />
+      <workItem from="1682620272925" duration="1251000" />
+      <workItem from="1682631702012" duration="5228000" />
+      <workItem from="1682681626832" duration="219000" />
+      <workItem from="1682681923929" duration="16019000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>

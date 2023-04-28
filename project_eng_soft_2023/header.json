@@ -1,0 +1,10 @@
+
+{
+	"serverSettings":{
+
+		"hostname":"127.0.0.1",
+		"PORT":1234,
+		"TCPPORT":1235,
+		"TCPPORTCP": 1236
+	}
+}

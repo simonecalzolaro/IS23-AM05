@@ -8,40 +8,54 @@ import model.CommonGoalCard;
 import model.PersonalGoalCard;
 import model.Tile;
 import myShelfieException.*;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Client Application
  */
-public class ClientApp extends UnicastRemoteObject implements ClientHandler {
+public abstract class ClientApp extends UnicastRemoteObject implements ClientHandler {
 
-    private Tile board[][];
-    private Tile shelf[][];
+    static String localhost;
+    static Long PORT;
+    static int PORTX;
+    static Long TCPPORT;
+    static int TCPPORTX;
 
-    private  int pgc;
-    private int cgc1;
-    private int cgc2;
+    static Long TCPPORTCP;
+    static int TCPPORTCPX;
 
-    private String nickName;
-    private boolean myTurn;
-    private boolean gameEnded;
-    private boolean connectionType;
+    Socket socketLobby;
+    Socket socketControlPlayer;
+
+
+    protected Tile board[][];
+    protected Tile shelf[][];
+
+    protected  int pgc;
+    protected int cgc1;
+    protected int cgc2;
+
+    protected String nickName;
+    protected boolean myTurn;
+    protected boolean gameEnded;
+    protected boolean connectionType;
 
     //-------------- RMI attributes --------------
-    private ClientServerHandler clientServerHandler;
-    private GameHandler gameHandler;
+    protected ClientServerHandler clientServerHandler;
+    protected GameHandler gameHandler;
+
+    protected int score;
 
     //-------------- socket attributes --------------
     //... ----SimoSocket
@@ -74,15 +88,45 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
     public static void main(String[] args) {
 
         System.out.println( "Hello from ClientApp" );
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        String read = null;
+        int readInt;
 
-        try {
+        int n=0;
 
-            new ClientApp().startClient();
+        try{
 
-        } catch (Exception e) {
+            //ciclo finche non inserisco i valori corretti
 
+
+
+            do{
+                System.out.println("Select connection: '0'--> RMI; '1' --> Socket");
+                read = in.readLine();
+
+            }while(!read.equals("0") && !read.equals("1"));
+
+            readInt = Integer.parseInt(read);
+
+            //lancio il client con la connessione scela
+
+            switch (readInt){
+
+                case 0:
+                    new RMIClient().startClient();
+                    break;
+
+                case 1:
+                    new SocketClient().startClient();
+                    break;
+
+
+
+            }
+
+
+        }catch (IOException e){
             e.printStackTrace();
-
         }
 
     }
@@ -91,75 +135,11 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      * asks user his nickname, load the remote interfaces and log the client into the server
      * @throws RemoteException
      */
-    private void startClient() throws RemoteException{
-
-        // Getting the registry
-        Registry registry;
-        registry = LocateRegistry.getRegistry(Settings.SERVER_NAME, Settings.PORT);
-        // Looking up the registry for the remote object
-        try {
-            this.clientServerHandler = (ClientServerHandler) registry.lookup("ServerAppService");
-
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        do {
-                int num;
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-                //-------questa parte andrà migliorata in GUI e TUI
-
-                System.out.println("0 --> socket");
-                System.out.println("1 --> RMI");
-                Scanner scan = new Scanner(System.in);
-                connectionType = (scan.nextInt()%2 == 0) ? false : true;
-
-                do {
-                    System.out.println("0 --> start a new game");
-                    System.out.println("1 --> continue a Game");
-                    num = scan.nextInt();
-
-                }while (num!=0 &&  num!=1);
-
-            try {
-
-                switch (num) {
-
-                    case 0:
-                        System.out.println("nickname: ");
-                        nickName = br.readLine();
-                        System.out.println("-----------------------");
-
-                        //login of the new player
-                        this.gameHandler = askLogin();
-                        System.out.println("-----login successfully");
-
-                        break;
-
-                    case 1:
-                        System.out.println("nickname: ");
-                        nickName = br.readLine();
-                        System.out.println("-------------------");
-
-                        //login of the new player
-                        this.gameHandler = askContinueGame();
-                        System.out.println("-----login successfully");
-                        break;
-                }
-
-            }catch (Exception e) {
-
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-                System.out.println("try again...");
-                nickName="";
-            }
-
-        }while(nickName.equals(""));
 
 
-    }
+    //DONE
+    public abstract void startClient() throws RemoteException;
+
 
     public static class Settings {
 
@@ -172,31 +152,20 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      * @return the chosen number of players
      * @throws RemoteException
      */
+
+
+    //DONE
     @Override
-    public int enterNumberOfPlayers() throws RemoteException{
-
-        int num;
-        Scanner scan = new Scanner(System.in);
-
-        do {
-
-            System.out.print("Enter the number of players: ");
-            // This method reads the number provided using keyboard
-            num = scan.nextInt();
-
-            if(num<2 || num >4) System.out.println("The number of players must be between 2 and 4");
-
-        }while(num<2 || num >4);
-
-        return num;
-
-    }
+    public abstract int enterNumberOfPlayers() throws IOException;
 
     /**
      * method called by the server to update the board of this client
      * @param board
      * @throws RemoteException
      */
+
+
+    //DONE
     @Override
     public boolean updateBoard(Tile[][] board) throws RemoteException{
 
@@ -219,6 +188,9 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      * and to end the match
      * @throws RemoteException
      */
+
+
+    //DONE
     @Override
     public boolean theGameEnd(Map< Integer, String> results) throws RemoteException{
 
@@ -235,7 +207,10 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
     /**
      * method called by the server to notify the user that his turn has started
      * @throws RemoteException
+     *
      */
+
+    //DONE
     @Override
     public boolean startYourTurn() throws RemoteException{
 
@@ -261,6 +236,9 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      *  method called by the server to notify the user that the match has started
      * @throws RemoteException
      */
+
+
+    //DONE
     @Override
     public boolean startPlaying( int pgc, int cgc1, int cgc2) throws RemoteException {
 
@@ -291,17 +269,9 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      * @throws IOException
      * @throws RemoteException
      */
-    public GameHandler askLogin() throws LoginException, IOException, RemoteException{
 
-        if(connectionType){
-            //RMI calling
-            return clientServerHandler.login(nickName, this, true);
-        }
-        else{
-            //socket calling
-            return null; //----SimoSocket
-        }
-    }
+    //DONE
+    public abstract GameHandler askLogin() throws LoginException, IOException, RemoteException;
 
     /**
      * asks the server to continue a game, is divided in RMI and socket
@@ -309,34 +279,20 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      * @throws LoginException
      * @throws RemoteException
      */
-    public GameHandler askContinueGame() throws LoginException, RemoteException {
 
-        if(connectionType){
-            //RMI calling
-            return clientServerHandler.continueGame(nickName, this, true);
-        }
-        else{
-            //socket calling
-            return null; //----SimoSocket
-        }
-    }
+    //DONE
+    public abstract GameHandler askContinueGame() throws LoginException, IOException;
+
 
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
      * @return true if everything went fine
      * @throws RemoteException
      */
-    public boolean askLeaveGame() throws RemoteException {
 
-        if(this.connectionType){
-            //RMI calling
-            return clientServerHandler.leaveGame(this);
-        }
-        else{
-            //socket calling
-            return false; //----SimoSocket
-        }
-    }
+    //DONE
+    public abstract boolean askLeaveGame() throws IOException;
+
 
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
@@ -349,40 +305,44 @@ public class ClientApp extends UnicastRemoteObject implements ClientHandler {
      * @throws RemoteException
      * @throws NotMyTurnException
      */
-    public boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
 
-        if(this.connectionType){
-            //RMI calling
-            return gameHandler.choseBoardTiles(chosenTiles, coord);
-        }
-        else{
-            //socket calling
-            return false; //----SimoSocket
-        }
-    }
+    //DONE
+    public abstract boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, IOException, NotMyTurnException;
 
-    boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
 
-        if(this.connectionType){
-            //RMI calling
-            return gameHandler.insertShelfTiles(choosenTiles, choosenColumn, coord);
-        }
-        else{
-            //socket calling
-            return false; //----SimoSocket
-        }
+    //DONE
+    abstract boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws IOException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException;
 
-    }
 
-    int askGetMyScore() throws RemoteException{
+    //DONE
+    abstract int askGetMyScore() throws IOException;
 
-        if(this.connectionType){
-            //RMI calling
-            return gameHandler.getMyScore();
-        }
-        else{
-            //socket calling
-            return -1; //----SimoSocket
+
+
+    public void getServerSettings(){
+        try{
+            Object o = new JSONParser().parse(new FileReader("header.json"));
+            JSONObject j =(JSONObject) o;
+            Map arg = new LinkedHashMap();
+            arg = (Map) j.get("serverSettings");
+
+            localhost = (String) arg.get("hostname");
+            PORT = (Long) arg.get("PORT");
+
+            PORTX = PORT.intValue();
+
+            TCPPORT = (Long) arg.get("TCPPORT");
+            TCPPORTX = TCPPORT.intValue();
+            TCPPORTCP = (Long) arg.get("TCPPORTCP");
+            TCPPORTCPX = TCPPORTCP.intValue();
+
+            System.out.println(localhost+" "+PORTX);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
     }
 
