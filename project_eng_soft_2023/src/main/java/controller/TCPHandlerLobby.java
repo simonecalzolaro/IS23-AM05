@@ -10,8 +10,6 @@ public class TCPHandlerLobby {
 
     static int PORT = 1236;
 
-
-
     public void startServer(){
 
         ExecutorService executor = Executors.newCachedThreadPool();
@@ -28,6 +26,7 @@ public class TCPHandlerLobby {
         System.out.println("TCPHandler ready");
 
         while(true){
+
             try{
 
                 Socket socket = serverSocket.accept();

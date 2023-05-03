@@ -17,7 +17,7 @@ public interface ClientServerHandler extends Remote {
      * @param nickname
      * @return true if the login request is approved
      */
-    GameHandler login(String nickname, ClientHandler ch, Socket socket) throws RemoteException, IOException, LoginException;
+    GameHandler login(String nickname, Object obj) throws RemoteException, IOException, LoginException;
 
     /**
      * Method called by a user who wants tu continue a game after a web or client's server crash
@@ -27,13 +27,13 @@ public interface ClientServerHandler extends Remote {
      * @throws RemoteException
      * @throws LoginException
      */
-    GameHandler continueGame(String nickname, ClientHandler ch) throws RemoteException, LoginException;
+    GameHandler continueGame(String nickname, Object client)  throws RemoteException, LoginException;
 
 
     /**
      * a player ask to leave the game he is playing
      * @return true if the request is approved
      */
-    boolean leaveGame(ClientHandler ch) throws RemoteException;
 
+    boolean leaveGame(String nickname) throws LoginException;
 }

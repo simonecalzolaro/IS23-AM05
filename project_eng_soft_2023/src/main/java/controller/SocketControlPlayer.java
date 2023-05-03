@@ -78,7 +78,6 @@ public class SocketControlPlayer extends ControlPlayer {
                         TCPgetMyScore();
                         break;
 
-
                 }
 
 

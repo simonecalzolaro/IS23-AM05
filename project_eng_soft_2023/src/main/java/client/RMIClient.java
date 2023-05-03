@@ -17,14 +17,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class RMIClient extends ClientApp{
+public class RMIClient extends Client{
+
+
+    //-------------- RMI attributes --------------
+    protected ClientServerHandler clientServerHandler;
+    protected GameHandler gameHandler;
+
 
     /**
      * constructor of ClientApp
      *
      * @throws RemoteException
      */
-    protected RMIClient() throws RemoteException {
+    public RMIClient() throws RemoteException {
         super();
     }
 
@@ -34,15 +40,16 @@ public class RMIClient extends ClientApp{
         // Getting the registry
         Registry registry;
         registry = LocateRegistry.getRegistry(Settings.SERVER_NAME, Settings.PORT);
+
         // Looking up the registry for the remote object
         try {
             this.clientServerHandler = (ClientServerHandler) registry.lookup("ServerAppService");
-
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
         }
 
         do {
+
             int num;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -69,7 +76,6 @@ public class RMIClient extends ClientApp{
                         //login of the new player
                         this.gameHandler = askLogin();
                         System.out.println("-----login successfully");
-
                         break;
 
                     case 1:
@@ -79,7 +85,7 @@ public class RMIClient extends ClientApp{
 
                         //login of the new player
                         this.gameHandler = askContinueGame();
-                        System.out.println("-----login successfully");
+                        System.out.println("-----reconnected successfully");
                         break;
                 }
 
@@ -96,25 +102,6 @@ public class RMIClient extends ClientApp{
 
     }
 
-    @Override
-    public int enterNumberOfPlayers() throws RemoteException{
-
-        int num;
-        Scanner scan = new Scanner(System.in);
-
-        do {
-
-            System.out.print("Enter the number of players: ");
-            // This method reads the number provided using keyboard
-            num = scan.nextInt();
-
-            if(num<2 || num >4) System.out.println("The number of players must be between 2 and 4");
-
-        }while(num<2 || num >4);
-
-        return num;
-
-    }
 
 
     /**
@@ -124,14 +111,11 @@ public class RMIClient extends ClientApp{
      * @throws IOException
      * @throws RemoteException
      */
-
     public GameHandler askLogin() throws LoginException, IOException, RemoteException{
 
-
-        return clientServerHandler.login(nickName, this,socketControlPlayer);
+        return clientServerHandler.login( this.nickName, this);
 
     }
-
 
 
     /**
@@ -141,7 +125,6 @@ public class RMIClient extends ClientApp{
      * @throws RemoteException
      */
     public GameHandler askContinueGame() throws LoginException, RemoteException {
-
 
         return clientServerHandler.continueGame(nickName, this);
 
@@ -153,10 +136,10 @@ public class RMIClient extends ClientApp{
      * @return true if everything went fine
      * @throws RemoteException
      */
-    public boolean askLeaveGame() throws RemoteException {
+    public boolean askLeaveGame() throws RemoteException, LoginException {
 
 
-        return clientServerHandler.leaveGame(this);
+        return clientServerHandler.leaveGame(nickName);
 
     }
 

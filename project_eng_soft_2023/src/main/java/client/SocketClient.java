@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class SocketClient extends ClientApp{
+public class SocketClient extends Client{
     static ObjectInputStream inLobby;
     static ObjectOutputStream outLobby;
 
@@ -65,25 +65,14 @@ public class SocketClient extends ClientApp{
 
     }
 
+    //---SimoSocket: is eguente metodo esiste già in Client, non va sovrascritto
+    /*
     @Override
     public int enterNumberOfPlayers() throws IOException {
 
-        int num;
-        Scanner scan = new Scanner(System.in);
-
-        do {
-
-            System.out.print("Enter the number of players: ");
-            // This method reads the number provided using keyboard
-            num = scan.nextInt();
-
-            if(num<2 || num >4) System.out.println("The number of players must be between 2 and 4");
-
-        }while(num<2 || num >4);
-
         JSONObject jo = new JSONObject();
         jo.put("method","enterNumberOfPlayers");
-        jo.put("param1",num);
+        jo.put("param1", enterNumberOfPlayers() );
         jo.put("param2",null);
 
         outLobby.writeObject(jo);
@@ -93,6 +82,8 @@ public class SocketClient extends ClientApp{
 
 
     }
+    */
+
 
     /**
      * asks the server to log in, is divided in RMI and socket
@@ -101,7 +92,6 @@ public class SocketClient extends ClientApp{
      * @throws IOException
      * @throws RemoteException
      */
-
     public GameHandler askLogin() throws LoginException, IOException, RemoteException {
 
         JSONObject jo = new JSONObject();

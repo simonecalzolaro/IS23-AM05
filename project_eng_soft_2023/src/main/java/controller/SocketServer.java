@@ -1,8 +1,7 @@
 package controller;
 
-import client.ClientApp;
+
 import client.ClientHandler;
-import model.Board;
 import myShelfieException.LoginException;
 import org.json.simple.JSONObject;
 
@@ -73,9 +72,6 @@ public class SocketServer extends Lobby implements Runnable{
                         TCPLeaveGame(json);
                         break;
 
-
-
-
                 }
 
 
@@ -102,9 +98,8 @@ public class SocketServer extends Lobby implements Runnable{
         Socket socketCP = (Socket) json.get("param3");
 
         synchronized (loginLock){
-            login(nick, ch,socketCP);
+            login(nick, socketCP); //----SimoSocket
         }
-
 
     }
 
@@ -117,15 +112,16 @@ public class SocketServer extends Lobby implements Runnable{
             continueGame(nick, ch);
         }
 
-
     }
 
     public void TCPLeaveGame(JSONObject json){
+
         ClientHandler ch = (ClientHandler) json.get("param1");
 
         synchronized (loginLock){
             leaveGame(ch);
         }
+
     }
 
 
@@ -140,7 +136,7 @@ public class SocketServer extends Lobby implements Runnable{
     }
 
 
-    //Sono arrivato qui: finisci
+    /* ---SimoSocket è da spostare in socketPlayer con la giusta signature
     @Override
     public int askNumberOfPlayers(ClientHandler ch) throws IOException {
 
@@ -160,6 +156,7 @@ public class SocketServer extends Lobby implements Runnable{
         JSONObject json = null;
 
         while(json == null){
+
             try{
                 json = (JSONObject) in.readObject();
             } catch (ClassNotFoundException e) {
@@ -178,79 +175,17 @@ public class SocketServer extends Lobby implements Runnable{
 
     }
 
-
-
-    /**
-     * Method called by the client to log into the server to start a new game.
-     * @param nickname is the name chosen by the client, if ti is already used throws IllegalArgumentException
-     * @param ch is the client interface. I need it to associate each client interface to a ControlPlayer
-     * @throws RemoteException
-     */
-
-    public GameHandler login(String nickname, ClientHandler ch,Socket socketCP) throws RemoteException, IOException, LoginException {
-
-        if( clients.values().stream().map(x -> x.getPlayerNickname()).toList().contains(nickname) ) throw new LoginException("this nickname is not available at the moment");
-
-        else {
-
-            if(attendedPlayers==-1){ //if the isn't any waiting room it means that ch is the first player
-
-                tempBoard = new Board();
-                System.out.println("...a new board has been created...");
-
-                do{
-                    try {
-                        //server asks client how many players he wants in his match
-                        attendedPlayers = askNumberOfPlayers(ch);
-                    } catch (RemoteException e) {
-                        attendedPlayers = -1;
-                        throw new RuntimeException(e);
-                    }
-                } while(attendedPlayers<2 || attendedPlayers>4); //eccezione da gestire
-
-                //initializing the board with the chosen number of players
-                tempBoard.initializeBoard(attendedPlayers);
-                System.out.println("...player "+ nickname+ " created a game with "+ attendedPlayers+" players...");
-
-            }
-
-            //create a ControlPlayer
-            ControlPlayer pl= new SocketControlPlayer(nickname, tempBoard,socketCP);
-            pl.setClientHandler(ch);
-
-            System.out.println("...player "+ nickname+ " entered the game ");
-
-            //add to the map "clients" the ClientHandler interface and the associated ControlPlayer
-            clients.put(ch, pl);
-            //tempPlayers is like a waiting room
-            tempPlayers.add(pl);
-
-            //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
-            if(tempPlayers.size() == attendedPlayers){
-
-                attendedPlayers = -1;
-                Game g = new Game( tempPlayers , tempBoard );
-                games.add( g );
-                tempPlayers.clear();
-
-
-                notifyStartPlaying(g);
-
-                System.out.println("...The game has been created, participants: "+ g.getPlayers());
-
-            }
-
-            return pl;
-        }
-    }
+*/
 
 
 
+    /* ---SimoSocket è da spostare in socketPlayer con la giusta signature
     /**
      * this method tells to all users that the game has started and that they aren't anymore in the waiting room, is divided in RMI and socket
      * @param g
      * @throws RemoteException
      */
+    /*
     public void notifyStartPlaying(Game g) throws RemoteException {
 
         for(ControlPlayer player: g.getPlayers()){
@@ -297,6 +232,7 @@ public class SocketServer extends Lobby implements Runnable{
 
 
     }
+    */
 
 
 }

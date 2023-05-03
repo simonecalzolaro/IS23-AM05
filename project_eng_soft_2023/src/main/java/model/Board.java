@@ -523,7 +523,6 @@ public class Board {
     }
 
 
-
     /**
      *
      * @param nPlayers number of player of the current game

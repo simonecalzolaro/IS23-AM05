@@ -1,17 +1,24 @@
 package controller;
 
+import client.ClientHandler;
+import client.RMIClient;
 import model.Board;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
+    ClientHandler ch= new RMIClient();
+
+    GameTest() throws RemoteException {
+    }
 
     @Test
     void startGame() throws IOException {
@@ -19,10 +26,10 @@ class GameTest {
         ArrayList<ControlPlayer> players = new ArrayList<>();
         Board board = new Board();
         board.initializeBoard(4);
-        players.add(new RMIControlPlayer("Ciro",board));
-        players.add(new RMIControlPlayer("Milo",board));
-        players.add(new RMIControlPlayer("Gino",board));
-        players.add(new RMIControlPlayer("Luis",board));
+        players.add(new RMIControlPlayer("Ciro",board, ch));
+        players.add(new RMIControlPlayer("Milo",board, ch));
+        players.add(new RMIControlPlayer("Gino",board, ch));
+        players.add(new RMIControlPlayer("Luis",board, ch));
 
         Game game1 = new Game(players,board);
 
@@ -44,10 +51,10 @@ class GameTest {
         Board board = new Board();
         board.initializeBoard(4);
         ArrayList<ControlPlayer> players = new ArrayList<>();
-        players.add(new RMIControlPlayer("Ciro",board));
-        players.add(new RMIControlPlayer("Milo",board));
-        players.add(new RMIControlPlayer("Gino",board));
-        players.add(new RMIControlPlayer("Luis",board));
+        players.add(new RMIControlPlayer("Ciro",board, ch));
+        players.add(new RMIControlPlayer("Milo",board, ch));
+        players.add(new RMIControlPlayer("Gino",board, ch));
+        players.add(new RMIControlPlayer("Luis",board, ch));
         Game game = new Game(players,board);
 
         Assertions.assertEquals(0,game.getCurrPlayer());

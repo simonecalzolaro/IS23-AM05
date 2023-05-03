@@ -1,5 +1,7 @@
 package controller;
 
+import client.ClientHandler;
+import client.RMIClient;
 import model.Board;
 import model.Tile;
 import myShelfieException.InvalidChoiceException;
@@ -16,6 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ControlPlayerTest {
 
+    ClientHandler ch= (ClientHandler) new RMIClient();
+
+    ControlPlayerTest() throws RemoteException {
+    }
+
+
     /**
      * This test is similar to putTiles() test. It analyzes the new exception thrown by the method
      * and the exception thrown by the model
@@ -31,7 +39,7 @@ class ControlPlayerTest {
     void insertTiles() throws NotConnectedException, InvalidChoiceException, NotMyTurnException, InvalidLenghtException, RemoteException {
         Board board = new Board();
         board.initializeBoard(4);
-        ControlPlayer cp = new RMIControlPlayer("Tony", board);
+        ControlPlayer cp = new RMIControlPlayer("Tony", board, ch);
 
         ArrayList<Tile> arr1= new ArrayList<>(){{add(Tile.BLUE); add(Tile.GREEN); add(Tile.WHITE);}};
 

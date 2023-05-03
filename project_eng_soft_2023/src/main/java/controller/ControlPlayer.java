@@ -13,35 +13,28 @@ import java.util.List;
 public abstract class ControlPlayer extends UnicastRemoteObject implements GameHandler{
 
     /**
-     *Player id
+     *Player's id
      */
     protected final String nickname;
 
     /**
-     * player status
+     * player's status
      */
-
     protected PlayerStatus playerStatus;
 
     /**
-     * player bookshelf
+     * player's bookshelf
      */
     protected final Bookshelf bookshelf;
 
     /**
-     * player score
+     * player's score
      */
     protected int score;
 
 
-
-    //RMI attributes-----------------------------
     protected Game game;
-    protected ClientHandler ch;
 
-
-    //soket attributes--------------------------
-    //...
 
 
 
@@ -55,7 +48,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
      */
     public ControlPlayer(String nickname,Board board) throws RemoteException{
 
-        this.nickname=nickname;
+        this.nickname = nickname;
         bookshelf = new Bookshelf(board);
         score = 0;
         playerStatus = PlayerStatus.NOT_MY_TURN;
@@ -172,7 +165,10 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         //inserting the tiles in the bookshelf
 
         if( ! insertTiles(chosenTiles, choosenColumn)) return false;
+
+        //and subtracting the same tiles from the board
         game.getBoard().subTiles(coord);
+
         //tell to ch that his turn is completed
         try {
             notifyEndYourTurn();
@@ -184,7 +180,11 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
 
         //notify the updated board to all the clients participating in the same game of ch
         try {
-            notifyUpdatedBoard();
+
+            for(ControlPlayer cp: game.getPlayers()){
+                cp.notifyUpdatedBoard();
+            }
+
         } catch (RemoteException e) { throw new RuntimeException(e); }
 
 
@@ -192,14 +192,20 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         if(game.getGameStatus().equals(GameStatus.END_GAME)){
 
             try {
-                notifyEndGame();
+
+                for(ControlPlayer cp: game.getPlayers()){
+                    cp.notifyEndGame();
+                }
+
             } catch (RemoteException e) { throw new RuntimeException(e); }
 
         }
 
         try {
+
             ControlPlayer nextPlayer= game.getPlayers().get(game.getCurrPlayer());
-            notifyStartYourTurn(nextPlayer.getClientHandler());
+            nextPlayer.notifyStartYourTurn();
+
         } catch (IOException e) { throw new RuntimeException(e); }
 
         return true;
@@ -225,11 +231,10 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
 
     /**
      * this method tells to "nextClient" to start his turn, is divided in RMI and socket
-     * @param nextClient
      * @return true if everything went fine
      * @throws RemoteException
      */
-    public abstract Boolean notifyStartYourTurn(ClientHandler nextClient) throws IOException;
+    public abstract Boolean notifyStartYourTurn() throws IOException;
 
     /**
      * this method tells to the current user that his turn is finished, is divided in RMI and socket
@@ -251,7 +256,19 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     public abstract void notifyEndGame() throws RemoteException;
 
 
+    /**
+     * this method tells to all users that the game has started and that they aren't anymore in the waiting room, is divided in RMI and socket
+     * @throws RemoteException
+     */
+    public  abstract void notifyStartPlaying() throws RemoteException;
 
+
+    /**
+     * this method tells asks a user how many players he wants in his game, is divided in RMI and socket
+     * @return the chosen number of players
+     * @throws RemoteException
+     */
+    public abstract int askNumberOfPlayers() throws IOException;
 
     //-------------------------------------- getter and setter methods --------------------------------------
 
@@ -281,12 +298,6 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     }
 
 
-    /**
-     * @return client handler
-     */
-    public ClientHandler getClientHandler(){
-        return ch;
-    }
 
     /**
      * @return true if it's used RMI connection, false otherwise
@@ -300,12 +311,6 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         this.game=g;
     }
 
-    /**
-     * @param cliHnd of type ClientHandler
-     */
-    public void setClientHandler(ClientHandler cliHnd){
-        this.ch=cliHnd;
-    }
 
     /**
      * @param playerStatus: player status
@@ -314,9 +319,8 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         this.playerStatus = playerStatus;
     }
 
-    /**
-     * @param RMIconnection type boolean
-     */
+
+    abstract public void setClientHandler(ClientHandler cliHnd);
 
 
 }
