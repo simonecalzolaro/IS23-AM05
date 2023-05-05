@@ -82,6 +82,11 @@ public class RMIControlPlayer extends ControlPlayer{
         return ch.enterNumberOfPlayers();
     }
 
+    @Override
+    public boolean askPing() throws RemoteException {
+        return ch.pong();
+    }
+
 
     /**
      * @return client handler

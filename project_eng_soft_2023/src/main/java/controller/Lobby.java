@@ -194,7 +194,7 @@ public abstract class Lobby implements ClientServerHandler {
 
     /**
      * method called by a client to leave the game he is playing
-     * @return
+     * @return true if the client nickname left the game correctly
      */
     @Override
     public boolean leaveGame(String nickname) throws LoginException {
@@ -244,7 +244,5 @@ public abstract class Lobby implements ClientServerHandler {
     public static ArrayList<Game> getGames() {
         return games;
     }
-
-
 
 }

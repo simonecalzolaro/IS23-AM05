@@ -8,23 +8,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="implementation of GameHandler on ControlPlayer, adjustments on the Lobby, adjustments on the ClientServer, first layer of communication protocol">
-      <change afterPath="$PROJECT_DIR$/src/test/java/controller/LobbyTest.java" afterDir="false" />
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="adjustments on network design patten and implementation of RMI/Soket Player, RMI/Socket Server and RMI/Server client">
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/PingPong.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMIServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/TCPHandlerLobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TCPHandlerLobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/GameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/GameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/CommonGoalCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CommonGoalCard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,7 +221,10 @@
       <workItem from="1682152983568" duration="3394000" />
       <workItem from="1682863262376" duration="47000" />
       <workItem from="1683110625436" duration="12803000" />
-      <workItem from="1683143075876" duration="3262000" />
+      <workItem from="1683143075876" duration="3410000" />
+      <workItem from="1683194859543" duration="322000" />
+      <workItem from="1683199952516" duration="753000" />
+      <workItem from="1683313045589" duration="4677000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
@@ -287,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680642204030</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="adjustments on network design patten and implementation of RMI/Soket Player, RMI/Socket Server and RMI/Server client">
+      <created>1683146449944</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1683146449944</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -324,7 +326,8 @@
     <MESSAGE value="catch tile" />
     <MESSAGE value="Controller Implementation" />
     <MESSAGE value="creation of ServerApp and ClientApp with RMI and adjustments on ControlPlayer and Game" />
-    <option name="LAST_COMMIT_MESSAGE" value="creation of ServerApp and ClientApp with RMI and adjustments on ControlPlayer and Game" />
+    <MESSAGE value="adjustments on network design patten and implementation of RMI/Soket Player, RMI/Socket Server and RMI/Server client" />
+    <option name="LAST_COMMIT_MESSAGE" value="adjustments on network design patten and implementation of RMI/Soket Player, RMI/Socket Server and RMI/Server client" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

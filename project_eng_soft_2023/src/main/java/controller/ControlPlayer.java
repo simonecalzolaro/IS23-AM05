@@ -36,9 +36,6 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     protected Game game;
 
 
-
-
-
     /**
      * Assign player id
      * Initialize score
@@ -53,6 +50,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         score = 0;
         playerStatus = PlayerStatus.NOT_MY_TURN;
 
+        (new Thread(new PingPong(this))).start(); //starting PinPonging
     }
 
     /**
@@ -269,6 +267,14 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
      * @throws RemoteException
      */
     public abstract int askNumberOfPlayers() throws IOException;
+
+
+    /**
+     * @return true if the client is connected
+     * @throws RemoteException RMI exception
+     */
+    public abstract boolean askPing() throws RemoteException;
+
 
     //-------------------------------------- getter and setter methods --------------------------------------
 

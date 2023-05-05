@@ -174,13 +174,14 @@ public class CommonGoalCard implements Card{
     }
 
     /**
-     *search how many groups with
+     *search if exist "nubOfGroups" groups with "elemPerGroup" elements
      * @param nubOfGroups total number of groups to reach
      * @param elemPerGroup total number of identical elements to reach in each group
      * @param shelf is the shelf to check
      * @return true if the goals set by the parameters are achieved
      */
     protected static boolean checkGroups(int nubOfGroups, int elemPerGroup, Tile[][] shelf ){
+
 
         boolean [][] visited;
         boolean [][] booleShelf;
@@ -192,7 +193,7 @@ public class CommonGoalCard implements Card{
         //declare booleshelf
         booleShelf=new boolean[shelf.length][shelf[0].length];
 
-        //declare and initialize visited
+        //declare and initialize visited all to false
         visited = new boolean[shelf.length][shelf[0].length];
         for(int row=0; row < shelf.length; row++){
             for(int col=0; col< shelf[0].length; col++){
@@ -201,7 +202,7 @@ public class CommonGoalCard implements Card{
         }
 
         //declare and initialize tiles
-        tiles=new ArrayList<Tile>();
+        tiles=new ArrayList<>();
         tiles.add(Tile.BLUE);
         tiles.add(Tile.PINK);
         tiles.add(Tile.LIGHTBLUE);
@@ -210,9 +211,10 @@ public class CommonGoalCard implements Card{
         tiles.add(Tile.WHITE);
 
 
+        //for each type of tile
         for(Tile t: tiles) {
 
-            //initialize booleShelf
+            //initialize booleShelf to true when there is a tile of the same type of t in [row][col]
             for (int row = 0; row < shelf.length; row++) {
                 for (int col = 0; col < shelf[0].length; col++) {
                     booleShelf[row][col]=shelf[row][col].equals(t);
@@ -223,11 +225,11 @@ public class CommonGoalCard implements Card{
             for (int row = 0; row < shelf.length; row++) {
                 for (int col = 0; col < shelf[0].length; col++) {
 
+                    //if not visited yet
                     if (!visited[row][col]) {
                         if(countElem(row, col, 0, booleShelf, visited)==elemPerGroup) nGroups ++;
                         if (nGroups == nubOfGroups) return true;
                     }
-
                 }
             }
         }

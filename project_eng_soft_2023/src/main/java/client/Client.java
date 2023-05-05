@@ -192,6 +192,14 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     }
 
 
+    /**
+     * @return always true
+     * @throws RemoteException RMI exception
+     */
+    public boolean pong() throws RemoteException {
+        return true;
+    }
+
     public void getServerSettings(){
         try{
             Object o = new JSONParser().parse(new FileReader("header.json"));

@@ -17,5 +17,5 @@ public interface ClientHandler extends Remote {
     boolean startYourTurn()throws RemoteException;
     boolean endYourTurn()throws RemoteException;
     boolean startPlaying(int pgc, int cgc1, int cgc2) throws RemoteException;
-
+    boolean pong() throws RemoteException;
 }
