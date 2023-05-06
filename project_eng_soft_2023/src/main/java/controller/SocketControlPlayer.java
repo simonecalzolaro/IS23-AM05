@@ -134,40 +134,72 @@ public class SocketControlPlayer extends ControlPlayer {
     }
 
 
+
+
+
     /**
      * this method tells to "nextClient" to start his turn, is divided in RMI and socket
      *
-     * @param nextClient
      * @return true if everything went fine
      * @throws RemoteException
      */
-    public Boolean notifyStartYourTurn(ClientHandler nextClient) throws IOException {
+
+    @Override
+    public Boolean notifyStartYourTurn() throws IOException {
 
         JSONObject jo = new JSONObject();
 
-        jo.put("method", "notifyStartYourTurn");
-        jo.put("param1", nextClient);
+        jo.put("method","notifyStartYourTurn");
 
         out.writeObject(jo);
         out.flush();
 
-        return true;
+        try{
+            while(jo == null){
+                jo = (JSONObject) in.readObject();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
+        if(jo.get("method").equals("startYourTurnOK")){
+            return true;
+        }
+
+        return false;
 
     }
 
-
+    @Override
     public Boolean notifyEndYourTurn() throws IOException {
 
         JSONObject jo = new JSONObject();
 
         jo.put("method", "notifyEndYourTurn");
-        jo.put("param1", ch);
 
         out.writeObject(jo);
         out.flush();
 
-        return true;
+        try{
+            while(jo == null){
+                jo = (JSONObject) in.readObject();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        if(jo.get("method").equals("endYourTurnOK")){
+            return true;
+        }
+
+
+
+
+        return false;
 
     }
 
@@ -176,33 +208,235 @@ public class SocketControlPlayer extends ControlPlayer {
 
 
 
-    public void notifyUpdatedBoard() throws RemoteException{
+    @Override
+    public void notifyUpdatedBoard() throws IOException {
 
-        //for each client in the game I push the updated board
-        for(ControlPlayer player: game.getPlayers()) {
+        JSONObject jo = new JSONObject();
 
-            if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
+        if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
 
 
-                //NON HO CAPITO
-                while (!player.getClientHandler().updateBoard(game.getBoard().getBoard())); //----poco elegante
+            jo.put("method","updateBoard");
+            jo.put("param1",game.getBoard().getBoard());
+
+            out.writeObject(jo);
+            out.flush();
+
+            jo.clear();
+            jo = null;
+
+            try{
+                while(jo == null){
+                    jo = (JSONObject) in.readObject();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            if(jo.get("method").equals("updateBoardOK")) {
+
+                jo.clear();
+                jo = null;
+            }
+
+
+
+        }
+    }
+
+
+    @Override
+    public boolean askPing() throws IOException {
+        JSONObject jo = new JSONObject();
+
+        jo.put("method","askPing");
+
+        out.writeObject(jo);
+        out.flush();;
+
+
+        jo.clear();
+        jo = null;
+
+        try{
+            while(jo == null){
+                jo = (JSONObject) in.readObject();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        if(jo.get("method").equals("askPingOK")) {
+
+            jo.clear();
+            jo = null;
+
+            return true;
+        }
+
+        return false;
+
+
+    }
+
+    @Override
+    public void setClientHandler(ClientHandler cliHnd) {}
+
+
+    public void notifyEndGame() throws IOException {
+
+        JSONObject jo = new JSONObject();
+
+
+        if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
+
+           jo.put("method","endGame");
+           jo.put("param1",game.getGameResults());
+
+           out.writeObject(jo);
+           out.flush();
+
+            try{
+                while(jo == null){
+                    jo = (JSONObject) in.readObject();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            if(jo.get("method").equals("endGameOK")) {
+
+                jo.clear();
+                jo = null;
+            }
+
+
+
+
+
+        }
+
+    }
+
+
+    @Override
+    public int askNumberOfPlayers() throws IOException{
+
+        int res=-1;
+        JSONObject jo = new JSONObject();
+
+        jo.put("method","askNumberOfPlayers");
+
+        out.writeObject(jo);
+        out.flush();
+
+        jo = null;
+
+
+
+        try{
+            while(jo == null){
+                jo = (JSONObject) in.readObject();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        if(jo.get("method").equals("enterNumberOfPlayers")){
+            res = (int) jo.get("param1");
+        }
+
+        return res;
+
+    }
+
+
+    @Override
+    public void notifyStartPlaying() throws IOException {
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("method","startPlaying");
+        jo.put("param1",bookshelf.getPgc().getCardNumber());
+        jo.put("param2",game.getBoard().getCommonGoalCard1().getCGCnumber());
+        jo.put("param3",game.getBoard().getCommonGoalCard2().getCGCnumber());
+
+        out.writeObject(jo);
+        out.flush();
+
+        jo.clear();
+        jo = null;
+
+        try{
+            while(jo == null){
+                jo = (JSONObject) in.readObject();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        if(jo.get("method").equals("startPlayingOK")){
+            jo.clear();
+            jo = null;
+
+            jo.put("method","updateBoard");
+            jo.put("param1",game.getBoard().getBoard());
+
+            out.writeObject(jo);
+            out.flush();
+
+            try{
+                while(jo == null){
+                    jo = (JSONObject) in.readObject();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            if(jo.get("method").equals("updateBoardOK")){
+
+                jo.clear();
+                jo = null;
+
+                if(game.getPlayers().get(game.getCurrPlayer()).equals(this)){
+                    jo.put("method","notifyStartYourTurn");
+
+                    out.writeObject(jo);
+                    out.flush();
+
+                    try{
+                        while(jo == null){
+                            jo = (JSONObject) in.readObject();
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    if(jo.get("method").equals("startYourTurnOK")){
+                        return;
+                    }
+                }
 
             }
         }
     }
 
-
-    public void notifyEndGame() throws RemoteException{
-
-        //for each client in the game I notify the end of the game with the results of the match
-        for(ControlPlayer player: game.getPlayers()) {
-
-            if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
-
-                //NON HO CAPITO
-                while( player.getClientHandler().theGameEnd(game.getGameResults()) ); //----poco elegante
-
-            }
-        }
+    @Override
+    public void setSocket(Socket socket) {
+        socketControlPlayer = socket;
     }
 }

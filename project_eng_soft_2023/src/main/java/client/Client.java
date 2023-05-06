@@ -47,6 +47,29 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     protected boolean gameEnded;
     protected int score;
 
+    public static void main(String[] args) throws RemoteException {
+        System.out.println("What kind of connection do you want?");
+        int select;
+        Scanner scan = new Scanner(System.in);
+        do{
+            System.out.println("0 --> RMI\n1 --> Socket");
+            select = scan.nextInt();
+        }while(select != 0 && select != 1);
+
+        switch (select){
+
+            case 0:
+                new RMIClient().startClient();
+                break;
+
+            case 1:
+                new SocketClient().startClient();
+                break;
+
+        }
+
+    }
+
 
     /**
      * constructor of ClientApp

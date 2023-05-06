@@ -4,6 +4,7 @@ import client.ClientHandler;
 import model.Board;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.rmi.RemoteException;
 
 public class RMIControlPlayer extends ControlPlayer{
@@ -102,4 +103,7 @@ public class RMIControlPlayer extends ControlPlayer{
     public void setClientHandler(ClientHandler cliHnd){
         this.ch=cliHnd;
     }
+
+    @Override
+    public void setSocket(Socket socket) {}
 }

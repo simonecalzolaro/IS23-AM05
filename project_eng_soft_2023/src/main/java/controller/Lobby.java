@@ -93,7 +93,7 @@ public abstract class Lobby implements ClientServerHandler {
             }
             else if (client instanceof ClientHandler){
 
-                pl= new RMIControlPlayer(nickname, tempBoard, (ClientHandler)client);
+                pl = new RMIControlPlayer(nickname, tempBoard, (ClientHandler) client);
 
             }
 
@@ -178,7 +178,7 @@ public abstract class Lobby implements ClientServerHandler {
 
         if (client instanceof Socket){
 
-            //SimoSocket : controlPlayer.setSocket() ;
+            controlPlayer.setSocket((Socket) client);
 
         }
         else if (client instanceof ClientHandler){

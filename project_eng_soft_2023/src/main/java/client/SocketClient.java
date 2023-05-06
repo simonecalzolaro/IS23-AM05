@@ -5,9 +5,7 @@ import model.Tile;
 import myShelfieException.*;
 import org.json.simple.JSONObject;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
@@ -56,6 +54,58 @@ public class SocketClient extends Client{
             threadInputLobby.start();
             Thread threadInputCP = new Thread(new ClientSocketInputCP());
             threadInputCP.start();
+
+
+            do {
+
+                int num;
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+                //-------questa parte andrà migliorata in GUI e TUI
+
+                Scanner scan = new Scanner(System.in);
+
+                do {
+                    System.out.println("0 --> start a new game");
+                    System.out.println("1 --> continue a Game");
+                    num = scan.nextInt();
+
+                }while (num!=0 &&  num!=1);
+
+                try {
+
+                    switch (num) {
+
+                        case 0:
+                            System.out.println("nickname: ");
+                            nickName = br.readLine();
+                            System.out.println("-----------------------");
+
+                            //login of the new player
+                            askLogin();
+                            System.out.println("-----login successfully");
+                            break;
+
+                        case 1:
+                            System.out.println("nickname: ");
+                            nickName = br.readLine();
+                            System.out.println("-------------------");
+
+                            //login of the new player
+                            askContinueGame();
+                            System.out.println("-----reconnected successfully");
+                            break;
+                    }
+
+                }catch (Exception e) {
+
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                    System.out.println("try again...");
+                    nickName="";
+                }
+
+            }while(nickName.equals(""));
 
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
@@ -125,7 +175,6 @@ public class SocketClient extends Client{
 
         jo.put("method", "continueGame");
         jo.put("param1", nickName);
-        jo.put("param2", this);
 
         System.out.println(jo);
 
@@ -146,7 +195,7 @@ public class SocketClient extends Client{
         JSONObject jo = new JSONObject();
 
         jo.put("method", "leaveGame");
-        jo.put("param1", this);
+        jo.put("param1", nickName);
 
 
         System.out.println(jo);

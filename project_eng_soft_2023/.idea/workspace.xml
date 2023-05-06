@@ -9,14 +9,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="adjustments on network design patten and implementation of RMI/Soket Player, RMI/Socket Server and RMI/Server client">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/PingPong.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientSocketInputCP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientSocketInputCP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/CommonGoalCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/CommonGoalCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +83,7 @@
       <recent name="client" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ControlPlayerTest">
+  <component name="RunManager">
     <configuration name="App test" type="JUnit" factoryName="JUnit">
       <module name="project_eng_soft_2023" />
       <option name="MAIN_CLASS_NAME" value="" />
@@ -225,6 +226,7 @@
       <workItem from="1683194859543" duration="322000" />
       <workItem from="1683199952516" duration="753000" />
       <workItem from="1683313045589" duration="4677000" />
+      <workItem from="1683380626742" duration="10510000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>

@@ -98,7 +98,7 @@ public class SocketServer extends Lobby implements Runnable{
         Socket socketCP = (Socket) json.get("param3");
 
         synchronized (loginLock){
-            login(nick, socketCP); //----SimoSocket
+            login(nick, socketCP);
         }
 
     }
@@ -106,20 +106,20 @@ public class SocketServer extends Lobby implements Runnable{
     public void TCPContinueGame(JSONObject json) throws LoginException, RemoteException {
 
         String nick = (String) json.get("param1");
-        ClientHandler ch = (ClientHandler) json.get("param2");
+
 
         synchronized (loginLock){
-            continueGame(nick, ch);
+            continueGame(nick, socket);
         }
 
     }
 
-    public void TCPLeaveGame(JSONObject json){
+    public void TCPLeaveGame(JSONObject json) throws LoginException {
 
-        ClientHandler ch = (ClientHandler) json.get("param1");
+        String nick = (String) json.get("param1");
 
         synchronized (loginLock){
-            leaveGame(ch);
+            leaveGame(nick);
         }
 
     }
@@ -135,104 +135,6 @@ public class SocketServer extends Lobby implements Runnable{
         }
     }
 
-
-    /* ---SimoSocket è da spostare in socketPlayer con la giusta signature
-    @Override
-    public int askNumberOfPlayers(ClientHandler ch) throws IOException {
-
-        int res = -1;
-
-
-        JSONObject jo = new JSONObject();
-        jo.put("method","askNumberOfPlayers");
-        jo.put("param1",null);
-        jo.put("param2",null);
-
-        System.out.println(jo);
-
-        out.writeObject(jo);
-        out.flush();
-
-        JSONObject json = null;
-
-        while(json == null){
-
-            try{
-                json = (JSONObject) in.readObject();
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
-        }
-
-        if(json.get("method").equals("enterNumberOfPlayers")){
-            Long num = (Long) json.get("param1");
-            res = num.intValue();
-        } else throw new IOException();
-
-        return  res;
-
-
-    }
-
-*/
-
-
-
-    /* ---SimoSocket è da spostare in socketPlayer con la giusta signature
-    /**
-     * this method tells to all users that the game has started and that they aren't anymore in the waiting room, is divided in RMI and socket
-     * @param g
-     * @throws RemoteException
-     */
-    /*
-    public void notifyStartPlaying(Game g) throws RemoteException {
-
-        for(ControlPlayer player: g.getPlayers()){
-            try {
-                    //RMI calling
-                    player.setGame(g);
-                    ClientHandler clih=player.getClientHandler();
-
-                    JSONObject jo = new JSONObject();
-                    jo.put("method","notifyStartPlaying");
-                    jo.put("param1",player.getBookshelf().getPgc().getCardNumber());
-                    jo.put("param2",g.getBoard().getCommonGoalCard1().getCGCnumber());
-                    jo.put("param3",g.getBoard().getCommonGoalCard2().getCGCnumber());
-
-                    System.out.println(jo);
-
-                    out.writeObject(jo);
-                    out.flush();
-
-                    jo.clear();
-
-                    jo.put("method","updateBoard");
-                    jo.put("param1",g.getBoard().getBoard());
-
-                    System.out.println(jo);
-
-                    out.writeObject(jo);
-                    out.flush();
-
-                    if(g.getPlayers().get(g.getCurrPlayer()).equals(player)) {
-                        jo.put("method","startYourTurn");
-                        System.out.println(jo);
-
-                        out.writeObject(jo);
-                        out.flush();
-                    }
-
-
-            } catch (RemoteException e) { throw new RuntimeException(e); }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-
-    }
-    */
 
 
 }

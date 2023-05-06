@@ -5,6 +5,7 @@ import model.*;
 import myShelfieException.*;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -183,7 +184,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
                 cp.notifyUpdatedBoard();
             }
 
-        } catch (RemoteException e) { throw new RuntimeException(e); }
+        } catch (IOException e) { throw new RuntimeException(e); }
 
 
         //if the game is ended every player is notified and the results are shown
@@ -195,7 +196,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
                     cp.notifyEndGame();
                 }
 
-            } catch (RemoteException e) { throw new RuntimeException(e); }
+            } catch (IOException e) { throw new RuntimeException(e); }
 
         }
 
@@ -245,20 +246,20 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
      * this method tells to all users to update their board to the new one, is divided in RMI and socket
      * @throws RemoteException
      */
-    public abstract void notifyUpdatedBoard() throws RemoteException;
+    public abstract void notifyUpdatedBoard() throws IOException;
 
     /**
      * this method tells to all users that the game they're playing is ended, is divided in RMI and socket
      * @throws RemoteException
      */
-    public abstract void notifyEndGame() throws RemoteException;
+    public abstract void notifyEndGame() throws IOException;
 
 
     /**
      * this method tells to all users that the game has started and that they aren't anymore in the waiting room, is divided in RMI and socket
      * @throws RemoteException
      */
-    public  abstract void notifyStartPlaying() throws RemoteException;
+    public  abstract void notifyStartPlaying() throws IOException;
 
 
     /**
@@ -273,7 +274,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
      * @return true if the client is connected
      * @throws RemoteException RMI exception
      */
-    public abstract boolean askPing() throws RemoteException;
+    public abstract boolean askPing() throws IOException;
 
 
     //-------------------------------------- getter and setter methods --------------------------------------
@@ -327,6 +328,8 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
 
 
     abstract public void setClientHandler(ClientHandler cliHnd);
+
+    abstract public void setSocket(Socket socket);
 
 
 }
