@@ -8,16 +8,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="adjustments on network design patten and implementation of RMI/Soket Player, RMI/Socket Server and RMI/Server client">
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../deliveries/UML_AM05.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientSocketInputCP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientSocketInputCP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +76,7 @@
       <recent name="client" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.App test">
     <configuration name="App test" type="JUnit" factoryName="JUnit">
       <module name="project_eng_soft_2023" />
       <option name="MAIN_CLASS_NAME" value="" />
@@ -226,7 +219,8 @@
       <workItem from="1683194859543" duration="322000" />
       <workItem from="1683199952516" duration="753000" />
       <workItem from="1683313045589" duration="4677000" />
-      <workItem from="1683380626742" duration="10510000" />
+      <workItem from="1683380626742" duration="10905000" />
+      <workItem from="1683570590387" duration="20000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
@@ -291,7 +285,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683146449944</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="adjustments on network design patten and implementation of RMI/Socket Player, RMI/Socket Server and RMI/Server client">
+      <created>1683394506648</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1683394506648</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -329,7 +330,8 @@
     <MESSAGE value="Controller Implementation" />
     <MESSAGE value="creation of ServerApp and ClientApp with RMI and adjustments on ControlPlayer and Game" />
     <MESSAGE value="adjustments on network design patten and implementation of RMI/Soket Player, RMI/Socket Server and RMI/Server client" />
-    <option name="LAST_COMMIT_MESSAGE" value="adjustments on network design patten and implementation of RMI/Soket Player, RMI/Socket Server and RMI/Server client" />
+    <MESSAGE value="adjustments on network design patten and implementation of RMI/Socket Player, RMI/Socket Server and RMI/Server client" />
+    <option name="LAST_COMMIT_MESSAGE" value="adjustments on network design patten and implementation of RMI/Socket Player, RMI/Socket Server and RMI/Server client" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
