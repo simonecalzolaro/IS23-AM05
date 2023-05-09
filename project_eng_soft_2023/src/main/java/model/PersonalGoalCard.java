@@ -15,7 +15,7 @@ public class PersonalGoalCard implements Card{
      * creation of a specific PersonalGoalCard
      * @param card indicates the type of PersonalGoalCard you want to create
      */
-    PersonalGoalCard(int card){
+    public PersonalGoalCard(int card){
         switch (card) {
             case 1 -> {
                 map.put(Tile.GREEN, new int[]{4, 4});
