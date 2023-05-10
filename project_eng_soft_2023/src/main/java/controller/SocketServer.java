@@ -29,6 +29,7 @@ public class SocketServer extends Lobby implements Runnable{
     protected SocketServer(Socket socket) throws RemoteException {
 
         this.socket = socket;
+        System.out.println("----SocketServer ready----");
     }
 
     @Override
@@ -114,7 +115,7 @@ public class SocketServer extends Lobby implements Runnable{
 
     }
 
-    public void TCPLeaveGame(JSONObject json) throws LoginException {
+    public void TCPLeaveGame(JSONObject json) throws LoginException, RemoteException {
 
         String nick = (String) json.get("param1");
 
@@ -123,7 +124,6 @@ public class SocketServer extends Lobby implements Runnable{
         }
 
     }
-
 
 
     @Override

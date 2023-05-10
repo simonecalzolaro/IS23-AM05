@@ -8,12 +8,9 @@ import java.util.concurrent.Executors;
 
 public class TCPHandlerLobby {
 
-    static int PORT = 1236;
+    static int PORT = 1235;
 
-    public void startServer(){
-
-        ExecutorService executor = Executors.newCachedThreadPool();
-        System.out.println("Hello from TCPHandler");
+    public TCPHandlerLobby() {
 
         ServerSocket serverSocket;
 
@@ -23,7 +20,13 @@ public class TCPHandlerLobby {
             throw new RuntimeException(e);
         }
 
-        System.out.println("TCPHandler ready");
+        new Thread(() -> startServer(serverSocket));
+        System.out.println("----TCPHandler ready----");
+    }
+
+    public void startServer(ServerSocket serverSocket){
+
+        ExecutorService executor = Executors.newCachedThreadPool();
 
         while(true){
 

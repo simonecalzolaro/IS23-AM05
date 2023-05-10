@@ -12,7 +12,7 @@ import java.util.Map;
 
 public interface ClientHandler extends Remote {
     int enterNumberOfPlayers() throws IOException;
-    boolean updateBoard(Tile[][] board)throws RemoteException;
+    boolean updateBoard(Tile[][] board, Tile[][] myShelf, Map<String, Tile[][]> otherShelf) throws RemoteException;
     boolean theGameEnd(Map<Integer, String> results)throws RemoteException;
     boolean startYourTurn()throws RemoteException;
     boolean endYourTurn()throws RemoteException;

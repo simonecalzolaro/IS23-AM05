@@ -22,7 +22,6 @@ public interface ClientServerHandler extends Remote {
     /**
      * Method called by a user who wants tu continue a game after a web or client's server crash
      * @param nickname of the user, the same used in an old game
-     * @param ch new ClientHandler to communicate with the user
      * @return the GameHandler of his local ControlPlayer
      * @throws RemoteException
      * @throws LoginException
@@ -30,10 +29,9 @@ public interface ClientServerHandler extends Remote {
     GameHandler continueGame(String nickname, Object client)  throws RemoteException, LoginException;
 
 
-    /**
-     * a player ask to leave the game he is playing
-     * @return true if the request is approved
-     */
-
-    boolean leaveGame(String nickname) throws LoginException;
+        /**
+         * a player ask to leave the game he is playing
+         * @return true if the request is approved
+         */
+    boolean leaveGame(String nickname) throws LoginException, RemoteException;
 }

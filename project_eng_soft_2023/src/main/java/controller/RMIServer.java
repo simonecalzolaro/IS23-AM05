@@ -13,14 +13,16 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class RMIServer extends Lobby{
+
     /**
      * constructor for the ServerApp
      *
      * @throws RemoteException
      */
     public RMIServer() throws RemoteException {
-
+        super();
     }
+
 
     @Override
     public void startServer() throws RemoteException, AlreadyBoundException {
@@ -32,7 +34,7 @@ public class RMIServer extends Lobby{
         registry = LocateRegistry.createRegistry(Settings.PORT);
         registry.bind("ServerAppService",stub);
 
-        System.out.println("RMIServer ready");
+        System.out.println("----RMIServer ready----");
     }
 
 

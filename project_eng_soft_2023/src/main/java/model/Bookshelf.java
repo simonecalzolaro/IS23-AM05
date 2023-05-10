@@ -4,10 +4,11 @@ package model;
 import myShelfieException.InvalidChoiceException;
 import myShelfieException.InvalidLenghtException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Bookshelf {
+public class Bookshelf implements Serializable {
     /**
      * shelf attribute represent the game bookshelf. Here is implemented with a 6x5 matrix
      */
@@ -46,21 +47,29 @@ public class Bookshelf {
      * @param board constructor instantiate the board described above
      */
     public Bookshelf(Board board){
+
         shelf = new Tile[r][c];
+
         for(int i=0;i<r;i++){
             for(int j=0; j<c;j++){
                 shelf[i][j] = Tile.EMPTY;
             }
         }
-        this.board = board;
 
+        this.board=board;
         tokenCG1 = null;
         tokenCG2 = null;
         tokenEOG = 0;
-        pgc = board.getDeck().getRandPGC();
+        pgc=null;
+
 
     }
 
+    public void initializePGC(Board board){
+
+        pgc = board.getDeck().getRandPGC();
+
+    }
 
     //CLASS USED FOR TESTING : IT MUSTN'T BE USED DURING THE GAME
     public void setPGC(PersonalGoalCard pgc){
@@ -114,7 +123,9 @@ public class Bookshelf {
     /**
      * Feedback method, it shows the element of the matrix in order to render the whole matrix on the CLI
      */
-    public void getBookshelf(){
+    public Tile[][] getBookshelf(){
+
+        /*
         for(int i = r-1; i>=0; i--){
             System.out.println("\n");
             for(int j=0;j<c;j++){
@@ -122,6 +133,9 @@ public class Bookshelf {
 
             }
         }
+         */
+
+        return this.shelf;
     }
 
     /**

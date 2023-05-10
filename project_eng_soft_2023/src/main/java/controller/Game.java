@@ -5,11 +5,12 @@ import model.Board;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class Game {
+public class Game implements Serializable {
 
     /**
      * Unique Game ID
@@ -66,6 +67,7 @@ public class Game {
      * Set the Game Status as PLAYING
      */
     public void startGame(){
+
         currPlayer=0;
         while (players.get(currPlayer).getPlayerStatus()==PlayerStatus.NOT_ONLINE) {
             if(currPlayer==players.size()-1){

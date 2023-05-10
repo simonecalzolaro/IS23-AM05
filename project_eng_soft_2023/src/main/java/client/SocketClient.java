@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SocketClient extends Client{
+
+    Socket socketLobby;
+    Socket socketControlPlayer;
+
     static ObjectInputStream inLobby;
     static ObjectOutputStream outLobby;
 
@@ -33,13 +37,14 @@ public class SocketClient extends Client{
 
     @Override
     public void startClient(){
-        System.out.println("Hello from SocketServer");
+
+        System.out.println("Hello from SocketClient");
 
         getServerSettings();
 
         try{
+
             socketLobby = new Socket(localhost,TCPPORTX);
-            socketControlPlayer = new Socket(localhost,TCPPORTCPX);
 
             outCP = new ObjectOutputStream(socketControlPlayer.getOutputStream());
             inCP = new ObjectInputStream(socketControlPlayer.getInputStream());

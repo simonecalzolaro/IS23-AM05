@@ -9,6 +9,7 @@ import javax.swing.plaf.PanelUI;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class RMIClient extends Client{
+public class RMIClient extends Client {
 
 
     //-------------- RMI attributes --------------
@@ -43,9 +44,13 @@ public class RMIClient extends Client{
 
         // Looking up the registry for the remote object
         try {
+
             this.clientServerHandler = (ClientServerHandler) registry.lookup("ServerAppService");
+
         } catch (NotBoundException e) {
+
             throw new RuntimeException(e);
+
         }
 
         do {
@@ -89,16 +94,16 @@ public class RMIClient extends Client{
                         break;
                 }
 
-            }catch (Exception e) {
+            } catch (Exception e) {
 
                 System.out.println(e.getMessage());
                 e.printStackTrace();
                 System.out.println("try again...");
                 nickName="";
+
             }
 
         }while(nickName.equals(""));
-
 
     }
 
@@ -157,7 +162,6 @@ public class RMIClient extends Client{
      */
     public boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
 
-
         return gameHandler.choseBoardTiles(chosenTiles, coord);
 
     }
@@ -173,15 +177,9 @@ public class RMIClient extends Client{
 
     int askGetMyScore() throws RemoteException{
 
-
         return gameHandler.getMyScore();
 
     }
-
-
-
-
-
 
 
 }

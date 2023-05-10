@@ -283,9 +283,6 @@ public class SocketControlPlayer extends ControlPlayer {
 
     }
 
-    @Override
-    public void setClientHandler(ClientHandler cliHnd) {}
-
 
     public void notifyEndGame() throws IOException {
 
@@ -438,5 +435,9 @@ public class SocketControlPlayer extends ControlPlayer {
     @Override
     public void setSocket(Socket socket) {
         socketControlPlayer = socket;
+    }
+
+    @Override
+    public void setClientHandler(ClientHandler cliHnd) {
     }
 }

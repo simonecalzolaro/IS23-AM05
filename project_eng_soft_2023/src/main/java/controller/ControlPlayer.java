@@ -5,13 +5,14 @@ import model.*;
 import myShelfieException.*;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ControlPlayer extends UnicastRemoteObject implements GameHandler{
+public abstract class ControlPlayer implements GameHandler, Serializable {
 
     /**
      *Player's id
@@ -44,7 +45,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
      * @param nickname: unique player nickname
      * @param board: unique board
      */
-    public ControlPlayer(String nickname,Board board) throws RemoteException{
+    public ControlPlayer(String nickname, Board board) throws RemoteException{
 
         this.nickname = nickname;
         bookshelf = new Bookshelf(board);
@@ -127,26 +128,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     @Override
     public boolean choseBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws RemoteException, NotConnectedException, InvalidParametersException, NotMyTurnException, InvalidChoiceException {
 
-        if ( catchTile(coord).equals(chosenTiles)){
-
-            /* updating the Board of all clients is not necessary here, I can do it in insertShelfTiles() only
-
-            Game g= (Game)games.stream().filter(x->x.getPlayers().contains(clients.get(ch)));
-
-            for (ControlPlayer cp: g.getPlayers() ) {
-
-                try{
-                    getKey(clients, cp).updateBoard(g.getBoard().getBoard()); //----------timer che aspetta il return true
-                }catch (RemoteException e){
-                    e.printStackTrace();
-                    return false;
-                }
-
-            } */
-            return true;
-        }
-        else return false;
-
+        return catchTile(coord).equals(chosenTiles);
 
     }
 
@@ -277,39 +259,30 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     public abstract boolean askPing() throws IOException;
 
 
+
     //-------------------------------------- getter and setter methods --------------------------------------
 
     /**
-     *
      * @return playerID
      */
     public String getPlayerNickname() {
         return nickname;
     }
+
     /**
      *
      * @return playerStatus
      */
-
     public PlayerStatus getPlayerStatus() {
         return playerStatus;
     }
 
     /**
-     *
      * @return bookshelf
      */
-
     public Bookshelf getBookshelf() {
         return bookshelf;
     }
-
-
-
-    /**
-     * @return true if it's used RMI connection, false otherwise
-     */
-
 
     /**
      * @param g of tupe Game

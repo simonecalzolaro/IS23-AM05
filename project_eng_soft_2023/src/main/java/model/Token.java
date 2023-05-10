@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * generic representation of a Token
  * EnfOfGame is the token you get when you are the first to complete your Bookshelf
  * ST2, ST4, ST8 are the tokens you can get when you complete a CommonGoalCard ( in order )
  */
-public enum Token {
+public enum Token implements Serializable {
 
     EndOfGame(1),
     ST2(2),

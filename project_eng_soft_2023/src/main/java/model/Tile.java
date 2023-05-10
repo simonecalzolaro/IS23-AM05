@@ -1,7 +1,9 @@
 
 package model;
 
-public enum Tile {
+import java.io.Serializable;
+
+public enum Tile implements Serializable {
     GREEN,
     WHITE,
     BLUE,

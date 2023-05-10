@@ -19,7 +19,7 @@ import java.util.*;
 /**
  * Client Application
  */
-public abstract class Client extends UnicastRemoteObject implements ClientHandler {
+public abstract class Client extends UnicastRemoteObject implements ClientHandler, Serializable {
 
     //----- tutti sti attributi sono da spostare in classi o sottoclassi più specifiche
     static String localhost;
@@ -27,12 +27,9 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     static int PORTX;
     static Long TCPPORT;
     static int TCPPORTX;
-
     static Long TCPPORTCP;
     static int TCPPORTCPX;
 
-    Socket socketLobby;
-    Socket socketControlPlayer;
 
 
     protected Tile board[][];
@@ -45,30 +42,9 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     protected String nickName;
     protected boolean myTurn;
     protected boolean gameEnded;
+
     protected int score;
 
-    public static void main(String[] args) throws RemoteException {
-        System.out.println("What kind of connection do you want?");
-        int select;
-        Scanner scan = new Scanner(System.in);
-        do{
-            System.out.println("0 --> RMI\n1 --> Socket");
-            select = scan.nextInt();
-        }while(select != 0 && select != 1);
-
-        switch (select){
-
-            case 0:
-                new RMIClient().startClient();
-                break;
-
-            case 1:
-                new SocketClient().startClient();
-                break;
-
-        }
-
-    }
 
 
     /**
@@ -133,7 +109,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws RemoteException
      */
     @Override
-    public boolean updateBoard(Tile[][] board) throws RemoteException{
+    public boolean updateBoard(Tile[][] board, Tile[][] myShelf, Map<String, Tile[][]> otherShelf) throws RemoteException{
 
         for(int row=0; row< board.length; row++){
             for(int col=0; col< board[0].length; col++){
@@ -241,6 +217,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
             TCPPORTCPX = TCPPORTCP.intValue();
 
             System.out.println(localhost+" "+PORTX);
+
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

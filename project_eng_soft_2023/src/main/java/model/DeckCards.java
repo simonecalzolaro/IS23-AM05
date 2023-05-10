@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -7,7 +8,7 @@ import java.util.Random;
 /**
  * representation of a deck of cards ( CommonGoalCard and PersonalGoalCard)
  */
-public class DeckCards{
+public class DeckCards implements Serializable {
 
     final private int deckPGCsize=12;
     final private int deckCGCsize=12;

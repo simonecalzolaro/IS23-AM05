@@ -1,12 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EmptyStackException;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-public class CommonGoalCard implements Card{
+public class CommonGoalCard implements Card, Serializable {
     private Stack<Token> stackTiles;
     private final int CGCnumber;
 

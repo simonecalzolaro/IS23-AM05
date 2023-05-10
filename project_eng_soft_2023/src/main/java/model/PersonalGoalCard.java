@@ -1,12 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * generic representation of a PersonalGoalCard
  */
-public class PersonalGoalCard implements Card{
+public class PersonalGoalCard implements Card, Serializable {
     public int score=0;
     Map<Tile, int[]> map = new HashMap<>();
 
