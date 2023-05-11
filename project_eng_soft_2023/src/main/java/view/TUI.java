@@ -2,6 +2,36 @@ package view;
 
 public class TUI implements View{
 
+    @Override
+    public int getNumOfPlayer() {
+        return 0;
+    }
+
+    @Override
+    public void updateBoard() {
+
+    }
+
+    @Override
+    public void endGame() {
+
+    }
+
+    @Override
+    public void isYourTurn() {
+
+    }
+
+    @Override
+    public void startGame() {
+
+    }
+
+    @Override
+    public void endYourTurn() {
+
+    }
+
     private enum ColorCLI{
         RESET("\u001B[0m"),
 
