@@ -32,18 +32,15 @@ public class SocketClient extends Client{
      * @throws RemoteException
      */
     protected SocketClient() throws RemoteException {
-        super();
-    }
 
-    @Override
-    public void startClient(){
+        super();
 
         System.out.println("Hello from SocketClient");
 
         getServerSettings();
 
-        try{
 
+        try{
             socketLobby = new Socket(localhost,TCPPORTX);
 
             outCP = new ObjectOutputStream(socketControlPlayer.getOutputStream());
@@ -54,71 +51,19 @@ public class SocketClient extends Client{
             inLobby = new ObjectInputStream(socketLobby.getInputStream());
 
 
-
             Thread threadInputLobby = new Thread(new ClientSocketInputLobby());
             threadInputLobby.start();
             Thread threadInputCP = new Thread(new ClientSocketInputCP());
             threadInputCP.start();
 
-
-            do {
-
-                int num;
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-                //-------questa parte andrà migliorata in GUI e TUI
-
-                Scanner scan = new Scanner(System.in);
-
-                do {
-                    System.out.println("0 --> start a new game");
-                    System.out.println("1 --> continue a Game");
-                    num = scan.nextInt();
-
-                }while (num!=0 &&  num!=1);
-
-                try {
-
-                    switch (num) {
-
-                        case 0:
-                            System.out.println("nickname: ");
-                            nickName = br.readLine();
-                            System.out.println("-----------------------");
-
-                            //login of the new player
-                            askLogin();
-                            System.out.println("-----login successfully");
-                            break;
-
-                        case 1:
-                            System.out.println("nickname: ");
-                            nickName = br.readLine();
-                            System.out.println("-------------------");
-
-                            //login of the new player
-                            askContinueGame();
-                            System.out.println("-----reconnected successfully");
-                            break;
-                    }
-
-                }catch (Exception e) {
-
-                    System.out.println(e.getMessage());
-                    e.printStackTrace();
-                    System.out.println("try again...");
-                    nickName="";
-                }
-
-            }while(nickName.equals(""));
-
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
+        }catch (UnknownHostException e) {
+        throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
+
 
     //---SimoSocket: is eguente metodo esiste già in Client, non va sovrascritto
     /*
@@ -147,12 +92,13 @@ public class SocketClient extends Client{
      * @throws IOException
      * @throws RemoteException
      */
-    public GameHandler askLogin() throws LoginException, IOException, RemoteException {
+    @Override
+    public void askLogin(String nick) throws LoginException, IOException, RemoteException {
 
         JSONObject jo = new JSONObject();
 
         jo.put("method", "login");
-        jo.put("param1", nickName);
+        jo.put("param1", model.getNickname());
         jo.put("param2", this);
         jo.put("param3",socketControlPlayer);
 
@@ -160,8 +106,6 @@ public class SocketClient extends Client{
 
         outLobby.writeObject(jo);
         outLobby.flush();
-
-        return null;
 
 
     }
@@ -174,19 +118,18 @@ public class SocketClient extends Client{
      * @throws LoginException
      * @throws RemoteException
      */
-    public GameHandler askContinueGame() throws LoginException, IOException {
+    public void askContinueGame() throws LoginException, IOException {
 
         JSONObject jo = new JSONObject();
 
         jo.put("method", "continueGame");
-        jo.put("param1", nickName);
+        jo.put("param1", model.getNickname());
 
         System.out.println(jo);
 
         outLobby.writeObject(jo);
         outLobby.flush();
 
-        return null;
     }
 
 
@@ -200,7 +143,7 @@ public class SocketClient extends Client{
         JSONObject jo = new JSONObject();
 
         jo.put("method", "leaveGame");
-        jo.put("param1", nickName);
+        jo.put("param1", model.getNickname());
 
 
         System.out.println(jo);

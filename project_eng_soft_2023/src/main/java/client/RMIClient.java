@@ -22,24 +22,19 @@ public class RMIClient extends Client {
 
 
     //-------------- RMI attributes --------------
-    protected ClientServerHandler clientServerHandler;
-    protected GameHandler gameHandler;
-
+    private ClientServerHandler clientServerHandler;
+    private GameHandler gameHandler;
+    private Registry registry;
 
     /**
      * constructor of ClientApp
-     *
      * @throws RemoteException
      */
     public RMIClient() throws RemoteException {
-        super();
-    }
 
-    @Override
-    public void startClient() throws RemoteException {
+        super();
 
         // Getting the registry
-        Registry registry;
         registry = LocateRegistry.getRegistry(Settings.SERVER_NAME, Settings.PORT);
 
         // Looking up the registry for the remote object
@@ -53,60 +48,7 @@ public class RMIClient extends Client {
 
         }
 
-        do {
-
-            int num;
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-            //-------questa parte andrà migliorata in GUI e TUI
-
-            Scanner scan = new Scanner(System.in);
-
-            do {
-                System.out.println("0 --> start a new game");
-                System.out.println("1 --> continue a Game");
-                num = scan.nextInt();
-
-            }while (num!=0 &&  num!=1);
-
-            try {
-
-                switch (num) {
-
-                    case 0:
-                        System.out.println("nickname: ");
-                        nickName = br.readLine();
-                        System.out.println("-----------------------");
-
-                        //login of the new player
-                        this.gameHandler = askLogin();
-                        System.out.println("-----login successfully");
-                        break;
-
-                    case 1:
-                        System.out.println("nickname: ");
-                        nickName = br.readLine();
-                        System.out.println("-------------------");
-
-                        //login of the new player
-                        this.gameHandler = askContinueGame();
-                        System.out.println("-----reconnected successfully");
-                        break;
-                }
-
-            } catch (Exception e) {
-
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-                System.out.println("try again...");
-                nickName="";
-
-            }
-
-        }while(nickName.equals(""));
-
     }
-
 
 
     /**
@@ -116,10 +58,9 @@ public class RMIClient extends Client {
      * @throws IOException
      * @throws RemoteException
      */
-    public GameHandler askLogin() throws LoginException, IOException, RemoteException{
+    public void askLogin(String nick) throws LoginException, IOException, RemoteException{
 
-        return clientServerHandler.login( this.nickName, this);
-
+        this.gameHandler= clientServerHandler.login(nick , this);
     }
 
 
@@ -129,10 +70,9 @@ public class RMIClient extends Client {
      * @throws LoginException
      * @throws RemoteException
      */
-    public GameHandler askContinueGame() throws LoginException, RemoteException {
+    public void askContinueGame() throws LoginException, RemoteException {
 
-        return clientServerHandler.continueGame(nickName, this);
-
+        this.gameHandler= clientServerHandler.continueGame(model.getNickname(), this);
     }
 
 
@@ -143,9 +83,7 @@ public class RMIClient extends Client {
      */
     public boolean askLeaveGame() throws RemoteException, LoginException {
 
-
-        return clientServerHandler.leaveGame(nickName);
-
+        return clientServerHandler.leaveGame(model.getNickname());
     }
 
 
@@ -163,23 +101,19 @@ public class RMIClient extends Client {
     public boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
 
         return gameHandler.choseBoardTiles(chosenTiles, coord);
-
     }
+
+
 
     boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
 
-
         return gameHandler.insertShelfTiles(choosenTiles, choosenColumn, coord);
-
-
     }
 
 
     int askGetMyScore() throws RemoteException{
 
         return gameHandler.getMyScore();
-
     }
-
 
 }

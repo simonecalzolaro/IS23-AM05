@@ -12,6 +12,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
@@ -32,18 +33,9 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
 
 
-    protected Tile board[][];
-    protected Tile shelf[][];
-
-    protected  int pgc;
-    protected int cgc1;
-    protected int cgc2;
-
-    protected String nickName;
+    protected ClientModel model;
     protected boolean myTurn;
     protected boolean gameEnded;
-
-    protected int score;
 
 
 
@@ -55,10 +47,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
         super();
 
-        board = new Tile[9][9]; //------------------------si può fare meglio
-        shelf = new Tile[6][5]; //------------------------si può fare meglio
-
-        nickName = "";
+        model=new ClientModel();
         myTurn=false;
         gameEnded=false;
 
@@ -66,9 +55,10 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
     }
 
+    public void startClient(){
 
-    public abstract void startClient() throws RemoteException;
 
+    }
 
     public static class Settings {
 
@@ -89,6 +79,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
         do {
 
+
             System.out.print("Enter the number of players: ");
             // This method reads the number provided using keyboard
             num = scan.nextInt();
@@ -102,7 +93,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     }
 
 
-
     /**
      * method called by the server to update the board of this client
      * @param board
@@ -111,13 +101,15 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     @Override
     public boolean updateBoard(Tile[][] board, Tile[][] myShelf, Map<String, Tile[][]> otherShelf) throws RemoteException{
 
-        for(int row=0; row< board.length; row++){
-            for(int col=0; col< board[0].length; col++){
-                this.board[row][col]= board[row][col]; //------------- gli elementi sono oggetti, facendo così copio il puntatore, devo usare una clone
-            }
+        Map<String, Matrix> otherPlayersMatr= new HashMap<>();
+
+        for(String nick: otherShelf.keySet()){
+            otherPlayersMatr.put(nick, new Matrix(otherShelf.get(nick)));
         }
 
-         //   gameHandler.getMyScore();
+        model.initializeMatrixes(new Matrix(board), new Matrix(myShelf), otherPlayersMatr );
+
+
         System.out.println("the board has been updated...");
 
         return true;
@@ -142,6 +134,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         return true;
     }
 
+
     /**
      * method called by the server to notify the user that his turn has started
      * @throws RemoteException
@@ -149,11 +142,12 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     @Override
     public boolean startYourTurn() throws RemoteException{
 
-        System.out.println(" make a move "+ nickName + " is your turn");
+        System.out.println(" make a move "+ model.getNickname() + " is your turn");
         myTurn=true;
         return true;
 
     }
+
 
     /**
      *  method called by the server to notify the user that his turn is ended
@@ -168,23 +162,22 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
     }
 
+
     /**
      *  method called by the server to notify the user that the match has started
      * @throws RemoteException
      */
     @Override
-    public boolean startPlaying( int pgc, int cgc1, int cgc2) throws RemoteException {
+    public boolean startPlaying(int pgcNum, Map<Tile, int[]> pgcMap, int cgc1num, int cgc2num) throws RemoteException {
 
         System.out.print("\033[H\033[2J");
         System.out.flush();
         System.out.println("let's go!! The game has started ! ");
         System.out.println("is your turn? make a move =) ");
 
-        this.pgc=pgc;
-        this.cgc1=cgc1;
-        this.cgc2=cgc2;
+        model.initializeCards(new Matrix(pgcMap), pgcNum, cgc1num, cgc2num );
 
-        //----qua dentro verrà poi lanciata la gui o la cli
+        //----UImethod()
 
         return true;
 
@@ -199,7 +192,11 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         return true;
     }
 
+    /**
+     * set up the servers' ports and hostname
+     */
     public void getServerSettings(){
+
         try{
             Object o = new JSONParser().parse(new FileReader("header.json"));
             JSONObject j =(JSONObject) o;
@@ -227,7 +224,26 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         }
     }
 
+    /**
+     * @return clientModel
+     */
+    public ClientModel getModel(){
+        return model;
+    }
 
+    /**
+     * @return true if is your turn
+     */
+    public boolean isMyTurn() {
+        return myTurn;
+    }
+
+    /**
+     * @return true if game ended
+     */
+    public boolean GameEnded() {
+        return gameEnded;
+    }
 
     //-------------------------------------- RMI vs Socket layer --------------------------------------
 
@@ -239,7 +255,8 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws IOException
      * @throws RemoteException
      */
-    public abstract GameHandler askLogin() throws LoginException, IOException, RemoteException;
+    public abstract void askLogin(String nick) throws LoginException, IOException, RemoteException;
+
 
     /**
      * asks the server to continue a game, is divided in RMI and socket
@@ -247,7 +264,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws LoginException
      * @throws RemoteException
      */
-    public abstract GameHandler askContinueGame() throws LoginException, IOException;
+    public abstract void askContinueGame() throws LoginException, IOException;
 
 
     /**
@@ -272,9 +289,26 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     public abstract boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, IOException, NotMyTurnException;
 
 
+    /**
+     * asks the server to insert some tiles in my shelf, is divided in RMI and socket
+     * @param choosenTiles are the tiles to insert in a column
+     * @param choosenColumn is the column where to insert the tiles
+     * @param coord board coordinates
+     * @return true if everything went fine
+     * @throws IOException
+     * @throws NotConnectedException
+     * @throws NotMyTurnException
+     * @throws InvalidChoiceException
+     * @throws InvalidLenghtException
+     */
     abstract boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws IOException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException;
 
 
+    /**
+     * asks the server my current score, is divided in RMI and socket
+     * @return the score
+     * @throws IOException
+     */
     abstract int askGetMyScore() throws IOException;
 
 

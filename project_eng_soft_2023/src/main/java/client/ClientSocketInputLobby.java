@@ -51,16 +51,17 @@ public class ClientSocketInputLobby extends SocketClient implements Runnable{
                        Long pgc = (Long) jsonIn.get("param1");
                        Long cgc1 = (Long) jsonIn.get("param2");
                        Long cgc2 = (Long) jsonIn.get("param3");
-                       startPlaying(pgc.intValue(),cgc1.intValue(),cgc2.intValue());
+                       startPlaying(pgc.intValue(),cgc1.intValue(),cgc2.intValue()); //---simoSocket
                    } catch (RemoteException e) {
                        throw new RuntimeException(e);
                    }
                    break;
 
                case "updateBoard":
+
                    try{
                        Tile[][] board = (Tile[][]) jsonIn.get("param1");
-                       updateBoard(board);
+                       updateBoard(board, ); //---simoSocket
                    } catch (RemoteException e) {
                        throw new RuntimeException(e);
                    }

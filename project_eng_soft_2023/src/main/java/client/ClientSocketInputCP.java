@@ -94,12 +94,14 @@ public class ClientSocketInputCP extends SocketClient implements Runnable{
                 case "updateBoard":
 
                     Tile[][] board = (Tile[][]) jsonInCP.get("param1");
-
+/*
                     try {
                         updateBoard(board);
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);
                     }
+
+ */
 
                     jo.put("method","updateBoardOK");
 

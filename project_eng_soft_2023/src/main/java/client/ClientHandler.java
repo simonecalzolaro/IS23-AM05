@@ -8,6 +8,7 @@ import model.Tile;
 import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Map;
 
 public interface ClientHandler extends Remote {
@@ -16,6 +17,7 @@ public interface ClientHandler extends Remote {
     boolean theGameEnd(Map<Integer, String> results)throws RemoteException;
     boolean startYourTurn()throws RemoteException;
     boolean endYourTurn()throws RemoteException;
-    boolean startPlaying(int pgc, int cgc1, int cgc2) throws RemoteException;
+    boolean startPlaying(int pgcNum, Map<Tile, int[]> pgcMap, int cgc1num, int cgc2num) throws RemoteException;
+
     boolean pong() throws RemoteException;
 }

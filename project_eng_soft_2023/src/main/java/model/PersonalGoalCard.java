@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -144,6 +145,11 @@ public class PersonalGoalCard implements Card, Serializable {
     public boolean checkGoal(Tile[][] shelf){
         goodShelf(shelf);
         return getScore(shelf) == 12;
+    }
+
+
+    public Map<Tile, int[]> getCardMap() {
+        return map;
     }
 
     /**

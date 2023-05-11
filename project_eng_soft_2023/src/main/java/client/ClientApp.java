@@ -1,5 +1,7 @@
 package client;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
@@ -12,11 +14,11 @@ public class ClientApp {
 
     public static void main(String[] args) {
 
+        String nickName="";
 
         //--------------------------------- TUI o GUI ? ----------------------------------
 
         //------------------------------- RMI o Socket ? ----------------------------------
-
 
         System.out.println("What kind of connection do you want?");
         int select;
@@ -26,6 +28,7 @@ public class ClientApp {
             select = scan.nextInt();
         }while(select != 0 && select != 1);
 
+        //create the client
         switch (select){
 
             case 0:
@@ -46,11 +49,59 @@ public class ClientApp {
 
         }
 
-        try {
-            client.startClient();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        client.startClient();
+
+
+        do {
+
+            int num;
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+
+            do {
+                System.out.println("0 --> start a new game");
+                System.out.println("1 --> continue a Game");
+                num = scan.nextInt();
+
+            }while (num!=0 &&  num!=1);
+
+            try {
+
+                switch (num) {
+
+                    case 0:
+                        System.out.println("nickname: ");
+                        nickName = br.readLine();
+                        System.out.println("-----------------------");
+
+                        //login of the new player
+                        client.askLogin(nickName);
+                        client.getModel().setNickname(nickName);
+
+                        System.out.println("-----login successfully");
+                        break;
+
+                    case 1:
+                        System.out.println("nickname: ");
+                        nickName = br.readLine();
+                        System.out.println("-------------------");
+
+                        //login of the new player
+                        client.askContinueGame();
+                        System.out.println("-----reconnected successfully");
+                        break;
+                }
+
+            } catch (Exception e) {
+
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+                System.out.println("try again...");
+                nickName="";
+
+            }
+
+        }while(nickName.equals(""));
 
         //------------------------------ waiting room ----------------------------------
 
