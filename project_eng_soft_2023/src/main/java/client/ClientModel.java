@@ -30,6 +30,7 @@ public class ClientModel {
         this.board=board;
         this.myBookshelf=myBookshelf;
         this.otherPlayers=otherPlayers;
+        System.out.println("...all shelf and board successfully initialized...");
 
     }
 
@@ -41,6 +42,7 @@ public class ClientModel {
         this.cgc1=CGC.getCGC(cgc1Num);
         this.cgc2=CGC.getCGC(cgc1Num);
 
+        System.out.println("...all cards successfully initialized...");
 
     }
 

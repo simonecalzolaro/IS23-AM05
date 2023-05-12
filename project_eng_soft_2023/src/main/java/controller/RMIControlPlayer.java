@@ -106,8 +106,6 @@ public class RMIControlPlayer extends ControlPlayer{
             ch.startPlaying(bookshelf.getPgc().getCardNumber(), bookshelf.getPgc().getCardMap(), game.getBoard().getCommonGoalCard1().getCGCnumber(), game.getBoard().getCommonGoalCard2().getCGCnumber());
             notifyUpdatedBoard();
 
-            //if this player is also the first player to play
-            if(game.getPlayers().get(game.getCurrPlayer()).equals(this)) this.notifyStartYourTurn();
 
     }
 

@@ -64,6 +64,7 @@ public abstract class Lobby implements ClientServerHandler {
 
         synchronized(this) {
 
+            //check if the nickname is available
             if (clients.stream().map(x -> x.getPlayerNickname()).toList().contains(nickname))
                 throw new LoginException("this nickname is not available at the moment");
 
@@ -106,11 +107,13 @@ public abstract class Lobby implements ClientServerHandler {
                         }
                     } while (attendedPlayers < 2 || attendedPlayers > 4); //eccezione da gestire
 
+                    //setting the status of this Player as MY_TURN
+                    pl.setPlayerStatus(PlayerStatus.MY_TURN);
+
                     //initializing the board with the chosen number of players
-                    // */*/*/*/
                     tempBoard.initializeBoard(attendedPlayers);
                     System.out.println("-> ...player " + nickname + " created a game with " + attendedPlayers + " players...");
-                    // */*/*/*
+
                 }
 
                 //add to the map "clients" the ClientHandler interface and the associated ControlPlayer
@@ -120,9 +123,9 @@ public abstract class Lobby implements ClientServerHandler {
 
                 System.out.println("-> ...player " + nickname + " entered the game. Waiting room now contains "+ tempPlayers.size()+"/" + attendedPlayers);
 
-                // */*/*/
+
                 //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
-                if (tempPlayers.size() == attendedPlayers) {
+                if (tempPlayers.size() >= attendedPlayers) {
 
                     attendedPlayers = -1;
 
@@ -134,6 +137,9 @@ public abstract class Lobby implements ClientServerHandler {
                         cp.setGame(g);
                         cp.getBookshelf().initializePGC(tempBoard);
                         cp.notifyStartPlaying();
+
+                        if(cp.getPlayerStatus().equals(PlayerStatus.MY_TURN)) cp.notifyStartYourTurn();
+
                     }
 
                     tempPlayers.clear();
@@ -141,7 +147,6 @@ public abstract class Lobby implements ClientServerHandler {
 
                 }
 
-                // */*/*/*
 
                 return pl;
             }

@@ -6,6 +6,5 @@ public interface View {
     public void endGame();
     public void isYourTurn();
     public void startGame();
-
     public void endYourTurn();
 }

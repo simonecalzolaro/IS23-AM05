@@ -17,7 +17,7 @@ public interface ClientHandler extends Remote {
     boolean theGameEnd(Map<Integer, String> results)throws RemoteException;
     boolean startYourTurn()throws RemoteException;
     boolean endYourTurn()throws RemoteException;
-    boolean startPlaying(int pgcNum, Map<Tile, int[]> pgcMap, int cgc1num, int cgc2num) throws RemoteException;
+    boolean startPlaying(int pgcNum, Map<Tile, Integer[]> pgcMap, int cgc1num, int cgc2num) throws RemoteException;
 
     boolean pong() throws RemoteException;
 }

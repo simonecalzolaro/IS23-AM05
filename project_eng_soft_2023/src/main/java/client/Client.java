@@ -38,7 +38,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     protected boolean gameEnded;
 
 
-
     /**
      * constructor of ClientApp
      * @throws RemoteException
@@ -102,7 +101,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     public boolean updateBoard(Tile[][] board, Tile[][] myShelf, Map<String, Tile[][]> otherShelf) throws RemoteException{
 
         Map<String, Matrix> otherPlayersMatr= new HashMap<>();
-
         for(String nick: otherShelf.keySet()){
             otherPlayersMatr.put(nick, new Matrix(otherShelf.get(nick)));
         }
@@ -168,16 +166,16 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws RemoteException
      */
     @Override
-    public boolean startPlaying(int pgcNum, Map<Tile, int[]> pgcMap, int cgc1num, int cgc2num) throws RemoteException {
+    public boolean startPlaying(int pgcNum, Map<Tile, Integer[]> pgcMap, int cgc1num, int cgc2num) throws RemoteException {
 
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-        System.out.println("let's go!! The game has started ! ");
-        System.out.println("is your turn? make a move =) ");
 
         model.initializeCards(new Matrix(pgcMap), pgcNum, cgc1num, cgc2num );
 
         //----UImethod()
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+        System.out.println("let's go!! The game has started ! ");
+        System.out.println("is your turn? make a move =) ");
 
         return true;
 

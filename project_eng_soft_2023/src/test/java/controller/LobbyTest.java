@@ -1,37 +1,46 @@
 package controller;
 
 import client.Client;
+import client.ClientApp;
+import client.RMIClient;
 import myShelfieException.LoginException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
+import java.rmi.AlreadyBoundException;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class LobbyTest {
-/*
+
     @Test
-    void login_onePlayer() throws LoginException, IOException {
+    void login_5Players() throws LoginException, IOException, AlreadyBoundException {
 
         Lobby lobby;
-        ClientApp client;
+        Client c1;
+        Client c2;
+        Client c3;
+        Client c4;
+        Client c5;
 
-        lobby=new Lobby();
-        client=new ClientApp();
-        GameHandler gh;
+        lobby=new RMIServer();
+        lobby.startServer();
 
-        gh=lobby.login("Mario", client, true );
+        c1=new RMIClient();
+        c2=new RMIClient();
+        c3=new RMIClient();
+        c4=new RMIClient();
+        c5=new RMIClient();
 
-        assertTrue(lobby.getGames().contains( gh ) );
 
-        assertEquals(lobby.getGames().size(), 1);
+        lobby.login("mario", c1);
+        lobby.login("elio", c2);
 
     }
 
     @Test
     void login_twoPlayer() throws LoginException, IOException {
 
+        /*
         Lobby lobby;
         ClientApp client;
 
@@ -51,8 +60,11 @@ class LobbyTest {
 
         assertEquals(lobby.getGames().size(), 2);
 
+         */
+
+
     }
-*/
+
 
     @Test
     void continueGame() {

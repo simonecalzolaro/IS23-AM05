@@ -3,6 +3,7 @@ package client;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.Scanner;
 
 public class ClientApp {
@@ -72,23 +73,18 @@ public class ClientApp {
                     case 0:
                         System.out.println("nickname: ");
                         nickName = br.readLine();
-                        System.out.println("-----------------------");
-
                         //login of the new player
                         client.askLogin(nickName);
                         client.getModel().setNickname(nickName);
-
-                        System.out.println("-----login successfully");
+                        System.out.println("...successfully LOGIN...");
                         break;
 
                     case 1:
                         System.out.println("nickname: ");
                         nickName = br.readLine();
-                        System.out.println("-------------------");
-
-                        //login of the new player
+                        //relogin of the new player
                         client.askContinueGame();
-                        System.out.println("-----reconnected successfully");
+                        System.out.println("...reconnected successfully...");
                         break;
                 }
 
@@ -105,7 +101,28 @@ public class ClientApp {
 
         //------------------------------ waiting room ----------------------------------
 
+
         //-------------------------------- game loop ----------------------------------
+
+        while(!client.GameEnded()){
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            if(client.isMyTurn()){
+                System.out.println("Choose a tiles: ");
+
+            }
+
+
+
+        }
+
+
+
 
     }
 }

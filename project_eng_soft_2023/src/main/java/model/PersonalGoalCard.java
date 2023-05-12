@@ -148,8 +148,18 @@ public class PersonalGoalCard implements Card, Serializable {
     }
 
 
-    public Map<Tile, int[]> getCardMap() {
-        return map;
+    public Map<Tile, Integer[]> getCardMap() {
+
+        Map<Tile, Integer[]> newMap=new HashMap<>();
+
+        for (Map.Entry<Tile, int[]> entry : map.entrySet()){
+
+            newMap.put(entry.getKey(), new Integer[]{entry.getValue()[0], entry.getValue()[1]});
+
+
+        }
+
+        return newMap;
     }
 
     /**

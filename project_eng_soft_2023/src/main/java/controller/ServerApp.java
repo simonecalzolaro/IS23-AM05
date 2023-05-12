@@ -20,9 +20,11 @@ public class ServerApp {
             lobby = new RMIServer();
             lobby.startServer();
 
-            SocketLobby = new TCPHandlerLobby();
+            //SocketLobby = new TCPHandlerLobby();
             //new Thread(() -> SocketLobby.startServer()); //---- potrebbe dare problemi con gli indirizzi di memoria (parla con Simo)
             //SocketLobby.startServer();
+
+           // new Thread(() -> new TCPHandlerLobby());
 
         } catch (Exception e) {
             e.printStackTrace();

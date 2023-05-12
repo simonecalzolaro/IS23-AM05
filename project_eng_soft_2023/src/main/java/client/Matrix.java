@@ -7,21 +7,24 @@ import java.util.Map;
 public class Matrix {
 
     Tile[][] matr;
-    Map<Tile, int[]> map;
+    Map<client.Tile, Integer[]> map;
 
 
-
-
-    public Matrix(Map<model.Tile,int[]> pgcMap) {
+    public Matrix(Map<model.Tile, Integer[]> pgcMap) {
 
         map=new HashMap<>();
-        ArrayList<Tile> keys= new ArrayList(pgcMap.keySet());
+        ArrayList<client.Tile> keys= new ArrayList(pgcMap.keySet());
 
-        for(int i=0; i< keys.size(); i++){
-            map.put( keys.get(i), pgcMap.get( keys.get(i)) ); //keys.get(i).ordinal()
+        for (Map.Entry<model.Tile, Integer[]> entry : pgcMap.entrySet()){
+
+            map.put(Tile.getTile(entry.getKey().ordinal()), entry.getValue());
+
+            /*
+            System.out.println("Key = " + entry.getKey() +
+                    ", Value = " + entry.getValue());
+
+             */
         }
-
-
 
     }
 
@@ -36,4 +39,42 @@ public class Matrix {
         }
 
     }
+
+    public Tile getTileByCoord(int row, int col){
+        return matr[row][col];
+    }
+
+    private Map<Tile, Integer[]>  generateMapFromMatrix(Tile[][] matr){
+
+        Map<client.Tile, Integer[]> map=new HashMap<>();
+
+        for (int i=0; i< matr.length; i++){
+            for (int j=0; j< matr[0].length; j++){
+
+                map.put(matr[i][j], new Integer[]{j, i});
+
+            }
+        }
+
+        return map;
+    }
+
+    private Tile[][] generateMatrixFromMap( Map<Tile, Integer[]>  map){
+
+        Tile[][] matr= new Tile[][]{};
+
+        for (int i=0; i< matr.length; i++){
+            for (int j=0; j< matr[0].length; j++){
+                matr[i][j]=Tile.EMPTY;
+            }
+        }
+
+
+        for (Map.Entry<Tile, Integer[]> entry : map.entrySet()){
+            matr[entry.getValue()[0]][entry.getValue()[1]] = entry.getKey() ;
+        }
+
+        return matr;
+    }
+
 }
