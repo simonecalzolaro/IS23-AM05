@@ -6,8 +6,9 @@ import java.util.Map;
 
 public class Matrix {
 
-    Tile[][] matr;
-    Map<client.Tile, Integer[]> map;
+
+    private Tile[][] matr;
+    private Map<client.Tile, Integer[]> map;
 
 
     public Matrix(Map<model.Tile, Integer[]> pgcMap) {
@@ -76,5 +77,14 @@ public class Matrix {
 
         return matr;
     }
+
+    public Tile[][] getMatr() {
+        return matr;
+    }
+
+    public Map<Tile, Integer[]> getMap() {
+        return map;
+    }
+
 
 }

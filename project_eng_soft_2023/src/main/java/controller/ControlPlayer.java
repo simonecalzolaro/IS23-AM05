@@ -291,6 +291,12 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
         this.game=g;
     }
 
+    /**
+     * @return game
+     */
+    public controller.Game getGame() {
+        return game;
+    }
 
     /**
      * @param playerStatus: player status

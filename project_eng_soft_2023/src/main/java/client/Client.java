@@ -15,6 +15,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -186,9 +187,14 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @return always true
      * @throws RemoteException RMI exception
      */
+    @Override
     public boolean pong() throws RemoteException {
+
+        System.out.println("    pong");
         return true;
     }
+
+
 
     /**
      * set up the servers' ports and hostname
@@ -309,5 +315,10 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      */
     abstract int askGetMyScore() throws IOException;
 
+    /**
+     * verifies the server is up
+     * @return true if the server is online
+     */
+    abstract boolean askPing();
 
 }

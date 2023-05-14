@@ -30,6 +30,7 @@ public class RMIClient extends Client {
      * constructor of ClientApp
      * @throws RemoteException
      */
+
     public RMIClient() throws RemoteException {
 
         super();
@@ -47,7 +48,6 @@ public class RMIClient extends Client {
             throw new RuntimeException(e);
 
         }
-
     }
 
 
@@ -58,6 +58,7 @@ public class RMIClient extends Client {
      * @throws IOException
      * @throws RemoteException
      */
+    @Override
     public void askLogin(String nick) throws LoginException, IOException, RemoteException{
 
         this.gameHandler= clientServerHandler.login(nick , this);
@@ -70,6 +71,7 @@ public class RMIClient extends Client {
      * @throws LoginException
      * @throws RemoteException
      */
+    @Override
     public void askContinueGame() throws LoginException, RemoteException {
 
         this.gameHandler= clientServerHandler.continueGame(model.getNickname(), this);
@@ -81,6 +83,7 @@ public class RMIClient extends Client {
      * @return true if everything went fine
      * @throws RemoteException
      */
+    @Override
     public boolean askLeaveGame() throws RemoteException, LoginException {
 
         return clientServerHandler.leaveGame(model.getNickname());
@@ -98,22 +101,31 @@ public class RMIClient extends Client {
      * @throws RemoteException
      * @throws NotMyTurnException
      */
+    @Override
     public boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
 
         return gameHandler.choseBoardTiles(chosenTiles, coord);
     }
 
-
-
+    @Override
     boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
 
         return gameHandler.insertShelfTiles(choosenTiles, choosenColumn, coord);
     }
 
-
+    @Override
     int askGetMyScore() throws RemoteException{
 
         return gameHandler.getMyScore();
+    }
+
+    @Override
+    boolean askPing() {
+        try {
+            return clientServerHandler.pong();
+        } catch (RemoteException e) {
+            return false;
+        }
     }
 
 }

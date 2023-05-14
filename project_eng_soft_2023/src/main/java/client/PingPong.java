@@ -1,18 +1,22 @@
-package controller;
+package client;
+
+
+
+import controller.PlayerStatus;
 
 /**
  * check if the player is still connected
  */
 public class PingPong implements Runnable{
 
-    ControlPlayer controlPlayer;
+    Client client;
     private boolean connected;
 
     private int counter;
 
-    public PingPong(ControlPlayer cp){
+    public PingPong(Client client){
 
-        controlPlayer=cp;
+        this.client=client;
         connected=false;
         counter=0;
 
@@ -23,7 +27,7 @@ public class PingPong implements Runnable{
 
         while( true  ){
 
-            (new Thread(new PingClient())).start(); //
+            (new Thread(new PingServer())).start(); //
 
             try {
                 Thread.sleep(5000); //wait for 5 seconds
@@ -33,35 +37,41 @@ public class PingPong implements Runnable{
 
             //depending on the result after the sleep I set the status of the player
             if(connected){
-                //if connected I change the status only if before he wasn't Online
-                if(controlPlayer.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE) )controlPlayer.setPlayerStatus(PlayerStatus.NOT_MY_TURN);
+                if(counter>12 ) System.out.println("    the server is online again");
                 counter=0;
             }
 
             else{
-                controlPlayer.setPlayerStatus(PlayerStatus.NOT_ONLINE);
-                System.out.println("    "+controlPlayer.getPlayerNickname()+" went offline ");
 
                 counter++;
                 //when counter reaches 12( -> 1 minute offline ) I disconnect the player from the game
-                if(counter >=12 ){
-                    controlPlayer.getGame().removePlayer(controlPlayer);
+                if(counter ==12 ){
 
-                    System.out.println("    "+controlPlayer.getPlayerNickname()+" timeout connection: removed ");
-                    break;
+                    System.out.println("    OPSSS... the server is offline, wait for the reconnection...");
+
+                }
+
+                if(counter >=12 && counter <=48 ){
+
+                    System.out.println("    ... ");
+
+                }
+
+                if(counter > 48){
+                    System.out.println("   sorry, something went wrong, try to login again");
                 }
             }
         }
     }
 
-    class PingClient implements Runnable{
+    class PingServer implements Runnable{
 
         @Override
         public void run() {
 
             try{
-                System.out.println("    ping to " + controlPlayer.getPlayerNickname());
-                connected=controlPlayer.askPing();
+                System.out.println("    ping to Server");
+                connected=client.askPing();
             }catch (Exception e){
                 connected=false;
             }
@@ -72,4 +82,3 @@ public class PingPong implements Runnable{
         return connected;
     }
 }
-

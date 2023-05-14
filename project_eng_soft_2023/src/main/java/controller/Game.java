@@ -115,7 +115,6 @@ public class Game implements Serializable {
     }
 
     /**
-     *
      * @return gameID
      */
     public int getGameID() {
@@ -123,7 +122,6 @@ public class Game implements Serializable {
     }
 
     /**
-     *
      * @return list of players
      */
     public ArrayList<ControlPlayer> getPlayers() {
@@ -131,7 +129,6 @@ public class Game implements Serializable {
     }
 
     /**
-     *
      * @return gameStatus
      */
     public GameStatus getGameStatus() {
@@ -139,7 +136,6 @@ public class Game implements Serializable {
     }
 
     /**
-     *
      * @return currPlayer index
      */
 

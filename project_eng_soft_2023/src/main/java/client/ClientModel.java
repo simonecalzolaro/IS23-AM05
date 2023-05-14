@@ -40,7 +40,7 @@ public class ClientModel {
         this.pgcNum=pgcNum;
 
         this.cgc1=CGC.getCGC(cgc1Num);
-        this.cgc2=CGC.getCGC(cgc1Num);
+        this.cgc2=CGC.getCGC(cgc2Num);
 
         System.out.println("...all cards successfully initialized...");
 

@@ -34,4 +34,7 @@ public interface ClientServerHandler extends Remote {
          * @return true if the request is approved
          */
     boolean leaveGame(String nickname) throws LoginException, RemoteException;
+
+
+    boolean pong() throws RemoteException;
 }

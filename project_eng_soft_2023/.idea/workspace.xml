@@ -8,9 +8,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="improvement on communication protocol's methods and parameters">
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="Matrix class and ClientModel adjustments">
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/PingPong.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/GUIApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/GUIApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" afterDir="false" />
@@ -18,14 +18,14 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientSocketInputCP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientSocketInputCP.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientSocketInputLobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientSocketInputLobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/Matrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Matrix.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PingPong.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PingPong.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/TCPHandlerLobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TCPHandlerLobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/PersonalGoalCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/PersonalGoalCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/View.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/LobbyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/LobbyTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,8 +36,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit5 Test Class" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -236,6 +236,9 @@
       <workItem from="1683784538908" duration="11884000" />
       <workItem from="1683815881739" duration="7089000" />
       <workItem from="1683835199073" duration="2755000" />
+      <workItem from="1683888182654" duration="175000" />
+      <workItem from="1683902280604" duration="5708000" />
+      <workItem from="1684084485284" duration="1596000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
@@ -314,7 +317,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683797484383</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Matrix class and ClientModel adjustments">
+      <created>1683888333165</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1683888333165</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -354,7 +364,8 @@
     <MESSAGE value="adjustments on network design patten and implementation of RMI/Soket Player, RMI/Socket Server and RMI/Server client" />
     <MESSAGE value="synchronization of RMI methods, adjustments on methods signature" />
     <MESSAGE value="improvement on communication protocol's methods and parameters" />
-    <option name="LAST_COMMIT_MESSAGE" value="improvement on communication protocol's methods and parameters" />
+    <MESSAGE value="Matrix class and ClientModel adjustments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Matrix class and ClientModel adjustments" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

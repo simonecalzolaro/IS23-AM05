@@ -246,6 +246,10 @@ public abstract class Lobby implements ClientServerHandler {
         }
     }
 
+    @Override
+    public boolean pong() throws RemoteException{
+        return true;
+    }
 
     //-------------------------------- getter and setter--------------------------------
 

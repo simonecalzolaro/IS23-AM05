@@ -36,7 +36,7 @@ public class ClientApp {
                 try{
                     client = new RMIClient();
                 }catch (RemoteException e) {
-                    throw new RuntimeException(e);
+                    System.out.println(" bro, u r offline... there is no server up");
                 }
                 break;
 
@@ -106,6 +106,7 @@ public class ClientApp {
 
         while(!client.GameEnded()){
 
+            /*
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -116,6 +117,8 @@ public class ClientApp {
                 System.out.println("Choose a tiles: ");
 
             }
+
+             */
 
 
 
