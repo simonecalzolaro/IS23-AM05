@@ -347,7 +347,7 @@ public class Board implements Serializable {
         } else if(shelf.maxShelfSpace()<2){
             throw new InvalidChoiceException("You don't have enough space in your board");
         } else if(!inLine(i1,j1,i2,j2)){
-            throw new InvalidChoiceException("Invalid salection");
+            throw new InvalidChoiceException("Invalid selection");
         } else {
             temp.add(board[i1][j1]);
             temp.add(board[i2][j2]);
@@ -389,7 +389,7 @@ public class Board implements Serializable {
         } else if(shelf.maxShelfSpace()<3){
             throw new InvalidChoiceException("You don't have enough space in your board");
         } else if(!inLine(i1,j1,i2,j2,i3,j3)) {
-            throw new InvalidChoiceException("Invalid salection");
+            throw new InvalidChoiceException("Invalid selection");
         } else{
             temp.add(board[i1][j1]);
             temp.add(board[i2][j2]);

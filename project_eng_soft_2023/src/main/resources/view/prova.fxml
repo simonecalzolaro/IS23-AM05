@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="201.33334732055664" minHeight="10.0" prefHeight="169.33331298828125" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="176.66665140787757" minHeight="10.0" prefHeight="76.66668701171875" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="182.3333282470703" minHeight="10.0" prefHeight="153.33332316080728" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <ImageView fitHeight="178.0" fitWidth="601.0" pickOnBounds="true" preserveRatio="true" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@17_MyShelfie_BGA/misc/base_pagina2.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="178.0" fitWidth="601.0" pickOnBounds="true" preserveRatio="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@17_MyShelfie_BGA/misc/base_pagina2.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="174.0" fitWidth="602.0" pickOnBounds="true" preserveRatio="true" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@17_MyShelfie_BGA/publisher_material/banner_1386x400px.png" />
+         </image>
+      </ImageView>
+   </children>
+</GridPane>
