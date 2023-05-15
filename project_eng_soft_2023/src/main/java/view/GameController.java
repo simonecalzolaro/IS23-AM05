@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -399,12 +398,16 @@ public class GameController extends GUIController {
         };
         }
 
-    public void prova(MouseEvent actionEvent) {
-        board4x0.setVisible(true);
-        board4x0.setDisable(false);
-        boardGroups[3][0].setVisible(true);
-        boardGroups[3][0].setDisable(false);
+    public void prova(ActionEvent actionEvent) {
+        for(int i=0; i<9; i++){
+            for (int j=0; j<9; j++){
+                if(boardGroups[i][j]!=null){
+                    boardGroups[i][j].setVisible(true);
+                    boardGroups[i][j].setDisable(false);
+                }
 
+            }
+        }
     }
 
 
@@ -421,4 +424,12 @@ public class GameController extends GUIController {
     }
 
 
+    public void highlightTile(MouseEvent mouseEvent) {
+        Button button = (Button) mouseEvent.getSource();
+        if(mouseEvent.getEventType().getName().equals("MOUSE_ENTERED")){
+            button.setOpacity(0.5);
+        } else {
+            button.setOpacity(0);
+        }
+    }
 }
