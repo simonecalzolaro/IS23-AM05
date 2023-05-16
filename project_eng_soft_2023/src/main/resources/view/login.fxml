@@ -56,12 +56,12 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#fff1c7" height="169.0" layoutX="-48.0" layoutY="246.0" stroke="#e9cb7e" strokeLineCap="BUTT" strokeType="OUTSIDE" strokeWidth="3.0" width="1487.0" />
       <TextField fx:id="nameField" disable="true" layoutX="600.0" layoutY="298.0" onAction="#enterNickname" prefHeight="38.0" prefWidth="225.0" visible="false" />
       <TextField fx:id="numField" disable="true" layoutX="601.0" layoutY="298.0" onAction="#enterNumOfPlayer" prefHeight="38.0" prefWidth="225.0" visible="false" />
-      <Button fx:id="loginButton" disable="true" layoutX="949.0" layoutY="298.0" mnemonicParsing="false" onAction="#enterNickname" prefHeight="38.0" prefWidth="85.0" style="-fx-background-color: #ffd896; -fx-border-color: #ffac37;" text="Login" textFill="#623e00" visible="false" onMouseEntered="#highlightbutton" onMouseExited="#highlightbutton">
+      <Button fx:id="loginButton" disable="true" layoutX="949.0" layoutY="298.0" mnemonicParsing="false" onAction="#enterNickname" prefHeight="38.0" prefWidth="85.0" style="-fx-background-color: #ffd896; -fx-border-color: #ffac37;" text="Login" textFill="#623e00" visible="false" onMouseEntered="#highlightButton" onMouseExited="#highlightButton">
          <font>
             <Font name="Bodoni MT" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="numButton" disable="true" layoutX="949.0" layoutY="298.0" mnemonicParsing="false" onAction="#enterNumOfPlayer" prefHeight="38.0" prefWidth="85.0" style="-fx-background-color: #ffd896; -fx-border-color: #ffac37;" text="Enter" textFill="#623e00" visible="false" onMouseEntered="#highlightbutton" onMouseExited="#highlightbutton">
+      <Button fx:id="numButton" disable="true" layoutX="949.0" layoutY="298.0" mnemonicParsing="false" onAction="#enterNumOfPlayer" prefHeight="38.0" prefWidth="85.0" style="-fx-background-color: #ffd896; -fx-border-color: #ffac37;" text="Enter" textFill="#623e00" visible="false" onMouseEntered="#highlightButton" onMouseExited="#highlightButton">
          <font>
             <Font name="Bodoni MT" size="18.0" />
          </font>
@@ -81,12 +81,12 @@
             <Font name="Bodoni MT" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="rmiButton" layoutX="584.0" layoutY="298.0" mnemonicParsing="false" onAction="#chooseProtocol" prefHeight="38.0" prefWidth="71.0" style="-fx-background-color: #ffd896; -fx-border-color: #ffac37;" text="RMI" textFill="#623e00" onMouseEntered="#highlightbutton" onMouseExited="#highlightbutton">
+      <Button fx:id="rmiButton" layoutX="584.0" layoutY="298.0" mnemonicParsing="false" onAction="#chooseProtocol" prefHeight="38.0" prefWidth="71.0" style="-fx-background-color: #ffd896; -fx-border-color: #ffac37;" text="RMI" textFill="#623e00" onMouseEntered="#highlightButton" onMouseExited="#highlightButton">
          <font>
             <Font name="Bodoni MT" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="socketButton" layoutX="814.0" layoutY="298.0" mnemonicParsing="false" onAction="#chooseProtocol" prefHeight="38.0" prefWidth="85.0" style="-fx-background-color: #ffd896; -fx-border-color: #ffac37;" text="Socket" textFill="#623e00" onMouseEntered="#highlightbutton" onMouseExited="#highlightbutton">
+      <Button fx:id="socketButton" layoutX="814.0" layoutY="298.0" mnemonicParsing="false" onAction="#chooseProtocol" prefHeight="38.0" prefWidth="85.0" style="-fx-background-color: #ffd896; -fx-border-color: #ffac37;" text="Socket" textFill="#623e00" onMouseEntered="#highlightButton" onMouseExited="#highlightButton">
          <font>
             <Font name="Bodoni MT" size="18.0" />
          </font>
