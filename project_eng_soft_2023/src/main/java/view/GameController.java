@@ -9,7 +9,34 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import static javafx.application.Platform.exit;
+
 public class GameController extends GUIController {
+    @FXML
+    public Group showBookshelfGroup;
+    @FXML
+    public Group exitGroup;
+    @FXML
+    public Button enterColumnButton;
+    @FXML
+    public Button closeBookshelfButton;
+    @FXML
+    public Button bookshelfButton;
+    @FXML
+    public Button column1Button;
+    @FXML
+    public Button column2Button;
+    @FXML
+    public Button column3Button;
+    @FXML
+    public Button column4Button;
+    @FXML
+    public Button column5Button;
+    List<Button> columnButtons;
     @FXML
     private Group board3x0;
     @FXML
@@ -396,6 +423,13 @@ public class GameController extends GUIController {
 
 
         };
+
+        columnButtons= new ArrayList<>();
+        columnButtons.add(column1Button);
+        columnButtons.add(column2Button);
+        columnButtons.add(column3Button);
+        columnButtons.add(column4Button);
+        columnButtons.add(column5Button);
         }
 
     public void prova(ActionEvent actionEvent) {
@@ -417,7 +451,13 @@ public class GameController extends GUIController {
     private void unselectTile() {
     }
 
-    public void showMyBookshef(ActionEvent actionEvent) {
+    public void selectMyBookshelf(ActionEvent actionEvent) {
+        showBookshelfGroup.setDisable(false);
+        showBookshelfGroup.setVisible(true);
+
+        bookshelfButton.setOnMouseExited(null);
+        bookshelfButton.setOnMouseEntered(null);
+
     }
 
     public void ableTile(){
@@ -430,6 +470,93 @@ public class GameController extends GUIController {
             button.setOpacity(0.5);
         } else {
             button.setOpacity(0);
+        }
+    }
+
+    public void closeBookshelf(ActionEvent actionEvent) {
+        showBookshelfGroup.setDisable(true);
+        showBookshelfGroup.setVisible(false);
+        bookshelfButton.setOnMouseExited(this::showMyBookshelf);
+        bookshelfButton.setOnMouseEntered(this::showMyBookshelf);
+        bookshelfButton.setOpacity(0);
+    }
+
+    public void showExitGroup(ActionEvent actionEvent) {
+        exitGroup.setVisible(true);
+        exitGroup.setDisable(false);
+    }
+
+    public void closeExit(ActionEvent actionEvent) {
+        exitGroup.setVisible(false);
+        exitGroup.setDisable(true);
+    }
+
+    public void quitTheGame(ActionEvent actionEvent) {
+        exit();
+    }
+
+    public void showOtherPlayerBookshelf(MouseEvent mouseEvent){
+        Button button = (Button) mouseEvent.getSource();
+        if(mouseEvent.getEventType().getName().equals("MOUSE_ENTERED")){
+            button.setOpacity(0.5);
+            showBookshelfGroup.setDisable(false);
+            showBookshelfGroup.setVisible(true);
+
+            enterColumnButton.setVisible(false);
+
+            closeBookshelfButton.setVisible(false);
+            closeBookshelfButton.setDisable(true);
+
+
+        } else {
+            button.setOpacity(0);
+            enterColumnButton.setVisible(true);
+
+            closeBookshelfButton.setVisible(true);
+            closeBookshelfButton.setDisable(false);
+
+            showBookshelfGroup.setDisable(true);
+            showBookshelfGroup.setVisible(false);
+        }
+    }
+
+    public void showMyBookshelf(MouseEvent mouseEvent){
+        Button button = (Button) mouseEvent.getSource();
+        if(mouseEvent.getEventType().getName().equals("MOUSE_ENTERED")){
+            button.setOpacity(0.5);
+            showBookshelfGroup.setDisable(false);
+            showBookshelfGroup.setVisible(true);
+
+        } else {
+            button.setOpacity(0);
+            showBookshelfGroup.setDisable(true);
+            showBookshelfGroup.setVisible(false);
+        }
+    }
+
+    public void selectColumn(ActionEvent actionEvent){
+        Button button = (Button) actionEvent.getSource();
+        if(button.getOnMouseEntered()!=null){
+            button.setOnMouseExited(null);
+            button.setOnMouseEntered(null);
+
+            button.setOpacity(0.5);
+
+            enterColumnButton.setDisable(false);
+
+            for(Button columnButton : columnButtons){
+                if(!columnButton.equals(button)){
+                    columnButton.setOnMouseExited(this::highlightTile);
+                    columnButton.setOnMouseEntered(this::highlightTile);
+
+                    columnButton.setOpacity(0);
+                }
+            }
+        } else {
+            button.setOnMouseExited(this::highlightTile);
+            button.setOnMouseEntered(this::highlightTile);
+
+            enterColumnButton.setDisable(true);
         }
     }
 }
