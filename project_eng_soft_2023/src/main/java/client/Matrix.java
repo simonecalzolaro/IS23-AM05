@@ -46,6 +46,7 @@ public class Matrix {
         return matr[row][col];
     }
 
+
     private Map<Tile, Integer[]>  generateMapFromMatrix(Tile[][] matr){
 
         Map<Tile, Integer[]> map=new HashMap<>();

@@ -5,7 +5,7 @@ import client.ClientModel;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GUI implements View{
+public class GUI extends View {
     private int numOfPlayer;
     private final LoginController loginController;
     private GameController gameController;
