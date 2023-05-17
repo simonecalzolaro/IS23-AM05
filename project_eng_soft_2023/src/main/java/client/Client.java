@@ -13,6 +13,7 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Timestamp;
@@ -24,15 +25,12 @@ import java.util.*;
 public abstract class Client extends UnicastRemoteObject implements ClientHandler, Serializable {
 
     //----- tutti sti attributi sono da spostare in classi o sottoclassi più specifiche
-    static String localhost;
-    static Long PORT;
-    static int PORTX;
-    static Long TCPPORT;
-    static int TCPPORTX;
-    static Long TCPPORTCP;
-    static int TCPPORTCPX;
+    protected String hostname;
+    protected Long PORT_pre;
+    protected int PORT;
 
-
+    protected boolean left;
+    protected int myScore;
 
     protected ClientModel model;
     protected boolean myTurn;
@@ -43,28 +41,19 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * constructor of ClientApp
      * @throws RemoteException
      */
-    protected Client() throws RemoteException {
+    public Client() throws RemoteException {
 
         super();
 
         model=new ClientModel();
         myTurn=false;
         gameEnded=false;
-
-        getServerSettings();
-
-    }
-
-    public void startClient(){
-
+        left = false;
 
     }
 
-    public static class Settings {
+    abstract public void initializeClient() throws IOException, NotBoundException;
 
-        static int PORT = 1234;
-        static String SERVER_NAME = "127.0.0.1";
-    }
 
     /**
      * method called by the server to ask the first player to entre the number of players he wants in his match
@@ -199,34 +188,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     /**
      * set up the servers' ports and hostname
      */
-    public void getServerSettings(){
-
-        try{
-            Object o = new JSONParser().parse(new FileReader("header.json"));
-            JSONObject j =(JSONObject) o;
-            Map arg = new LinkedHashMap();
-            arg = (Map) j.get("serverSettings");
-
-            localhost = (String) arg.get("hostname");
-            PORT = (Long) arg.get("PORT");
-
-            PORTX = PORT.intValue();
-
-            TCPPORT = (Long) arg.get("TCPPORT");
-            TCPPORTX = TCPPORT.intValue();
-            TCPPORTCP = (Long) arg.get("TCPPORTCP");
-            TCPPORTCPX = TCPPORTCP.intValue();
-
-            System.out.println(localhost+" "+PORTX);
-
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    abstract public void getServerSettings();
 
     /**
      * @return clientModel
@@ -279,6 +241,9 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     public abstract boolean askLeaveGame() throws IOException, LoginException;
 
 
+    public abstract void askCheckFullWaitingRoom() throws IOException;
+
+
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
      * @param chosenTiles
@@ -305,7 +270,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws InvalidChoiceException
      * @throws InvalidLenghtException
      */
-    abstract boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws IOException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException;
+    abstract public boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws IOException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException;
 
 
     /**
@@ -313,12 +278,12 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @return the score
      * @throws IOException
      */
-    abstract int askGetMyScore() throws IOException;
+    abstract public int askGetMyScore() throws IOException;
 
     /**
      * verifies the server is up
      * @return true if the server is online
      */
-    abstract boolean askPing();
+    abstract public boolean askPing();
 
 }

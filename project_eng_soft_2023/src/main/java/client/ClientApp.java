@@ -1,10 +1,17 @@
 package client;
 
+import myShelfieException.LoginException;
+
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.UnknownHostException;
 import java.util.List;
 import java.util.Scanner;
+
+import static java.lang.Thread.sleep;
 
 public class ClientApp {
 
@@ -22,82 +29,146 @@ public class ClientApp {
         //------------------------------- RMI o Socket ? ----------------------------------
 
         System.out.println("What kind of connection do you want?");
-        int select;
+        String select;
         Scanner scan = new Scanner(System.in);
         do{
             System.out.println("0 --> RMI \n1 --> Socket");
-            select = scan.nextInt();
-        }while(select != 0 && select != 1);
+            select = scan.nextLine();
+
+            if(!select.equals("0") && !select.equals("1")) System.out.println("ClientApp --- Invalid code --> Try again !");
+
+        }while(!select.equals("0") && !select.equals("1"));
 
         //create the client
         switch (select){
 
-            case 0:
+            case "0":
                 try{
                     client = new RMIClient();
                 }catch (RemoteException e) {
-                    System.out.println(" bro, u r offline... there is no server up");
+                    System.out.println("ClientApp --- RemoteException occurred trying to initialize a new RMIClient");
+                    e.printStackTrace();
                 }
                 break;
 
-            case 1:
+            case "1":
                 try {
                     client= new SocketClient();
                 } catch (RemoteException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("ClientApp --- RemoteException occurred trying to initialize a new SocketClient");
+                    e.printStackTrace();
                 }
                 break;
 
         }
 
-        client.startClient();
 
+        try {
+            client.initializeClient();
+        } catch (RemoteException e) {
+            System.out.println("ClientApp --- RemoteException occurred trying to initialize the client");
+            e.printStackTrace();
+        }catch (NotBoundException e){
+            System.out.println("ClientApp --- NotBoundException occurred trying to initialize the RMIClient");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("ClientApp --- IOException occurred trying to initialize the SocketClient");
+            System.out.println("---> Socket hasn't been created");
+            e.printStackTrace();
+        }
 
-        do {
+        boolean goOn = false;
+        boolean ok = false;
 
-            int num;
+        do{
+
+            String num;
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 
             do {
                 System.out.println("0 --> start a new game");
                 System.out.println("1 --> continue a Game");
-                num = scan.nextInt();
+                num = scan.nextLine();
 
-            }while (num!=0 &&  num!=1);
+                if(!num.equals("0") &&  !num.equals("1")) System.out.println("ClientApp --- Invalid code --> Try again !");
 
-            try {
+            }while (!num.equals("0") &&  !num.equals("1"));
 
-                switch (num) {
+            switch (num) {
 
-                    case 0:
-                        System.out.println("nickname: ");
-                        nickName = br.readLine();
-                        //login of the new player
+                //LOGIN
+                case "0":
+
+                    //insert nickname
+                    do{
+                        try{
+                            System.out.println("nickname: ");
+                            nickName = br.readLine();
+                            ok = true;
+                        }catch (IOException e){
+                            System.out.println("ClientApp --- System.in exception --> Try again");
+                            ok = false;
+                        }
+                    }while(!ok);
+
+
+                    //login of the new player
+                    try{
                         client.askLogin(nickName);
                         client.getModel().setNickname(nickName);
                         System.out.println("...successfully LOGIN...");
-                        break;
+                    } catch (LoginException e) {
+                        System.out.println("ClientApp --- LoginException occurred in askLogin()");
+                        throw new RuntimeException();
+                    } catch (IOException e) {
+                        System.out.println("ClientApp --- IOException occurred in askLogin()");
+                        throw new RuntimeException();
+                    }
 
-                    case 1:
-                        System.out.println("nickname: ");
-                        nickName = br.readLine();
-                        //relogin of the new player
+                    try {
+                        client.askCheckFullWaitingRoom();
+                    } catch (IOException e) {
+                        System.out.println("ClientApp --- IOException occurred in askCheckFullWaitingRoom()");
+                        throw new RuntimeException();
+                    }
+
+
+                    goOn = true;
+                    break;
+
+                //CONTINUE GAME
+                case "1":
+                    do{
+                        try{
+                            System.out.println("nickname: ");
+                            nickName = br.readLine();
+                            ok = true;
+                        }catch (IOException e){
+                            System.out.println("ClientApp --- System.in exception --> Try again");
+                            ok = false;
+                        }
+                    }while(!ok);
+                    //relogin of the new player
+                    try {
                         client.askContinueGame();
-                        System.out.println("...reconnected successfully...");
-                        break;
-                }
+                    } catch (LoginException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
 
-            } catch (Exception e) {
 
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-                System.out.println("try again...");
-                nickName="";
+                    System.out.println("...reconnected successfully...");
 
+                    goOn = true;
+                    break;
+
+                default:
+                    goOn = false;
+                    break;
             }
-
-        }while(nickName.equals(""));
+        }while(!goOn);
 
         //------------------------------ waiting room ----------------------------------
 
@@ -105,10 +176,9 @@ public class ClientApp {
         //-------------------------------- game loop ----------------------------------
 
         while(!client.GameEnded()){
-
-            /*
             try {
-                Thread.sleep(1000);
+                sleep(10000);
+                System.out.println("I'm "+nickName+" and I'm playing");
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -117,11 +187,6 @@ public class ClientApp {
                 System.out.println("Choose a tiles: ");
 
             }
-
-             */
-
-
-
         }
 
 

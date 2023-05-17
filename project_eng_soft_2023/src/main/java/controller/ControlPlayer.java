@@ -52,7 +52,7 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
         score = 0;
         playerStatus = PlayerStatus.NOT_MY_TURN;
 
-        (new Thread(new PingPong(this))).start(); //starting PinPonging
+        //(new Thread(new PingPong(this))).start(); //starting PinPonging
     }
 
     /**
@@ -126,7 +126,7 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
      * @return true if the chosen tiles are valid
      */
     @Override
-    public boolean choseBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws RemoteException, NotConnectedException, InvalidParametersException, NotMyTurnException, InvalidChoiceException {
+    public boolean chooseBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws RemoteException, NotConnectedException, InvalidParametersException, NotMyTurnException, InvalidChoiceException {
 
         return catchTile(coord).equals(chosenTiles);
 
@@ -185,7 +185,8 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
         try {
 
             ControlPlayer nextPlayer= game.getPlayers().get(game.getCurrPlayer());
-            nextPlayer.notifyStartYourTurn();
+            nextPlayer.notifyStartYourTurn(); //Eccezione assicurata con socket !!!!!!!!!!! perchè ci sarà un accesso concorrente allo stesso socket da parte del nextPlayer
+            //bisogna trovare una soluzione
 
         } catch (IOException e) { throw new RuntimeException(e); }
 
@@ -308,7 +309,7 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
 
     abstract public void setClientHandler(ClientHandler cliHnd);
 
-    abstract public void setSocket(Socket socket);
+    abstract public void setStreams(ArrayList<Stream> streams);
 
 
 }

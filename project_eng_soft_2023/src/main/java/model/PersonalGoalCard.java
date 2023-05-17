@@ -150,7 +150,7 @@ public class PersonalGoalCard implements Card, Serializable {
 
     public Map<Tile, Integer[]> getCardMap() {
 
-        Map<Tile, Integer[]> newMap=new HashMap<>();
+        Map<Tile, Integer[]> newMap = new HashMap<>();
 
         for (Map.Entry<Tile, int[]> entry : map.entrySet()){
 

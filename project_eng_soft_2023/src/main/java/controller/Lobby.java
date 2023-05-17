@@ -3,7 +3,12 @@ package controller;
 import client.ClientHandler;
 import model.*;
 import myShelfieException.*;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.Socket;
 import java.rmi.AlreadyBoundException;
@@ -18,6 +23,10 @@ import java.util.stream.Stream;
  */
 public abstract class Lobby implements ClientServerHandler {
 
+    static String hostname;
+    static Long PORT_pre;
+    static int PORT;
+
     protected static ArrayList<ControlPlayer> clients;
     protected static ArrayList< Game > games;
     protected static int attendedPlayers;
@@ -29,21 +38,17 @@ public abstract class Lobby implements ClientServerHandler {
      * @throws RemoteException
      */
     protected Lobby() throws RemoteException {
+        super();
+    }
+
+
+    public static void initializeServer(){
 
         clients = new ArrayList<>();
         games = new ArrayList<>();
         tempPlayers= new ArrayList<>();
         attendedPlayers = -1;
         tempBoard=null;
-    }
-
-    /**
-     * start the server app and create a registry "ServerAppService" bound with "this" object
-     * @throws RemoteException
-     */
-    public static class Settings {
-        static int PORT = 1234;
-        static String SERVER_NAME = "127.0.0.1";
     }
 
 
@@ -80,12 +85,12 @@ public abstract class Lobby implements ClientServerHandler {
                 }
 
                 //create a ControlPlayer
-                if (client instanceof Socket) {
-                    pl = new SocketControlPlayer(nickname, tempBoard, (Socket) client);
+                if (client instanceof ArrayList<?>) {
+                    pl = new SocketControlPlayer(nickname, tempBoard, (ArrayList<controller.Stream>) client);
                 } else if (client instanceof ClientHandler) {
                     pl = new RMIControlPlayer(nickname, tempBoard, (ClientHandler) client);
                 } else{
-                    throw new IllegalArgumentException("Object client must only be instanceof Socket or ClientHandler");
+                    throw new IllegalArgumentException("Object client must only be instanceof ArratList<> or ClientHandler");
                 }
 
                 if (attendedPlayers == -1) { //if there isn't any waiting room it means that "client" is the first player
@@ -124,32 +129,36 @@ public abstract class Lobby implements ClientServerHandler {
                 System.out.println("-> ...player " + nickname + " entered the game. Waiting room now contains "+ tempPlayers.size()+"/" + attendedPlayers);
 
 
-                //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
-                if (tempPlayers.size() >= attendedPlayers) {
-
-                    attendedPlayers = -1;
-
-                    Game g = new Game(tempPlayers, tempBoard);
-                    games.add(g);
-
-                    for (ControlPlayer cp : tempPlayers) {
-
-                        cp.setGame(g);
-                        cp.getBookshelf().initializePGC(tempBoard);
-                        cp.notifyStartPlaying();
-
-                        if(cp.getPlayerStatus().equals(PlayerStatus.MY_TURN)) cp.notifyStartYourTurn();
-
-                    }
-
-                    tempPlayers.clear();
-                    System.out.println(" -> ...The game has been created, participants: " + g.getPlayers());
-
-                }
-
-
                 return pl;
             }
+        }
+    }
+
+
+    @Override
+    public void checkFullWaitingRoom() throws IOException {
+
+        //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
+        if (tempPlayers.size() >= attendedPlayers) {
+
+            attendedPlayers = -1;
+
+            Game g = new Game(tempPlayers, tempBoard);
+            games.add(g);
+
+            for (ControlPlayer cp : tempPlayers) {
+
+                cp.setGame(g);
+                cp.getBookshelf().initializePGC(tempBoard);
+                cp.notifyStartPlaying();
+
+                if(cp.getPlayerStatus().equals(PlayerStatus.MY_TURN)) cp.notifyStartYourTurn();
+
+            }
+
+            tempPlayers.clear();
+            System.out.println(" -> ...The game has been created, participants: " + g.getPlayers());
+
         }
     }
 
@@ -180,9 +189,9 @@ public abstract class Lobby implements ClientServerHandler {
 
             //if exists I'll create a new one, remove the current ClientHandler-ControlPlayer pair from the map, set a new ClientHandler on the ControlPlayer
 
-            if (client instanceof Socket){
+            if (client instanceof ArrayList<?>){
 
-                controlPlayer.setSocket((Socket) client);
+                controlPlayer.setStreams((ArrayList<controller.Stream>) client);
 
             }
             else if (client instanceof ClientHandler){
@@ -271,4 +280,7 @@ public abstract class Lobby implements ClientServerHandler {
     public int getAttendedPlayers(){
         return attendedPlayers;
     }
+
+
+
 }

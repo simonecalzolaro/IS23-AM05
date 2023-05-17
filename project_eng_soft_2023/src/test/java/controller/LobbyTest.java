@@ -1,7 +1,6 @@
 package controller;
 
 import client.Client;
-import client.ClientApp;
 import client.RMIClient;
 import myShelfieException.LoginException;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ class LobbyTest {
         Client c4;
         Client c5;
 
-        lobby=new RMIServer();
+        lobby=new RMILobby();
         lobby.startServer();
 
         c1=new RMIClient();

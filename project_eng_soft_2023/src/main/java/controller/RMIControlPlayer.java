@@ -5,12 +5,8 @@ import model.Board;
 import model.Tile;
 
 import java.io.IOException;
-import java.net.Socket;
-import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,16 +67,15 @@ public class RMIControlPlayer extends ControlPlayer{
     public void notifyUpdatedBoard() throws RemoteException{
 
             if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
-
                 Map<String, Tile[][]> map= new HashMap<>();
 
                 for(ControlPlayer cp: game.getPlayers()){
 
-                    if(! cp.equals(this))  map.put(cp.getPlayerNickname(), cp.getBookshelf().getBookshelf());
+                    if(! cp.equals(this))  map.put(cp.getPlayerNickname(),cp.getBookshelf().getShelf());
 
                 }
 
-                ch.updateBoard(game.getBoard().getBoard(), this.bookshelf.getBookshelf(), map  );
+                ch.updateBoard(game.getBoard().getBoard(), this.bookshelf.getShelf(), map  );
 
             }
     }
@@ -137,12 +132,7 @@ public class RMIControlPlayer extends ControlPlayer{
     }
 
     @Override
-    public void setSocket(Socket socket) {
-    }
+    public void setStreams(ArrayList<Stream> streams) {}
 
-    private static class Settings {
-        static int PORT = 5678;
-        static String SERVER_NAME = "127.0.0.1";
-    }
 
 }

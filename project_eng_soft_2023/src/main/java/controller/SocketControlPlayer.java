@@ -7,24 +7,16 @@ import myShelfieException.*;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SocketControlPlayer extends ControlPlayer {
 
 
-    Socket socketControlPlayer;
-
-    ObjectOutputStream out;
-    ObjectInputStream in;
-
-    static int count;
-
-    static Object cpLock;
+    Stream outCP;
+    Stream inCP;
 
 
     /**
@@ -35,106 +27,12 @@ public class SocketControlPlayer extends ControlPlayer {
      * @param nickname : unique player nickname
      * @param board    : unique board
      */
-    public SocketControlPlayer(String nickname, Board board, Socket socketControlPlayer) throws RemoteException {
+    public SocketControlPlayer(String nickname, Board board, ArrayList<Stream> streams) throws RemoteException {
         super(nickname, board);
-        this.socketControlPlayer = socketControlPlayer;
-    }
 
-    public void startServer() {
-
-        System.out.println("CP Thread num: " + count + " created");
-        count++;
-
-        while (true) {
-            try {
-
-                in = new ObjectInputStream(socketControlPlayer.getInputStream());
-                out = new ObjectOutputStream(socketControlPlayer.getOutputStream());
-
-                String method;
-
-
-                JSONObject json = null;
-
-                while (json == null) {
-                    json = (JSONObject) in.readObject();
-                }
-
-                method = (String) json.get("method");
-
-
-                // gestisci vari metodi
-
-                switch (method) {
-                    case "askBoardTiles":
-                        TCPaskBoardTiles(json);
-                        break;
-
-                    case "askInsertShelfTiles":
-                        TCPaskInsertShelfTiles(json);
-                        break;
-
-                    case "getMyScore":
-                        TCPgetMyScore();
-                        break;
-
-                }
-
-
-            } catch (Exception e) {
-                System.out.println("error x");
-                e.printStackTrace();
-
-            }
-        }
+        setStreams(streams);
 
     }
-
-    public void TCPaskBoardTiles(JSONObject json) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
-
-        List<Tile> choosenTiles = (List<Tile>) json.get("param1");
-        List<Integer> coord = (List<Integer>) json.get("param2");
-
-        synchronized (cpLock) {
-            choseBoardTiles(choosenTiles, coord);
-        }
-
-    }
-
-
-    public void TCPaskInsertShelfTiles(JSONObject json) throws InvalidChoiceException, NotConnectedException, InvalidLenghtException, RemoteException, NotMyTurnException {
-
-        ArrayList<Tile> choosenTiles = (ArrayList<Tile>) json.get("param1");
-        Long choosenColumn = (Long) json.get("param2");
-        List<Integer> coord = (List<Integer>) json.get("param3");
-
-        synchronized (cpLock) {
-            insertShelfTiles(choosenTiles, choosenColumn.intValue(), coord);
-        }
-
-    }
-
-    public void TCPgetMyScore() throws IOException {
-
-        int num;
-
-        synchronized (cpLock) {
-            num = getMyScore();
-        }
-
-        JSONObject jo = new JSONObject();
-
-        jo.put("method", "getMyScore");
-        jo.put("param1", num);
-
-        out.writeObject(jo);
-        out.flush();
-
-
-    }
-
-
-
 
 
     /**
@@ -147,59 +45,108 @@ public class SocketControlPlayer extends ControlPlayer {
     @Override
     public Boolean notifyStartYourTurn() throws IOException {
 
-        JSONObject jo = new JSONObject();
+        JSONObject object = new JSONObject();
+        JSONObject response = new JSONObject();
 
-        jo.put("method","notifyStartYourTurn");
+        object.put("Action","Method");
+        object.put("Method","notifyStartYourTurn");
 
-        out.writeObject(jo);
-        out.flush();
 
         try{
-            while(jo == null){
-                jo = (JSONObject) in.readObject();
-            }
+            outCP.reset();
+            outCP.write(object);
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to reset/write the stream");
+            System.out.println("---> Maybe you're trying to reset/write an input stream");
+            throw new RuntimeException();
+        }
+
+        try{
+            System.out.println("SocketControlPlayer --- Waiting a feedback from the client");
+            response = inCP.read();
+            System.out.println("SocketControlPlayer --- Feedback received from the client");
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to read a new request");
+            e.printStackTrace();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketControlPlayer --- IOException occurred trying to read a new request");
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketControlPlayer --- ClassNotFoundException occurred trying to read a new request");
+            e.printStackTrace();
         }
 
-        if(jo.get("method").equals("startYourTurnOK")){
-            return true;
+
+        String Action = (String) response.get("Action");
+
+        switch (Action){
+
+            case "Method":
+                break;
+
+            case "Feedback":
+                String Feedback = (String) response.get("Feedback");
+                if(!Feedback.equals("OKnotifyStartYourTurn")) throw new IOException();
+
+
+                break;
         }
 
-        return false;
+        return true;
 
     }
 
     @Override
     public Boolean notifyEndYourTurn() throws IOException {
 
-        JSONObject jo = new JSONObject();
+        JSONObject object = new JSONObject();
+        JSONObject response = new JSONObject();
 
-        jo.put("method", "notifyEndYourTurn");
+        object.put("Action","Method");
+        object.put("Method","notifyEndYourTurn");
 
-        out.writeObject(jo);
-        out.flush();
 
         try{
-            while(jo == null){
-                jo = (JSONObject) in.readObject();
-            }
+            outCP.reset();
+            outCP.write(object);
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to reset/write the stream");
+            System.out.println("---> Maybe you're trying to reset/write an input stream");
+            throw new RuntimeException();
+        }
+
+        try{
+            System.out.println("SocketControlPlayer --- Waiting a feedback from the client");
+            response = inCP.read();
+            System.out.println("SocketControlPlayer --- Feedback received from the client");
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to read a new request");
+            e.printStackTrace();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketControlPlayer --- IOException occurred trying to read a new request");
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        if(jo.get("method").equals("endYourTurnOK")){
-            return true;
+            System.out.println("SocketControlPlayer --- ClassNotFoundException occurred trying to read a new request");
+            e.printStackTrace();
         }
 
 
+        String Action = (String) response.get("Action");
+
+        switch (Action){
+
+            case "Method":
+                break;
+
+            case "Feedback":
+                String Feedback = (String) response.get("Feedback");
+                if(!Feedback.equals("OKnotifyEndYourTurn")) throw new IOException();
 
 
-        return false;
+                break;
+        }
+
+        return true;
 
     }
 
@@ -211,111 +158,133 @@ public class SocketControlPlayer extends ControlPlayer {
     @Override
     public void notifyUpdatedBoard() throws IOException {
 
-        JSONObject jo = new JSONObject();
 
         if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
 
+            Map<String, Tile[][]> map= new HashMap<>();
 
-            jo.put("method","updateBoard");
-            jo.put("param1",game.getBoard().getBoard());
+            for(ControlPlayer cp: game.getPlayers()){
 
-            out.writeObject(jo);
-            out.flush();
+                if(! cp.equals(this))  map.put(cp.getPlayerNickname(), cp.getBookshelf().getShelf());
 
-            jo.clear();
-            jo = null;
+            }
+
+            JSONObject object = new JSONObject();
+            JSONObject response = new JSONObject();
+
+            object.put("Action","Method");
+            object.put("Method","notifyUpdateBoard");
+            object.put("Param1",game.getBoard().getBoard());
+            object.put("Param2", this.bookshelf.getShelf());
+            object.put("Param3", map);
 
             try{
-                while(jo == null){
-                    jo = (JSONObject) in.readObject();
-                }
+                outCP.reset();
+                outCP.write(object);
+            } catch (InvalidOperationException e) {
+                System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to reset/write the stream");
+                System.out.println("---> Maybe you're trying to reset/write an input stream");
+                throw new RuntimeException();
+            }
+
+
+
+            try{
+                System.out.println("SocketControlPlayer --- Waiting a feedback from the client");
+                response = inCP.read();
+                System.out.println("SocketControlPlayer --- Feedback received from the client");
+            } catch (InvalidOperationException e) {
+                System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to read a new request");
+                e.printStackTrace();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("SocketControlPlayer --- IOException occurred trying to read a new request");
+                e.printStackTrace();
             } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                System.out.println("SocketControlPlayer --- ClassNotFoundException occurred trying to read a new request");
+                e.printStackTrace();
             }
 
-            if(jo.get("method").equals("updateBoardOK")) {
 
-                jo.clear();
-                jo = null;
+            String Action = (String) response.get("Action");
+
+            switch (Action){
+
+                case "Method":
+                    break;
+
+                case "Feedback":
+                    String Feedback = (String) response.get("Feedback");
+                    if(!Feedback.equals("OKnotifyUpdateBoard")) throw new IOException();
+
+
+                    break;
             }
-
 
 
         }
+
     }
 
 
     @Override
     public boolean askPing() throws IOException {
-        JSONObject jo = new JSONObject();
-
-        jo.put("method","askPing");
-
-        out.writeObject(jo);
-        out.flush();;
-
-
-        jo.clear();
-        jo = null;
-
-        try{
-            while(jo == null){
-                jo = (JSONObject) in.readObject();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        if(jo.get("method").equals("askPingOK")) {
-
-            jo.clear();
-            jo = null;
-
-            return true;
-        }
-
         return false;
-
-
     }
 
 
     public void notifyEndGame() throws IOException {
 
-        JSONObject jo = new JSONObject();
-
-
         if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
 
-           jo.put("method","endGame");
-           jo.put("param1",game.getGameResults());
 
-           out.writeObject(jo);
-           out.flush();
+
+            JSONObject object = new JSONObject();
+            JSONObject response = new JSONObject();
+
+            object.put("Action","Method");
+            object.put("Method","notifyEndGame");
+            object.put("Param1",game.getGameResults());
+
 
             try{
-                while(jo == null){
-                    jo = (JSONObject) in.readObject();
-                }
+                outCP.reset();
+                outCP.write(object);
+            } catch (InvalidOperationException e) {
+                System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to reset/write the stream");
+                System.out.println("---> Maybe you're trying to reset/write an input stream");
+                throw new RuntimeException();
+            }
+
+            try{
+                System.out.println("SocketControlPlayer --- Waiting a feedback from the client");
+                response = inCP.read();
+                System.out.println("SocketControlPlayer --- Feedback received from the client");
+            } catch (InvalidOperationException e) {
+                System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to read a new request");
+                e.printStackTrace();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("SocketControlPlayer --- IOException occurred trying to read a new request");
+                e.printStackTrace();
             } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
-            if(jo.get("method").equals("endGameOK")) {
-
-                jo.clear();
-                jo = null;
+                System.out.println("SocketControlPlayer --- ClassNotFoundException occurred trying to read a new request");
+                e.printStackTrace();
             }
 
 
+            String Action = (String) response.get("Action");
+
+            switch (Action){
+
+                case "Method":
+                    break;
+
+                case "Feedback":
+                    String Feedback = (String) response.get("Feedback");
+                    if(!Feedback.equals("OKnotifyEndGame")) throw new IOException();
 
 
+                    break;
+            }
 
         }
 
@@ -325,30 +294,49 @@ public class SocketControlPlayer extends ControlPlayer {
     @Override
     public int askNumberOfPlayers() throws IOException{
 
-        int res=-1;
-        JSONObject jo = new JSONObject();
+        JSONObject object = new JSONObject();
+        JSONObject response = new JSONObject();
 
-        jo.put("method","askNumberOfPlayers");
+        int res = -1;
 
-        out.writeObject(jo);
-        out.flush();
-
-        jo = null;
-
-
+        object.put("Action","Method");
+        object.put("Method","askNumberOfPlayers");
 
         try{
-            while(jo == null){
-                jo = (JSONObject) in.readObject();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            outCP.reset();
+            outCP.write(object);
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to reset/write the stream");
+            System.out.println("---> Maybe you're trying to reset/write an input stream");
+            throw new RuntimeException();
         }
 
-        if(jo.get("method").equals("enterNumberOfPlayers")){
-            res = (int) jo.get("param1");
+        try{
+            System.out.println("SocketControlPlayer --- Waiting number of players from the client");
+            response = inCP.read();
+            System.out.println("SocketControlPlayer --- Number of players received from the client");
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to read a new request");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("SocketControlPlayer --- IOException occurred trying to read a new request");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("SocketControlPlayer --- ClassNotFoundException occurred trying to read a new request");
+            e.printStackTrace();
+        }
+
+        String Action = (String) response.get("Action");
+
+        switch (Action){
+
+            case "Method":
+                break;
+
+            case "Feedback":
+                res = (int) response.get("Feedback");
+                break;
+
         }
 
         return res;
@@ -359,82 +347,65 @@ public class SocketControlPlayer extends ControlPlayer {
     @Override
     public void notifyStartPlaying() throws IOException {
 
-        JSONObject jo = new JSONObject();
+        JSONObject object = new JSONObject();
+        JSONObject response = new JSONObject();
 
-        jo.put("method","startPlaying");
-        jo.put("param1",bookshelf.getPgc().getCardNumber());
-        jo.put("param2",game.getBoard().getCommonGoalCard1().getCGCnumber());
-        jo.put("param3",game.getBoard().getCommonGoalCard2().getCGCnumber());
-
-        out.writeObject(jo);
-        out.flush();
-
-        jo.clear();
-        jo = null;
+        object.put("Action","Method");
+        object.put("Method","notifyStartPlaying");
+        object.put("Param1",bookshelf.getPgc().getCardNumber());
+        object.put("Param2",bookshelf.getPgc().getCardMap());
+        object.put("Param3",game.getBoard().getCommonGoalCard1().getCGCnumber());
+        object.put("Param4",game.getBoard().getCommonGoalCard2().getCGCnumber());
 
         try{
-            while(jo == null){
-                jo = (JSONObject) in.readObject();
-            }
+            outCP.reset();
+            outCP.write(object);
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to reset/write the stream");
+            System.out.println("---> Maybe you're trying to reset/write an input stream");
+            throw new RuntimeException();
+        }
+
+
+        try{
+            System.out.println("SocketControlPlayer --- Waiting a feedback from the client");
+            response = inCP.read();
+            System.out.println("SocketControlPlayer --- Feedback received from the client");
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to read a new request");
+            e.printStackTrace();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketControlPlayer --- IOException occurred trying to read a new request");
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketControlPlayer --- ClassNotFoundException occurred trying to read a new request");
+            e.printStackTrace();
         }
 
-        if(jo.get("method").equals("startPlayingOK")){
-            jo.clear();
-            jo = null;
 
-            jo.put("method","updateBoard");
-            jo.put("param1",game.getBoard().getBoard());
+        String Action = (String) response.get("Action");
 
-            out.writeObject(jo);
-            out.flush();
+        switch (Action){
 
-            try{
-                while(jo == null){
-                    jo = (JSONObject) in.readObject();
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            case "Method":
+                break;
 
-            if(jo.get("method").equals("updateBoardOK")){
+            case "Feedback":
+                String Feedback = (String) response.get("Feedback");
+                if(!Feedback.equals("OKnotifyStartPlaying")) throw new IOException();
 
-                jo.clear();
-                jo = null;
 
-                if(game.getPlayers().get(game.getCurrPlayer()).equals(this)){
-                    jo.put("method","notifyStartYourTurn");
-
-                    out.writeObject(jo);
-                    out.flush();
-
-                    try{
-                        while(jo == null){
-                            jo = (JSONObject) in.readObject();
-                        }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (ClassNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    if(jo.get("method").equals("startYourTurnOK")){
-                        return;
-                    }
-                }
-
-            }
+                break;
         }
+
+        notifyUpdatedBoard();
+
     }
 
     @Override
-    public void setSocket(Socket socket) {
-        socketControlPlayer = socket;
+    public void setStreams(ArrayList<Stream> streams) {
+        outCP = streams.get(0);
+        inCP = streams.get(1);
     }
 
     @Override

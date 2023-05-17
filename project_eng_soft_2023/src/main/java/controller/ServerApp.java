@@ -1,11 +1,13 @@
 package controller;
 
+import java.rmi.AlreadyBoundException;
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class ServerApp {
 
     static Lobby lobby;
-    static TCPHandlerLobby SocketLobby;
+    static TCPHandler client_server_bridge;
 
     /**
      * main program of the server, he will just start the server app with startServer()
@@ -15,21 +17,31 @@ public class ServerApp {
 
         System.out.println( "Hello from ServerApp!" );
 
+        Lobby.initializeServer();
+
         try {
-
-            lobby = new RMIServer();
+            lobby = new RMILobby();
             lobby.startServer();
-
-            //SocketLobby = new TCPHandlerLobby();
-            //new Thread(() -> SocketLobby.startServer()); //---- potrebbe dare problemi con gli indirizzi di memoria (parla con Simo)
-            //SocketLobby.startServer();
-
-           // new Thread(() -> new TCPHandlerLobby());
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (RemoteException e) {
+            System.out.println("ServerApp --- RemoteException occurred while starting a new RMIServer");
+            throw new RuntimeException();
+        } catch (AlreadyBoundException e) {
+            System.out.println("ServerApp --- AlreadyBoundException occurred while starting a nee RMIServer");
+            throw new RuntimeException();
         }
 
+        try {
+            client_server_bridge = new TCPHandler();
+            client_server_bridge.startServer();
+        } catch (Exception e) {
+            System.out.println("ServerApp --- Unexptected exception occurred trying to start the TCPHandler ");
+        }
+
+
+    }
+
+
+    private void menu(){
         Scanner scan = new Scanner(System.in);
         String action;
         boolean flag=true;

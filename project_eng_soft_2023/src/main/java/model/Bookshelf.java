@@ -123,7 +123,7 @@ public class Bookshelf implements Serializable {
     /**
      * Feedback method, it shows the element of the matrix in order to render the whole matrix on the CLI
      */
-    public Tile[][] getBookshelf(){
+    public Tile[][] getShelf(){
 
         /*
         for(int i = r-1; i>=0; i--){

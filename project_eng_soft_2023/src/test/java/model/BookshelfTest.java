@@ -211,7 +211,7 @@ class BookshelfTest {
 
         bookshelf.setShelf(matr);
 
-        bookshelf.getBookshelf();
+        bookshelf.getShelf();
 
 
         assertEquals(8,bookshelf.getScoreCGC());

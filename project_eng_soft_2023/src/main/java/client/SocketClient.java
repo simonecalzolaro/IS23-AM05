@@ -4,85 +4,73 @@ import controller.GameHandler;
 import model.Tile;
 import myShelfieException.*;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class SocketClient extends Client{
 
-    Socket socketLobby;
-    Socket socketControlPlayer;
+    Socket socketClient;
 
-    static ObjectInputStream inLobby;
-    static ObjectOutputStream outLobby;
+    private Stream outClient;
+    private Stream inClient;
 
-    static ObjectInputStream inCP;
-    static ObjectOutputStream outCP;
     static JSONObject jsonIn = null;
-    static JSONObject jsonInCP = null;
+
+    private boolean isPaused;
+
 
     /**
      * constructor of ClientApp
      *
      * @throws RemoteException
      */
-    protected SocketClient() throws RemoteException {
+    public SocketClient() throws RemoteException {
 
         super();
+    }
 
-        System.out.println("Hello from SocketClient");
+    @Override
+    public void initializeClient() throws IOException {
 
+        System.out.println("--- Initializing the SocketClient ...");
+
+
+        //Getting server's information about IPAddress and PORT
         getServerSettings();
+        isPaused = false;
 
+        socketClient = new Socket(hostname,PORT);
 
         try{
-            socketLobby = new Socket(localhost,TCPPORTX);
-
-            outCP = new ObjectOutputStream(socketControlPlayer.getOutputStream());
-            inCP = new ObjectInputStream(socketControlPlayer.getInputStream());
-
-
-            outLobby = new ObjectOutputStream(socketLobby.getOutputStream());
-            inLobby = new ObjectInputStream(socketLobby.getInputStream());
-
-
-            Thread threadInputLobby = new Thread(new ClientSocketInputLobby());
-            threadInputLobby.start();
-            Thread threadInputCP = new Thread(new ClientSocketInputCP());
-            threadInputCP.start();
-
-        }catch (UnknownHostException e) {
-        throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            outClient = new Stream(socketClient,0);
+        } catch (InvalidParametersException e) {
+            System.out.println("SocketClient --- InvalidParameterException occurred trying to create the output stream");
+            System.out.println("---> Change it with a valid one");
+            throw new RuntimeException();
         }
 
-    }
+        try{
+            inClient = new Stream(socketClient,1);
+        } catch (InvalidParametersException e) {
+            System.out.println("SocketClient --- InvalidParameterException occurred trying to create the input stream");
+            System.out.println("---> Change it with a valid one");
+            throw new RuntimeException();
+        }
 
+        Thread inputReader = new Thread(new AsyncClientInput(this));
+        inputReader.start();
 
-    //---SimoSocket: is eguente metodo esiste già in Client, non va sovrascritto
-    /*
-    @Override
-    public int enterNumberOfPlayers() throws IOException {
-
-        JSONObject jo = new JSONObject();
-        jo.put("method","enterNumberOfPlayers");
-        jo.put("param1", enterNumberOfPlayers() );
-        jo.put("param2",null);
-
-        outLobby.writeObject(jo);
-        outLobby.flush();
-
-        return 0;
+        System.out.println("--- SocketClient ready ---");
 
 
     }
-    */
 
 
     /**
@@ -93,22 +81,70 @@ public class SocketClient extends Client{
      * @throws RemoteException
      */
     @Override
-    public void askLogin(String nick) throws LoginException, IOException, RemoteException {
+    public synchronized void askLogin(String nick) throws LoginException, IOException, RemoteException {
 
-        JSONObject jo = new JSONObject();
+        JSONObject object = new JSONObject();
 
-        jo.put("method", "login");
-        jo.put("param1", model.getNickname());
-        jo.put("param2", this);
-        jo.put("param3",socketControlPlayer);
+        object.put("Action","Method");
+        object.put("Method","login");
+        object.put("Param1",nick);
 
-        System.out.println(jo);
+        try{
+            outClient.reset();
+            outClient.write(object);
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketClient --- InvalidOperationException occurred in askLogin() trying to reset/write the stream");
+            System.out.println("---> Maybe you're trying to reset/write an input stream");
+            throw new RuntimeException();
+        }
 
-        outLobby.writeObject(jo);
-        outLobby.flush();
+
+        redLight();
+
+        while(isPaused){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                System.out.println("SocketClient --- InterruptedException occurred trying to wait the execution flow");
+                throw new RuntimeException();
+            }
+        }
+
 
 
     }
+
+
+    @Override
+    public synchronized void askCheckFullWaitingRoom() throws IOException {
+
+        JSONObject object = new JSONObject();
+
+        object.put("Action","Method");
+        object.put("Method","checkFullWaitingRoom");
+
+        try{
+            outClient.reset();
+            outClient.write(object);
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketClient --- InvalidOperationException occurred in askLogin() trying to reset/write the stream");
+            System.out.println("---> Maybe you're trying to reset/write an input stream");
+            throw new RuntimeException();
+        }
+
+        redLight();
+
+        while(isPaused){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                System.out.println("SocketClient --- InterruptedException occurred trying to wait the execution flow");
+                throw new RuntimeException();
+            }
+        }
+    }
+
+
 
 
 
@@ -118,17 +154,9 @@ public class SocketClient extends Client{
      * @throws LoginException
      * @throws RemoteException
      */
-    public void askContinueGame() throws LoginException, IOException {
 
-        JSONObject jo = new JSONObject();
-
-        jo.put("method", "continueGame");
-        jo.put("param1", model.getNickname());
-
-        System.out.println(jo);
-
-        outLobby.writeObject(jo);
-        outLobby.flush();
+    @Override
+    public synchronized void askContinueGame() throws LoginException, IOException {
 
     }
 
@@ -138,20 +166,38 @@ public class SocketClient extends Client{
      * @return true if everything went fine
      * @throws RemoteException
      */
-    public boolean askLeaveGame() throws IOException {
 
-        JSONObject jo = new JSONObject();
+    @Override
+    public synchronized boolean askLeaveGame() throws IOException {
 
-        jo.put("method", "leaveGame");
-        jo.put("param1", model.getNickname());
+        JSONObject object = new JSONObject();
+
+        object.put("Action","Method");
+        object.put("Method","leaveGame");
+        object.put("Param1",model.getNickname());
+
+        try{
+            outClient.reset();
+            outClient.write(object);
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketClient --- InvalidOperationException occurred trying to reset/write the stream");
+            System.out.println("---> Maybe you're trying to reset/write an input stream");
+            throw new RuntimeException();
+        }
 
 
-        System.out.println(jo);
+        redLight();
 
-        outLobby.writeObject(jo);
-        outLobby.flush();
+        while(isPaused){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                System.out.println("SocketClient --- InterruptedException occurred trying to wait the execution flow");
+                throw new RuntimeException();
+            }
+        }
 
-        return true;
+        return left;
 
     }
 
@@ -168,61 +214,165 @@ public class SocketClient extends Client{
      * @throws RemoteException
      * @throws NotMyTurnException
      */
-    public boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, IOException, NotMyTurnException {
 
-        JSONObject jo = new JSONObject();
+    @Override
+    public synchronized boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, IOException, NotMyTurnException {
 
-        jo.put("method", "askBoardTiles");
-        jo.put("param1", chosenTiles);
-        jo.put("param2",coord);
+        JSONObject object = new JSONObject();
 
+        object.put("Action","Method");
+        object.put("Method","chooseBoardTiles");
+        object.put("Param1",chosenTiles);
+        object.put("Param2",coord);
 
-        System.out.println(jo);
-
-        outCP.writeObject(jo);
-        outCP.flush();
-
-        return true;
-
-    }
-
-
-    boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws IOException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
-
-        JSONObject jo = new JSONObject();
-
-        jo.put("method", "askInsertShelfTiles");
-        jo.put("param1", choosenTiles);
-        jo.put("param2",choosenColumn);
-        jo.put("param3",coord);
+        try{
+            outClient.reset();
+            outClient.write(object);
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketClient --- InvalidOperationException occurred in trying to reset/write the stream");
+            System.out.println("---> Maybe you're trying to reset/write an input stream");
+            throw new RuntimeException();
+        }
 
 
-        System.out.println(jo);
+        redLight();
 
-        outCP.writeObject(jo);
-        outCP.flush();
+        while(isPaused){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                System.out.println("SocketClient --- InterruptedException occurred trying to wait the execution flow");
+                throw new RuntimeException();
+            }
+        }
 
         return true;
 
     }
 
 
-    int askGetMyScore() throws IOException {
 
-        JSONObject jo = new JSONObject();
+    @Override
+    public synchronized boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws IOException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
 
-        jo.put("method", "askGetMyScore");
+        JSONObject object = new JSONObject();
+
+        object.put("Action","Method");
+        object.put("Method","insertShelfTiles");
+        object.put("Param1",choosenTiles);
+        object.put("Param2",choosenColumn);
+        object.put("Param3",coord);
+
+        try{
+            outClient.reset();
+            outClient.write(object);
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketClient --- InvalidOperationException occurred in trying to reset/write the stream");
+            System.out.println("---> Maybe you're trying to reset/write an input stream");
+            throw new RuntimeException();
+        }
+
+
+        redLight();
+
+        while(isPaused){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                System.out.println("SocketClient --- InterruptedException occurred trying to wait the execution flow");
+                throw new RuntimeException();
+            }
+        }
+
+        return true;
+
+    }
 
 
 
-        System.out.println(jo);
+    @Override
+     public synchronized int askGetMyScore() throws IOException {
 
-        outCP.writeObject(jo);
-        outCP.flush();
+        JSONObject object = new JSONObject();
 
-        return 0;
+        object.put("Action","Method");
+        object.put("Method","getMyScore");
 
 
+        try{
+            outClient.reset();
+            outClient.write(object);
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketClient --- InvalidOperationException occurred in trying to reset/write the stream");
+            System.out.println("---> Maybe you're trying to reset/write an input stream");
+            throw new RuntimeException();
+        }
+
+
+        redLight();
+
+        while(isPaused){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                System.out.println("SocketClient --- InterruptedException occurred trying to wait the execution flow");
+                throw new RuntimeException();
+            }
+        }
+
+        return myScore;
+
+    }
+
+    @Override
+    public synchronized boolean askPing() {
+        return false;
+    }
+
+
+    @Override
+    public void getServerSettings() {
+        try{
+            Object o = new JSONParser().parse(new FileReader("header.json"));
+            JSONObject j =(JSONObject) o;
+            Map arg = new LinkedHashMap();
+            arg = (Map) j.get("serverSettings");
+
+            hostname = (String) arg.get("hostname");
+            PORT_pre = (Long) arg.get("TCPPORT");
+
+            PORT = PORT_pre.intValue();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("SocketClient --- FileNotFoundException occurred trying to retrieve server's information from header.json");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("SocketClient --- IOException occurred trying to retrieve server's information from header.json");
+            e.printStackTrace();
+        } catch (ParseException e) {
+            System.out.println("SocketClient --- ParseException occurred trying to retrieve server's information from header.json");
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public Stream getInputStream(){
+        return inClient;
+    }
+
+    public Stream getOutputStream(){
+        return outClient;
+    }
+
+
+    public synchronized void redLight(){
+        isPaused = true;
+    }
+
+    public synchronized void greenLight(){
+        isPaused = false;
+        notifyAll();
     }
 
 

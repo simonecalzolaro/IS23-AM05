@@ -3,18 +3,19 @@ package client;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import model.Tile;
 
 public class Matrix {
 
 
     private Tile[][] matr;
-    private Map<client.Tile, Integer[]> map;
+    private Map<Tile, Integer[]> map;
 
 
     public Matrix(Map<model.Tile, Integer[]> pgcMap) {
 
         map=new HashMap<>();
-        ArrayList<client.Tile> keys= new ArrayList(pgcMap.keySet());
+        ArrayList<Tile> keys= new ArrayList(pgcMap.keySet());
 
         for (Map.Entry<model.Tile, Integer[]> entry : pgcMap.entrySet()){
 
@@ -47,7 +48,7 @@ public class Matrix {
 
     private Map<Tile, Integer[]>  generateMapFromMatrix(Tile[][] matr){
 
-        Map<client.Tile, Integer[]> map=new HashMap<>();
+        Map<Tile, Integer[]> map=new HashMap<>();
 
         for (int i=0; i< matr.length; i++){
             for (int j=0; j< matr[0].length; j++){

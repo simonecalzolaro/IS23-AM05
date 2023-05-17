@@ -37,4 +37,8 @@ public interface ClientServerHandler extends Remote {
 
 
     boolean pong() throws RemoteException;
+
+    void checkFullWaitingRoom() throws IOException;
+
+
 }
