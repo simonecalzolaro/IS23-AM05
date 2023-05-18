@@ -27,6 +27,7 @@ public abstract class Lobby implements ClientServerHandler {
     static Long PORT_pre;
     static int PORT;
 
+    static Object lock;
     protected static ArrayList<ControlPlayer> clients;
     protected static ArrayList< Game > games;
     protected static int attendedPlayers;
@@ -49,6 +50,7 @@ public abstract class Lobby implements ClientServerHandler {
         tempPlayers= new ArrayList<>();
         attendedPlayers = -1;
         tempBoard=null;
+        lock = new Object();
     }
 
 
@@ -67,7 +69,7 @@ public abstract class Lobby implements ClientServerHandler {
     @Override
     public GameHandler login(String nickname, Object client) throws RemoteException, IOException, LoginException {
 
-        synchronized(this) {
+        synchronized(lock) {
 
             //check if the nickname is available
             if (clients.stream().map(x -> x.getPlayerNickname()).toList().contains(nickname))
@@ -138,27 +140,29 @@ public abstract class Lobby implements ClientServerHandler {
     @Override
     public void checkFullWaitingRoom() throws IOException {
 
-        //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
-        if (tempPlayers.size() >= attendedPlayers) {
+        synchronized (lock){
+            //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
+            if (tempPlayers.size() >= attendedPlayers) {
 
-            attendedPlayers = -1;
+                attendedPlayers = -1;
 
-            Game g = new Game(tempPlayers, tempBoard);
-            games.add(g);
+                Game g = new Game(tempPlayers, tempBoard);
+                games.add(g);
 
-            for (ControlPlayer cp : tempPlayers) {
+                for (ControlPlayer cp : tempPlayers) {
 
-                cp.setGame(g);
-                cp.getBookshelf().initializePGC(tempBoard);
-                cp.notifyStartPlaying();
+                    cp.setGame(g);
+                    cp.getBookshelf().initializePGC(tempBoard);
+                    cp.notifyStartPlaying();
 
-                if(cp.getPlayerStatus().equals(PlayerStatus.MY_TURN)) cp.notifyStartYourTurn();
+                    if(cp.getPlayerStatus().equals(PlayerStatus.MY_TURN)) cp.notifyStartYourTurn();
+
+                }
+
+                tempPlayers.clear();
+                System.out.println(" -> ...The game has been created, participants: " + g.getPlayers());
 
             }
-
-            tempPlayers.clear();
-            System.out.println(" -> ...The game has been created, participants: " + g.getPlayers());
-
         }
     }
 
@@ -171,7 +175,7 @@ public abstract class Lobby implements ClientServerHandler {
     @Override
     public GameHandler continueGame(String nickname, Object client) throws RemoteException, LoginException {
 
-        synchronized(this){
+        synchronized(lock){
 
             //checking if exists a player called "nickname" now offline
 
@@ -212,7 +216,7 @@ public abstract class Lobby implements ClientServerHandler {
     @Override
     public boolean leaveGame(String nickname) throws LoginException, RemoteException {
 
-        synchronized(this) {
+        synchronized(lock) {
 
             //checking if exists a player called "nickname" now offline
             Stream<ControlPlayer> cp = null;

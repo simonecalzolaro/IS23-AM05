@@ -8,35 +8,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="GUI">
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/AsyncClientInput.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/Stream.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/Stream.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/myShelfieException/InvalidOperationException.java" afterDir="false" />
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header.json" beforeDir="false" afterPath="$PROJECT_DIR$/header.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientSocketInputCP.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientSocketInputLobby.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Matrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Matrix.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Tile.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMILobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketLobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/TCPHandlerLobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TCPHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/PersonalGoalCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/PersonalGoalCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/LobbyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/LobbyTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/model/BookshelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/model/BookshelfTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +79,7 @@
       <recent name="client" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ServerApp">
+  <component name="RunManager">
     <configuration name="ClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.ClientApp" />
       <module name="project_eng_soft_2023" />
@@ -262,7 +236,8 @@
       <workItem from="1684240229135" duration="646000" />
       <workItem from="1684251209333" duration="11874000" />
       <workItem from="1684276929716" duration="8849000" />
-      <workItem from="1684319935734" duration="22880000" />
+      <workItem from="1684319935734" duration="24620000" />
+      <workItem from="1684412627543" duration="1592000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
@@ -348,7 +323,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684156080689</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="SocketClient + SocketLobby + SocketControlPlayer fixed, new communication protocol implemented, new JSON object format for communication protocol, ClientApp + ServerApp + RMIClient exception fixed">
+      <created>1684348329977</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1684348329977</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -388,7 +370,8 @@
     <MESSAGE value="adjustments on network design patten and implementation of RMI/Soket Player, RMI/Socket Server and RMI/Server client" />
     <MESSAGE value="synchronization of RMI methods, adjustments on methods signature" />
     <MESSAGE value="GUI" />
-    <option name="LAST_COMMIT_MESSAGE" value="GUI" />
+    <MESSAGE value="SocketClient + SocketLobby + SocketControlPlayer fixed, new communication protocol implemented, new JSON object format for communication protocol, ClientApp + ServerApp + RMIClient exception fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="SocketClient + SocketLobby + SocketControlPlayer fixed, new communication protocol implemented, new JSON object format for communication protocol, ClientApp + ServerApp + RMIClient exception fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
