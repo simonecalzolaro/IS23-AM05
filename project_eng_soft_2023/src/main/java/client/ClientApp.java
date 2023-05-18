@@ -1,23 +1,25 @@
 package client;
 
 import myShelfieException.LoginException;
+import view.GUI;
+import view.TUI;
+import view.View;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.UnknownHostException;
-import java.util.List;
+
 import java.util.Scanner;
 
-import static java.lang.Thread.sleep;
 
 public class ClientApp {
 
 
     private static Client client;
     //private static UI userInterface;
+    private static View view;
 
 
     public static void main(String[] args) {
@@ -25,6 +27,43 @@ public class ClientApp {
         String nickName="";
 
         //--------------------------------- TUI o GUI ? ----------------------------------
+
+        String select;
+        Scanner scan = new Scanner(System.in);
+        do{
+            System.out.println("0 ---> TUI \n 1 ---> GUI?");
+
+            select = scan.nextLine();
+
+            if(!select.equals("0") && !select.equals("1")) System.out.println("ClientApp --- Invalid code --> Try again !");
+
+        }while(!select.equals("0") && !select.equals("1"));
+
+        switch (select){
+
+            case "0":
+
+                view = new TUI();
+                break;
+
+            case "1":
+
+                //view = new GUI();
+                break;
+
+        }
+
+        try {
+            view.startGame();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LoginException e) {
+            throw new RuntimeException(e);
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        /*
 
         //------------------------------- RMI o Socket ? ----------------------------------
 
@@ -176,6 +215,7 @@ public class ClientApp {
         //-------------------------------- game loop ----------------------------------
 
         while(!client.GameEnded()){
+            /*
             try {
                 sleep(10000);
                 System.out.println("I'm "+nickName+" and I'm playing");
@@ -188,6 +228,8 @@ public class ClientApp {
 
             }
         }
+         */
+
 
 
 

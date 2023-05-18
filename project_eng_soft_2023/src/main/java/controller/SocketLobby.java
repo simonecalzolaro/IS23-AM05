@@ -17,13 +17,9 @@ import java.util.List;
 public class SocketLobby extends Lobby implements Runnable{
 
     Socket socketServer;
-    static int count;
-
     Stream outServer;
     Stream inServer;
-
     GameHandler cp;
-
     static boolean isPaused;
 
     /**
@@ -55,6 +51,7 @@ public class SocketLobby extends Lobby implements Runnable{
 
     @Override
     public synchronized void startServer() throws RemoteException {
+
          isPaused = false;
 
         JSONObject request = new JSONObject();
@@ -528,10 +525,10 @@ public class SocketLobby extends Lobby implements Runnable{
 
     public boolean TCPchooseBoardTiles(JSONObject json) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
 
-        List<Tile> chosenTiles = (List<Tile>) json.get("Param1");
+        // List<Tile> chosenTiles = (List<Tile>) json.get("Param1"); //----SimoSocket
         List<Integer> coord = (List<Integer>) json.get("Param2");
 
-        return cp.chooseBoardTiles(chosenTiles,coord);
+        return cp.chooseBoardTiles(coord);
 
     }
 
@@ -542,7 +539,7 @@ public class SocketLobby extends Lobby implements Runnable{
         int choosenColumns = (int) json.get("Param2");
         List<Integer> coord = (List<Integer>) json.get("Param3");
 
-        return cp.insertShelfTiles(choosenTiles,choosenColumns,coord);
+        return cp.insertShelfTiles(choosenColumns,coord);
 
 
     }
@@ -573,7 +570,5 @@ public class SocketLobby extends Lobby implements Runnable{
             throw new RuntimeException(e);
         }
     }
-
-
 
 }

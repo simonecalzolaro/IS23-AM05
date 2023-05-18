@@ -2,6 +2,7 @@ package view;
 
 import client.ClientModel;
 
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -52,7 +53,7 @@ public class GUI extends View {
     }
 
     @Override
-    public void endGame() {
+    public void endGame(Map< Integer, String> results) {
 
     }
 
@@ -73,6 +74,12 @@ public class GUI extends View {
     public void endYourTurn() {
 
     }
+
+    @Override
+    public void startPlay() {
+
+    }
+
     public void setNumOfPlayer(int n){
         numOfPlayer=n;
     }

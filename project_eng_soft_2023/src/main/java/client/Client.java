@@ -1,22 +1,15 @@
 package client;
 
 
-import controller.ClientServerHandler;
-import controller.GameHandler;
 
-import model.Tile;
 import myShelfieException.*;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import view.View;
+
 
 import java.io.*;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -26,13 +19,15 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
     //----- tutti sti attributi sono da spostare in classi o sottoclassi più specifiche
     protected String hostname;
-    protected Long PORT_pre;
     protected int PORT;
 
     protected boolean left;
     protected int myScore;
 
     protected ClientModel model;
+    private View view;
+
+
     protected boolean myTurn;
     protected boolean gameEnded;
 
@@ -41,18 +36,20 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * constructor of ClientApp
      * @throws RemoteException
      */
-    public Client() throws RemoteException {
+    protected Client(View view) throws RemoteException {
 
         super();
 
+        this.view=view;
         model=new ClientModel();
         myTurn=false;
         gameEnded=false;
-        left = false;
+        left=false;
 
     }
 
-    abstract public void initializeClient() throws IOException, NotBoundException;
+
+    abstract public void initializeClient() throws  IOException, NotBoundException;
 
 
     /**
@@ -63,21 +60,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     @Override
     public int enterNumberOfPlayers() throws RemoteException{
 
-        int num;
-        Scanner scan = new Scanner(System.in);
-
-        do {
-
-
-            System.out.print("Enter the number of players: ");
-            // This method reads the number provided using keyboard
-            num = scan.nextInt();
-
-            if(num<2 || num >4) System.out.println("The number of players must be between 2 and 4");
-
-        }while(num<2 || num >4);
-
-        return num;
+        return view.getNumOfPlayer();
 
     }
 
@@ -88,7 +71,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws RemoteException
      */
     @Override
-    public boolean updateBoard(Tile[][] board, Tile[][] myShelf, Map<String, Tile[][]> otherShelf) throws RemoteException{
+    public boolean updateBoard(model.Tile[][] board, model.Tile[][] myShelf, Map<String, model.Tile[][]> otherShelf) throws RemoteException{
 
         Map<String, Matrix> otherPlayersMatr= new HashMap<>();
         for(String nick: otherShelf.keySet()){
@@ -97,8 +80,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
         model.initializeMatrixes(new Matrix(board), new Matrix(myShelf), otherPlayersMatr );
 
-
-        System.out.println("the board has been updated...");
+        view.updateBoard();
 
         return true;
 
@@ -113,13 +95,10 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     @Override
     public boolean theGameEnd(Map< Integer, String> results) throws RemoteException{
 
-        for(Integer key: results.keySet()){
-            System.out.println(key + " ->   "+ results.get(key));
-        }
-
         gameEnded=true;
-
+        view.endGame(results);
         return true;
+
     }
 
 
@@ -130,10 +109,22 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     @Override
     public boolean startYourTurn() throws RemoteException{
 
-        System.out.println(" make a move "+ model.getNickname() + " is your turn");
         myTurn=true;
-        return true;
+        try {
+            view.isYourTurn();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidChoiceException e) {
+            throw new RuntimeException(e);
+        } catch (NotConnectedException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidParametersException e) {
+            throw new RuntimeException(e);
+        } catch (NotMyTurnException e) {
+            throw new RuntimeException(e);
+        }
 
+        return true;
     }
 
 
@@ -144,7 +135,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     @Override
     public boolean endYourTurn() throws RemoteException{
 
-        System.out.println("...your turn is ended ! ");
+        view.endYourTurn();
         myTurn=false;
         return true;
 
@@ -156,16 +147,12 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws RemoteException
      */
     @Override
-    public boolean startPlaying(int pgcNum, Map<Tile, Integer[]> pgcMap, int cgc1num, int cgc2num) throws RemoteException {
+    public boolean startPlaying(int pgcNum, Map<model.Tile, Integer[]> pgcMap, int cgc1num, int cgc2num) throws RemoteException {
 
 
         model.initializeCards(new Matrix(pgcMap), pgcNum, cgc1num, cgc2num );
 
-        //----UImethod()
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-        System.out.println("let's go!! The game has started ! ");
-        System.out.println("is your turn? make a move =) ");
+        view.startPlay();
 
         return true;
 
@@ -178,8 +165,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      */
     @Override
     public boolean pong() throws RemoteException {
-
-        System.out.println("    pong");
         return true;
     }
 
@@ -241,12 +226,8 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     public abstract boolean askLeaveGame() throws IOException, LoginException;
 
 
-    public abstract void askCheckFullWaitingRoom() throws IOException;
-
-
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
-     * @param chosenTiles
      * @param coord
      * @return true if everything went fine
      * @throws InvalidChoiceException
@@ -255,12 +236,11 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws RemoteException
      * @throws NotMyTurnException
      */
-    public abstract boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, IOException, NotMyTurnException;
+    public abstract boolean askBoardTiles( List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, IOException, NotMyTurnException;
 
 
     /**
      * asks the server to insert some tiles in my shelf, is divided in RMI and socket
-     * @param choosenTiles are the tiles to insert in a column
      * @param choosenColumn is the column where to insert the tiles
      * @param coord board coordinates
      * @return true if everything went fine
@@ -270,7 +250,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws InvalidChoiceException
      * @throws InvalidLenghtException
      */
-    abstract public boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws IOException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException;
+    public abstract boolean askInsertShelfTiles( int choosenColumn, List<Integer> coord) throws IOException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException;
 
 
     /**
@@ -284,6 +264,8 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * verifies the server is up
      * @return true if the server is online
      */
-    abstract public boolean askPing();
+    public abstract boolean askPing();
+
+    abstract public void askCheckFullWaitingRoom() throws IOException;
 
 }

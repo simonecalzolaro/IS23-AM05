@@ -52,6 +52,7 @@ public class Game implements Serializable {
      * @param players list of the player joining the game
      */
     public Game(List<ControlPlayer> players, Board board) throws IOException {
+
         this.gameID = counterID;
         counterID++;
         this.board = board;
@@ -78,6 +79,7 @@ public class Game implements Serializable {
         }
         players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
         gameStatus=GameStatus.PLAYING;
+
     }
 
     /**
@@ -89,17 +91,19 @@ public class Game implements Serializable {
      */
     public void endTurn(){
 
+        //updating the board
         board.updateBoard();
 
-
+        //if online, setting the current player to NOT_MY_TURN
         if(players.get(currPlayer).getPlayerStatus()!=PlayerStatus.NOT_ONLINE) players.get(currPlayer).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
+
+        //searching for the next player
         do{
             if (currPlayer < players.size()-1){
                 currPlayer++;
             }
             else if (board.getEOG()){
                 gameStatus=GameStatus.END_GAME;
-
             }
             else {
                 currPlayer=0;
@@ -107,11 +111,19 @@ public class Game implements Serializable {
 
         } while(gameStatus!=GameStatus.END_GAME && players.get(currPlayer).getPlayerStatus()==PlayerStatus.NOT_ONLINE);
 
-        if(gameStatus!=GameStatus.END_GAME) players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
-
-
-
-
+        if(gameStatus!=GameStatus.END_GAME){
+            players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
+            try {
+                players.get(currPlayer).notifyStartYourTurn();
+            } catch (IOException e) { throw new RuntimeException(e); }
+        }
+        else{
+            try {
+                for(ControlPlayer cp: players){
+                    cp.notifyEndGame();
+                }
+            } catch (IOException e) { throw new RuntimeException(e); }
+        }
     }
 
     /**
@@ -199,7 +211,9 @@ public class Game implements Serializable {
 
     }
 
-
+    public void setGameStatus(GameStatus gs){
+        this.gameStatus=gs;
+    }
 
 
 }

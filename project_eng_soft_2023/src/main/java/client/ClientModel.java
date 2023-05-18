@@ -20,7 +20,15 @@ public class ClientModel {
 
 
     public ClientModel() {
+
         this.nickname = "";
+        this.board=null;
+        this.myBookshelf=null;
+        this.otherPlayers=null;
+        this.pgc=null;
+        this.pgcNum=-1;
+        this.cgc1=null;
+        this.cgc2=null;
 
     }
 

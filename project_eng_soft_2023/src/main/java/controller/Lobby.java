@@ -115,7 +115,7 @@ public abstract class Lobby implements ClientServerHandler {
                     } while (attendedPlayers < 2 || attendedPlayers > 4); //eccezione da gestire
 
                     //setting the status of this Player as MY_TURN
-                    pl.setPlayerStatus(PlayerStatus.MY_TURN);
+                    pl.setPlayerStatus(PlayerStatus.WAITING_ROOM);
 
                     //initializing the board with the chosen number of players
                     tempBoard.initializeBoard(attendedPlayers);
@@ -149,7 +149,10 @@ public abstract class Lobby implements ClientServerHandler {
                 Game g = new Game(tempPlayers, tempBoard);
                 games.add(g);
 
-                for (ControlPlayer cp : tempPlayers) {
+                //give the "arm chair" to the firs player
+                //tempPlayers.get(0).setPlayerStatus(PlayerStatus.MY_TURN);
+
+                for (ControlPlayer cp : g.getPlayers()) {
 
                     cp.setGame(g);
                     cp.getBookshelf().initializePGC(tempBoard);
@@ -160,7 +163,7 @@ public abstract class Lobby implements ClientServerHandler {
                 }
 
                 tempPlayers.clear();
-                System.out.println(" -> ...The game has been created, participants: " + g.getPlayers());
+                System.out.println(" -> ...The game has been created, participants: " + g.getPlayers().stream().map(x-> x.getPlayerNickname()));
 
             }
         }
@@ -285,6 +288,22 @@ public abstract class Lobby implements ClientServerHandler {
         return attendedPlayers;
     }
 
+    /**
+     * @return clients present in the lobby
+     */
+    public static ArrayList<ControlPlayer> getClients() {
+        return clients;
+    }
 
+    public void removeFromWaitingRoom (ControlPlayer cp){
+
+        synchronized(lock) {
+            tempPlayers.remove(cp);
+            clients.remove(cp);
+
+            //se non è rimasto nessuno nella waiting room :
+            if(tempPlayers.size()==0) attendedPlayers=-1;
+        }
+    }
 
 }

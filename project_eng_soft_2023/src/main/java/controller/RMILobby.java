@@ -17,6 +17,11 @@ import java.util.Map;
 
 public class RMILobby extends Lobby{
 
+
+    String hostname;
+    int PORT;
+
+
     /**
      * constructor for the ServerApp
      *
@@ -35,7 +40,7 @@ public class RMILobby extends Lobby{
         Registry registry = null;
         ClientServerHandler stub = null;
 
-        stub = (ClientServerHandler) UnicastRemoteObject.exportObject(this,PORT);
+        stub = (ClientServerHandler) UnicastRemoteObject.exportObject(this, PORT);
         registry = LocateRegistry.createRegistry(PORT);
         registry.bind("ServerAppService",stub);
 
@@ -44,6 +49,9 @@ public class RMILobby extends Lobby{
 
 
     public void getServerSettings() {
+
+        Long PORT_pre;
+
         try{
             Object o = new JSONParser().parse(new FileReader("header.json"));
             JSONObject j =(JSONObject) o;
@@ -66,6 +74,5 @@ public class RMILobby extends Lobby{
             e.printStackTrace();
         }
     }
-
 
 }

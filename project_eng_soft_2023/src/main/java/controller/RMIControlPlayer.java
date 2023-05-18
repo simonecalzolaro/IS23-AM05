@@ -3,11 +3,17 @@ package controller;
 import client.ClientHandler;
 import model.Board;
 import model.Tile;
+import myShelfieException.InvalidChoiceException;
+import myShelfieException.InvalidParametersException;
+import myShelfieException.NotConnectedException;
+import myShelfieException.NotMyTurnException;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RMIControlPlayer extends ControlPlayer{
@@ -98,10 +104,8 @@ public class RMIControlPlayer extends ControlPlayer{
     @Override
     public void notifyStartPlaying() throws RemoteException {
 
-            ch.startPlaying(bookshelf.getPgc().getCardNumber(), bookshelf.getPgc().getCardMap(), game.getBoard().getCommonGoalCard1().getCGCnumber(), game.getBoard().getCommonGoalCard2().getCGCnumber());
-            notifyUpdatedBoard();
-
-
+        ch.startPlaying(bookshelf.getPgc().getCardNumber(), bookshelf.getPgc().getCardMap(), game.getBoard().getCommonGoalCard1().getCGCnumber(), game.getBoard().getCommonGoalCard2().getCGCnumber());
+        notifyUpdatedBoard();
     }
 
     @Override
@@ -132,7 +136,7 @@ public class RMIControlPlayer extends ControlPlayer{
     }
 
     @Override
-    public void setStreams(ArrayList<Stream> streams) {}
+    public void setStreams(ArrayList<Stream> streams) { }
 
 
 }

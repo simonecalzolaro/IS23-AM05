@@ -6,6 +6,7 @@ import myShelfieException.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import view.View;
 
 import java.io.*;
 import java.net.Socket;
@@ -31,9 +32,9 @@ public class SocketClient extends Client{
      *
      * @throws RemoteException
      */
-    public SocketClient() throws RemoteException {
+    public SocketClient(View view) throws RemoteException {
 
-        super();
+        super( view);
     }
 
     @Override
@@ -205,7 +206,6 @@ public class SocketClient extends Client{
 
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
-     * @param chosenTiles
      * @param coord
      * @return true if everything went fine
      * @throws InvalidChoiceException
@@ -216,13 +216,13 @@ public class SocketClient extends Client{
      */
 
     @Override
-    public synchronized boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, IOException, NotMyTurnException {
+    public synchronized boolean askBoardTiles( List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, IOException, NotMyTurnException {
 
         JSONObject object = new JSONObject();
 
         object.put("Action","Method");
         object.put("Method","chooseBoardTiles");
-        object.put("Param1",chosenTiles);
+        //object.put("Param1",chosenTiles); ---- SimoSocket
         object.put("Param2",coord);
 
         try{
@@ -253,13 +253,13 @@ public class SocketClient extends Client{
 
 
     @Override
-    public synchronized boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws IOException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
+    public synchronized boolean askInsertShelfTiles( int choosenColumn, List<Integer> coord) throws IOException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
 
         JSONObject object = new JSONObject();
 
         object.put("Action","Method");
         object.put("Method","insertShelfTiles");
-        object.put("Param1",choosenTiles);
+        //object.put("Param1",choosenTiles); ---SimoSocket
         object.put("Param2",choosenColumn);
         object.put("Param3",coord);
 
@@ -326,13 +326,16 @@ public class SocketClient extends Client{
 
     @Override
     public synchronized boolean askPing() {
-        return false;
+        return true;
     }
 
 
     @Override
     public void getServerSettings() {
         try{
+
+            Long PORT_pre;
+
             Object o = new JSONParser().parse(new FileReader("header.json"));
             JSONObject j =(JSONObject) o;
             Map arg = new LinkedHashMap();
@@ -374,11 +377,6 @@ public class SocketClient extends Client{
         isPaused = false;
         notifyAll();
     }
-
-
-
-
-
 
 
 }

@@ -1,9 +1,6 @@
+package client;
 
-package model;
-
-import java.io.Serializable;
-
-public enum Tile implements Serializable {
+public enum Tile {
 
     GREEN,
     WHITE,
@@ -17,6 +14,7 @@ public enum Tile implements Serializable {
     public static Tile getTile(int tileNumb){
 
         switch (tileNumb % 12) {
+
             case 1 : return Tile.GREEN;
             case 2 : return Tile.WHITE;
             case 3 : return Tile.BLUE;
@@ -27,8 +25,8 @@ public enum Tile implements Serializable {
             case 8 : return Tile.NOTAVAILABLE;
 
             default: return Tile.EMPTY;
-        }
 
+        }
 
     }
 

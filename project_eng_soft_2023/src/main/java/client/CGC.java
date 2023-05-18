@@ -81,8 +81,6 @@ public enum CGC {
             case 12 : return CGC.CGC12;
             default: return CGC.CGC1;
         }
-
-
     }
 
 

@@ -6,9 +6,7 @@ import myShelfieException.*;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.Socket;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +50,7 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
         score = 0;
         playerStatus = PlayerStatus.NOT_MY_TURN;
 
-        //(new Thread(new PingPong(this))).start(); //starting PinPonging
+        (new Thread(new PingPong(this))).start(); //starting PinPonging
     }
 
     /**
@@ -77,7 +75,6 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
             return true;
         }
 
-
     }
 
 
@@ -95,7 +92,6 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
      * @throws NotConnectedException the player is not connected
      */
     public List<Tile> catchTile(List<Integer> coord) throws InvalidParametersException, InvalidChoiceException, NotMyTurnException, NotConnectedException {
-
 
         if (playerStatus == PlayerStatus.NOT_MY_TURN) {
             throw new NotMyTurnException();
@@ -121,31 +117,34 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
 
     /**
      * method called by the clients to choose tiles from the board of their game
-     * @param chosenTiles List of tiles chosen by the client
      * @param coord coordinates of the chosen tiles
      * @return true if the chosen tiles are valid
      */
     @Override
-    public boolean chooseBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws RemoteException, NotConnectedException, InvalidParametersException, NotMyTurnException, InvalidChoiceException {
+    public boolean chooseBoardTiles(List<Integer> coord) throws RemoteException, NotConnectedException, InvalidParametersException, NotMyTurnException, InvalidChoiceException {
 
-        return catchTile(coord).equals(chosenTiles);
-
+            catchTile(coord);
+            return true;
     }
 
     /**
      * method called by clients to insert the tiles they choose from the board into their bookshelf
-     * @param chosenTiles ordered list of tiles, from the lowest one to the top one
      * @param choosenColumn column where to insert the tiles
      * @param coord tile coordinates
      * @throws NotConnectedException
      * @throws NotMyTurnException
      */
     @Override
-    public boolean insertShelfTiles(ArrayList<Tile> chosenTiles, int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidLenghtException, InvalidChoiceException {
+    public boolean insertShelfTiles( int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidLenghtException, InvalidChoiceException {
+
+        ArrayList<Tile> choosenTiles=new ArrayList<>();
+
+        for(int i=0; i<coord.size()/2; i+=2){
+            choosenTiles.add(game.getBoard().getBoard()[i][i+1]);
+        }
 
         //inserting the tiles in the bookshelf
-
-        if( ! insertTiles(chosenTiles, choosenColumn)) return false;
+        if( ! insertTiles(choosenTiles, choosenColumn)) return false;
 
         //and subtracting the same tiles from the board
         game.getBoard().subTiles(coord);
@@ -156,14 +155,15 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
         } catch (IOException e) { throw new RuntimeException(e); }
 
         //Game.endTurn() is called to update the turn to the next player and update the game status
-
         game.endTurn();
 
         //notify the updated board to all the clients participating in the same game of ch
         try {
 
             for(ControlPlayer cp: game.getPlayers()){
-                cp.notifyUpdatedBoard();
+
+                //if player cp is online ill update his board
+                if(!cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)) cp.notifyUpdatedBoard();
             }
 
         } catch (IOException e) { throw new RuntimeException(e); }
@@ -171,23 +171,17 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
 
         //if the game is ended every player is notified and the results are shown
         if(game.getGameStatus().equals(GameStatus.END_GAME)){
-
             try {
-
                 for(ControlPlayer cp: game.getPlayers()){
                     cp.notifyEndGame();
                 }
-
             } catch (IOException e) { throw new RuntimeException(e); }
-
         }
 
+        //tell the next player to start his turn
         try {
-
             ControlPlayer nextPlayer= game.getPlayers().get(game.getCurrPlayer());
-            nextPlayer.notifyStartYourTurn(); //Eccezione assicurata con socket !!!!!!!!!!! perchè ci sarà un accesso concorrente allo stesso socket da parte del nextPlayer
-            //bisogna trovare una soluzione
-
+            nextPlayer.notifyStartYourTurn();
         } catch (IOException e) { throw new RuntimeException(e); }
 
         return true;
@@ -204,7 +198,6 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
         return bookshelf.getMyScore();
 
     }
-
 
 
 
@@ -271,7 +264,6 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
     }
 
     /**
-     *
      * @return playerStatus
      */
     public PlayerStatus getPlayerStatus() {
@@ -300,10 +292,40 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
     }
 
     /**
-     * @param playerStatus: player status
+     * @param ps: player status
      */
-    public void setPlayerStatus(PlayerStatus playerStatus) {
-        this.playerStatus = playerStatus;
+    public void setPlayerStatus(PlayerStatus ps) {
+
+
+        switch (this.getPlayerStatus()){
+
+            case MY_TURN :
+                this.playerStatus = ps;
+                //se va offline durante il suo turno devo cercare il client successivo
+                if(ps.equals(PlayerStatus.NOT_ONLINE)) {
+                    game.endTurn();
+                }
+                break;
+
+            case NOT_MY_TURN :
+                this.playerStatus = ps;
+                break;
+
+            case NOT_ONLINE:
+                if(ps.equals(PlayerStatus.NOT_MY_TURN)){
+                    this.playerStatus = ps;
+                }
+                break;
+
+            case WAITING_ROOM:
+
+                    this.playerStatus = ps;
+
+                break;
+
+            default:
+                System.out.println(" impossible to set "+nickname+" status from "+this.playerStatus + " to " + ps);
+        }
     }
 
 

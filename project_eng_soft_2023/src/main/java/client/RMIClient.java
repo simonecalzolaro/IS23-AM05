@@ -7,6 +7,7 @@ import myShelfieException.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import view.View;
 
 import javax.swing.plaf.PanelUI;
 import java.io.*;
@@ -29,16 +30,18 @@ public class RMIClient extends Client {
      * @throws RemoteException
      */
 
-    public RMIClient() throws RemoteException {
-        super();
+    public RMIClient(View view) throws RemoteException {
+
+        super(view);
+
     }
 
     @Override
     public void initializeClient() throws IOException, NotBoundException {
 
-        System.out.println("--- Initializing the RMIClient ...");
 
-        //Getting information about server's IPAddress and PORT
+        System.out.println("--- initialize the RMI Client --- ");
+
         getServerSettings();
 
         // Getting the registry
@@ -47,10 +50,37 @@ public class RMIClient extends Client {
         // Looking up the registry for the remote object
         this.clientServerHandler = (ClientServerHandler) registry.lookup("ServerAppService");
 
-        System.out.println("--- RMIClient ready ---");
+    }
 
+    @Override
+    public void getServerSettings() {
+
+        Long PORT_pre;
+
+        try{
+            Object o = new JSONParser().parse(new FileReader("header.json"));
+            JSONObject j =(JSONObject) o;
+            Map arg = new LinkedHashMap();
+            arg = (Map) j.get("serverSettings");
+
+            hostname = (String) arg.get("hostname");
+            PORT_pre = (Long) arg.get("RMIPORT");
+
+            PORT = PORT_pre.intValue();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("RMIClient --- FileNotFoundException occurred trying to retrieve server's information from header.json");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("RMIClient --- IOException occurred trying to retrieve server's information from header.json");
+            e.printStackTrace();
+        } catch (ParseException e) {
+            System.out.println("RMIClient --- ParseException occurred trying to retrieve server's information from header.json");
+            e.printStackTrace();
+        }
 
     }
+
 
     /**
      * asks the server to log in, is divided in RMI and socket
@@ -60,15 +90,11 @@ public class RMIClient extends Client {
      * @throws RemoteException
      */
     @Override
-    public void askLogin(String nick) throws LoginException, IOException{
+    public void askLogin(String nick) throws LoginException, IOException, RemoteException{
 
         this.gameHandler= clientServerHandler.login(nick , this);
     }
 
-    @Override
-    public void askCheckFullWaitingRoom() throws IOException {
-        clientServerHandler.checkFullWaitingRoom();
-    }
 
     /**
      * asks the server to continue a game, is divided in RMI and socket
@@ -91,15 +117,12 @@ public class RMIClient extends Client {
     @Override
     public boolean askLeaveGame() throws RemoteException, LoginException {
 
-        left = clientServerHandler.leaveGame(model.getNickname());
-
-        return left;
+        return clientServerHandler.leaveGame(model.getNickname());
     }
 
 
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
-     * @param chosenTiles
      * @param coord
      * @return true if everything went fine
      * @throws InvalidChoiceException
@@ -109,23 +132,23 @@ public class RMIClient extends Client {
      * @throws NotMyTurnException
      */
     @Override
-    public boolean askBoardTiles(List<Tile> chosenTiles, List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
+    public boolean askBoardTiles( List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
 
-        return gameHandler.chooseBoardTiles(chosenTiles, coord);
+        return gameHandler.chooseBoardTiles( coord );
+
     }
 
     @Override
-    public boolean askInsertShelfTiles(ArrayList<Tile> choosenTiles, int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
+    public boolean askInsertShelfTiles( int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
 
-        return gameHandler.insertShelfTiles(choosenTiles, choosenColumn, coord);
+
+        return gameHandler.insertShelfTiles( choosenColumn, coord);
     }
 
     @Override
     public int askGetMyScore() throws RemoteException{
 
-        myScore = gameHandler.getMyScore();
-
-        return myScore;
+        return gameHandler.getMyScore();
     }
 
     @Override
@@ -133,37 +156,15 @@ public class RMIClient extends Client {
         try {
             return clientServerHandler.pong();
         } catch (RemoteException e) {
-            return false;
+            return true;
         }
     }
 
     @Override
-    public void getServerSettings() {
-            try{
-                Object o = new JSONParser().parse(new FileReader("header.json"));
-                JSONObject j =(JSONObject) o;
-                Map arg = new LinkedHashMap();
-                arg = (Map) j.get("serverSettings");
+    public void askCheckFullWaitingRoom() throws IOException {
 
-                hostname = (String) arg.get("hostname");
-                PORT_pre = (Long) arg.get("RMIPORT");
-
-                PORT = PORT_pre.intValue();
-
-            } catch (FileNotFoundException e) {
-                System.out.println("RMIClient --- FileNotFoundException occurred trying to retrieve server's information from header.json");
-                e.printStackTrace();
-            } catch (IOException e) {
-                System.out.println("RMIClient --- IOException occurred trying to retrieve server's information from header.json");
-                e.printStackTrace();
-            } catch (ParseException e) {
-                System.out.println("RMIClient --- ParseException occurred trying to retrieve server's information from header.json");
-                e.printStackTrace();
-            }
-        }
-
-
-
+        clientServerHandler.checkFullWaitingRoom();
 
     }
 
+}

@@ -11,30 +11,64 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class TUI extends View {
-    List<Integer> coord = new ArrayList<>();
-    ArrayList<Tile> chosenTiles = new ArrayList<>();
+
+    List<Integer> coord ;
+    ArrayList<client.Tile> chosenTiles ;
+    private final PrintStream out;
+    private final BufferedReader reader;
+
+    public TUI() {
+
+        super();
+
+        reader = new BufferedReader(new InputStreamReader(System.in));
+        out = System.out;
+
+    }
+
+    //-------------------------------- @Override methods from View --------------------------------
 
     @Override
     public int getNumOfPlayer() throws RemoteException {
-        return client.enterNumberOfPlayers();
+
+        int num;
+        Scanner scan = new Scanner(System.in);
+
+        do {
+
+            System.out.print("Enter the number of players: ");
+            // This method reads the number provided using keyboard
+            num = scan.nextInt();
+
+            if(num<2 || num >4) System.out.println("The number of players must be between 2 and 4");
+
+        }while(num<2 || num >4);
+
+        return  num;
     }
 
     @Override
     public void updateBoard() {
+
         out.println("This is the updated board:\n");
         plotBoard();
         out.println("This is your Bookshelf:\n");
         plotShelf();
+
     }
 
     @Override
-    public void endGame() {
+    public void endGame(Map< Integer, String> results) {
+
+        for(Integer key: results.keySet()){
+            System.out.println(key + " ->   "+ results.get(key));
+        }
+
         out.println("The game has ended!\n");
+
     }
 
     @Override
@@ -48,11 +82,16 @@ public class TUI extends View {
             int request = 0;
 
             do {
-                out.println("What do you want to do?\n");
-                out.println("0 --> ShowPGC\n");
-                out.println("1 --> ShowCGC\n");
-                out.println("2 --> GetMyScore\n");
-                out.println("3 --> MakeYourMove\n");
+                out.println("+-----------------------------------+");
+                out.println("|     What do you want to do?       |");
+                out.println("|        0 --> ShowPGC              |");
+                out.println("|        1 --> ShowCGC              |");
+                out.println("|        2 --> GetMyScore           |");
+                out.println("|        3 --> MakeYourMove         |");
+                out.println("|        4 --> leave the game       |");
+                out.println("+-----------------------------------+");
+                out.println("---> ");
+
                 action = getInput();
 
                 switch (action) {
@@ -65,7 +104,7 @@ public class TUI extends View {
                     }
 
                     case "1" -> {
-                        if (getNumOfPlayer() == 3) {
+                        if (client.getModel().getOtherPlayers().size() < 3) {
                             out.println("This is the CommonGoalCard:\n");
                             out.println(client.getModel().getCgc1().getDescription());
                         } else {
@@ -74,7 +113,6 @@ public class TUI extends View {
                             out.println(client.getModel().getCgc2().getDescription());
                         }
                         request++;
-
                     }
 
                     case "2" ->{
@@ -86,14 +124,22 @@ public class TUI extends View {
                         }
                     }
 
+                    case "4" -> {
+
+                        try {
+                            out.println(client.askLeaveGame());
+                        } catch (LoginException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
             }while(!action.equals("3") || request!=3);
-
 
             boolean goon = false;
 
             do {
 
+                //---da rendere a prova di scimmia
                 out.println("Choose tiles from the board: (x,y)\n");
                 String tile1 = getInput();
                 coord.add(Integer.valueOf(tile1.substring(2)));
@@ -111,7 +157,7 @@ public class TUI extends View {
                 chosenTiles.add(client.getModel().getBoard().getTileByCoord(coord.get(4), coord.get(5)));
 
                 try {
-                    client.askBoardTiles(chosenTiles, coord);
+                    client.askBoardTiles(coord);
                     goon = true;
 
                 } catch (InvalidChoiceException e) {
@@ -138,7 +184,7 @@ public class TUI extends View {
                 int chosenColumn = Integer.parseInt(getInput());
 
                 try {
-                    client.askInsertShelfTiles(chosenTiles, chosenColumn, coord);
+                    client.askInsertShelfTiles( chosenColumn, coord);
                     goon = true;
                     chosenTiles.clear();
                     coord.clear();
@@ -162,6 +208,7 @@ public class TUI extends View {
 
     @Override
     public void startGame() throws IOException{
+
         String connection;
         String num;
 
@@ -174,7 +221,7 @@ public class TUI extends View {
 
             if(connection.equals("0")){
                 try {
-                    client = new RMIClient();
+                    client = new RMIClient(this);
                 }catch (RemoteException e){
                     out.println("RemoteException occurred trying to initialize the client");
                     e.printStackTrace();
@@ -183,7 +230,7 @@ public class TUI extends View {
 
             if(connection.equals("1")){
                 try {
-                    client = new SocketClient();
+                    client = new SocketClient(this);
                 }catch (RemoteException e){
                     out.println("RemoteException occurred trying to initialize the client");
                     e.printStackTrace();
@@ -238,7 +285,23 @@ public class TUI extends View {
 
 
         }
+        try {
+            client.askCheckFullWaitingRoom();
+        } catch (IOException e) {
+            System.out.println("ClientApp --- IOException occurred in askCheckFullWaitingRoom()");
+            throw new RuntimeException();
+        }
 
+        System.out.println(" you are now int the WAITING ROOM...");
+
+        while(client.getModel().getPgcNum()==-1){
+            System.out.println("...waiting for other players");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
@@ -247,6 +310,20 @@ public class TUI extends View {
 
     }
 
+    @Override
+    public void startPlay() {
+
+        System.out.flush();
+        System.out.println("+-----------------------------------+");
+        System.out.println("|             let's go!!            |");
+        System.out.println("|        The game has started !     |");
+        System.out.println("|     is your turn? make a move =)  |");
+        System.out.println("+-----------------------------------+");
+
+    }
+
+
+    //-------------------------------- other methods --------------------------------
 
     private enum ColorCLI{
         RESET("\u001B[0m"),
@@ -277,13 +354,6 @@ public class TUI extends View {
         }
     }
 
-    private final PrintStream out;
-    private final BufferedReader reader;
-
-    public TUI() {
-        reader = new BufferedReader(new InputStreamReader(System.in));
-        out = System.out;
-    }
 
     public String getInput() throws IOException {
         return reader.readLine();

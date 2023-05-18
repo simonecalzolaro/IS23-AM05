@@ -29,16 +29,16 @@ public interface ClientServerHandler extends Remote {
     GameHandler continueGame(String nickname, Object client)  throws RemoteException, LoginException;
 
 
-        /**
-         * a player ask to leave the game he is playing
-         * @return true if the request is approved
-         */
+    /**
+     * a player ask to leave the game he is playing
+     * @return true if the request is approved
+     */
     boolean leaveGame(String nickname) throws LoginException, RemoteException;
 
 
     boolean pong() throws RemoteException;
 
-    void checkFullWaitingRoom() throws IOException;
 
+    void checkFullWaitingRoom() throws IOException;
 
 }

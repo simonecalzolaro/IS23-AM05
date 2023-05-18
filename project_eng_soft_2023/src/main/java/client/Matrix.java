@@ -3,14 +3,10 @@ package client;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import model.Tile;
 
 public class Matrix {
-
-
     private Tile[][] matr;
     private Map<Tile, Integer[]> map;
-
 
     public Matrix(Map<model.Tile, Integer[]> pgcMap) {
 
@@ -21,11 +17,6 @@ public class Matrix {
 
             map.put(Tile.getTile(entry.getKey().ordinal()), entry.getValue());
 
-            /*
-            System.out.println("Key = " + entry.getKey() +
-                    ", Value = " + entry.getValue());
-
-             */
         }
 
     }
@@ -39,13 +30,11 @@ public class Matrix {
                 this.matr[i][j]=Tile.getTile(matr[i][j].ordinal());
             }
         }
-
     }
 
     public Tile getTileByCoord(int row, int col){
         return matr[row][col];
     }
-
 
     private Map<Tile, Integer[]>  generateMapFromMatrix(Tile[][] matr){
 
@@ -80,13 +69,9 @@ public class Matrix {
         return matr;
     }
 
-    public Tile[][] getMatr() {
-        return matr;
-    }
+    public Tile[][] getMatr() { return matr; }
 
-    public Map<Tile, Integer[]> getMap() {
-        return map;
-    }
+    public Map<Tile, Integer[]> getMap() { return map; }
 
 
 }
