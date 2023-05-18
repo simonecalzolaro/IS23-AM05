@@ -17,7 +17,7 @@ import java.util.List;
 
 public class TUI extends View {
     List<Integer> coord = new ArrayList<>();
-    List<Tile> chosenTiles = new ArrayList<>();
+    ArrayList<Tile> chosenTiles = new ArrayList<>();
 
     @Override
     public int getNumOfPlayer() throws RemoteException {
@@ -38,9 +38,8 @@ public class TUI extends View {
     }
 
     @Override
-    public void isYourTurn() throws IOException, NotConnectedException, InvalidParametersException {
+    public void isYourTurn() throws IOException{
 
-        try{
         if(client.isMyTurn()) {
             out.println("It's your turn, you have 2 min to complete your task!\n");
 
@@ -52,7 +51,8 @@ public class TUI extends View {
                 out.println("What do you want to do?\n");
                 out.println("0 --> ShowPGC\n");
                 out.println("1 --> ShowCGC\n");
-                out.println("2 --> MakeYourMove\n");
+                out.println("2 --> GetMyScore\n");
+                out.println("3 --> MakeYourMove\n");
                 action = getInput();
 
                 switch (action) {
@@ -77,8 +77,17 @@ public class TUI extends View {
 
                     }
 
+                    case "2" ->{
+                        try {
+                            out.println(client.askGetMyScore());
+                        }catch (IOException e){
+                            out.println("IOException occurred trying to get the score!");
+                            e.printStackTrace();
+                        }
+                    }
+
                 }
-            }while(!action.equals("2") || request!=2);
+            }while(!action.equals("3") || request!=3);
 
 
             boolean goon = false;
@@ -104,59 +113,138 @@ public class TUI extends View {
                 try {
                     client.askBoardTiles(chosenTiles, coord);
                     goon = true;
-                    coord.clear();
-                    chosenTiles.clear();
 
                 } catch (InvalidChoiceException e) {
+                    e.getMessage();
+                    coord.clear();
+                    chosenTiles.clear();
+                }catch (NotConnectedException e){
+                    out.println("NotConnectedException occurred trying to choose the tiles!");
+                    e.printStackTrace();
+                }catch (NotMyTurnException e){
+                    out.println("NotMyTurnException occurred trying to choose the tiles!");
+                    e.printStackTrace();
+                }catch (InvalidParametersException e){
+                    out.println("InvalidParametersException occurred trying to choose the tiles!");
                     e.getMessage();
                 }
 
             } while (!goon);
 
-        }
+            goon=false;
 
-        }catch(NotMyTurnException e){
-            e.getMessage();
+            do{
+                out.println("Choose the column of your bookshelf for the tiles:\n");
+                int chosenColumn = Integer.parseInt(getInput());
+
+                try {
+                    client.askInsertShelfTiles(chosenTiles, chosenColumn, coord);
+                    goon = true;
+                    chosenTiles.clear();
+                    coord.clear();
+                }catch (InvalidChoiceException e){
+                    e.getMessage();
+                } catch (InvalidLenghtException e) {
+                    throw new RuntimeException(e);
+                }catch (NotMyTurnException e){
+                    out.println("NotMyTurnException occurred trying to insert tiles!");
+                    e.printStackTrace();
+                }catch (NotConnectedException e){
+                    out.println("NotConnectedException occurred trying to insert tiles!");
+                    e.printStackTrace();
+                }
+
+            }while (!goon);
+
         }
 
     }
 
     @Override
-    public void startGame() throws IOException, NotBoundException {
+    public void startGame() throws IOException{
+        String connection;
+        String num;
+
         init();
         out.println("What kind of connection do you want?\n");
-        String connection;
+
         do{
             out.println("0 --> RMI \n1 --> Socket");
             connection = getInput();
 
             if(connection.equals("0")){
-                client = new RMIClient();
+                try {
+                    client = new RMIClient();
+                }catch (RemoteException e){
+                    out.println("RemoteException occurred trying to initialize the client");
+                    e.printStackTrace();
+                }
             }
 
             if(connection.equals("1")){
-                client = new SocketClient();
+                try {
+                    client = new SocketClient();
+                }catch (RemoteException e){
+                    out.println("RemoteException occurred trying to initialize the client");
+                    e.printStackTrace();
+                }
             }
         }while(!connection.equals("0") && !connection.equals("1"));
 
-        client.initializeClient();
+        try{
+            client.initializeClient();
+        }catch (RemoteException e){
+            out.println("RemoteException occurred trying to initialize the client");
+            e.printStackTrace();
+        }catch (NotBoundException e){
+            out.println("NotBoundException occurred trying to initialize the RMIClient");
+            e.printStackTrace();
+        }catch (IOException e){
+            out.println("IOException occurred trying to initialize the SocketClient");
+            out.println("---> Socket hasn't been created");
+            e.printStackTrace();
+        }
+
+        do {
+            System.out.println("0 --> start a new game");
+            System.out.println("1 --> continue a Game");
+            num = getInput();
+
+            if(!num.equals("0") &&  !num.equals("1")) System.out.println("ClientApp --- Invalid code --> Try again !");
+
+        }while (!num.equals("0") &&  !num.equals("1"));
 
         boolean goon = false;
-        do {
-            out.println("Choose your nickname:\n");
-            String nickname = getInput();
-            try {
-                client.askLogin(nickname);
-                goon = true;
-            } catch (LoginException e) {
-                e.getMessage();
-            }
-        }while(!goon);
+        switch (num){
+            case "0":
+                do {
+                     out.println("Choose your nickname:\n");
+                    String nickname = getInput();
+                    try {
+                        client.askLogin(nickname);
+                        client.getModel().setNickname(nickname);
+                        goon = true;
+                    } catch (LoginException e) {
+                        e.getMessage();
+                    }
+                }while(!goon);
+
+                break;
+
+            case "1":
+
+                break;
+
+
+
+        }
+
     }
 
     @Override
     public void endYourTurn() {
         out.println("Your turn is over!\n");
+
     }
 
 
