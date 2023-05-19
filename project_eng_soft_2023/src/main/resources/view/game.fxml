@@ -25,270 +25,180 @@
          <Group layoutX="19.0" layoutY="52.0">
             <children>
                <ImageView fx:id="bookshelf0x0" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
             </children>
          </Group>
          <Group layoutX="55.0" layoutY="52.0">
             <children>
-               <ImageView fx:id="bookshelf1x0" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf0x1" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="92.0" layoutY="52.0">
             <children>
-               <ImageView fx:id="bookshelf2x0" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf0x2" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="129.0" layoutY="52.0">
             <children>
-               <ImageView fx:id="bookshelf3x0" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf0x3" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="166.0" layoutY="52.0">
             <children>
-               <ImageView fx:id="bookshelf4x0" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf0x4" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="166.0" layoutY="84.0">
             <children>
-               <ImageView fx:id="bookshelf4x1" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf1x4" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="125.0" layoutY="80.0">
             <children>
-               <ImageView fx:id="bookshelf3x1" fitHeight="28.0" fitWidth="28.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf1x3" fitHeight="28.0" fitWidth="28.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="92.0" layoutY="84.0">
             <children>
-               <ImageView fx:id="bookshelf2x1" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf1x2" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="55.0" layoutY="84.0">
             <children>
                <ImageView fx:id="bookshelf1x1" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
             </children>
          </Group>
          <Group layoutX="19.0" layoutY="84.0">
             <children>
-               <ImageView fx:id="bookshelf0x1" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf1x0" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="19.0" layoutY="116.0">
             <children>
-               <ImageView fx:id="bookshelf0x2" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf2x0" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="55.0" layoutY="116.0">
             <children>
-               <ImageView fx:id="bookshelf1x2" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf2x1" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="92.0" layoutY="116.0">
             <children>
                <ImageView fx:id="bookshelf2x2" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
             </children>
          </Group>
          <Group layoutX="129.0" layoutY="116.0">
             <children>
-               <ImageView fx:id="bookshelf3x2" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf2x3" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="166.0" layoutY="116.0">
             <children>
-               <ImageView fx:id="bookshelf4x2" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf2x4" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="19.0" layoutY="147.0">
             <children>
-               <ImageView fx:id="bookshelf0x3" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf3x0" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="55.0" layoutY="147.0">
             <children>
-               <ImageView fx:id="bookshelf1x3" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf3x1" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="92.0" layoutY="147.0">
             <children>
-               <ImageView fx:id="bookshelf2x3" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf3x2" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="129.0" layoutY="147.0">
             <children>
                <ImageView fx:id="bookshelf3x3" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
             </children>
          </Group>
          <Group layoutX="166.0" layoutY="147.0">
             <children>
-               <ImageView fx:id="bookshelf4x3" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf3x4" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="19.0" layoutY="179.0">
             <children>
-               <ImageView fx:id="bookshelf0x4" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf4x0" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="55.0" layoutY="179.0">
             <children>
-               <ImageView fx:id="bookshelf1x4" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf4x1" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="92.0" layoutY="179.0">
             <children>
-               <ImageView fx:id="bookshelf2x4" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf4x2" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="129.0" layoutY="179.0">
             <children>
-               <ImageView fx:id="bookshelf3x4" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf4x3" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="166.0" layoutY="179.0">
             <children>
                <ImageView fx:id="bookshelf4x4" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
             </children>
          </Group>
          <Group layoutX="19.0" layoutY="211.0">
             <children>
-               <ImageView fx:id="bookshelf0x5" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf5x0" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="55.0" layoutY="211.0">
             <children>
-               <ImageView fx:id="bookshelf1x5" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf5x1" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="92.0" layoutY="211.0">
             <children>
-               <ImageView fx:id="bookshelf2x5" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf5x2" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="129.0" layoutY="211.0">
             <children>
-               <ImageView fx:id="bookshelf3x5" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf5x3" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
          <Group layoutX="166.0" layoutY="211.0">
             <children>
-               <ImageView fx:id="bookshelf4x5" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
+               <ImageView fx:id="bookshelf5x4" fitHeight="28.0" fitWidth="28.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
                </ImageView>
             </children>
          </Group>
@@ -335,154 +245,64 @@
    <Group layoutX="1100.0" layoutY="464.0">
       <children>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="89.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fx:id="bookshelf1" fitHeight="92.0" fitWidth="93.0" layoutX="19.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -492,7 +312,7 @@
          <Button fx:id="bookshelfPlayer1Button" layoutX="19.0" layoutY="14.0" mnemonicParsing="false" onMouseEntered="#showOtherPlayerBookshelf" onMouseExited="#showOtherPlayerBookshelf" opacity="0" prefHeight="93.0" prefWidth="92.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" textFill="#623e00" />
       </children>
    </Group>
-   <Group layoutX="831.0" layoutY="264.0">
+   <Group layoutX="830.0" layoutY="284.0">
       <children>
          <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#fff1c7" height="70.0" stroke="#e9cb7e" strokeLineCap="BUTT" strokeType="OUTSIDE" strokeWidth="3.0" width="90.0" />
          <Label alignment="CENTER" layoutX="8.0" layoutY="4.0" prefHeight="22.0" prefWidth="82.0" text="SCORE" textFill="#623e00">
@@ -525,14 +345,11 @@
          <Image url="@17_MyShelfie_BGA/scoring_tokens/end_game.jpg" />
       </image>
    </ImageView>
-   <Group layoutX="87.0" layoutY="85.0">
+   <Group fx:id="boardTilesGroup" layoutX="87.0" layoutY="85.0">
       <children>
          <Group fx:id="board3x0" disable="true" layoutX="158.0" visible="false">
             <children>
                <ImageView fx:id="boardImage3x0" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton3x0" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -540,9 +357,6 @@
          <Group fx:id="board4x0" disable="true" layoutX="211.0" visible="false">
             <children>
                <ImageView fx:id="boardImage4x0" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton4x0" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -550,9 +364,6 @@
          <Group fx:id="board3x1" disable="true" layoutX="158.0" layoutY="53.0" visible="false">
             <children>
                <ImageView fx:id="boardImage3x1" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton3x1" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -560,9 +371,6 @@
          <Group fx:id="board4x1" disable="true" layoutX="211.0" layoutY="53.0" visible="false">
             <children>
                <ImageView fx:id="boardImage4x1" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton4x1" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -570,9 +378,6 @@
          <Group fx:id="board5x1" disable="true" layoutX="263.0" layoutY="53.0" visible="false">
             <children>
                <ImageView fx:id="boardImage5x1" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton5x1" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -580,9 +385,6 @@
          <Group fx:id="board3x2" disable="true" layoutX="158.0" layoutY="106.0" visible="false">
             <children>
                <ImageView fx:id="boardImage3x2" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton3x2" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -590,9 +392,6 @@
          <Group fx:id="board4x2" disable="true" layoutX="211.0" layoutY="106.0" visible="false">
             <children>
                <ImageView fx:id="boardImage4x2" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton4x2" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -600,9 +399,6 @@
          <Group fx:id="board5x2" disable="true" layoutX="263.0" layoutY="106.0" visible="false">
             <children>
                <ImageView fx:id="boardImage5x2" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton5x2" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -610,9 +406,6 @@
          <Group fx:id="board6x2" disable="true" layoutX="316.0" layoutY="106.0" visible="false">
             <children>
                <ImageView fx:id="boardImage6x2" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton6x2" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -620,9 +413,6 @@
          <Group fx:id="board2x2" disable="true" layoutX="105.0" layoutY="106.0" visible="false">
             <children>
                <ImageView fx:id="boardImage2x2" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton2x2" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -630,9 +420,6 @@
          <Group fx:id="board1x3" disable="true" layoutX="52.0" layoutY="159.0" visible="false">
             <children>
                <ImageView fx:id="boardImage1x3" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton1x3" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -640,9 +427,6 @@
          <Group fx:id="board2x3" disable="true" layoutX="105.0" layoutY="159.0" visible="false">
             <children>
                <ImageView fx:id="boardImage2x3" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton2x3" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -650,9 +434,6 @@
          <Group fx:id="board2x4" disable="true" layoutX="105.0" layoutY="212.0" visible="false">
             <children>
                <ImageView fx:id="boardImage2x4" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton2x4" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -660,9 +441,6 @@
          <Group fx:id="board3x3" disable="true" layoutX="158.0" layoutY="159.0" visible="false">
             <children>
                <ImageView fx:id="boardImage3x3" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton3x3" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -670,9 +448,6 @@
          <Group fx:id="board4x3" disable="true" layoutX="211.0" layoutY="159.0" visible="false">
             <children>
                <ImageView fx:id="boardImage4x3" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton4x3" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -680,9 +455,6 @@
          <Group fx:id="board5x3" disable="true" layoutX="263.0" layoutY="159.0" visible="false">
             <children>
                <ImageView fx:id="boardImage5x3" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton5x3" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -690,9 +462,6 @@
          <Group fx:id="board6x3" disable="true" layoutX="316.0" layoutY="159.0" visible="false">
             <children>
                <ImageView fx:id="boardImage6x3" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton6x3" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -700,9 +469,6 @@
          <Group fx:id="board7x3" disable="true" layoutX="369.0" layoutY="159.0" visible="false">
             <children>
                <ImageView fx:id="boardImage7x3" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton7x3" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -710,9 +476,6 @@
          <Group fx:id="board8x3" disable="true" layoutX="422.0" layoutY="159.0" visible="false">
             <children>
                <ImageView fx:id="boardImage8x3" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton8x3" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -720,9 +483,6 @@
          <Group fx:id="board1x4" disable="true" layoutX="52.0" layoutY="212.0" visible="false">
             <children>
                <ImageView fx:id="boardImage1x4" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton1x4" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -730,9 +490,6 @@
          <Group fx:id="board0x4" disable="true" layoutY="212.0" visible="false">
             <children>
                <ImageView fx:id="boardImage0x4" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton0x4" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -740,9 +497,6 @@
          <Group fx:id="board3x4" disable="true" layoutX="158.0" layoutY="212.0" visible="false">
             <children>
                <ImageView fx:id="boardImage3x4" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton3x4" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -750,9 +504,6 @@
          <Group fx:id="board4x4" disable="true" layoutX="211.0" layoutY="212.0" visible="false">
             <children>
                <ImageView fx:id="boardImage4x4" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton4x4" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -760,9 +511,6 @@
          <Group fx:id="board5x4" disable="true" layoutX="263.0" layoutY="212.0" visible="false">
             <children>
                <ImageView fx:id="boardImage5x4" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton5x4" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -770,9 +518,6 @@
          <Group fx:id="board6x4" disable="true" layoutX="316.0" layoutY="212.0" visible="false">
             <children>
                <ImageView fx:id="boardImage6x4" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton6x4" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -780,9 +525,6 @@
          <Group fx:id="board7x4" disable="true" layoutX="369.0" layoutY="212.0" visible="false">
             <children>
                <ImageView fx:id="boardImage7x4" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton7x4" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -790,9 +532,6 @@
          <Group fx:id="board8x4" disable="true" layoutX="422.0" layoutY="212.0" visible="false">
             <children>
                <ImageView fx:id="boardImage8x4" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton8x4" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -800,9 +539,6 @@
          <Group fx:id="board0x5" disable="true" layoutY="264.0" visible="false">
             <children>
                <ImageView fx:id="boardImage0x5" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton0x5" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -810,9 +546,6 @@
          <Group fx:id="board1x5" disable="true" layoutX="53.0" layoutY="264.0" visible="false">
             <children>
                <ImageView fx:id="boardImage1x5" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton1x5" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -820,9 +553,6 @@
          <Group fx:id="board2x5" disable="true" layoutX="105.0" layoutY="264.0" visible="false">
             <children>
                <ImageView fx:id="boardImage2x5" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton2x5" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -830,9 +560,6 @@
          <Group fx:id="board3x5" disable="true" layoutX="158.0" layoutY="264.0" visible="false">
             <children>
                <ImageView fx:id="boardImage3x5" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton3x5" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -840,9 +567,6 @@
          <Group fx:id="board4x5" disable="true" layoutX="211.0" layoutY="264.0" visible="false">
             <children>
                <ImageView fx:id="boardImage4x5" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton4x5" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -850,9 +574,6 @@
          <Group fx:id="board5x5" disable="true" layoutX="263.0" layoutY="264.0" visible="false">
             <children>
                <ImageView fx:id="boardImage5x5" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton5x5" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -860,9 +581,6 @@
          <Group fx:id="board6x5" disable="true" layoutX="316.0" layoutY="264.0" visible="false">
             <children>
                <ImageView fx:id="boardImage6x5" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton6x5" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -870,9 +588,6 @@
          <Group fx:id="board7x5" disable="true" layoutX="369.0" layoutY="264.0" visible="false">
             <children>
                <ImageView fx:id="boardImage7x5" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton7x5" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -880,9 +595,6 @@
          <Group fx:id="board2x6" disable="true" layoutX="105.0" layoutY="317.0" visible="false">
             <children>
                <ImageView fx:id="boardImage2x6" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton2x6" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -890,9 +602,6 @@
          <Group fx:id="board3x6" disable="true" layoutX="158.0" layoutY="317.0" visible="false">
             <children>
                <ImageView fx:id="boardImage3x6" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton3x6" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -900,9 +609,6 @@
          <Group fx:id="board4x6" disable="true" layoutX="211.0" layoutY="317.0" visible="false">
             <children>
                <ImageView fx:id="boardImage4x6" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton4x6" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -910,9 +616,6 @@
          <Group fx:id="board5x6" disable="true" layoutX="263.0" layoutY="317.0" visible="false">
             <children>
                <ImageView fx:id="boardImage5x6" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton5x6" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -920,9 +623,6 @@
          <Group fx:id="board6x6" disable="true" layoutX="316.0" layoutY="317.0" visible="false">
             <children>
                <ImageView fx:id="boardImage6x6" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton6x6" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -930,9 +630,6 @@
          <Group fx:id="board3x7" disable="true" layoutX="158.0" layoutY="369.0" visible="false">
             <children>
                <ImageView fx:id="boardImage3x7" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton3x7" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -940,9 +637,6 @@
          <Group fx:id="board5x7" disable="true" layoutX="263.0" layoutY="369.0" visible="false">
             <children>
                <ImageView fx:id="boardImage5x7" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton5x7" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -950,9 +644,6 @@
          <Group fx:id="board4x8" disable="true" layoutX="211.0" layoutY="422.0" visible="false">
             <children>
                <ImageView fx:id="boardImage4x8" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton4x8" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -960,9 +651,6 @@
          <Group fx:id="board5x8" disable="true" layoutX="263.0" layoutY="422.0" visible="false">
             <children>
                <ImageView fx:id="boardImage5x8" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton5x8" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -970,9 +658,6 @@
          <Group fx:id="board4x7" disable="true" layoutX="211.0" layoutY="369.0" visible="false">
             <children>
                <ImageView fx:id="boardImage4x7" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-                  </image>
                </ImageView>
                <Button fx:id="boardButton4x7" mnemonicParsing="false" onAction="#selectTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
             </children>
@@ -982,154 +667,64 @@
    <Group layoutX="1100.0" layoutY="339.0">
       <children>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="89.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fx:id="bookshelf12" fitHeight="92.0" fitWidth="93.0" layoutX="19.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -1142,154 +737,64 @@
    <Group layoutX="1100.0" layoutY="214.0">
       <children>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="89.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="30.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="45.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="60.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="74.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="90.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fx:id="bookshelf121" fitHeight="92.0" fitWidth="93.0" layoutX="19.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -1301,7 +806,7 @@
    </Group>
    <Group fx:id="showBookshelfGroup" disable="true" layoutX="59.0" layoutY="56.0" visible="false">
       <children>
-         <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#fff1c7" height="522.0" layoutX="3.0" layoutY="4.0" stroke="#e9cb7e" strokeLineCap="BUTT" strokeType="OUTSIDE" strokeWidth="3.0" width="522.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#fff1c7" height="522.0" stroke="#e9cb7e" strokeLineCap="BUTT" strokeType="OUTSIDE" strokeWidth="3.0" width="522.0" />
          <Button fx:id="closeBookshelfButton" layoutX="453.0" layoutY="24.0" mnemonicParsing="false" onAction="#closeBookshelf" onMouseEntered="#highlightButton" onMouseExited="#highlightButton" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: #ffd896; -fx-border-color: #ffac37;" text="X" textFill="#623e00">
             <font>
                <Font name="Bodoni MT" size="18.0" />
@@ -1312,167 +817,406 @@
                <Font name="Bodoni MT" size="18.0" />
             </font>
          </Button>
+         <Group layoutX="13.0" layoutY="55.0">
+            <children>
+               <ImageView fx:id="insert0x0" fitHeight="47.0" fitWidth="50.0" layoutX="45.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert0x1" fitHeight="47.0" fitWidth="50.0" layoutX="106.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert0x2" fitHeight="47.0" fitWidth="50.0" layoutX="168.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert0x3" fitHeight="47.0" fitWidth="50.0" layoutX="230.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert0x4" fitHeight="47.0" fitWidth="50.0" layoutX="292.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert1x0" fitHeight="47.0" fitWidth="50.0" layoutX="45.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert1x3" fitHeight="47.0" fitWidth="50.0" layoutX="230.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert1x2" fitHeight="47.0" fitWidth="50.0" layoutX="169.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert1x1" fitHeight="47.0" fitWidth="50.0" layoutX="106.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert1x4" fitHeight="47.0" fitWidth="50.0" layoutX="292.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert2x0" fitHeight="47.0" fitWidth="50.0" layoutX="45.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert2x2" fitHeight="47.0" fitWidth="50.0" layoutX="169.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert2x4" fitHeight="47.0" fitWidth="50.0" layoutX="292.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert2x3" fitHeight="47.0" fitWidth="50.0" layoutX="230.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert2x1" fitHeight="47.0" fitWidth="50.0" layoutX="107.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert3x0" fitHeight="47.0" fitWidth="50.0" layoutX="46.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert3x1" fitHeight="47.0" fitWidth="50.0" layoutX="108.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert3x2" fitHeight="47.0" fitWidth="50.0" layoutX="169.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert3x3" fitHeight="47.0" fitWidth="50.0" layoutX="231.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert3x4" fitHeight="47.0" fitWidth="50.0" layoutX="293.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert4x0" fitHeight="47.0" fitWidth="50.0" layoutX="46.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert4x3" fitHeight="47.0" fitWidth="50.0" layoutX="231.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert4x2" fitHeight="47.0" fitWidth="50.0" layoutX="169.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert4x1" fitHeight="47.0" fitWidth="50.0" layoutX="107.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert4x4" fitHeight="47.0" fitWidth="50.0" layoutX="293.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert5x0" fitHeight="47.0" fitWidth="50.0" layoutX="46.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert5x2" fitHeight="47.0" fitWidth="50.0" layoutX="170.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert5x4" fitHeight="47.0" fitWidth="50.0" layoutX="293.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert5x3" fitHeight="47.0" fitWidth="50.0" layoutX="231.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="insert5x1" fitHeight="47.0" fitWidth="50.0" layoutX="108.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true" >
+               </ImageView>
+               <ImageView fx:id="bookshelf2" fitHeight="384.0" fitWidth="384.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@17_MyShelfie_BGA/boards/bookshelf_orth.png" />
+                  </image>
+               </ImageView>
+               <Button fx:id="column1Button" layoutX="37.0" layoutY="16.0" mnemonicParsing="false" onAction="#selectColumn" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="325.0" prefWidth="63.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
+               <Button fx:id="column2Button" layoutX="100.0" layoutY="17.0" mnemonicParsing="false" onAction="#selectColumn" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="325.0" prefWidth="63.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
+               <Button fx:id="column3Button" layoutX="160.0" layoutY="16.0" mnemonicParsing="false" onAction="#selectColumn" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="325.0" prefWidth="63.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
+               <Button fx:id="column4Button" layoutX="223.0" layoutY="17.0" mnemonicParsing="false" onAction="#selectColumn" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="325.0" prefWidth="63.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
+               <Button fx:id="column5Button" layoutX="284.0" layoutY="16.0" mnemonicParsing="false" onAction="#selectColumn" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="325.0" prefWidth="63.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
+            </children>
+         </Group>
+         <Group fx:id="tile3" disable="true" layoutX="406.0" layoutY="141.0">
+            <children>
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="80.0" stroke="#e98c00" strokeType="INSIDE" strokeWidth="3.0" width="80.0" />
+               <ImageView fx:id="tile3Image" fitHeight="70.0" fitWidth="70.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               </ImageView>
+               <Button fx:id="tile3Button" mnemonicParsing="false" onAction="#putTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
+            </children>
+         </Group>
+         <Group fx:id="tile2" disable="true" layoutX="406.0" layoutY="231.0">
+            <children>
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="80.0" stroke="#e98c00" strokeType="INSIDE" strokeWidth="3.0" width="80.0" />
+               <ImageView fx:id="tile2Image" fitHeight="70.0" fitWidth="70.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               </ImageView>
+               <Button fx:id="tile2Button"  mnemonicParsing="false" onAction="#putTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
+            </children>
+         </Group>
+         <Group fx:id="tile1" disable="true" layoutX="406.0" layoutY="321.0">
+            <children>
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="80.0" stroke="#e98c00" strokeType="INSIDE" strokeWidth="3.0" width="80.0" />
+               <ImageView fx:id="tile1Image" fitHeight="70.0" fitWidth="70.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               </ImageView>
+               <Button fx:id="tile1Button"  mnemonicParsing="false" onAction="#putTile" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
+            </children>
+         </Group>
+      </children>
+   </Group>
+   <ImageView fitHeight="530.0" fitWidth="1800.0" layoutX="-15.0" layoutY="670.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@17_MyShelfie_BGA/publisher_material/banner_1386x400px.png" />
+      </image>
+   </ImageView>
+   <Label alignment="CENTER" disable="true" layoutX="969.0" layoutY="289.0" prefHeight="22.0" prefWidth="82.0" text="#" textFill="#623e00" visible="false">
+      <font>
+         <Font name="Bodoni MT Bold" size="48.0" />
+      </font>
+   </Label>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#ffa62a" height="70.0" layoutX="830.0" layoutY="188.0" stroke="#e98c00" strokeLineCap="BUTT" strokeType="OUTSIDE" strokeWidth="3.0" width="250.0" />
+   <Label fx:id="stateLabel" alignment="CENTER" layoutX="829.0" layoutY="209.0" prefHeight="27.0" prefWidth="256.0" text="Choose board tiles" textFill="#fff1c7">
+      <font>
+         <Font name="Bodoni MT Bold" size="22.0" />
+      </font>
+   </Label>
+   <Group fx:id="showBookshelf1Group" disable="true" layoutX="59.0" layoutY="56.0" visible="false">
+      <children>
+         <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#fff1c7" height="522.0" layoutX="3.0" layoutY="4.0" stroke="#e9cb7e" strokeLineCap="BUTT" strokeType="OUTSIDE" strokeWidth="3.0" width="522.0" />
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="124.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="185.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="247.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="309.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="371.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="124.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="309.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="185.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="371.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="124.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="371.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="309.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="186.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="125.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="187.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="310.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="372.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="125.0" layoutY="293.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="310.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="186.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="372.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="125.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="249.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="372.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="310.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
          <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="187.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
-            <image>
-               <Image url="@17_MyShelfie_BGA/item_tiles/Cornici1.1.png" />
-            </image>
          </ImageView>
-         <ImageView fx:id="bookshelf2" fitHeight="384.0" fitWidth="384.0" layoutX="79.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="bookshelf21" fitHeight="384.0" fitWidth="384.0" layoutX="79.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@17_MyShelfie_BGA/boards/bookshelf_orth.png" />
             </image>
          </ImageView>
-         <Button fx:id="column1Button" layoutX="116.0" layoutY="71.0" mnemonicParsing="false" onAction="#selectColumn" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="325.0" prefWidth="63.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
-         <Button fx:id="column2Button" layoutX="179.0" layoutY="72.0" mnemonicParsing="false" onAction="#selectColumn" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="325.0" prefWidth="63.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
-         <Button fx:id="column3Button" layoutX="239.0" layoutY="71.0" mnemonicParsing="false" onAction="#selectColumn" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="325.0" prefWidth="63.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
-         <Button fx:id="column4Button" layoutX="302.0" layoutY="72.0" mnemonicParsing="false" onAction="#selectColumn" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="325.0" prefWidth="63.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
-         <Button fx:id="column5Button" layoutX="363.0" layoutY="71.0" mnemonicParsing="false" onAction="#selectColumn" onMouseEntered="#highlightTile" onMouseExited="#highlightTile" opacity="0.0" prefHeight="325.0" prefWidth="63.0" style="-fx-background-color: #ffd900; -fx-border-color: #ffad00;" />
+</children>
+   </Group>
+   <Button fx:id="enterTilesButton" layoutX="264.0" layoutY="600.0" mnemonicParsing="false" onAction="#insertTile" onMouseEntered="#highlightButton" onMouseExited="#highlightButton" prefHeight="37.0" prefWidth="118.0" style="-fx-background-color: #ffd896; -fx-border-color: #ffac37;" text="Enter" textFill="#623e00">
+      <font>
+         <Font name="Bodoni MT" size="18.0" />
+      </font>
+   </Button>
+   <Group fx:id="showBookshelf2Group" disable="true" layoutX="59.0" layoutY="56.0" visible="false">
+      <children>
+         <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#fff1c7" height="522.0" layoutX="3.0" layoutY="4.0" stroke="#e9cb7e" strokeLineCap="BUTT" strokeType="OUTSIDE" strokeWidth="3.0" width="522.0" />
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="124.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="185.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="247.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="309.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="371.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="124.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="309.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="185.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="371.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="124.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="371.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="309.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="186.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="125.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="187.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="310.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="372.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="125.0" layoutY="293.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="310.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="186.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="372.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="125.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="249.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="372.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="310.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="187.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fx:id="bookshelf211" fitHeight="384.0" fitWidth="384.0" layoutX="79.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@17_MyShelfie_BGA/boards/bookshelf_orth.png" />
+            </image>
+         </ImageView>
       </children>
+   </Group>
+   <Group fx:id="showBookshelf3Group" disable="true" layoutX="59.0" layoutY="56.0" visible="false">
+      <children>
+         <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#fff1c7" height="522.0" layoutX="3.0" layoutY="4.0" stroke="#e9cb7e" strokeLineCap="BUTT" strokeType="OUTSIDE" strokeWidth="3.0" width="522.0" />
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="124.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="185.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="247.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="309.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="371.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="124.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="309.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="185.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="371.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="124.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="371.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="309.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="186.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="125.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="187.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="310.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="372.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="125.0" layoutY="293.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="310.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="186.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="372.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="125.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="249.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="372.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="310.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="187.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fx:id="bookshelf2111" fitHeight="384.0" fitWidth="384.0" layoutX="79.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@17_MyShelfie_BGA/boards/bookshelf_orth.png" />
+            </image>
+         </ImageView>
+ </children>
+   </Group>
+   <Group fx:id="showMyBookshelfGroup" disable="true" layoutX="59.0" layoutY="56.0" visible="false">
+      <children>
+         <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="#fff1c7" height="522.0" layoutX="3.0" layoutY="4.0" stroke="#e9cb7e" strokeLineCap="BUTT" strokeType="OUTSIDE" strokeWidth="3.0" width="522.0" />
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="124.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="185.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="247.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="309.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="371.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="124.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="309.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="185.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="371.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="124.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="371.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="309.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="186.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="125.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="187.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="310.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="372.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="125.0" layoutY="293.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="310.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="248.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="186.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="372.0" layoutY="292.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="125.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="249.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="372.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="310.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fitHeight="47.0" fitWidth="50.0" layoutX="187.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         </ImageView>
+         <ImageView fx:id="bookshelf21111" fitHeight="384.0" fitWidth="384.0" layoutX="79.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@17_MyShelfie_BGA/boards/bookshelf_orth.png" />
+            </image>
+         </ImageView>
+  </children>
    </Group>
    <Group fx:id="exitGroup" disable="true" layoutX="-24.0" layoutY="201.0" visible="false">
       <children>
@@ -1494,9 +1238,4 @@
          </Button>
       </children>
    </Group>
-   <ImageView fitHeight="530.0" fitWidth="1800.0" layoutX="-15.0" layoutY="670.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@17_MyShelfie_BGA/publisher_material/banner_1386x400px.png" />
-      </image>
-   </ImageView>
 </Pane>

@@ -1,5 +1,7 @@
 package view;
 
+import client.RMIClient;
+import client.SocketClient;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import myShelfieException.LoginException;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -116,7 +119,7 @@ public class LoginController extends GUIController {
         loginExceptionLabel.setDisable(true);
         loginExceptionLabel.setVisible(false);
 
-        /*try{
+        try{
             if(actionEvent.getSource().equals(rmiButton)){
                 client = new RMIClient();
             } else {client = new SocketClient();
@@ -124,7 +127,7 @@ public class LoginController extends GUIController {
             client.startClient();
         } catch (Exception e){
             showException("Error! Try again!");
-        }*/
+        }
 
 
         rmiButton.isDisable();
@@ -147,12 +150,14 @@ public class LoginController extends GUIController {
         loginExceptionLabel.setVisible(false);
         String nickname = nameField.getText();
         nameField.clear();
-        /*try{
+        try{
             client.askLogin(nickname);
+        } catch (LoginException e){
+            showException("This nickname is not available! Try again!");
         } catch (Exception e){
             showException("Error! Try again!");
 
-        }*/
+        }
         //timer se non viene invocato enter num of player mostro la waitingScene
         showEnterNumOfPlayer(); //da cambiare
 
@@ -173,9 +178,8 @@ public class LoginController extends GUIController {
         numButton.setVisible(true);
     }
 
-
     public void enterNumOfPlayer(ActionEvent actionEvent) {
-        /* if(gui.getTimer()!=null){
+        if(gui.getTimer()!=null){
             gui.getTimer().cancel();
             gui.setTimer(null);
             loginExceptionLabel.setDisable(true);
@@ -187,7 +191,7 @@ public class LoginController extends GUIController {
                 showException("Error! You can choose from 2 to 4 player!");
                 gui.getNumOfPlayer();
             }
-        }*/
+        }
         try {
             showWaitingScene(); //da cambiare
         } catch (IOException e){

@@ -13,7 +13,7 @@ public class GUIApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("login.fxml"));
         FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("game.fxml"));
-        Scene scene = new Scene(fxmlLoader1.load(), 1200,650);
+        Scene scene = new Scene(fxmlLoader1.load(), 1250,650);
         stage.setScene(scene);
         stage.setTitle("MyShelfie");
         //stage.setMaximized(true);
