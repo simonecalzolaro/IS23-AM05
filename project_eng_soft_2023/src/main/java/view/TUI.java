@@ -133,13 +133,21 @@ public class TUI extends View {
                         }
                     }
                 }
-            }while(!action.equals("3") || request!=3);
+            }while(!action.equals("3") && request!=3);
 
             boolean goon = false;
 
             do {
 
                 //---da rendere a prova di scimmia
+                //  ->puù scegliere più volte la stessa tile
+                //  ->può scegliere tiles non adiacenti
+                //  ->substring funziona male senza fflush(), io ti consiglierei di fare un loop del tipo
+                //      Inserisci x:
+                //      Inserisci y:
+                //      Continuare? y/n
+                //  ->scritto così è sempre costretto a pescarne 3
+
                 out.println("Choose tiles from the board: (x,y)\n");
                 String tile1 = getInput();
                 coord.add(Integer.valueOf(tile1.substring(2)));
@@ -292,12 +300,12 @@ public class TUI extends View {
             throw new RuntimeException();
         }
 
-        System.out.println(" you are now int the WAITING ROOM...");
+        System.out.println(" Welcome "+ client.getModel().getNickname() +" you are now int the WAITING ROOM...");
 
         while(client.getModel().getPgcNum()==-1){
             System.out.println("...waiting for other players");
             try {
-                Thread.sleep(2000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

@@ -140,9 +140,15 @@ public abstract class Lobby implements ClientServerHandler {
     @Override
     public void checkFullWaitingRoom() throws IOException {
 
+        System.out.println("-> checkFullWaitingRoom 1");
+
         synchronized (lock){
+
+            System.out.println("-> checkFullWaitingRoom 2");
             //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
             if (tempPlayers.size() >= attendedPlayers) {
+
+                System.out.println(" -> ...Loading game , participants: " + tempPlayers.stream().map(ControlPlayer::getPlayerNickname));
 
                 attendedPlayers = -1;
 
@@ -158,7 +164,9 @@ public abstract class Lobby implements ClientServerHandler {
                     cp.getBookshelf().initializePGC(tempBoard);
                     cp.notifyStartPlaying();
 
-                    if(cp.getPlayerStatus().equals(PlayerStatus.MY_TURN)) cp.notifyStartYourTurn();
+                    if(cp.getPlayerStatus().equals(PlayerStatus.MY_TURN)){
+                        cp.notifyStartYourTurn();
+                    }
 
                 }
 

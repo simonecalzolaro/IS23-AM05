@@ -61,7 +61,10 @@ public class RMIControlPlayer extends ControlPlayer{
      */
     @Override
     public Boolean notifyStartYourTurn() throws RemoteException {
-        return ch.startYourTurn();
+
+        System.out.println("notify StartYourTurn to "+ nickname);
+        ch.startYourTurn();
+        return true;
     }
 
     @Override
@@ -104,6 +107,7 @@ public class RMIControlPlayer extends ControlPlayer{
     @Override
     public void notifyStartPlaying() throws RemoteException {
 
+        System.out.println("notify startPlaying to "+ nickname);
         ch.startPlaying(bookshelf.getPgc().getCardNumber(), bookshelf.getPgc().getCardMap(), game.getBoard().getCommonGoalCard1().getCGCnumber(), game.getBoard().getCommonGoalCard2().getCGCnumber());
         notifyUpdatedBoard();
     }

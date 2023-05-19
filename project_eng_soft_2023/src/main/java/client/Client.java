@@ -104,27 +104,31 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
     /**
      * method called by the server to notify the user that his turn has started
+     *
      * @throws RemoteException
      */
     @Override
-    public boolean startYourTurn() throws RemoteException{
+    public void startYourTurn() throws RemoteException{
 
         myTurn=true;
-        try {
-            view.isYourTurn();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidChoiceException e) {
-            throw new RuntimeException(e);
-        } catch (NotConnectedException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidParametersException e) {
-            throw new RuntimeException(e);
-        } catch (NotMyTurnException e) {
-            throw new RuntimeException(e);
-        }
 
-        return true;
+        new Thread(() -> {
+                            try {
+                                view.isYourTurn();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            } catch (InvalidChoiceException e) {
+                                throw new RuntimeException(e);
+                            } catch (NotConnectedException e) {
+                                throw new RuntimeException(e);
+                            } catch (InvalidParametersException e) {
+                                throw new RuntimeException(e);
+                            } catch (NotMyTurnException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }).start();
+
+
     }
 
 
@@ -151,7 +155,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
 
         model.initializeCards(new Matrix(pgcMap), pgcNum, cgc1num, cgc2num );
-
+        System.out.println("+++++++++++++++++++++++++++++");
         view.startPlay();
 
         return true;
