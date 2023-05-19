@@ -3,17 +3,10 @@ package controller;
 import client.ClientHandler;
 import model.*;
 import myShelfieException.*;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.Socket;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -26,6 +19,7 @@ public abstract class Lobby implements ClientServerHandler {
     static String hostname;
     static Long PORT_pre;
     static int PORT;
+    static int currNoP=0;
 
     static Object lock;
     protected static ArrayList<ControlPlayer> clients;
@@ -51,6 +45,7 @@ public abstract class Lobby implements ClientServerHandler {
         attendedPlayers = -1;
         tempBoard=null;
         lock = new Object();
+
     }
 
 
@@ -67,9 +62,15 @@ public abstract class Lobby implements ClientServerHandler {
      * @throws RemoteException
      */
     @Override
-    public GameHandler login(String nickname, Object client) throws RemoteException, IOException, LoginException {
+    public synchronized GameHandler login(String nickname, Object client) throws RemoteException, IOException, LoginException {
 
-        synchronized(lock) {
+        while( currNoP != tempPlayers.size() ) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
             //check if the nickname is available
             if (clients.stream().map(x -> x.getPlayerNickname()).toList().contains(nickname))
@@ -130,19 +131,28 @@ public abstract class Lobby implements ClientServerHandler {
 
                 System.out.println("-> ...player " + nickname + " entered the game. Waiting room now contains "+ tempPlayers.size()+"/" + attendedPlayers);
 
-
+                notifyAll();
                 return pl;
             }
-        }
+
     }
 
 
-    @Override
-    public void checkFullWaitingRoom() throws IOException {
+
+    public synchronized void checkFullWaitingRoom() {
 
         System.out.println("-> checkFullWaitingRoom 1");
 
-        synchronized (lock){
+        while(true) {
+
+            while( currNoP == tempPlayers.size() ) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            currNoP = tempPlayers.size();
 
             System.out.println("-> checkFullWaitingRoom 2");
             //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
@@ -152,26 +162,38 @@ public abstract class Lobby implements ClientServerHandler {
 
                 attendedPlayers = -1;
 
-                Game g = new Game(tempPlayers, tempBoard);
-                games.add(g);
+                Game g = null;
+                try {
+                    g = new Game(tempPlayers, tempBoard);
+                    games.add(g);
+                } catch (IOException e) {
+                    System.out.println("----Exception occurred while initializing a Game");
+                    e.printStackTrace();
+                }
 
                 //give the "arm chair" to the firs player
                 //tempPlayers.get(0).setPlayerStatus(PlayerStatus.MY_TURN);
 
                 for (ControlPlayer cp : g.getPlayers()) {
 
-                    cp.setGame(g);
-                    cp.getBookshelf().initializePGC(tempBoard);
-                    cp.notifyStartPlaying();
+                    try {
 
-                    if(cp.getPlayerStatus().equals(PlayerStatus.MY_TURN)){
-                        cp.notifyStartYourTurn();
+                        cp.setGame(g);
+                        cp.getBookshelf().initializePGC(tempBoard);
+                        cp.notifyStartPlaying();
+
+                    if (cp.getPlayerStatus().equals(PlayerStatus.MY_TURN)) cp.notifyStartYourTurn();
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
+
+                    currNoP=0;
 
                 }
 
                 tempPlayers.clear();
-                System.out.println(" -> ...The game has been created, participants: " + g.getPlayers().stream().map(x-> x.getPlayerNickname()));
+                System.out.println(" -> ...The game has been created, participants: " + g.getPlayers().stream().map(x -> x.getPlayerNickname()));
 
             }
         }
@@ -270,10 +292,6 @@ public abstract class Lobby implements ClientServerHandler {
         }
     }
 
-    @Override
-    public boolean pong() throws RemoteException{
-        return true;
-    }
 
     //-------------------------------- getter and setter--------------------------------
 

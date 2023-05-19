@@ -36,9 +36,7 @@ public interface ClientServerHandler extends Remote {
     boolean leaveGame(String nickname) throws LoginException, RemoteException;
 
 
-    boolean pong() throws RemoteException;
 
-
-    void checkFullWaitingRoom() throws IOException;
+    //void checkFullWaitingRoom() throws IOException;
 
 }

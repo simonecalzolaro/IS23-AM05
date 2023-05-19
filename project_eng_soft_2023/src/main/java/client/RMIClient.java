@@ -141,7 +141,6 @@ public class RMIClient extends Client {
     @Override
     public boolean askInsertShelfTiles( int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
 
-
         return gameHandler.insertShelfTiles( choosenColumn, coord);
     }
 
@@ -151,20 +150,11 @@ public class RMIClient extends Client {
         return gameHandler.getMyScore();
     }
 
-    @Override
-    public boolean askPing() {
-        try {
-            return clientServerHandler.pong();
-        } catch (RemoteException e) {
-            return true;
-        }
-    }
 
-    @Override
+
     public void askCheckFullWaitingRoom() throws IOException {
 
-        clientServerHandler.checkFullWaitingRoom();
-
+        //clientServerHandler.checkFullWaitingRoom();
     }
 
 }

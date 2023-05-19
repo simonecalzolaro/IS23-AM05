@@ -116,7 +116,7 @@ public class SocketClient extends Client{
     }
 
 
-    @Override
+
     public synchronized void askCheckFullWaitingRoom() throws IOException {
 
         JSONObject object = new JSONObject();
@@ -322,11 +322,6 @@ public class SocketClient extends Client{
 
         return myScore;
 
-    }
-
-    @Override
-    public synchronized boolean askPing() {
-        return true;
     }
 
 

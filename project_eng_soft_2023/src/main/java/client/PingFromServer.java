@@ -8,13 +8,13 @@ import java.io.IOException;
 /**
  * check if the player is still connected
  */
-public class PingPong implements Runnable{
+public class PingFromServer implements Runnable{
 
     Client client;
     private boolean connected;
     private int counter;
 
-    public PingPong(Client client){
+    public PingFromServer(Client client){
 
         this.client=client;
         connected=false;
@@ -29,17 +29,14 @@ public class PingPong implements Runnable{
 
         while( true  ){
 
-            (new Thread(new PingServer())).start(); //
-
             try {
-                Thread.sleep(1000); //wait for 5 seconds
+                Thread.sleep(2000); //wait for 5 seconds
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
             //depending on the result after the sleep I set the status of the player
             if(connected){
-                if(counter > 0 ) System.out.println("     u r connected again! ");
                 counter=0;
             }
 
@@ -47,11 +44,11 @@ public class PingPong implements Runnable{
 
                 counter++;
                 //when counter reaches 12( -> 1 minute offline ) I disconnect the player from the game
-                if(counter ==4 ){
+                if(counter ==2 ){
                     System.out.println("    OPSSS... the server is offline, wait for the reconnection...");
                 }
 
-                if(counter >=4 && counter <=6 ){
+                if(counter >=2 && counter <=6 ){
                     System.out.println("    ...    ");
                 }
 
@@ -68,22 +65,7 @@ public class PingPong implements Runnable{
                     }finally {
                         System.out.println("    reconnection failed");
                     }
-
                 }
-            }
-        }
-    }
-
-    class PingServer implements Runnable{
-
-        @Override
-        public void run() {
-
-            try{
-               // System.out.println("    ping to Server");
-                connected=client.askPing();
-            } catch (Exception e){
-                connected=false;
             }
         }
     }
@@ -91,4 +73,9 @@ public class PingPong implements Runnable{
     public boolean getConnectionStatus(){
         return connected;
     }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+
 }

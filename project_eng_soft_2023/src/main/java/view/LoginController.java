@@ -114,6 +114,7 @@ public class LoginController extends GUIController {
         timer1.schedule(task1, 3000, 3000);
         timer2.schedule(task2, 750, 750);
     }
+
     public void chooseProtocol(ActionEvent actionEvent) {
 
         loginExceptionLabel.setDisable(true);
@@ -121,10 +122,10 @@ public class LoginController extends GUIController {
 
         try{
             if(actionEvent.getSource().equals(rmiButton)){
-                client = new RMIClient();
-            } else {client = new SocketClient();
+                //client = new RMIClient();
+            } else {//client = new SocketClient();
             }
-            client.startClient();
+            client.initializeClient();
         } catch (Exception e){
             showException("Error! Try again!");
         }
@@ -145,6 +146,7 @@ public class LoginController extends GUIController {
         loginButton.setVisible(true);
 
     }
+
     public void enterNickname(ActionEvent actionEvent) throws IOException {
         loginExceptionLabel.setDisable(true);
         loginExceptionLabel.setVisible(false);

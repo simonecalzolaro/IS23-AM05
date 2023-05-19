@@ -293,14 +293,16 @@ public class TUI extends View {
 
 
         }
+        /*
         try {
             client.askCheckFullWaitingRoom();
         } catch (IOException e) {
             System.out.println("ClientApp --- IOException occurred in askCheckFullWaitingRoom()");
             throw new RuntimeException();
         }
+         */
 
-        System.out.println(" Welcome "+ client.getModel().getNickname() +" you are now int the WAITING ROOM...");
+        //System.out.println(" Welcome "+ client.getModel().getNickname() +" you are now int the WAITING ROOM...");
 
         while(client.getModel().getPgcNum()==-1){
             System.out.println("...waiting for other players");

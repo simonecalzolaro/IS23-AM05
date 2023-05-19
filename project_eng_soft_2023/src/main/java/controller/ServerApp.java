@@ -24,6 +24,7 @@ public class ServerApp {
         try {
             lobby = new RMILobby();
             lobby.startServer();
+            lobby.checkFullWaitingRoom();
         } catch (RemoteException e) {
             System.out.println("ServerApp --- RemoteException occurred while starting a new RMIServer");
             throw new RuntimeException();

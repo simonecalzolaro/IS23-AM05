@@ -27,6 +27,8 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     protected ClientModel model;
     private View view;
 
+    private PingFromServer pingChecker;
+    private Thread pingThread;
 
     protected boolean myTurn;
     protected boolean gameEnded;
@@ -45,12 +47,17 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         myTurn=false;
         gameEnded=false;
         left=false;
+        pingChecker=new PingFromServer(this);
+        pingThread=new Thread(pingChecker);
 
     }
 
-
+    /**
+     * initialize client's parameters
+     * @throws IOException
+     * @throws NotBoundException
+     */
     abstract public void initializeClient() throws  IOException, NotBoundException;
-
 
     /**
      * method called by the server to ask the first player to entre the number of players he wants in his match
@@ -63,7 +70,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         return view.getNumOfPlayer();
 
     }
-
 
     /**
      * method called by the server to update the board of this client
@@ -86,7 +92,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
     }
 
-
     /**
      * method called by the server to show the user an ordered rank of players
      * and to end the match
@@ -100,7 +105,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         return true;
 
     }
-
 
     /**
      * method called by the server to notify the user that his turn has started
@@ -131,7 +135,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
     }
 
-
     /**
      *  method called by the server to notify the user that his turn is ended
      * @throws RemoteException
@@ -145,7 +148,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
     }
 
-
     /**
      *  method called by the server to notify the user that the match has started
      * @throws RemoteException
@@ -153,6 +155,8 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     @Override
     public boolean startPlaying(int pgcNum, Map<model.Tile, Integer[]> pgcMap, int cgc1num, int cgc2num) throws RemoteException {
 
+        //start pinging the server
+        pingThread.start();
 
         model.initializeCards(new Matrix(pgcMap), pgcNum, cgc1num, cgc2num );
         System.out.println("+++++++++++++++++++++++++++++");
@@ -162,17 +166,17 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
     }
 
-
     /**
      * @return always true
      * @throws RemoteException RMI exception
      */
     @Override
     public boolean pong() throws RemoteException {
+
+        pingChecker.setConnected(true);
         return true;
+
     }
-
-
 
     /**
      * set up the servers' ports and hostname
@@ -200,8 +204,10 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         return gameEnded;
     }
 
-    //-------------------------------------- RMI vs Socket layer --------------------------------------
 
+
+
+    //-------------------------------------- RMI vs Socket layer --------------------------------------
 
     /**
      * asks the server to log in, is divided in RMI and socket
@@ -212,7 +218,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      */
     public abstract void askLogin(String nick) throws LoginException, IOException, RemoteException;
 
-
     /**
      * asks the server to continue a game, is divided in RMI and socket
      * @return GameHandler interface
@@ -221,14 +226,12 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      */
     public abstract void askContinueGame() throws LoginException, IOException;
 
-
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
      * @return true if everything went fine
      * @throws RemoteException
      */
     public abstract boolean askLeaveGame() throws IOException, LoginException;
-
 
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
@@ -241,7 +244,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws NotMyTurnException
      */
     public abstract boolean askBoardTiles( List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, IOException, NotMyTurnException;
-
 
     /**
      * asks the server to insert some tiles in my shelf, is divided in RMI and socket
@@ -256,7 +258,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      */
     public abstract boolean askInsertShelfTiles( int choosenColumn, List<Integer> coord) throws IOException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException;
 
-
     /**
      * asks the server my current score, is divided in RMI and socket
      * @return the score
@@ -264,12 +265,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      */
     abstract public int askGetMyScore() throws IOException;
 
-    /**
-     * verifies the server is up
-     * @return true if the server is online
-     */
-    public abstract boolean askPing();
 
-    abstract public void askCheckFullWaitingRoom() throws IOException;
 
 }
