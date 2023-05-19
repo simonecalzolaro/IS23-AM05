@@ -58,7 +58,7 @@ public class RMIClient extends Client {
         Long PORT_pre;
 
         try{
-            Object o = new JSONParser().parse(new FileReader("header.json"));
+            Object o = new JSONParser().parse(new FileReader("src/main/config/header.json"));
             JSONObject j =(JSONObject) o;
             Map arg = new LinkedHashMap();
             arg = (Map) j.get("serverSettings");
