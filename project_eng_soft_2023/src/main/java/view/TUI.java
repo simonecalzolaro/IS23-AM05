@@ -2,7 +2,7 @@ package view;
 
 import client.RMIClient;
 import client.SocketClient;
-import model.Tile;
+import client.Tile;
 import myShelfieException.*;
 
 import java.io.BufferedReader;
@@ -15,8 +15,8 @@ import java.util.*;
 
 public class TUI extends View {
 
-    List<Integer> coord ;
-    ArrayList<client.Tile> chosenTiles ;
+    List<Integer> coord = new ArrayList<>();
+    ArrayList<client.Tile> chosenTiles = new ArrayList<>();
     private final PrintStream out;
     private final BufferedReader reader;
 
@@ -148,21 +148,59 @@ public class TUI extends View {
                 //      Continuare? y/n
                 //  ->scritto così è sempre costretto a pescarne 3
 
+                /*
                 out.println("Choose tiles from the board: (x,y)\n");
                 String tile1 = getInput();
-                coord.add(Integer.valueOf(tile1.substring(2)));
-                coord.add(Integer.valueOf(tile1.substring(4)));
+                coord.add((int) tile1.charAt(2));
+                coord.add((int) tile1.charAt(4));
                 chosenTiles.add(client.getModel().getBoard().getTileByCoord(coord.get(0), coord.get(1)));
 
                 String tile2 = getInput();
-                coord.add(Integer.valueOf(tile2.substring(2)));
-                coord.add(Integer.valueOf(tile2.substring(4)));
+                coord.add((int) tile2.charAt(2));
+                coord.add((int) tile2.charAt(4));
                 chosenTiles.add(client.getModel().getBoard().getTileByCoord(coord.get(2), coord.get(3)));
 
                 String tile3 = getInput();
-                coord.add(Integer.valueOf(tile3.substring(2)));
-                coord.add(Integer.valueOf(tile3.substring(4)));
+                coord.add((int) tile3.charAt(2));
+                coord.add((int) tile3.charAt(4));
                 chosenTiles.add(client.getModel().getBoard().getTileByCoord(coord.get(4), coord.get(5)));
+                */
+                int round = 0;
+                String select;
+
+                out.println("Choose tiles from the board!");
+
+                do {
+                    do{
+
+                        out.println("Insert x:");
+
+                        int x = Integer.parseInt(getInput());
+
+                        out.println("Insert y:");
+
+                        int y = Integer.parseInt(getInput());
+
+                        coord.add(x);
+                        coord.add(y);
+                        chosenTiles.add(client.getModel().getBoard().getTileByCoord(x,y));
+
+                        if (!checkTiles(coord)) {
+                            out.println("There has been some error!\nChoose tiles from the board!");
+                            coord.clear();
+                            chosenTiles.clear();
+                            round=0;
+                        }
+
+                    }while(!checkTiles(coord));
+
+                    round++;
+
+                    out.println("Would you like to continue? y/n");
+                    select = getInput();
+
+                }while (round!=3 && !Objects.equals(select, "n"));
+
 
                 try {
                     client.askBoardTiles(coord);
@@ -224,7 +262,7 @@ public class TUI extends View {
         out.println("What kind of connection do you want?\n");
 
         do{
-            out.println("0 --> RMI \n1 --> Socket");
+            out.println("0 --> RMI\n1 --> Socket");
             connection = getInput();
 
             if(connection.equals("0")){
@@ -273,7 +311,7 @@ public class TUI extends View {
         switch (num){
             case "0":
                 do {
-                     out.println("Choose your nickname:\n");
+                     out.println("Choose your nickname:");
                     String nickname = getInput();
                     try {
                         client.askLogin(nickname);
@@ -460,17 +498,17 @@ public class TUI extends View {
                     strPGC.append("\n");
                 }
 
-                if(Arrays.equals(client.getModel().getPgc().getMap().get(Tile.GREEN), new Integer[]{row, col})){
+                if(client.getModel().getPgc().getTileFromMap(Tile.GREEN)[0]==row &&  client.getModel().getPgc().getTileFromMap(Tile.GREEN)[1]==col){
                     strPGC.append("|").append(ColorCLI.GREEN_BACKGROUND).append(" ").append(ColorCLI.RESET);
-                }else if(Arrays.equals(client.getModel().getPgc().getMap().get(Tile.BLUE), new Integer[]{row, col})){
+                }else if(client.getModel().getPgc().getTileFromMap(Tile.BLUE)[0]==row &&  client.getModel().getPgc().getTileFromMap(Tile.BLUE)[1]==col){
                     strPGC.append("|").append(ColorCLI.BLUE_BACKGROUND).append(" ").append(ColorCLI.RESET);
-                } else if (Arrays.equals(client.getModel().getPgc().getMap().get(Tile.WHITE), new Integer[]{row, col})) {
+                } else if (client.getModel().getPgc().getTileFromMap(Tile.WHITE)[0]==row &&  client.getModel().getPgc().getTileFromMap(Tile.WHITE)[1]==col) {
                     strPGC.append("|").append(ColorCLI.WHITE_BACKGROUND).append(" ").append(ColorCLI.RESET);
-                }else if(Arrays.equals(client.getModel().getPgc().getMap().get(Tile.PINK), new Integer[]{row, col})){
+                }else if(client.getModel().getPgc().getTileFromMap(Tile.PINK)[0]==row &&  client.getModel().getPgc().getTileFromMap(Tile.PINK)[1]==col){
                     strPGC.append("|").append(ColorCLI.PINK_BACKGROUND).append(" ").append(ColorCLI.RESET);
-                }else if(Arrays.equals(client.getModel().getPgc().getMap().get(Tile.YELLOW), new Integer[]{row, col})){
+                }else if(client.getModel().getPgc().getTileFromMap(Tile.YELLOW)[0]==row &&  client.getModel().getPgc().getTileFromMap(Tile.YELLOW)[1]==col){
                     strPGC.append("|").append(ColorCLI.YELLOW_BACKGROUND).append(" ").append(ColorCLI.RESET);
-                }else if(Arrays.equals(client.getModel().getPgc().getMap().get(Tile.LIGHTBLUE), new Integer[]{row, col})){
+                }else if(client.getModel().getPgc().getTileFromMap(Tile.LIGHTBLUE)[0]==row &&  client.getModel().getPgc().getTileFromMap(Tile.LIGHTBLUE)[1]==col){
                     strPGC.append("|").append(ColorCLI.LIGHTBLUE_BACKGROUND).append(" ").append(ColorCLI.RESET);
                 }else{
                     strPGC.append("| ").append(ColorCLI.RESET);
@@ -482,5 +520,26 @@ public class TUI extends View {
         System.out.println(strPGC.toString());
 
         return true;
+    }
+
+    public boolean checkTiles(List<Integer> tiles){
+
+        if(tiles.size()==6){
+            if(Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(2), tiles.get(4))) return true;
+
+            if(Objects.equals(tiles.get(1), tiles.get(3)) && Objects.equals(tiles.get(3), tiles.get(5))) return true;
+
+            return false;
+        }else if (tiles.size()==4){
+            if(Objects.equals(tiles.get(0), tiles.get(2))) return true;
+
+            if(Objects.equals(tiles.get(1), tiles.get(3))) return true;
+
+            return false;
+        }else if(tiles.size()==2){
+            return true;
+        }
+
+        return false;
     }
 }

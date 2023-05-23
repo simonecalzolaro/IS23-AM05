@@ -15,14 +15,14 @@ public enum Tile {
 
         switch (tileNumb % 12) {
 
-            case 1 : return Tile.GREEN;
-            case 2 : return Tile.WHITE;
-            case 3 : return Tile.BLUE;
-            case 4 : return Tile.LIGHTBLUE;
-            case 5 : return Tile.PINK;
-            case 6 : return Tile.YELLOW;
-            case 7 : return Tile.EMPTY;
-            case 8 : return Tile.NOTAVAILABLE;
+            case 0 : return Tile.GREEN;
+            case 1 : return Tile.WHITE;
+            case 2 : return Tile.BLUE;
+            case 3 : return Tile.LIGHTBLUE;
+            case 4 : return Tile.PINK;
+            case 5 : return Tile.YELLOW;
+            case 6 : return Tile.EMPTY;
+            case 7 : return Tile.NOTAVAILABLE;
 
             default: return Tile.EMPTY;
 

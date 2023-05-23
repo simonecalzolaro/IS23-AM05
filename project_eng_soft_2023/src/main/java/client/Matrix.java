@@ -36,6 +36,9 @@ public class Matrix {
         return matr[row][col];
     }
 
+    public Integer[] getTileFromMap(Tile tile){
+        return map.get(tile);
+    }
     private Map<Tile, Integer[]>  generateMapFromMatrix(Tile[][] matr){
 
         Map<Tile, Integer[]> map=new HashMap<>();
@@ -71,7 +74,9 @@ public class Matrix {
 
     public Tile[][] getMatr() { return matr; }
 
-    public Map<Tile, Integer[]> getMap() { return map; }
+    public Map<Tile, Integer[]> getMap() {
+        return map;
+    }
 
 
 }
