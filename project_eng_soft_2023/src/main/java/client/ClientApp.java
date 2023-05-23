@@ -1,20 +1,25 @@
 package client;
 
+
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.stage.Stage;
+
 import myShelfieException.LoginException;
-import view.GUI;
+
+import view.GUIApplication;
 import view.TUI;
 import view.View;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 
 import java.util.Scanner;
 
 
-public class ClientApp {
+public class ClientApp{
 
 
     private static Client client;
@@ -22,7 +27,7 @@ public class ClientApp {
     private static View view;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         String nickName="";
 
@@ -44,24 +49,33 @@ public class ClientApp {
             case "0":
 
                 view = new TUI();
+                try {
+                    view.startGame();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (LoginException e) {
+                    throw new RuntimeException(e);
+                } catch (NotBoundException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
 
             case "1":
+                new JFXPanel();
+                Platform.runLater(()-> {
+                    try {
 
-                //view = new GUI();
-                break;
+                        GUIApplication guiApplication= new GUIApplication();
+                        guiApplication.start(new Stage());
+
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
 
         }
 
-        try {
-            view.startGame();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LoginException e) {
-            throw new RuntimeException(e);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        }
+
 
         /*
 
@@ -229,9 +243,6 @@ public class ClientApp {
             }
         }
          */
-
-
-
 
 
     }

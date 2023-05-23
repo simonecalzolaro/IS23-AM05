@@ -93,6 +93,10 @@ public class RMIClient extends Client {
     public void askLogin(String nick) throws LoginException, IOException, RemoteException{
 
         this.gameHandler= clientServerHandler.login(nick , this);
+
+        System.out.println("OK");
+
+
     }
 
 
@@ -106,6 +110,7 @@ public class RMIClient extends Client {
     public void askContinueGame() throws LoginException, RemoteException {
 
         this.gameHandler= clientServerHandler.continueGame(model.getNickname(), this);
+
     }
 
 

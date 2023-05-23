@@ -83,7 +83,7 @@
                   <Font name="Bodoni MT Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="exitButton" layoutX="63.0" layoutY="110.0" mnemonicParsing="false" onAction="#exit" style="-fx-background-color: #ffd896; -fx-border-color: #ffac37; -fx-border-width: 2;" text="Exit" textFill="#623e00">
+            <Button fx:id="exitButton" layoutX="63.0" layoutY="110.0" mnemonicParsing="false" onAction="#askExit" style="-fx-background-color: #ffd896; -fx-border-color: #ffac37; -fx-border-width: 2;" text="Exit" textFill="#623e00">
                <font>
                   <Font name="Bodoni MT" size="14.0" />
                </font>
