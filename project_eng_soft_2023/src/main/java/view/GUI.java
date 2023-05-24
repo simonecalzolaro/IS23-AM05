@@ -23,7 +23,7 @@ public class GUI extends View {
     }
 
     @Override
-    public void getNumOfPlayer() {
+    public int getNumOfPlayer() {
         loginController.showEnterNumOfPlayer();
         timer=new Timer();
         TimerTask task = new TimerTask() {
@@ -42,8 +42,7 @@ public class GUI extends View {
         if(numOfPlayer==-1) {
             loginController.showException("Time is out!");
         }
-
-        client.askSetNumberOfPlayers(numOfPlayer, client.getModel().getNickname());
+        return numOfPlayer;
     }
 
 

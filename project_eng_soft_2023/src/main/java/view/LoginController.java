@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import myShelfieException.LoginException;
 
 import java.io.IOException;
@@ -114,7 +115,6 @@ public class LoginController extends GUIController {
         timer1.schedule(task1, 3000, 3000);
         timer2.schedule(task2, 750, 750);
     }
-
     public void chooseProtocol(ActionEvent actionEvent) {
 
         loginExceptionLabel.setDisable(true);
@@ -122,8 +122,9 @@ public class LoginController extends GUIController {
 
         try{
             if(actionEvent.getSource().equals(rmiButton)){
-                //client = new RMIClient();
-            } else {//client = new SocketClient();
+                client = new RMIClient(gui);
+            } else {
+                client = new SocketClient(gui);
             }
             client.initializeClient();
         } catch (Exception e){
@@ -146,14 +147,14 @@ public class LoginController extends GUIController {
         loginButton.setVisible(true);
 
     }
-
     public void enterNickname(ActionEvent actionEvent) throws IOException {
         loginExceptionLabel.setDisable(true);
         loginExceptionLabel.setVisible(false);
         String nickname = nameField.getText();
         nameField.clear();
-        try{
+       try{
             client.askLogin(nickname);
+            client.getModel().setNickname(nickname);
         } catch (LoginException e){
             showException("This nickname is not available! Try again!");
         } catch (Exception e){
@@ -161,8 +162,8 @@ public class LoginController extends GUIController {
 
         }
         //timer se non viene invocato enter num of player mostro la waitingScene
-        showEnterNumOfPlayer(); //da cambiare
-
+         //da cambiare
+        showEnterNumOfPlayer();
     }
 
     public void showEnterNumOfPlayer(){
@@ -245,4 +246,9 @@ public class LoginController extends GUIController {
         stage.setScene(scene);
     }
 
+    @Override
+    public void setScene(GUI gui, Stage stage) {
+        gui.setLoginController(this);
+        super.setScene(gui, stage);
+    }
 }

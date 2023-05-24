@@ -8,35 +8,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="pingPong server-&gt;client, login and waiting room concurrency">
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/ClientAskNotify.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/ControllerAskNotify.java" afterDir="false" />
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="PingPong implementation and addition of askMethods">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/AsyncClientInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/AsyncClientInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Matrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Matrix.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/config/header.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PingPong.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PingPong.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PlayerStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PlayerStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMILobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMILobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketLobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketLobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/TUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/TUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/View.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/GameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/GameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/TCPHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TCPHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +26,6 @@
         <option value="JUnit5 Test Class" />
         <option value="Class" />
         <option value="Enum" />
-        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -85,7 +61,6 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
@@ -107,7 +82,7 @@
       <recent name="client" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.ServerApp">
     <configuration name="ClientApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.ClientApp" />
       <module name="project_eng_soft_2023" />
@@ -265,10 +240,8 @@
       <workItem from="1684251209333" duration="11874000" />
       <workItem from="1684276929716" duration="8849000" />
       <workItem from="1684319935734" duration="22880000" />
-      <workItem from="1684436670476" duration="9117000" />
-      <workItem from="1684482178828" duration="3177000" />
-      <workItem from="1684867147266" duration="7096000" />
-      <workItem from="1684909308828" duration="7864000" />
+      <workItem from="1684436670476" duration="8692000" />
+      <workItem from="1684500018753" duration="1004000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
@@ -354,14 +327,7 @@
       <option name="project" value="LOCAL" />
       <updated>1684156080689</updated>
     </task>
-    <task id="LOCAL-00013" summary="union of View and Client">
-      <created>1684445763239</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1684445763239</updated>
-    </task>
-    <option name="localTasksCounter" value="14" />
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,8 +367,7 @@
     <MESSAGE value="adjustments on network design patten and implementation of RMI/Soket Player, RMI/Socket Server and RMI/Server client" />
     <MESSAGE value="synchronization of RMI methods, adjustments on methods signature" />
     <MESSAGE value="GUI" />
-    <MESSAGE value="union of View and Client" />
-    <option name="LAST_COMMIT_MESSAGE" value="union of View and Client" />
+    <option name="LAST_COMMIT_MESSAGE" value="GUI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

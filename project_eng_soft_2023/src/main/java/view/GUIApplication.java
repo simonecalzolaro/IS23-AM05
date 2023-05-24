@@ -2,12 +2,12 @@ package view;
 
 import javafx.application.Application;
 
+import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class GUIApplication extends Application {
-
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -19,9 +19,9 @@ public class GUIApplication extends Application {
         //stage.setMaximized(true);
         stage.show();
         LoginController controller=fxmlLoader.getController();
-        //io creo la GUI e mirko setClientModel
-        GUI gui=new GUI(controller);
+        GUI gui=new GUI();
 
+        //gui.setLoginController(controller);
         //controller.setScene(gui,stage);
         GameController controller1=fxmlLoader1.getController();
         controller1.setScene(gui, stage);
