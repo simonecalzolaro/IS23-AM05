@@ -47,7 +47,6 @@ public class ClientApp {
                 break;
 
             case "1":
-
                 //view = new GUI();
                 break;
 

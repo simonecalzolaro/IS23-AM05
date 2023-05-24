@@ -31,13 +31,11 @@ public class RMIControlPlayer extends ControlPlayer{
      * Set player status as NOT_MY_TURN
      *
      * @param nickname : unique player nickname
-     * @param board    : unique board
      */
-    public RMIControlPlayer(String nickname, Board board, ClientHandler clientHandler) throws RemoteException {
+    public RMIControlPlayer(String nickname, ClientHandler clientHandler) throws RemoteException {
 
-        super(nickname, board);
+        super(nickname);
         ch=clientHandler;
-
         /* ----------------------------
 
         stub = (GameHandler) UnicastRemoteObject.exportObject(this, Settings.PORT);
@@ -60,33 +58,33 @@ public class RMIControlPlayer extends ControlPlayer{
      * @throws RemoteException
      */
     @Override
-    public Boolean notifyStartYourTurn() throws RemoteException {
+    public void notifyStartYourTurn() throws RemoteException {
 
-        System.out.println("notify StartYourTurn to "+ nickname);
+        System.out.println("    ->notify StartYourTurn to "+ nickname);
         ch.startYourTurn();
-        return true;
+
     }
 
     @Override
-    public Boolean notifyEndYourTurn() throws RemoteException {
-        return ch.endYourTurn();
+    public void notifyEndYourTurn() throws RemoteException {
+        ch.endYourTurn();
     }
 
     @Override
     public void notifyUpdatedBoard() throws RemoteException{
 
-            if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
-                Map<String, Tile[][]> map= new HashMap<>();
+        if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
 
-                for(ControlPlayer cp: game.getPlayers()){
+            Map<String, Tile[][]> map= new HashMap<>();
 
-                    if(! cp.equals(this))  map.put(cp.getPlayerNickname(),cp.getBookshelf().getShelf());
+            //in this for I'm creating the map to send, I'm NOT notifying each player
+            for(ControlPlayer cp: game.getPlayers()){
 
-                }
-
-                ch.updateBoard(game.getBoard().getBoard(), this.bookshelf.getShelf(), map  );
+                if(! cp.equals(this))  map.put(cp.getPlayerNickname(), cp.getBookshelf().getShelf());
 
             }
+            ch.updateBoard(game.getBoard().getBoard(), this.bookshelf.getShelf(), map , bookshelf.getMyScore());
+        }
     }
 
 
@@ -107,20 +105,27 @@ public class RMIControlPlayer extends ControlPlayer{
     @Override
     public void notifyStartPlaying() throws RemoteException {
 
-        System.out.println("notify startPlaying to "+ nickname);
-        ch.startPlaying(bookshelf.getPgc().getCardNumber(), bookshelf.getPgc().getCardMap(), game.getBoard().getCommonGoalCard1().getCGCnumber(), game.getBoard().getCommonGoalCard2().getCGCnumber());
-        notifyUpdatedBoard();
+        System.out.println("    ->notify startPlaying to "+ nickname);
+        ch.startPlaying(bookshelf.getPgc().getCardNumber(), bookshelf.getPgc().getCardMap(), game.getBoard().getCommonGoalCard1().getCGCnumber(), game.getBoard().getCommonGoalCard2().getCGCnumber(), game.getGameID());
+
     }
 
     @Override
-    public int askNumberOfPlayers() throws IOException {
-        return ch.enterNumberOfPlayers();
+    public void askNumberOfPlayers() {
+        try {
+            ch.enterNumberOfPlayers();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    /*
     @Override
-    public boolean askPing() throws RemoteException {
-        return ch.pong();
+    public void askPing() throws RemoteException {
+        ch.pong();
     }
+
+     */
 
 
     /**

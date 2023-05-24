@@ -4,11 +4,17 @@ import client.ClientHandler;
 import model.*;
 import myShelfieException.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
+
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Stream;
+
 
 /**
  * ServerApp is the running program of the server, it handles the remote clients and
@@ -21,12 +27,18 @@ public abstract class Lobby implements ClientServerHandler {
     static int PORT;
     static int currNoP=0;
 
-    static Object lock;
+
+    private static Object nowLoggingClient;
     protected static ArrayList<ControlPlayer> clients;
     protected static ArrayList< Game > games;
     protected static int attendedPlayers;
     protected static Board tempBoard;
     protected static ArrayList<ControlPlayer> tempPlayers;
+
+    private static boolean flagNoP;
+    private static boolean flagLogin;
+    private static boolean flagWR;
+
 
     /**
      * constructor for the ServerApp
@@ -34,6 +46,7 @@ public abstract class Lobby implements ClientServerHandler {
      */
     protected Lobby() throws RemoteException {
         super();
+
     }
 
 
@@ -44,7 +57,9 @@ public abstract class Lobby implements ClientServerHandler {
         tempPlayers= new ArrayList<>();
         attendedPlayers = -1;
         tempBoard=null;
-        lock = new Object();
+        flagLogin=true;
+        flagNoP=false;
+        flagWR=false;
 
     }
 
@@ -64,138 +79,182 @@ public abstract class Lobby implements ClientServerHandler {
     @Override
     public synchronized GameHandler login(String nickname, Object client) throws RemoteException, IOException, LoginException {
 
-        while( currNoP != tempPlayers.size() ) {
+        //questo while è a mutua esclusione con quello all'interno di checkFullWaitingRoom()
+
+        while ( !flagLogin ) {
             try {
                 wait();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
+        flagLogin=false;
 
-            //check if the nickname is available
-            if (clients.stream().map(x -> x.getPlayerNickname()).toList().contains(nickname))
-                throw new LoginException("this nickname is not available at the moment");
+        nowLoggingClient=client;
 
-            else {
+        //check if the nickname is available
+        if (tempPlayers.stream().map(x -> x.getPlayerNickname()).toList().contains(nickname))
+            throw new LoginException("this nickname is not available at the moment");
 
-                ControlPlayer pl = null;
+        else {
 
-                if (attendedPlayers == -1) { //if the isn't any waiting room it means that ch is the first player
+            ControlPlayer pl = null;
 
-                    tempBoard = new Board();
-                    System.out.println("\n\n...a new board has been created... " + tempBoard);
+            //se la waiting room è vuota o non è ancora stato chiesto il numero di giocatori
+            if (tempBoard==null) {
+                tempBoard = new Board();
+                System.out.println("\n...a new board has been created... " + tempBoard);
+            }
 
-                }
+            try {
 
                 //create a ControlPlayer
                 if (client instanceof ArrayList<?>) {
-                    pl = new SocketControlPlayer(nickname, tempBoard, (ArrayList<controller.Stream>) client);
+                    pl = new SocketControlPlayer(nickname, (ArrayList<controller.Stream>) client);
                 } else if (client instanceof ClientHandler) {
-                    pl = new RMIControlPlayer(nickname, tempBoard, (ClientHandler) client);
-                } else{
+                    pl = new RMIControlPlayer(nickname, (ClientHandler) client);
+                } else {
                     throw new IllegalArgumentException("Object client must only be instanceof ArratList<> or ClientHandler");
                 }
 
-                if (attendedPlayers == -1) { //if there isn't any waiting room it means that "client" is the first player
-
-                    do {
-                        try {
-                            //server asks client how many players he wants in his match
-                            attendedPlayers = pl.askNumberOfPlayers();
-                            System.out.println("-> " + nickname + "chooses " + attendedPlayers + " number of players");
-
-                            //attendedPlayers == -1 when the user is slow
-                            if(attendedPlayers==-1){
-                                throw new LoginException("OPSSS...you have been too slow, try to login again... ");
-                            }
-
-                        } catch (RemoteException e) {
-                            attendedPlayers = -1;
-                            throw new RuntimeException(e);
-                        }
-                    } while (attendedPlayers < 2 || attendedPlayers > 4); //eccezione da gestire
-
-                    //setting the status of this Player as MY_TURN
-                    pl.setPlayerStatus(PlayerStatus.WAITING_ROOM);
-
-                    //initializing the board with the chosen number of players
-                    tempBoard.initializeBoard(attendedPlayers);
-                    System.out.println("-> ...player " + nickname + " created a game with " + attendedPlayers + " players...");
-
-                }
-
-                //add to the map "clients" the ClientHandler interface and the associated ControlPlayer
-                clients.add(pl);
-                //tempPlayers is like a waiting room
-                tempPlayers.add(pl);
-
-                System.out.println("-> ...player " + nickname + " entered the game. Waiting room now contains "+ tempPlayers.size()+"/" + attendedPlayers);
-
-                notifyAll();
-                return pl;
+            }finally {
+                if(pl==null) return null;
             }
 
+
+            //add to the map "clients" the ClientHandler interface and the associated ControlPlayer
+            clients.add(pl);
+            //tempPlayers is like a waiting room
+            //adding the player to the waiting room, so now tempPlayers.size() è uguale a old( tempPlayers.size() ) + 1
+            tempPlayers.add(pl);
+            pl.setPlayerStatus(PlayerStatus.WAITING_ROOM);
+            System.out.println("-> ...player " + nickname + " entered the game. Waiting room now contains " + tempPlayers.size() + "/" + attendedPlayers);
+
+            flagNoP=true;
+            notifyAll();
+
+            return pl;
+        }
     }
 
 
+    public synchronized void checkAskNuberOfPlayers(){
 
+        System.out.println("-> checkAskNuberOfPlayers active");
+        //if there isn't any waiting room it means that "client" is the first player
+        while(true) {
+
+                while(!flagNoP){
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                flagNoP=false;
+
+                if (attendedPlayers == -1 ) {
+
+                    attendedPlayers = -2;
+                    System.out.println("...checking AskNuberOfPlayers ");
+                    ControlPlayer pl = tempPlayers.get(0);
+
+                    //server asks client how many players he wants in his match
+                    pl.askNumberOfPlayers();
+                   // System.out.println("-> " + pl.getPlayerNickname() + " chooses " + attendedPlayers + " number of players");
+
+                    //setting the status of this Player as nOfPlayerAsked
+                    pl.setPlayerStatus(PlayerStatus.nOfPlayerAsked);
+
+                }
+
+                flagWR=true;
+                notifyAll();
+        }
+    }
+
+    /**
+     * loop function to check the status of the waiting room.
+     * If the waiting room size is equal to the number of attended players a new Game starts and all the players are notified
+     */
     public synchronized void checkFullWaitingRoom() {
 
-        System.out.println("-> checkFullWaitingRoom 1");
+        System.out.println("-> checkFullWaitingRoom active");
 
         while(true) {
 
-            while( currNoP == tempPlayers.size() ) {
+            while( !flagWR){
                 try {
                     wait();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
-            currNoP = tempPlayers.size();
+            flagWR=false;
 
-            System.out.println("-> checkFullWaitingRoom 2");
+
+            System.out.println("... checkFullWaitingRoom, tempPlayers.size():"+ tempPlayers.size() + ", attendedPlayers:"+attendedPlayers);
             //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
-            if (tempPlayers.size() >= attendedPlayers) {
+            if (tempPlayers.size() >= attendedPlayers && attendedPlayers>0) {
 
                 System.out.println(" -> ...Loading game , participants: " + tempPlayers.stream().map(ControlPlayer::getPlayerNickname));
 
-                attendedPlayers = -1;
-
-                Game g = null;
                 try {
-                    g = new Game(tempPlayers, tempBoard);
+
+                    ArrayList<ControlPlayer> newPlayers= new ArrayList<>();
+
+                    //creating a list with the first "attendedPlayer" players in tempPlayers
+                    for(int i=0; i<attendedPlayers; i++){
+                        newPlayers.add(tempPlayers.get(0));
+                        tempPlayers.remove(0);
+                    }
+
+                    //initializing the board with the chosen number of players
+                    tempBoard.initializeBoard(attendedPlayers);
+                    System.out.println("-> creating a game with " + attendedPlayers + " players...");
+
+
+                    Game g = new Game( newPlayers, tempBoard);
                     games.add(g);
+
+                    //initializing each client, this for CAN'T be inside the next one otherwise when notifyUpdatedBoard()
+                    //is launched for the first client the others are not initialized yet (NULL pointer exc.)
+                    for (ControlPlayer cp : g.getPlayers()) {
+                        cp.initializeControlPlayer(tempBoard);
+                        cp.setGame(g);
+                        cp.getBookshelf().initializePGC(tempBoard);
+                    }
+
+
+                    for (ControlPlayer cp : g.getPlayers()) {
+
+                        try {
+                            cp.notifyUpdatedBoard();
+                            cp.notifyStartPlaying();
+                            if (cp.equals(newPlayers.get(0))){
+                                cp.setPlayerStatus(PlayerStatus.MY_TURN);
+                                cp.notifyStartYourTurn();
+                            }
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
+                    System.out.println(" -> ...The game has been created, participants: " + g.getPlayers().stream().map(x -> x.getPlayerNickname()));
+
                 } catch (IOException e) {
                     System.out.println("----Exception occurred while initializing a Game");
                     e.printStackTrace();
                 }
 
-                //give the "arm chair" to the firs player
-                //tempPlayers.get(0).setPlayerStatus(PlayerStatus.MY_TURN);
-
-                for (ControlPlayer cp : g.getPlayers()) {
-
-                    try {
-
-                        cp.setGame(g);
-                        cp.getBookshelf().initializePGC(tempBoard);
-                        cp.notifyStartPlaying();
-
-                    if (cp.getPlayerStatus().equals(PlayerStatus.MY_TURN)) cp.notifyStartYourTurn();
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    currNoP=0;
-
-                }
-
-                tempPlayers.clear();
-                System.out.println(" -> ...The game has been created, participants: " + g.getPlayers().stream().map(x -> x.getPlayerNickname()));
+                tempBoard=null;
+                attendedPlayers = -1;
 
             }
+
+            flagLogin=true;
+            notifyAll();
+
         }
     }
 
@@ -206,12 +265,9 @@ public abstract class Lobby implements ClientServerHandler {
      * @throws RemoteException
      */
     @Override
-    public GameHandler continueGame(String nickname, Object client) throws RemoteException, LoginException {
-
-        synchronized(lock){
+    public synchronized GameHandler continueGame(String nickname, Object client) throws RemoteException, LoginException {
 
             //checking if exists a player called "nickname" now offline
-
             Stream<ControlPlayer> cp= null;
             cp = clients.stream()
                         .filter(x -> x.getPlayerNickname().equals(nickname));
@@ -226,7 +282,7 @@ public abstract class Lobby implements ClientServerHandler {
 
             //if exists I'll create a new one, remove the current ClientHandler-ControlPlayer pair from the map, set a new ClientHandler on the ControlPlayer
 
-            if (client instanceof ArrayList<?>){
+            if (client instanceof ArrayList<?>) {
 
                 controlPlayer.setStreams((ArrayList<controller.Stream>) client);
 
@@ -239,7 +295,7 @@ public abstract class Lobby implements ClientServerHandler {
 
             //searching the correspondent Game and return the GameHandler interface
             return controlPlayer;
-        }
+
     }
 
     /**
@@ -247,49 +303,67 @@ public abstract class Lobby implements ClientServerHandler {
      * @return true if the client nickname left the game correctly
      */
     @Override
-    public boolean leaveGame(String nickname) throws LoginException, RemoteException {
+    public synchronized void leaveGame(String nickname, int ID) throws LoginException, RemoteException {
 
-        synchronized(lock) {
-
-            //checking if exists a player called "nickname" now offline
-            Stream<ControlPlayer> cp = null;
-            cp = clients.stream()
-                    .filter(x -> x.getPlayerNickname().equals(nickname));
+        //checking if exists a player called "nickname" now offline
+        Stream<ControlPlayer> cp = null;
+        cp = clients.stream()
+                .filter(x -> x.getPlayerNickname().equals(nickname));
 
 
-            if (cp.count() < 1) throw new LoginException("This nickname does not exists");
+        if (cp.count() < 1) throw new LoginException("This nickname does not exists");
 
-            if (cp.count() != 1) throw new LoginException("try again");
+        if (cp.count() != 1) throw new LoginException("try again");
 
-            ControlPlayer controlPlayer = cp.toList().get(0);
+        ControlPlayer controlPlayer = cp.toList().get(0);
 
-            System.out.println("User " + controlPlayer.getPlayerNickname());
+        System.out.println("User " + controlPlayer.getPlayerNickname());
 
-            //searching the game controlPlayer was playing
-            Game g = null;
-            for (Game g1 : games) {
+        //searching the game controlPlayer was playing
+        Game g = null;
+        for (Game g1 : games) {
 
-                for (ControlPlayer conti : g1.getPlayers()) {
+            for (ControlPlayer conti : g1.getPlayers()) {
 
-                    if (conti.getPlayerNickname().equals(nickname)) {
-                        g = g1;
-                        break;
-                    }
+                if (conti.getPlayerNickname().equals(nickname)) {
+                    g = g1;
+                    break;
                 }
             }
-
-
-            boolean res = ((g != null) ? g.removePlayer(controlPlayer) : false);
-            clients.remove(controlPlayer);
-
-            if (res) {
-                System.out.println(" successfully ");
-            } else System.out.println("tried to");
-
-            System.out.println(" leave the game: " + g.getGameID());
-
-            return res;
         }
+
+
+        boolean res = ((g != null) ? g.removePlayer(controlPlayer) : false);
+        clients.remove(controlPlayer);
+
+        if (res) {
+            System.out.println(" successfully ");
+        } else System.out.println("tried to");
+
+        System.out.println(" leave the game: " + g.getGameID());
+
+    }
+
+
+    /**
+     * method to set the number of players
+     * @param n number of players the players wants
+     * @param nick nickname of the client
+     * @throws RemoteException
+     */
+    @Override
+    public void setNumberOfPlayers(int n, String nick) throws RemoteException{
+
+        //searching the controlPlayer called "nick" int the waiting room and if I found him I'll set attendedPlayers to n
+        System.out.println("...setting new number of players...");
+        if(tempPlayers.get(0).getPlayerNickname().equals(nick) && tempPlayers.size()>0){
+            if (n>=2 && n<=4) {
+                attendedPlayers = n;
+                System.out.println("--> new number of attendedPlayers:"+attendedPlayers);
+                return;
+            }
+        }
+
     }
 
 
@@ -321,15 +395,20 @@ public abstract class Lobby implements ClientServerHandler {
         return clients;
     }
 
-    public void removeFromWaitingRoom (ControlPlayer cp){
+    /**
+     * removes Player cp from his waiting room and, if cp is the only one present, the waiting room il reinitialized
+     * @param cp ControlPlayer to be removed from the waiting room
+     */
+    public synchronized void removeFromWaitingRoom (ControlPlayer cp){
 
-        synchronized(lock) {
+
             tempPlayers.remove(cp);
             clients.remove(cp);
 
             //se non è rimasto nessuno nella waiting room :
             if(tempPlayers.size()==0) attendedPlayers=-1;
-        }
+
     }
+
 
 }

@@ -73,9 +73,9 @@ public class AsyncClientInput implements Runnable{
                         case "askNumberOfPlayers":
 
                             try {
-                                int num = TCPaskNumberOfPlayers();
+                                TCPaskNumberOfPlayers();
                                 response.put("Action","Feedback");
-                                response.put("Feedback",num);
+                                //response.put("Feedback",num);
 
                                 try {
                                     outClient.reset();
@@ -450,9 +450,9 @@ public class AsyncClientInput implements Runnable{
     }
 
 
-    public int TCPaskNumberOfPlayers() throws RemoteException {
+    public void TCPaskNumberOfPlayers() throws RemoteException {
 
-        return socketClient.enterNumberOfPlayers();
+         socketClient.enterNumberOfPlayers();
 
     }
 
@@ -463,7 +463,7 @@ public class AsyncClientInput implements Runnable{
         int cgcNum1 = (int) json.get("Param3");
         int cgcNum2 = (int) json.get("Param4");
 
-        socketClient.startPlaying(pgcNum,map,cgcNum1,cgcNum2);
+        //socketClient.startPlaying(pgcNum,map,cgcNum1,cgcNum2, 10); //---SimoSocket
     }
 
     public void TCPnotifyUpdateBoard(JSONObject json) throws RemoteException {
@@ -472,7 +472,7 @@ public class AsyncClientInput implements Runnable{
         Tile[][] bookshelf = (Tile[][]) json.get("Param2");
         Map<String,Tile[][]> map = (Map) json.get("Param3");
 
-        socketClient.updateBoard(board,bookshelf,map);
+        socketClient.updateBoard(board,bookshelf,map, 10); //---SimoSocket il 10 è messo a caso
 
     }
 

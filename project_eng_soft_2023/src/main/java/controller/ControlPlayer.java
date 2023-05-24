@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ControlPlayer implements GameHandler, Serializable {
+public abstract class ControlPlayer implements GameHandler, ControllerAskNotify, Serializable {
 
     /**
      *Player's id
@@ -18,21 +18,23 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
     protected final String nickname;
 
     /**
-     * player's status
+     * Player's status
      */
     protected PlayerStatus playerStatus;
 
     /**
-     * player's bookshelf
+     * Player's bookshelf
      */
-    protected final Bookshelf bookshelf;
+    protected Bookshelf bookshelf;
 
     /**
-     * player's score
+     * Player's score
      */
     protected int score;
 
-
+    /**
+     * Player's game
+     */
     protected Game game;
 
 
@@ -41,16 +43,21 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
      * Initialize score
      * Set player status as NOT_MY_TURN
      * @param nickname: unique player nickname
-     * @param board: unique board
      */
-    public ControlPlayer(String nickname, Board board) throws RemoteException{
+    public ControlPlayer(String nickname) throws RemoteException{
 
         this.nickname = nickname;
+        playerStatus = PlayerStatus.NOT_MY_TURN;
+
+        //(new Thread(new PingPong(this))).start(); //starting PinPonging
+    }
+
+    public void initializeControlPlayer(Board board){
+
         bookshelf = new Bookshelf(board);
         score = 0;
         playerStatus = PlayerStatus.NOT_MY_TURN;
 
-        (new Thread(new PingPong(this))).start(); //starting PinPonging
     }
 
     /**
@@ -112,7 +119,6 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
 
 
 
-
     //-------------------------------------- GameHandler implemented methods --------------------------------------
 
     /**
@@ -121,10 +127,10 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
      * @return true if the chosen tiles are valid
      */
     @Override
-    public boolean chooseBoardTiles(List<Integer> coord) throws RemoteException, NotConnectedException, InvalidParametersException, NotMyTurnException, InvalidChoiceException {
+    public void chooseBoardTiles(List<Integer> coord) throws RemoteException, NotConnectedException, InvalidParametersException, NotMyTurnException, InvalidChoiceException {
 
             catchTile(coord);
-            return true;
+
     }
 
     /**
@@ -135,7 +141,7 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
      * @throws NotMyTurnException
      */
     @Override
-    public boolean insertShelfTiles( int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidLenghtException, InvalidChoiceException {
+    public void insertShelfTiles( int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidLenghtException, InvalidChoiceException {
 
         ArrayList<Tile> choosenTiles=new ArrayList<>();
 
@@ -144,7 +150,7 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
         }
 
         //inserting the tiles in the bookshelf
-        if( ! insertTiles(choosenTiles, choosenColumn)) return false;
+        if( ! insertTiles(choosenTiles, choosenColumn)) return;
 
         //and subtracting the same tiles from the board
         game.getBoard().subTiles(coord);
@@ -161,7 +167,6 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
         try {
 
             for(ControlPlayer cp: game.getPlayers()){
-
                 //if player cp is online ill update his board
                 if(!cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)) cp.notifyUpdatedBoard();
             }
@@ -175,7 +180,7 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
                 for(ControlPlayer cp: game.getPlayers()){
                     cp.notifyEndGame();
                 }
-            } catch (IOException e) { throw new RuntimeException(e); }
+            }catch (IOException e) { throw new RuntimeException(e); }
         }
 
         //tell the next player to start his turn
@@ -184,73 +189,48 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
             nextPlayer.notifyStartYourTurn();
         } catch (IOException e) { throw new RuntimeException(e); }
 
-        return true;
-
     }
 
+
     /**
-     * @return the score of the player ch
+     * method called by the client to pass his turn to the next player (like timeout or others)
      * @throws RemoteException
      */
     @Override
-    public int getMyScore() throws RemoteException{
+    public void passMyTurn() throws RemoteException{
 
-        return bookshelf.getMyScore();
+        game.endTurn();
+
+        //notify the updated board to all the clients participating in the same game of ch
+        try {
+
+            for(ControlPlayer cp: game.getPlayers()){
+                //if player cp is online ill update his board
+                if(!cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)) cp.notifyUpdatedBoard();
+            }
+
+        } catch (IOException e) { throw new RuntimeException(e); }
+
+
+        //if the game is ended every player is notified and the results are shown
+        if(game.getGameStatus().equals(GameStatus.END_GAME)){
+            try {
+                for(ControlPlayer cp: game.getPlayers()){
+                    cp.notifyEndGame();
+                }
+            }catch (IOException e) { throw new RuntimeException(e); }
+        }
+
+        //tell the next player to start his turn
+        try {
+            ControlPlayer nextPlayer= game.getPlayers().get(game.getCurrPlayer());
+            nextPlayer.notifyStartYourTurn();
+        } catch (IOException e) { throw new RuntimeException(e); }
 
     }
 
-
-
     //-------------------------------------- RMI vs Socket layer --------------------------------------
 
-
-    /**
-     * this method tells to "nextClient" to start his turn, is divided in RMI and socket
-     * @return true if everything went fine
-     * @throws RemoteException
-     */
-    public abstract Boolean notifyStartYourTurn() throws IOException;
-
-    /**
-     * this method tells to the current user that his turn is finished, is divided in RMI and socket
-     * @return true if everything went fine
-     * @throws RemoteException
-     */
-    public abstract Boolean notifyEndYourTurn() throws IOException;
-
-    /**
-     * this method tells to all users to update their board to the new one, is divided in RMI and socket
-     * @throws RemoteException
-     */
-    public abstract void notifyUpdatedBoard() throws IOException;
-
-    /**
-     * this method tells to all users that the game they're playing is ended, is divided in RMI and socket
-     * @throws RemoteException
-     */
-    public abstract void notifyEndGame() throws IOException;
-
-
-    /**
-     * this method tells to all users that the game has started and that they aren't anymore in the waiting room, is divided in RMI and socket
-     * @throws RemoteException
-     */
-    public  abstract void notifyStartPlaying() throws IOException;
-
-
-    /**
-     * this method tells asks a user how many players he wants in his game, is divided in RMI and socket
-     * @return the chosen number of players
-     * @throws RemoteException
-     */
-    public abstract int askNumberOfPlayers() throws IOException;
-
-
-    /**
-     * @return true if the client is connected
-     * @throws RemoteException RMI exception
-     */
-    public abstract boolean askPing() throws IOException;
 
 
 
@@ -278,7 +258,7 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
     }
 
     /**
-     * @param g of tupe Game
+     * @param g of type Game
      */
     public void setGame(Game g){
         this.game=g;
@@ -323,11 +303,16 @@ public abstract class ControlPlayer implements GameHandler, Serializable {
 
                 break;
 
+            case nOfPlayerAsked:
+                if(ps.equals(PlayerStatus.MY_TURN)){
+                    this.playerStatus = ps;
+                }
+                break;
+
             default:
                 System.out.println(" impossible to set "+nickname+" status from "+this.playerStatus + " to " + ps);
         }
     }
-
 
     abstract public void setClientHandler(ClientHandler cliHnd);
 

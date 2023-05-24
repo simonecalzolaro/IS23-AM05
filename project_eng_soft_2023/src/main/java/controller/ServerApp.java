@@ -24,7 +24,9 @@ public class ServerApp {
         try {
             lobby = new RMILobby();
             lobby.startServer();
-            lobby.checkFullWaitingRoom();
+            new Thread(()-> lobby.checkFullWaitingRoom()).start();
+            new Thread(()-> lobby.checkAskNuberOfPlayers()).start();
+
         } catch (RemoteException e) {
             System.out.println("ServerApp --- RemoteException occurred while starting a new RMIServer");
             throw new RuntimeException();
@@ -33,6 +35,7 @@ public class ServerApp {
             throw new RuntimeException();
         }
 
+        /*
         try {
             client_server_bridge = new TCPHandler();
             client_server_bridge.startServer();
@@ -41,9 +44,9 @@ public class ServerApp {
             throw new RuntimeException();
         }
 
+         */
 
     }
-
 
     static class Menu implements Runnable{
 
@@ -99,7 +102,7 @@ public class ServerApp {
 
             for(Game g: lobby.getGames()){
 
-                System.out.println("GAME: " + g.getGameID() + "   status:" + g.getGameStatus());
+                System.out.println("\nGAME: " + g.getGameID() + "   status:" + g.getGameStatus());
 
                 System.out.println("number of players: " + g.getPlayers().size());
 

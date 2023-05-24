@@ -93,6 +93,7 @@ public class RMIClient extends Client {
     public void askLogin(String nick) throws LoginException, IOException, RemoteException{
 
         this.gameHandler= clientServerHandler.login(nick , this);
+
     }
 
 
@@ -115,9 +116,9 @@ public class RMIClient extends Client {
      * @throws RemoteException
      */
     @Override
-    public boolean askLeaveGame() throws RemoteException, LoginException {
+    public void askLeaveGame() throws RemoteException, LoginException {
 
-        return clientServerHandler.leaveGame(model.getNickname());
+        clientServerHandler.leaveGame(model.getNickname(), model.getGameID());
     }
 
 
@@ -132,29 +133,37 @@ public class RMIClient extends Client {
      * @throws NotMyTurnException
      */
     @Override
-    public boolean askBoardTiles( List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
+    public void askBoardTiles( List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
 
-        return gameHandler.chooseBoardTiles( coord );
+        gameHandler.chooseBoardTiles( coord );
 
     }
 
     @Override
-    public boolean askInsertShelfTiles( int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
+    public void askInsertShelfTiles( int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
 
-        return gameHandler.insertShelfTiles( choosenColumn, coord);
+        gameHandler.insertShelfTiles( choosenColumn, coord);
     }
 
     @Override
-    public int askGetMyScore() throws RemoteException{
+    public void askSetNumberOfPlayers(int n, String nick) {
 
-        return gameHandler.getMyScore();
+        try {
+            clientServerHandler.setNumberOfPlayers(n, nick);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public void askPassMyTurn() {
+
+
+
     }
 
 
 
-    public void askCheckFullWaitingRoom() throws IOException {
-
-        //clientServerHandler.checkFullWaitingRoom();
-    }
 
 }

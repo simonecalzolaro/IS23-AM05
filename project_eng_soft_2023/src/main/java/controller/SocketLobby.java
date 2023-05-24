@@ -207,11 +207,11 @@ public class SocketLobby extends Lobby implements Runnable{
                         case "leaveGame":
 
                             try{
-                                boolean left = TCPLeaveGame(request);
+                                TCPLeaveGame(request);
 
                                 response.put("Action","Feedback");
                                 response.put("Feedback","OKleaveGame");
-                                response.put("Param1",left);
+                               // response.put("Param1",left);
 
                                 try{
                                     outServer.reset();
@@ -441,12 +441,10 @@ public class SocketLobby extends Lobby implements Runnable{
 
                         case "getMyScore":
 
-                            try {
-                                int score = TCPgetMyScore();
 
                                 response.put("Action","Feedback");
                                 response.put("Feedback","OKgetMyScore");
-                                response.put("Param1",score);
+                                //response.put("Param1",score);
 
                                 try{
                                     outServer.reset();
@@ -460,22 +458,22 @@ public class SocketLobby extends Lobby implements Runnable{
                                 }
 
 
-                            } catch (RemoteException e) {
+
                                 response.put("Action","Feedback");
                                 response.put("Feedback","RemoteException");
-                                response.put("Param1",e);
+                                //response.put("Param1",e);
 
                                 try {
                                     outServer.reset();
                                     outServer.write(response);
                                 } catch (InvalidOperationException e1) {
                                     System.out.println("SocketLobby --- InvalidOperationException occurred trying yo flush the feedback to the client");
-                                    e.printStackTrace();
+                                  //  e.printStackTrace();
                                 } catch (IOException e1) {
                                     System.out.println("SocketLobby --- IOException occurred trying to flush the feedback to the client");
-                                    e.printStackTrace();
+                                 //   e.printStackTrace();
                                 }
-                            }
+
 
 
                     }
@@ -515,41 +513,35 @@ public class SocketLobby extends Lobby implements Runnable{
 
     }
 
-    public boolean TCPLeaveGame(JSONObject json) throws LoginException, RemoteException {
+    public void TCPLeaveGame(JSONObject json) throws LoginException, RemoteException {
 
         String nick = (String) json.get("Param1");
-        return leaveGame(nick);
+        //leaveGame(nick); ----SimoSocket
 
     }
 
 
-    public boolean TCPchooseBoardTiles(JSONObject json) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
+    public void TCPchooseBoardTiles(JSONObject json) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
 
         // List<Tile> chosenTiles = (List<Tile>) json.get("Param1"); //----SimoSocket
         List<Integer> coord = (List<Integer>) json.get("Param2");
 
-        return cp.chooseBoardTiles(coord);
+        cp.chooseBoardTiles(coord);
 
     }
 
 
-    public boolean TCPinsertShelfTiles(JSONObject json) throws InvalidChoiceException, NotConnectedException, InvalidLenghtException, RemoteException, NotMyTurnException {
+    public void TCPinsertShelfTiles(JSONObject json) throws InvalidChoiceException, NotConnectedException, InvalidLenghtException, RemoteException, NotMyTurnException {
 
         ArrayList<Tile> choosenTiles = (ArrayList<Tile>) json.get("Param1");
         int choosenColumns = (int) json.get("Param2");
         List<Integer> coord = (List<Integer>) json.get("Param3");
 
-        return cp.insertShelfTiles(choosenColumns,coord);
+        cp.insertShelfTiles(choosenColumns,coord);
 
 
     }
 
-
-    public int TCPgetMyScore() throws RemoteException {
-
-        return cp.getMyScore();
-
-    }
 
 
     public synchronized void redLight(){

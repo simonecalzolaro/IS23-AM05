@@ -25,13 +25,10 @@ public class SocketControlPlayer extends ControlPlayer {
      * Set player status as NOT_MY_TURN
      *
      * @param nickname : unique player nickname
-     * @param board    : unique board
      */
-    public SocketControlPlayer(String nickname, Board board, ArrayList<Stream> streams) throws RemoteException {
-        super(nickname, board);
-
+    public SocketControlPlayer(String nickname, ArrayList<Stream> streams) throws RemoteException {
+        super(nickname);
         setStreams(streams);
-
     }
 
 
@@ -43,7 +40,7 @@ public class SocketControlPlayer extends ControlPlayer {
      */
 
     @Override
-    public Boolean notifyStartYourTurn() throws IOException {
+    public void notifyStartYourTurn() throws IOException {
 
         JSONObject object = new JSONObject();
         JSONObject response = new JSONObject();
@@ -92,12 +89,12 @@ public class SocketControlPlayer extends ControlPlayer {
                 break;
         }
 
-        return true;
+
 
     }
 
     @Override
-    public Boolean notifyEndYourTurn() throws IOException {
+    public void notifyEndYourTurn() throws IOException {
 
         JSONObject object = new JSONObject();
         JSONObject response = new JSONObject();
@@ -146,7 +143,6 @@ public class SocketControlPlayer extends ControlPlayer {
                 break;
         }
 
-        return true;
 
     }
 
@@ -225,11 +221,13 @@ public class SocketControlPlayer extends ControlPlayer {
 
     }
 
-
+/*
     @Override
-    public boolean askPing() throws IOException {
+    public void askPing() throws IOException {
         return false;
     }
+
+ */
 
 
     public void notifyEndGame() throws IOException {
@@ -292,7 +290,7 @@ public class SocketControlPlayer extends ControlPlayer {
 
 
     @Override
-    public int askNumberOfPlayers() throws IOException{
+    public void askNumberOfPlayers(){
 
         JSONObject object = new JSONObject();
         JSONObject response = new JSONObject();
@@ -309,6 +307,8 @@ public class SocketControlPlayer extends ControlPlayer {
             System.out.println("SocketControlPlayer --- InvalidOperationException occurred trying to reset/write the stream");
             System.out.println("---> Maybe you're trying to reset/write an input stream");
             throw new RuntimeException();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         try{
@@ -339,7 +339,7 @@ public class SocketControlPlayer extends ControlPlayer {
 
         }
 
-        return res;
+
 
     }
 

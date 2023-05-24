@@ -31,12 +31,12 @@ public interface ClientServerHandler extends Remote {
 
     /**
      * a player ask to leave the game he is playing
-     * @return true if the request is approved
      */
-    boolean leaveGame(String nickname) throws LoginException, RemoteException;
+    void leaveGame(String nickname, int ID) throws LoginException, RemoteException;
 
-
-
-    //void checkFullWaitingRoom() throws IOException;
+    /**
+     * method called by the client to set the number of players
+     */
+    void setNumberOfPlayers(int n, String nick) throws RemoteException;
 
 }

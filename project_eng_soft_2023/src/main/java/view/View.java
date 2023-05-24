@@ -17,7 +17,7 @@ public abstract class View {
 
     }
 
-    public abstract int getNumOfPlayer() throws RemoteException;
+    public abstract void getNumOfPlayer() throws RemoteException;
     public abstract void updateBoard();
     public abstract void endGame(Map< Integer, String> results);
     public abstract void isYourTurn() throws IOException, InvalidChoiceException, NotConnectedException, InvalidParametersException, NotMyTurnException;

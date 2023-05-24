@@ -15,9 +15,12 @@ public class Matrix {
 
         for (Map.Entry<model.Tile, Integer[]> entry : pgcMap.entrySet()){
 
-            map.put(Tile.getTile(entry.getKey().ordinal()), entry.getValue());
-
+            map.put(Tile.getTile(entry.getKey().ordinal()) , new Integer[] {entry.getValue()[0], entry.getValue()[1]});
+            //System.out.println("key:"+Tile.getTile(entry.getKey().ordinal())+ " value: "+ entry.getValue()[0] + ","+entry.getValue()[1]);
         }
+
+      matr=generateMatrixFromMap(map);
+
 
     }
 
@@ -30,6 +33,9 @@ public class Matrix {
                 this.matr[i][j]=Tile.getTile(matr[i][j].ordinal());
             }
         }
+
+       map=generateMapFromMatrix(this.matr);
+
     }
 
     public Tile getTileByCoord(int row, int col){
@@ -56,17 +62,19 @@ public class Matrix {
 
     private Tile[][] generateMatrixFromMap( Map<Tile, Integer[]>  map){
 
-        Tile[][] matr= new Tile[][]{};
+        Tile[][] matr= new Tile[6][5];
+        Integer[] vett=new Integer[2];
 
-        for (int i=0; i< matr.length; i++){
+        for (int i=0; i < matr.length; i++){
             for (int j=0; j< matr[0].length; j++){
                 matr[i][j]=Tile.EMPTY;
             }
         }
 
-
         for (Map.Entry<Tile, Integer[]> entry : map.entrySet()){
-            matr[entry.getValue()[0]][entry.getValue()[1]] = entry.getKey() ;
+            vett[0]=entry.getValue()[0];
+            vett[1]=entry.getValue()[1];
+            matr[vett[0]][vett[1]] = entry.getKey() ;
         }
 
         return matr;

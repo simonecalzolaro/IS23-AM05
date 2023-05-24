@@ -25,7 +25,7 @@ public class PingPong implements Runnable{
     @Override
     public void run() {
 
-        while( true  ){
+        while( true ){
 
             (new Thread(new PingClient())).start(); //
 
@@ -86,7 +86,7 @@ public class PingPong implements Runnable{
 
             try{
                 //System.out.println("    ping to " + controlPlayer.getPlayerNickname());
-                connected=controlPlayer.askPing();
+               // connected=controlPlayer.askPing();
             }catch (Exception e){
                 connected=false;
             }

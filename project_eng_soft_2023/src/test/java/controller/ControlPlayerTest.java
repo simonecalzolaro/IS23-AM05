@@ -10,6 +10,7 @@ import myShelfieException.NotConnectedException;
 import myShelfieException.NotMyTurnException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import view.TUI;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ControlPlayerTest {
 
-    ClientHandler ch= (ClientHandler) new RMIClient();
+    ClientHandler ch= (ClientHandler) new RMIClient(new TUI());
 
     ControlPlayerTest() throws RemoteException {
     }
@@ -39,7 +40,8 @@ class ControlPlayerTest {
     void insertTiles() throws NotConnectedException, InvalidChoiceException, NotMyTurnException, InvalidLenghtException, RemoteException {
         Board board = new Board();
         board.initializeBoard(4);
-        ControlPlayer cp = new RMIControlPlayer("Tony", board, ch);
+        ControlPlayer cp = new RMIControlPlayer("Tony", ch);
+        cp.initializeControlPlayer(board);
 
         ArrayList<Tile> arr1= new ArrayList<>(){{add(Tile.BLUE); add(Tile.GREEN); add(Tile.WHITE);}};
 

@@ -5,17 +5,18 @@ import java.util.Map;
 
 public class ClientModel {
 
-
+    private int GameID;
     private String nickname;
     private Matrix board;
     private Matrix myBookshelf;
     private Map<String, Matrix> otherPlayers;
 
+    private int myScore;
+
+    //------------cards-------------
     private Matrix pgc;
     private int pgcNum;
-
     private CGC cgc1;
-
     private CGC cgc2;
 
 
@@ -89,7 +90,7 @@ public class ClientModel {
     }
 
 
-    //--------------------getter e setter CGC---------------
+    //--------------------getter and setter CGC---------------
 
     public Matrix getPgc() {
         return pgc;
@@ -101,8 +102,6 @@ public class ClientModel {
 
 
     //--------------------getter PGC---------------
-
-
     public CGC getCgc1() {
         return cgc1;
     }
@@ -112,5 +111,22 @@ public class ClientModel {
     }
 
 
+    //--------------------getter and setter GameID--------------------
+    public int getGameID() {
+        return GameID;
+    }
 
+    public void setGameID(int gameID) {
+        GameID = gameID;
+    }
+
+
+    //--------------------getter and setter myScore--------------------
+    public int getMyScore() {
+        return myScore;
+    }
+
+    public void setMyScore(int myScore) {
+        this.myScore = myScore;
+    }
 }
