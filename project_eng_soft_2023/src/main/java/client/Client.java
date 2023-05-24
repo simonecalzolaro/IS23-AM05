@@ -85,6 +85,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         }
 
         model.initializeMatrixes(new Matrix(board), new Matrix(myShelf), otherPlayersMatr );
+        model.setMyScore(myScore);
 
         view.updateBoard();
 

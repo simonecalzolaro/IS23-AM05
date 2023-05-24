@@ -7,10 +7,11 @@ import myShelfieException.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ControlPlayer implements GameHandler, ControllerAskNotify, Serializable {
+public abstract class ControlPlayer extends UnicastRemoteObject implements GameHandler, ControllerAskNotify, Serializable {
 
     /**
      *Player's id
@@ -25,7 +26,7 @@ public abstract class ControlPlayer implements GameHandler, ControllerAskNotify,
     /**
      * Player's bookshelf
      */
-    protected Bookshelf bookshelf;
+     Bookshelf bookshelf;
 
     /**
      * Player's score
@@ -54,9 +55,11 @@ public abstract class ControlPlayer implements GameHandler, ControllerAskNotify,
 
     public void initializeControlPlayer(Board board){
 
+        System.out.println("    "+nickname+" player is initialized, bookshelf:"+ bookshelf);
         bookshelf = new Bookshelf(board);
         score = 0;
         playerStatus = PlayerStatus.NOT_MY_TURN;
+        System.out.println("    "+nickname+" player is initialized, bookshelf:"+ bookshelf);
 
     }
 
@@ -77,7 +80,7 @@ public abstract class ControlPlayer implements GameHandler, ControllerAskNotify,
             throw new NotConnectedException();
         }
         else{
-            bookshelf.putTiles(stream_tiles,column);
+            bookshelf.putTiles(stream_tiles, column);
             updateScore();
             return true;
         }
@@ -99,6 +102,8 @@ public abstract class ControlPlayer implements GameHandler, ControllerAskNotify,
      * @throws NotConnectedException the player is not connected
      */
     public List<Tile> catchTile(List<Integer> coord) throws InvalidParametersException, InvalidChoiceException, NotMyTurnException, NotConnectedException {
+
+        System.out.println("    "+nickname+" catchTile bookshelf:"+ bookshelf);
 
         if (playerStatus == PlayerStatus.NOT_MY_TURN) {
             throw new NotMyTurnException();
@@ -144,13 +149,15 @@ public abstract class ControlPlayer implements GameHandler, ControllerAskNotify,
     public void insertShelfTiles( int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidLenghtException, InvalidChoiceException {
 
         ArrayList<Tile> choosenTiles=new ArrayList<>();
+        boolean goOn;
 
         for(int i=0; i<coord.size()/2; i+=2){
             choosenTiles.add(game.getBoard().getBoard()[i][i+1]);
         }
 
         //inserting the tiles in the bookshelf
-        if( ! insertTiles(choosenTiles, choosenColumn)) return;
+        goOn=insertTiles(choosenTiles, choosenColumn);
+        if( !goOn  ) return;
 
         //and subtracting the same tiles from the board
         game.getBoard().subTiles(coord);

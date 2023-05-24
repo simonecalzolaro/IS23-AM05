@@ -79,6 +79,8 @@ public class ClientModel {
     }
 
 
+
+
     //-------------------- getter and setter otherPlayers ----------------------
 
     public Map<String, Matrix> getOtherPlayers() {

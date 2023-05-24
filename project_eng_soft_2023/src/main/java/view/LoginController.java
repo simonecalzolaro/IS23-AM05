@@ -248,7 +248,7 @@ public class LoginController extends GUIController {
 
     @Override
     public void setScene(GUI gui, Stage stage) {
-        gui.setLoginController(this);
+       // gui.setLoginController(this);
         super.setScene(gui, stage);
     }
 }

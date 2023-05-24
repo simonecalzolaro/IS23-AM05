@@ -265,11 +265,9 @@ public class GameController extends GUIController {
         bookshelfButton.setOnAction(null);
         stateLabel.setText("Not your turn!");
         Integer score = null;
-        try{
-            score= client.askGetMyScore();
-        } catch (IOException e) {
 
-        }
+            score= client.getModel().getMyScore();
+
 
         scoreLabel.setText(Integer.toString(score));
     }

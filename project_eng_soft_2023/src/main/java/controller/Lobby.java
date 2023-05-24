@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 
+import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -20,7 +21,7 @@ import java.util.stream.Stream;
  * ServerApp is the running program of the server, it handles the remote clients and
  * all the actions each client wants to take
  */
-public abstract class Lobby implements ClientServerHandler {
+public abstract class Lobby implements  ClientServerHandler {
 
     static String hostname;
     static Long PORT_pre;
