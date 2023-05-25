@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -25,12 +26,21 @@ public class PingPong implements Runnable{
     @Override
     public void run() {
 
+
         while( true ){
 
-            (new Thread(new PingClient())).start(); //
-
+            //set the connection to false and sending a ping request
+            connected=false;
             try {
-                Thread.sleep(1000); //wait for 5 seconds
+                controlPlayer.askPing();
+            } catch (Exception e) {
+                System.out.println(" --- error: impossible to ask ping to "+controlPlayer.getPlayerNickname());
+            }
+
+
+            //waiting a little
+            try {
+                Thread.sleep(5000); //wait for 5 seconds
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -42,9 +52,10 @@ public class PingPong implements Runnable{
                     controlPlayer.setPlayerStatus(PlayerStatus.NOT_MY_TURN);
                 }
                 counter=0;
-            } else{
 
-                if(controlPlayer.getPlayerStatus().equals(PlayerStatus.WAITING_ROOM)){
+            }else{
+
+                if(controlPlayer.getPlayerStatus().equals(PlayerStatus.WAITING_ROOM) || controlPlayer.getPlayerStatus().equals(PlayerStatus.nOfPlayerAsked)){
                     ServerApp.lobby.removeFromWaitingRoom(controlPlayer);
                     System.out.println("    "+controlPlayer.getPlayerNickname()+"  left the waiting room ");
                     break;
@@ -60,7 +71,6 @@ public class PingPong implements Runnable{
 
                     controlPlayer.getGame().removePlayer(controlPlayer);
                     System.out.println("    "+controlPlayer.getPlayerNickname()+" timeout connection: removed from his game");
-
                     break;
                 }
             }
@@ -79,24 +89,14 @@ public class PingPong implements Runnable{
         }
     }
 
-    class PingClient implements Runnable{
-
-        @Override
-        public void run() {
-
-            try{
-                //System.out.println("    ping to " + controlPlayer.getPlayerNickname());
-               // connected=controlPlayer.askPing();
-            }catch (Exception e){
-                connected=false;
-            }
-        }
-    }
 
     public boolean getConnectionStatus(){
         return connected;
     }
 
+    public void setConnected() {
+        this.connected = true;
+    }
 
     public void verifyGameSuspension(){
 

@@ -38,12 +38,11 @@ public interface ControllerAskNotify {
      */
     void notifyStartPlaying() throws IOException;
 
-    /*
     /**
-     * @return true if the client is connected
+     * send an ask request to the client
      * @throws RemoteException RMI exception
-
+     */
     void askPing() throws IOException;
-    */
+
 
 }

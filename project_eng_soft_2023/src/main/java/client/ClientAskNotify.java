@@ -61,5 +61,6 @@ public interface ClientAskNotify {
 
     void askPassMyTurn();
 
+    void notifyPong();
 
 }

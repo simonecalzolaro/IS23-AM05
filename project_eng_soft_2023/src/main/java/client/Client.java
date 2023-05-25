@@ -28,7 +28,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     private View view;
 
     private PingFromServer pingChecker;
-    private Thread pingThread;
 
     protected boolean myTurn;
     protected boolean gameEnded;
@@ -47,8 +46,8 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         myTurn=false;
         gameEnded=false;
         left=false;
-       // pingChecker=new PingFromServer(this);
-        // pingThread=new Thread(pingChecker);
+        pingChecker=new PingFromServer(this);
+        (new Thread(pingChecker)).start();
 
     }
 
@@ -168,10 +167,10 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws RemoteException RMI exception
      */
     @Override
-    public boolean pong() throws RemoteException {
+    public void ping() throws RemoteException {
 
         pingChecker.setConnected(true);
-        return true;
+        notifyPong();
 
     }
 

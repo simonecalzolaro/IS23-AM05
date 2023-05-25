@@ -77,9 +77,10 @@ public class TUI extends View {
     public void isYourTurn() throws IOException{
 
         if(client.isMyTurn()) {
+
             out.println("It's your turn, you have 2 min to complete your task!\n");
 
-            updateBoard();
+            //updateBoard();
             String action;
             int request = 0;
 
@@ -313,8 +314,10 @@ public class TUI extends View {
                     out.println("Choose your nickname:");
                     String nickname = getInput();
                     try {
-                        client.askLogin(nickname);
+
                         client.getModel().setNickname(nickname);
+                        client.askLogin(nickname);
+
                         goon = true;
                     } catch (LoginException e) {
                         e.getMessage();
@@ -342,12 +345,12 @@ public class TUI extends View {
         //System.out.println(" Welcome "+ client.getModel().getNickname() +" you are now int the WAITING ROOM...");
 
         while(client.getModel().getPgcNum()==-1){
-            System.out.println("...waiting for other players");
             try {
-                Thread.sleep(3000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            System.out.println("...waiting for other players");
         }
     }
 

@@ -111,11 +111,16 @@ public class RMIControlPlayer extends ControlPlayer{
     }
 
     @Override
+    public void askPing() throws IOException {
+            ch.ping();
+    }
+
+    @Override
     public void askNumberOfPlayers() {
         try {
             ch.enterNumberOfPlayers();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            System.out.println(" --- an error occured while asking enterNumberOfPlayers() to "+ nickname);
         }
     }
 

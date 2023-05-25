@@ -39,4 +39,9 @@ public interface ClientServerHandler extends Remote {
      */
     void setNumberOfPlayers(int n, String nick) throws RemoteException;
 
+    /**
+     * method called by the client after the server's ping to confirm the connection
+     * @throws RemoteException
+     */
+    void pong(String nickname, int gameID) throws RemoteException;
 }

@@ -295,6 +295,10 @@ public class SocketClient extends Client{
 //---SimoSocket
     }
 
+    @Override
+    public void notifyPong() {
+
+    }
 
 
     @Override

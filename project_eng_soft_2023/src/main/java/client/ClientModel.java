@@ -30,6 +30,7 @@ public class ClientModel {
         this.pgcNum=-1;
         this.cgc1=null;
         this.cgc2=null;
+        this.GameID=-1;
         myScore=0;
     }
 
@@ -64,6 +65,7 @@ public class ClientModel {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
     //-------------------- getter and setter board ----------------------
 
 

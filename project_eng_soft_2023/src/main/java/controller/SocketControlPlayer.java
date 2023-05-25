@@ -403,6 +403,13 @@ public class SocketControlPlayer extends ControlPlayer {
     }
 
     @Override
+    public void askPing() throws IOException {
+
+        //----simoSocket
+
+    }
+
+    @Override
     public void setStreams(ArrayList<Stream> streams) {
         outCP = streams.get(0);
         inCP = streams.get(1);

@@ -18,6 +18,9 @@ public class PersonalGoalCard implements Card, Serializable {
      * @param card indicates the type of PersonalGoalCard you want to create
      */
     public PersonalGoalCard(int card){
+
+        cardNumber=card;
+
         switch (card) {
             case 1 -> {
                 map.put(Tile.GREEN, new int[]{4, 4});

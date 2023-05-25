@@ -40,7 +40,7 @@ public class RMIClient extends Client {
     public void initializeClient() throws IOException, NotBoundException {
 
 
-        System.out.println("--- initialize the RMI Client --- ");
+        //System.out.println("--- initialize the RMI Client --- ");
 
         getServerSettings();
 
@@ -159,11 +159,26 @@ public class RMIClient extends Client {
     @Override
     public void askPassMyTurn() {
 
-
+        try {
+            gameHandler.passMyTurn();
+        } catch (RemoteException e) {
+            System.out.println("---error occurred when asking to skip the turn");
+            throw new RuntimeException(e);
+        }
 
     }
 
+    @Override
+    public void notifyPong() {
 
+        try {
+
+            clientServerHandler.pong(model.getNickname(), model.getGameID());
+
+        } catch (RemoteException e) {
+            System.out.println("--- an error occur when pong() back the server");
+        }
+    }
 
 
 }

@@ -39,6 +39,10 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     protected Game game;
 
 
+
+    private PingPong pingClass;
+
+
     /**
      * Assign player id
      * Initialize score
@@ -50,16 +54,16 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         this.nickname = nickname;
         playerStatus = PlayerStatus.NOT_MY_TURN;
 
-        //(new Thread(new PingPong(this))).start(); //starting PinPonging
+        pingClass=new PingPong(this);
+        (new Thread(pingClass)).start(); //starting PinPonging
+
     }
 
     public void initializeControlPlayer(Board board){
 
-        System.out.println("    "+nickname+" player is initialized, bookshelf:"+ bookshelf);
         bookshelf = new Bookshelf(board);
         score = 0;
         playerStatus = PlayerStatus.NOT_MY_TURN;
-        System.out.println("    "+nickname+" player is initialized, bookshelf:"+ bookshelf);
 
     }
 
@@ -80,7 +84,37 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
             throw new NotConnectedException();
         }
         else{
+
+            /*
+            StringBuilder str = new StringBuilder();
+            System.out.println("-----------------------------------------------");
+            System.out.println("    bookshelf.putTiles(stream_tiles, column):");
+            System.out.println("    stream_tiles: ");
+            for (Tile t: stream_tiles) {
+                str.append(t).append(",");
+            }
+            System.out.println(str);
+            str.delete(0,str.length()-1);
+            System.out.println("    col: "+column);
+            //--------------------------------------
+             */
+
             bookshelf.putTiles(stream_tiles, column);
+
+            /*
+            //--------------------------------------
+            System.out.println("    bookshelf :");
+            for(int i=0; i< bookshelf.getShelf().length; i++){
+                for(int j=0; j< bookshelf.getShelf()[0].length; j++){
+                    str.append(bookshelf.getShelf()[i][j]).append(",");
+                }
+                System.out.println( str );
+                str.delete(0,str.length()-1);
+            }
+            System.out.println("-----------------------------------------------");
+             */
+
+
             updateScore();
             return true;
         }
@@ -102,8 +136,6 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
      * @throws NotConnectedException the player is not connected
      */
     public List<Tile> catchTile(List<Integer> coord) throws InvalidParametersException, InvalidChoiceException, NotMyTurnException, NotConnectedException {
-
-        System.out.println("    "+nickname+" catchTile bookshelf:"+ bookshelf);
 
         if (playerStatus == PlayerStatus.NOT_MY_TURN) {
             throw new NotMyTurnException();
@@ -151,8 +183,8 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         ArrayList<Tile> choosenTiles=new ArrayList<>();
         boolean goOn;
 
-        for(int i=0; i<coord.size()/2; i+=2){
-            choosenTiles.add(game.getBoard().getBoard()[i][i+1]);
+        for(int i=0; i<coord.size(); i+=2){
+            choosenTiles.add(game.getBoard().getBoard()[coord.get(i)][coord.get(i+1)]);
         }
 
         //inserting the tiles in the bookshelf
@@ -311,9 +343,9 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
                 break;
 
             case nOfPlayerAsked:
-                if(ps.equals(PlayerStatus.MY_TURN)){
+
                     this.playerStatus = ps;
-                }
+
                 break;
 
             default:
@@ -325,5 +357,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
 
     abstract public void setStreams(ArrayList<Stream> streams);
 
-
+    public PingPong getPingClass() {
+        return pingClass;
+    }
 }

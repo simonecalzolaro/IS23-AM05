@@ -104,7 +104,7 @@ public abstract class Lobby implements  ClientServerHandler {
             //se la waiting room è vuota o non è ancora stato chiesto il numero di giocatori
             if (tempBoard==null) {
                 tempBoard = new Board();
-                System.out.println("\n...a new board has been created... " + tempBoard);
+                System.out.println("\n  ...a new board has been created... " + tempBoard);
             }
 
             try {
@@ -129,7 +129,7 @@ public abstract class Lobby implements  ClientServerHandler {
             //adding the player to the waiting room, so now tempPlayers.size() è uguale a old( tempPlayers.size() ) + 1
             tempPlayers.add(pl);
             pl.setPlayerStatus(PlayerStatus.WAITING_ROOM);
-            System.out.println("-> ...player " + nickname + " entered the game. Waiting room now contains " + tempPlayers.size() + "/" + attendedPlayers);
+            System.out.println("-->player " + nickname + " entered the game. Waiting room now contains " + tempPlayers.size() + "/" + (attendedPlayers<0? "0": attendedPlayers));
 
             flagNoP=true;
             notifyAll();
@@ -157,10 +157,10 @@ public abstract class Lobby implements  ClientServerHandler {
                 if (attendedPlayers == -1 ) {
 
                     attendedPlayers = -2;
-                    System.out.println("...checking AskNuberOfPlayers ");
                     ControlPlayer pl = tempPlayers.get(0);
 
                     //server asks client how many players he wants in his match
+                    System.out.println("    ...asking the number of players to "+pl.getPlayerNickname());
                     pl.askNumberOfPlayers();
                    // System.out.println("-> " + pl.getPlayerNickname() + " chooses " + attendedPlayers + " number of players");
 
@@ -194,11 +194,11 @@ public abstract class Lobby implements  ClientServerHandler {
             flagWR=false;
 
 
-            System.out.println("... checkFullWaitingRoom, tempPlayers.size():"+ tempPlayers.size() + ", attendedPlayers:"+attendedPlayers);
+            //System.out.println("... checkFullWaitingRoom, tempPlayers.size():"+ tempPlayers.size() + ", attendedPlayers:"+attendedPlayers);
             //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
             if (tempPlayers.size() >= attendedPlayers && attendedPlayers>0) {
 
-                System.out.println(" -> ...Loading game , participants: " + tempPlayers.stream().map(ControlPlayer::getPlayerNickname));
+                System.out.println("    ...Loading game , participants: " + tempPlayers.stream().map(ControlPlayer::getPlayerNickname));
 
                 try {
 
@@ -212,7 +212,7 @@ public abstract class Lobby implements  ClientServerHandler {
 
                     //initializing the board with the chosen number of players
                     tempBoard.initializeBoard(attendedPlayers);
-                    System.out.println("-> creating a game with " + attendedPlayers + " players...");
+                    System.out.println("    ...creating a game with " + attendedPlayers + " players...");
 
 
                     Game g = new Game( newPlayers, tempBoard);
@@ -241,7 +241,7 @@ public abstract class Lobby implements  ClientServerHandler {
                         }
                     }
 
-                    System.out.println(" -> ...The game has been created, participants: " + g.getPlayers().stream().map(x -> x.getPlayerNickname()));
+                    System.out.println("    ...The game has been created, participants: " + g.getPlayers().stream().map(x -> x.getPlayerNickname()));
 
                 } catch (IOException e) {
                     System.out.println("----Exception occurred while initializing a Game");
@@ -356,18 +356,37 @@ public abstract class Lobby implements  ClientServerHandler {
     public void setNumberOfPlayers(int n, String nick) throws RemoteException{
 
         //searching the controlPlayer called "nick" int the waiting room and if I found him I'll set attendedPlayers to n
-        System.out.println("...setting new number of players...");
+        //System.out.println("...setting new number of players...");
         if(tempPlayers.get(0).getPlayerNickname().equals(nick) && tempPlayers.size()>0){
             if (n>=2 && n<=4) {
                 attendedPlayers = n;
                 System.out.println("--> new number of attendedPlayers:"+attendedPlayers);
-                return;
+                tempPlayers.get(0).setPlayerStatus(PlayerStatus.WAITING_ROOM);
             }
         }
-
     }
 
 
+    @Override
+    public void pong(String nickname, int gameID) throws RemoteException{
+
+
+        if(gameID<=0 ){ // if gameId is less than 0 it means that we still are in the waiting room
+            for(ControlPlayer cp: tempPlayers){
+                if(cp.getPlayerNickname().equals(nickname) ){
+                    cp.getPingClass().setConnected();
+                    return;
+                }
+            }
+        }else{
+            for(ControlPlayer cp: clients){
+                if(cp.getPlayerNickname().equals(nickname) && gameID==cp.getGame().getGameID()){
+                    cp.getPingClass().setConnected();
+                    return;
+                }
+            }
+        }
+    }
     //-------------------------------- getter and setter--------------------------------
 
     /**
@@ -402,14 +421,25 @@ public abstract class Lobby implements  ClientServerHandler {
      */
     public synchronized void removeFromWaitingRoom (ControlPlayer cp){
 
+        //se il primo se ne va ancor prima di chedergli in nuber Of PLayers:
+        if(cp.equals(tempPlayers.get(0))){
+            attendedPlayers=-1;
+        }
 
-            tempPlayers.remove(cp);
-            clients.remove(cp);
+        tempPlayers.remove(cp);
+        clients.remove(cp);
 
-            //se non è rimasto nessuno nella waiting room :
-            if(tempPlayers.size()==0) attendedPlayers=-1;
+        //se non è rimasto nessuno nella waiting room :
+        if(tempPlayers.size()==0){
+            attendedPlayers=-1;
+            return;
+        }
 
+        //se il primo se ne va ma da lui mi aspettavo il NoP:
+        if(cp.getPlayerStatus().equals(PlayerStatus.nOfPlayerAsked)){
+            attendedPlayers = -2;
+            tempPlayers.get(0).setPlayerStatus(PlayerStatus.nOfPlayerAsked);
+            tempPlayers.get(0).askNumberOfPlayers();
+        }
     }
-
-
 }
