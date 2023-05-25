@@ -113,9 +113,6 @@ public class Game implements Serializable {
 
         if(gameStatus!=GameStatus.END_GAME){
             players.get(currPlayer).setPlayerStatus(PlayerStatus.MY_TURN);
-            try {
-                players.get(currPlayer).notifyStartYourTurn();
-            } catch (IOException e) { throw new RuntimeException(e); }
         }
         else{
             try {

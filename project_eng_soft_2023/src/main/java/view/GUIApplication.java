@@ -13,7 +13,7 @@ public class GUIApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("login.fxml"));
         FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("game.fxml"));
-        Scene scene = new Scene(fxmlLoader1.load(), 1250,650);
+        Scene scene = new Scene(fxmlLoader.load(), 1250,650);
         stage.setScene(scene);
         stage.setTitle("MyShelfie");
         //stage.setMaximized(true);
@@ -21,10 +21,10 @@ public class GUIApplication extends Application {
         LoginController controller=fxmlLoader.getController();
         GUI gui=new GUI();
 
-        //gui.setLoginController(controller);
-        //controller.setScene(gui,stage);
-        GameController controller1=fxmlLoader1.getController();
-        controller1.setScene(gui, stage);
+        gui.setLoginController(controller);
+        controller.setScene(gui,stage);
+        //GameController controller1=fxmlLoader1.getController();
+        //controller1.setScene(gui, stage);
     }
     public static void main(String[] args) {
         launch();

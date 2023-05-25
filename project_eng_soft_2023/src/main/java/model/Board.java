@@ -87,20 +87,10 @@ public class Board implements Serializable {
             }
         }
 
-        switch (nPlayers) {
-            case 3 -> {
-                //3 players settings
-                board[0][4] = Tile.NOTAVAILABLE;
-                board[1][5] = Tile.NOTAVAILABLE;
-                board[3][1] = Tile.NOTAVAILABLE;
-                board[4][0] = Tile.NOTAVAILABLE;
-                board[4][8] = Tile.NOTAVAILABLE;
-                board[5][7] = Tile.NOTAVAILABLE;
-                board[7][3] = Tile.NOTAVAILABLE;
-                board[8][4] = Tile.NOTAVAILABLE;
 
-            }
-            case 2 -> {
+
+        switch (nPlayers) {
+            case 2 : {
                 //2 players settings
                 board[0][3] = Tile.NOTAVAILABLE;
                 board[2][2] = Tile.NOTAVAILABLE;
@@ -112,10 +102,24 @@ public class Board implements Serializable {
                 board[8][5] = Tile.NOTAVAILABLE;
 
             }
+            case 3: {
+                //3 players settings
+                board[0][4] = Tile.NOTAVAILABLE;
+                board[1][5] = Tile.NOTAVAILABLE;
+                board[3][1] = Tile.NOTAVAILABLE;
+                board[4][0] = Tile.NOTAVAILABLE;
+                board[4][8] = Tile.NOTAVAILABLE;
+                board[5][7] = Tile.NOTAVAILABLE;
+                board[7][3] = Tile.NOTAVAILABLE;
+                board[8][4] = Tile.NOTAVAILABLE;
+
+            }
+
         }
 
         //fill completely the board
         updateBoard();
+
         setCommonGoalCard();
     }
 

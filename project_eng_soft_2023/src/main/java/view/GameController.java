@@ -2,11 +2,14 @@ package view;
 
 
 
+import client.Client;
 import client.Matrix;
 import client.Tile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -19,12 +22,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import static javafx.application.Platform.exit;
 
 public class GameController extends GUIController {
     @FXML
     public Label scoreLabel;
     public Group bookshelfPlayer1, bookshelfPlayer2, bookshelfPlayer3;
+    @FXML
+    public ImageView pgc;
+    @FXML
+    public ImageView cgc1;
+    @FXML
+    public ImageView cgc2;
     @FXML
     private  Button tile1Button, tile2Button, tile3Button;
     @FXML
@@ -83,16 +93,21 @@ public class GameController extends GUIController {
     private final TileImages tileImages=new TileImages();
 
     private final List<Integer> coord = new ArrayList<>();
+
+
     @Override
     public void setScene(GUI gui, Stage stage) {
         super.setScene(gui, stage);
-        gui.setGameController(this);
         initialize();
         }
 
-    public void prova(ActionEvent actionEvent){
+        public void setClient(Client client){
+        this.client=client;
+        }
 
-        for(int i=0; i<9; i++){
+    public void prova(ActionEvent actionEvent){
+updateBoard();
+        /*for(int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 if(boardImages[i][j]!=null){
                     boardImages[i][j].setImage(new Image(tileImages.getImage(Tile.PINK)));
@@ -110,24 +125,68 @@ public class GameController extends GUIController {
         myBookshelf[3][0].setImage(insertBookshelf[3][0].getImage());
         myBookshelf[2][0].setImage(insertBookshelf[2][0].getImage());
 
-        startTurn();
+        startTurn();*/
     }
     //----------------------------------------------------------- Server vs client-------------------------------------
 
     public void startTurn(){
         ableBoardButton();
         setBoardButton();
+
+        cgc1.setImage(new Image(getCGCImage(client.getModel().getCgc1().ordinal())));
+        cgc2.setImage(new Image(getCGCImage(client.getModel().getCgc2().ordinal())));
+        //pgc.setImage(new Image(getPGCImage(client.getModel().getPgcNum())));
         enterTilesButton.setVisible(true);
         stateLabel.setText("Choose tile!");
     }
 
-    public void update(){
+
+
+    public void endGame() throws IOException {
+        FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("rank.fxml"));
+        Scene scene = new Scene(fxmlLoader1.load(), 1250,650);
+        RankController rankController=fxmlLoader1.getController();
+        rankController.setScene(gui,stage);
+        gui.setRankController(rankController);
+        rankController.setClient(client);
+        stage.setScene(scene);
+    }
+
+    public void updateAll() {
         updateBoard();
+        updateScore();
+        updateMyBookshelf();
         updateOtherBookshelf();
     }
 
-    public void endGame(){
-        //TODO show final ranking
+    private void updateScore() {
+       scoreLabel.setText(Integer.toString(client.getModel().getMyScore()));
+    }
+
+    private void updateMyBookshelf() {
+        updateBookshelf(myBookshelf,client.getModel().getMyBookshelf());
+        updateBookshelf(insertBookshelf, client.getModel().getMyBookshelf());
+    }
+
+    private void updateBookshelf(ImageView[][] bookshelf, Matrix reference){
+        if(bookshelf!=null){
+            for(int i=0; i<6;i++){
+                for(int j=0; j<5; j++){
+                    if(bookshelf[i][j].getImage()!=null){
+                        Tile tile=reference.getTileByCoord(i, j);
+                        if(tile==Tile.NOTAVAILABLE||tile==Tile.EMPTY||tile==null) {
+                            bookshelf[i][j].setImage(null);
+                        }
+                        else {
+                            Image image=new Image(tileImages.getImage(tile));
+                            bookshelf[i][j].setImage(image);
+                        }
+                    }
+
+                }
+            }
+        }
+
     }
 
     //------------------------------------------------------------Client vs Server-----------------------------------
@@ -142,7 +201,7 @@ public class GameController extends GUIController {
                 }
             }
         }
-        /*try{
+        try{
             client.askBoardTiles(coord);
         } catch (InvalidChoiceException e) {
             throw new RuntimeException(e);
@@ -154,7 +213,7 @@ public class GameController extends GUIController {
             throw new RuntimeException(e);
         } catch (NotMyTurnException e) {
             throw new RuntimeException(e);
-        }*/
+        }
         disableBoardButton();
         setTile();
         removeTiles();
@@ -205,7 +264,7 @@ public class GameController extends GUIController {
     }
 
     public void insertTile(ActionEvent actionEvent) {
-        /*try {
+        try {
             client.askInsertShelfTiles(selectedColumn, coord);
 
         } catch (InvalidChoiceException e) {
@@ -218,7 +277,7 @@ public class GameController extends GUIController {
             throw new RuntimeException(e);
         } catch (NotMyTurnException e) {
             throw new RuntimeException(e);
-        }*/
+        }
 
         closeBookshelf(actionEvent);
 
@@ -264,12 +323,6 @@ public class GameController extends GUIController {
         enterColumnButton.setDisable(true);
         bookshelfButton.setOnAction(null);
         stateLabel.setText("Not your turn!");
-        Integer score = null;
-
-            score= client.getModel().getMyScore();
-
-
-        scoreLabel.setText(Integer.toString(score));
     }
 
 
@@ -467,11 +520,11 @@ public class GameController extends GUIController {
                 enterColumnButton.setDisable(false);
             }
         } else {
-
+            enterColumnButton.setDisable(true);
             for (int i=0; i<6; i++){
                 if(insertBookshelf[i][selectedColumn].getImage()!=null){
                     if(!insertBookshelf[i][selectedColumn].getImage().equals(image)) return;
-                    enterColumnButton.setDisable(true);
+
                     insertBookshelf[i][selectedColumn].setImage(null);
 
                     button.setOpacity(0);
@@ -489,24 +542,38 @@ public class GameController extends GUIController {
             }
     }
 
-    private void updateOtherBookshelf() {
-        int i=0;
-        for (Matrix m:client.getModel().getOtherPlayers().values()){
-            //TODO update other player bookshelf
-        }
-    }
+    private void updateOtherBookshelf() {/*
+        int i = 0;
+        for (Matrix m : client.getModel().getOtherPlayers().values()) {
+            if(i<client.getModel().getOtherPlayers().size()){
+                switch (i) {
+                    case 0 -> updateBookshelf(bookshelf1, m);
+                    case 1 -> updateBookshelf(bookshelf2, m);
+                    case 2 -> updateBookshelf(bookshelf3, m);
+                    default -> {
+                        return;
+                    }
+                }
+            }
+            i++;
 
+
+        }*/
+
+    }
     //--------------------------------------------------------------Board methods-----------------------------------------------
 
     public void updateBoard(){
         for (int i = 0; i<9; i++){
             for (int j = 0; j<9; j++){
-                if(boardGroups[j][i]!=null){
+                if(boardGroups[j][i]!=null&&(client.getModel().getBoard().getTileByCoord(i,j)==Tile.EMPTY||boardImages[j][i].getImage()==null)){
                     Tile tile=client.getModel().getBoard().getTileByCoord(i,j);
-                    if (tile==Tile.EMPTY) boardImages[j][i].setImage(null);
+                    if (tile==Tile.EMPTY||tile==Tile.NOTAVAILABLE) boardImages[j][i].setImage(null);
                     else {
                         String image = tileImages.getImage(tile);
-                        boardImages[j][i].setImage(new Image(image));
+                        if(image!=null){
+                            boardImages[j][i].setImage(new Image(image));
+                        }
                     }
                 }
             }
@@ -738,6 +805,8 @@ public class GameController extends GUIController {
         columnButtons.add(column5Button);
     }
 
+
+
     //--------------------------------------------------------Private class--------------------------------------------
     private static class TileImages {
         List<String> greenTiles;
@@ -816,5 +885,89 @@ public class GameController extends GUIController {
             return null;
         }
     }
+
+  private String getPGCImage(int i){
+        switch (i){
+            case 1 -> {
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals.png";
+            }
+            case 2 -> {
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals2.png";
+            }
+            case 3 -> {
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals3.png";
+            }
+            case 4 -> {
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals4.png";
+            }
+            case 5 -> {
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals5.png";
+            }
+            case 6 -> {
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals6.png";
+            }
+            case 7 -> {
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals7.png";
+            }
+            case 8 -> {
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals8.png";
+            }
+            case 9 -> {
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals9.png";
+            }
+            case 10-> {
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals10.png";
+            }
+            case 11 -> {
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals11.png";
+            }
+            case 12 -> {
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals12.png";
+            }
+        }
+        return null;
+  }
+
+  public String getCGCImage(int i){
+        switch (i+1){
+            case 4->{
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/1.jpg";
+            }
+            case 9->{
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/2.jpg";
+            }
+            case 3->{
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/3.jpg";
+            }
+            case 1->{
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/4.jpg";
+            }
+            case 5->{
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/5.jpg";
+            }
+            case 10->{
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/6.jpg";
+            }
+            case 8->{
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/7.jpg";
+            }
+            case 2->{
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/8.jpg";
+            }
+            case 6->{
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/9.jpg";
+            }
+            case 11->{
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/10.jpg";
+            }
+            case 7->{
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/11.jpg";
+            }
+            case 12->{
+                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/12.jpg";
+            }
+        }
+        return null;
+  }
 
 }

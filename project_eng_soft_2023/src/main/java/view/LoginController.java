@@ -129,6 +129,7 @@ public class LoginController extends GUIController {
             client.initializeClient();
         } catch (Exception e){
             showException("Error! Try again!");
+            return;
         }
 
 
@@ -155,18 +156,32 @@ public class LoginController extends GUIController {
        try{
             client.askLogin(nickname);
             client.getModel().setNickname(nickname);
+
         } catch (LoginException e){
             showException("This nickname is not available! Try again!");
         } catch (Exception e){
             showException("Error! Try again!");
 
         }
-        //timer se non viene invocato enter num of player mostro la waitingScene
-         //da cambiare
-        showEnterNumOfPlayer();
+
+        showWaitingScene();
     }
 
     public void showEnterNumOfPlayer(){
+
+        if(timer1!=null){
+            timer2.cancel();
+            timer1.cancel();
+            timer1=null;
+            timer2=null;
+        }
+
+
+        enterNicknameLabel.setVisible(true);
+        enterNicknameLabel.setDisable(false);
+        waitingLabel.setVisible(false);
+        waitingLabel.setDisable(true);
+
         loginExceptionLabel.setDisable(true);
         loginExceptionLabel.setVisible(false);
         enterNicknameLabel.setText("Enter number of player to create a new game:");
@@ -182,33 +197,30 @@ public class LoginController extends GUIController {
     }
 
     public void enterNumOfPlayer(ActionEvent actionEvent) {
-        if(gui.getTimer()!=null){
-            gui.getTimer().cancel();
-            gui.setTimer(null);
+
             loginExceptionLabel.setDisable(true);
             loginExceptionLabel.setVisible(false);
             int n=Integer.parseInt(numField.getText());
             if(n>1&&n<=4){
-                gui.setNumOfPlayer(n);
+                client.askSetNumberOfPlayers(n, client.getModel().getNickname());
             } else {
                 showException("Error! You can choose from 2 to 4 player!");
                 gui.getNumOfPlayer();
             }
-        }
+
         try {
             showWaitingScene(); //da cambiare
         } catch (IOException e){
-            System.out.println("Qualcosa non funziona con il file");
+
         } catch (Exception e){
-            System.out.println("Qualcosa non funziona e basta");
+
         }
     }
 
 
     public void showWaitingScene() throws IOException {
         enterNicknameLabel.setVisible(false);
-        enterNicknameLabel.isDisable();
-
+        enterNicknameLabel.setDisable(true);
         nameField.setVisible(false);
         nameField.isDisable();
 
@@ -238,17 +250,18 @@ public class LoginController extends GUIController {
 
     public void showGameScene() throws IOException {
         timer1.cancel();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("game.fxml")));
-        Scene scene= new Scene(root);
-        GameController gameController=new GameController();
+        FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("game.fxml"));
+        Scene scene = new Scene(fxmlLoader1.load(), 1250,650);
+        GameController gameController=fxmlLoader1.getController();
         gameController.setScene(gui,stage);
-        stage.setFullScreen(true);
+        gui.setGameController(gameController);
+        gameController.setClient(client);
         stage.setScene(scene);
     }
 
     @Override
     public void setScene(GUI gui, Stage stage) {
-       // gui.setLoginController(this);
+        gui.setLoginController(this);
         super.setScene(gui, stage);
     }
 }

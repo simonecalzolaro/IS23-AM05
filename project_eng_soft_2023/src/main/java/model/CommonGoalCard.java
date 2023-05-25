@@ -101,7 +101,7 @@ public class CommonGoalCard implements Card, Serializable {
                 return maxDiffTiles(4, 3, false, shelf);
 
             /**
-             * Common Goal card n
+             * Common Goal card n 9
              * Goal: two columns each formed by 6 different type of tile
              */
             case 9:

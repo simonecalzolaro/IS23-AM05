@@ -30,7 +30,7 @@ public class ClientModel {
         this.pgcNum=-1;
         this.cgc1=null;
         this.cgc2=null;
-
+        myScore=0;
     }
 
 

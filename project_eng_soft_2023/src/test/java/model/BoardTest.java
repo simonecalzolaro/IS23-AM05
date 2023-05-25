@@ -19,7 +19,6 @@ public class BoardTest  {
         DeckCards deck= new DeckCards(4);
         board.initializeBoard(4);
 
-
         assertEquals(4, board.getNPlayers());
         Bag bag = null;
         board=null;

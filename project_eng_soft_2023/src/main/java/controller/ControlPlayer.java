@@ -274,7 +274,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     /**
      * @return game
      */
-    public controller.Game getGame() {
+    public Game getGame() {
         return game;
     }
 

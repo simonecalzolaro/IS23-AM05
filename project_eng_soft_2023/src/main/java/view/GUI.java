@@ -2,86 +2,92 @@ package view;
 
 import client.ClientModel;
 
+import javafx.application.Platform;
+
+
+import java.io.IOException;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class GUI extends View {
     private int numOfPlayer;
-    private final LoginController loginController;
+    private LoginController loginController;
     private GameController gameController;
 
     private Timer timer;
     ClientModel clientModel;
-    public GUI(LoginController loginController) {
+    private RankController rankController;
+
+    public GUI() {
         this.numOfPlayer = 0;
-        this.loginController = loginController;
+
     }
 
-    public void setClientModel(ClientModel clientModel) {
-        this.clientModel = clientModel;
-    }
-
+    /**
+     * asks the player to enter the number of players in the game
+     */
     @Override
-    public int getNumOfPlayer() {
-        loginController.showEnterNumOfPlayer();
-        timer=new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                if (timer != null) {
-                    numOfPlayer = -1;
-                    timer.cancel();
-                    timer = null;
-                }
-            }
-        };
-        timer.schedule(task, 30000);
-        while(numOfPlayer==0){
-        }
-        if(numOfPlayer==-1) {
-            loginController.showException("Time is out!");
-        }
-        return numOfPlayer;
+    public void getNumOfPlayer() {
+        Platform.runLater(()-> loginController.showEnterNumOfPlayer());
     }
 
 
 
     @Override
     public void updateBoard() {
+        if(gameController!=null){
+            Platform.runLater(()->gameController.updateAll());
+        }
 
     }
 
     @Override
     public void endGame(Map< Integer, String> results) {
+        Platform.runLater(()-> {
+            try {
+                gameController.endGame();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
     }
 
     @Override
     public void isYourTurn() {
-
+        Platform.runLater(()->gameController.startTurn());
     }
 
     @Override
     public void startGame() {
-        try{
-            loginController.showGameScene();
-        } catch (Exception ignored){
-        }
     }
 
+    /**
+     *
+     */
     @Override
     public void endYourTurn() {
-
+        Platform.runLater(()->gameController.endTurn());
     }
 
     @Override
     public void startPlay() {
-
+        try{
+            Platform.runLater(()-> {
+                try {
+                    loginController.showGameScene();
+                    gameController.updateAll();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } catch (Exception ignored){
+        }
     }
 
-    public void setNumOfPlayer(int n){
-        numOfPlayer=n;
+    public void setLoginController(LoginController loginController) {
+        this.loginController=loginController;
     }
 
     public void setGameController(GameController gameController) {
@@ -94,5 +100,10 @@ public class GUI extends View {
 
     public void setTimer(Timer timer) {
         this.timer=timer;
+    }
+
+
+    public void setRankController(RankController rankController) {
+        this.rankController=rankController;
     }
 }
