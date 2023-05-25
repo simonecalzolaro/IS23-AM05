@@ -4,16 +4,11 @@ import client.ClientHandler;
 import model.*;
 import myShelfieException.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 
-import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Stream;
 
 
@@ -139,7 +134,7 @@ public abstract class Lobby implements  ClientServerHandler {
     }
 
 
-    public synchronized void checkAskNuberOfPlayers(){
+    public synchronized void checkAskNumberOfPlayers(){
 
         System.out.println("-> checkAskNuberOfPlayers active");
         //if there isn't any waiting room it means that "client" is the first player

@@ -1,9 +1,5 @@
 package controller;
 
-import client.Tile;
-import model.Bookshelf;
-import view.TUI;
-
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
@@ -29,7 +25,7 @@ public class ServerApp {
             lobby = new RMILobby();
             lobby.startServer();
             new Thread(()-> lobby.checkFullWaitingRoom()).start();
-            new Thread(()-> lobby.checkAskNuberOfPlayers()).start();
+            new Thread(()-> lobby.checkAskNumberOfPlayers()).start();
 
         } catch (RemoteException e) {
             System.out.println("ServerApp --- RemoteException occurred while starting a new RMIServer");
@@ -39,16 +35,16 @@ public class ServerApp {
             throw new RuntimeException();
         }
 
-        /*
+
         try {
-            client_server_bridge = new TCPHandler();
+            client_server_bridge = new TCPHandler(lobby);
             client_server_bridge.startServer();
         } catch (Exception e) {
             System.out.println("ServerApp --- Unexptected exception occurred trying to start the TCPHandler ");
             throw new RuntimeException();
         }
 
-         */
+
 
     }
 

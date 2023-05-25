@@ -20,6 +20,12 @@ public class TCPHandler {
     private Long PORT_pre;
     private int PORT;
 
+    public Lobby lobby;
+
+    public TCPHandler(Lobby lobby){
+        this.lobby = lobby;
+    }
+
     public void startServer(){
 
         System.out.println("--- Initializing the TCPHandler ...");
@@ -43,7 +49,7 @@ public class TCPHandler {
 
             try{
                 Socket socket = serverSocket.accept();
-                executor.submit(new SocketLobby(socket));
+                executor.submit(new SocketLobby(lobby,socket));
             }catch (IOException e){
                 System.out.println("TCPHandler --- IOException occurred trying to create a new SocketLobby");
             }
