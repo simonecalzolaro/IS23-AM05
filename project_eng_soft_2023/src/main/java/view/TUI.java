@@ -1,5 +1,6 @@
 package view;
 
+import client.Matrix;
 import client.RMIClient;
 import client.SocketClient;
 import client.Tile;
@@ -24,9 +25,11 @@ public class TUI extends View {
 
         super();
 
-        reader = new BufferedReader(new InputStreamReader(System.in));
         out = System.out;
-
+        reader = new BufferedReader(new InputStreamReader(System.in));
+        startGame();
+        Thread t = new Thread(this::commandListener);
+        t.start();
     }
 
     //-------------------------------- @Override methods from View --------------------------------
@@ -43,9 +46,9 @@ public class TUI extends View {
             // This method reads the number provided using keyboard
             num = scan.nextInt();
 
-            if(num<2 || num >4) System.out.println("The number of players must be between 2 and 4");
+            if (num < 2 || num > 4) System.out.println("The number of players must be between 2 and 4");
 
-        }while(num<2 || num >4);
+        } while (num < 2 || num > 4);
 
         client.askSetNumberOfPlayers(num, client.getModel().getNickname());
 
@@ -54,19 +57,18 @@ public class TUI extends View {
 
     @Override
     public void updateBoard() {
-
         out.println("This is the updated board:\n");
         plotBoard();
         out.println("This is your Bookshelf:\n");
-        plotShelf();
+        plotMatrixShelf(client.getModel().getMyBookshelf());
 
     }
 
     @Override
-    public void endGame(Map< Integer, String> results) {
+    public void endGame(Map<Integer, String> results) {
 
-        for(Integer key: results.keySet()){
-            System.out.println(key + " ->   "+ results.get(key));
+        for (Integer key : results.keySet()) {
+            System.out.println(key + " ->   " + results.get(key));
         }
 
         out.println("The game has ended!\n");
@@ -74,14 +76,14 @@ public class TUI extends View {
     }
 
     @Override
-    public void isYourTurn() throws IOException{
+    public void isYourTurn() {
 
-        if(client.isMyTurn()) {
+        if (client.isMyTurn()) {
 
             out.println("It's your turn, you have 2 min to complete your task!\n");
 
             //updateBoard();
-            String action;
+            /*String action;
             int request = 0;
 
             do {
@@ -91,7 +93,8 @@ public class TUI extends View {
                 out.println("|        1 --> ShowCGC              |");
                 out.println("|        2 --> GetMyScore           |");
                 out.println("|        3 --> MakeYourMove         |");
-                out.println("|        4 --> leave the game       |");
+                out.println("|        4 --> ShowOtherPlayerShelf |");
+                out.println("|        5 --> leave the game       |");
                 out.println("+-----------------------------------+");
                 out.println("---> ");
 
@@ -119,12 +122,15 @@ public class TUI extends View {
                     }
 
                     case "2" ->{
-
-                            out.println(client.getModel().getMyScore());
-
+                        out.println(client.getModel().getMyScore());
+                        request++;
                     }
 
-                    case "4" -> {
+                    case "4" ->{
+                        plotOtherPlayersShelf();
+                    }
+
+                    case "5" -> {
 
                         try {
                             client.askLeaveGame();
@@ -148,23 +154,6 @@ public class TUI extends View {
                 //      Continuare? y/n
                 //  ->scritto così è sempre costretto a pescarne 3
 
-                /*
-                out.println("Choose tiles from the board: (x,y)\n");
-                String tile1 = getInput();
-                coord.add((int) tile1.charAt(2));
-                coord.add((int) tile1.charAt(4));
-                chosenTiles.add(client.getModel().getBoard().getTileByCoord(coord.get(0), coord.get(1)));
-
-                String tile2 = getInput();
-                coord.add((int) tile2.charAt(2));
-                coord.add((int) tile2.charAt(4));
-                chosenTiles.add(client.getModel().getBoard().getTileByCoord(coord.get(2), coord.get(3)));
-
-                String tile3 = getInput();
-                coord.add((int) tile3.charAt(2));
-                coord.add((int) tile3.charAt(4));
-                chosenTiles.add(client.getModel().getBoard().getTileByCoord(coord.get(4), coord.get(5)));
-                */
                 int round = 0;
                 String select;
 
@@ -247,52 +236,52 @@ public class TUI extends View {
                 }
 
             }while (!goon);
-
+*/
         }
 
     }
 
     @Override
-    public void startGame() throws IOException{
-
+    public void startGame() {
+        Scanner scan = new Scanner(System.in);
         String connection;
         String num;
 
         init();
         out.println("What kind of connection do you want?\n");
 
-        do{
+        do {
             out.println("0 --> RMI\n1 --> Socket");
-            connection = getInput();
+            connection = scan.next();
 
-            if(connection.equals("0")){
+            if (connection.equals("0")) {
                 try {
                     client = new RMIClient(this);
-                }catch (RemoteException e){
+                } catch (RemoteException e) {
                     out.println("RemoteException occurred trying to initialize the client");
                     e.printStackTrace();
                 }
             }
 
-            if(connection.equals("1")){
+            if (connection.equals("1")) {
                 try {
                     client = new SocketClient(this);
-                }catch (RemoteException e){
+                } catch (RemoteException e) {
                     out.println("RemoteException occurred trying to initialize the client");
                     e.printStackTrace();
                 }
             }
-        }while(!connection.equals("0") && !connection.equals("1"));
+        } while (!connection.equals("0") && !connection.equals("1"));
 
-        try{
+        try {
             client.initializeClient();
-        }catch (RemoteException e){
+        } catch (RemoteException e) {
             out.println("RemoteException occurred trying to initialize the client");
             e.printStackTrace();
-        }catch (NotBoundException e){
+        } catch (NotBoundException e) {
             out.println("NotBoundException occurred trying to initialize the RMIClient");
             e.printStackTrace();
-        }catch (IOException e){
+        } catch (IOException e) {
             out.println("IOException occurred trying to initialize the SocketClient");
             out.println("---> Socket hasn't been created");
             e.printStackTrace();
@@ -301,18 +290,18 @@ public class TUI extends View {
         do {
             System.out.println("0 --> start a new game");
             System.out.println("1 --> continue a Game");
-            num = getInput();
+            num = scan.next();
 
-            if(!num.equals("0") &&  !num.equals("1")) System.out.println("ClientApp --- Invalid code --> Try again !");
+            if (!num.equals("0") && !num.equals("1")) System.out.println("ClientApp --- Invalid code --> Try again !");
 
-        }while (!num.equals("0") &&  !num.equals("1"));
+        } while (!num.equals("0") && !num.equals("1"));
 
         boolean goon = false;
-        switch (num){
+        switch (num) {
             case "0":
                 do {
                     out.println("Choose your nickname:");
-                    String nickname = getInput();
+                    String nickname = scan.next();
                     try {
 
                         client.getModel().setNickname(nickname);
@@ -321,15 +310,16 @@ public class TUI extends View {
                         goon = true;
                     } catch (LoginException e) {
                         e.getMessage();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                }while(!goon);
+                } while (!goon);
 
                 break;
 
             case "1":
 
                 break;
-
 
 
         }
@@ -344,7 +334,7 @@ public class TUI extends View {
 
         //System.out.println(" Welcome "+ client.getModel().getNickname() +" you are now int the WAITING ROOM...");
 
-        while(client.getModel().getPgcNum()==-1){
+        while (client.getModel().getPgcNum() == -1) {
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
@@ -375,7 +365,7 @@ public class TUI extends View {
 
     //-------------------------------- other methods --------------------------------
 
-    private enum ColorCLI{
+    private enum ColorCLI {
         RESET("\u001B[0m"),
 
         GREEN("\u001B[32m"),
@@ -395,11 +385,11 @@ public class TUI extends View {
 
         private final String color;
 
-        ColorCLI(String color){
+        ColorCLI(String color) {
             this.color = color;
         }
 
-        public String toString(){
+        public String toString() {
             return color;
         }
     }
@@ -428,17 +418,17 @@ public class TUI extends View {
     public boolean plotBoard() {
 
         StringBuilder strBoard = new StringBuilder();
-        int temp=0;
+        int temp = 0;
 
-        for(int row=0; row< 9; row++){
-            for(int col=0; col< 9; col++){
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
 
-                if(row!=temp) {
+                if (row != temp) {
                     temp++;
                     strBoard.append("\n");
                 }
 
-                switch (client.getModel().getBoard().getTileByCoord(row, col)){
+                switch (client.getModel().getBoard().getTileByCoord(row, col)) {
                     case GREEN -> strBoard.append(ColorCLI.GREEN_BACKGROUND).append(row).append(";").append(col).append(" ").append(ColorCLI.RESET);
                     case BLUE -> strBoard.append(ColorCLI.BLUE_BACKGROUND).append(row).append(";").append(col).append(" ").append(ColorCLI.RESET);
                     case WHITE -> strBoard.append(ColorCLI.WHITE_BACKGROUND).append(row).append(";").append(col).append(" ").append(ColorCLI.RESET);
@@ -455,20 +445,20 @@ public class TUI extends View {
         return true;
     }
 
-    public boolean plotShelf() {
+    public boolean plotMatrixShelf(Matrix bookshelf) {
 
         StringBuilder strShelf = new StringBuilder();
-        int temp=5;
+        int temp = 5;
 
-        for(int row=5; row>=0; row--){
-            for(int col=0; col< 5; col++){
+        for (int row = 5; row >= 0; row--) {
+            for (int col = 0; col < 5; col++) {
 
-                if(row!=temp) {
+                if (row != temp) {
                     temp--;
                     strShelf.append("\n");
                 }
 
-                switch (client.getModel().getMyBookshelf().getTileByCoord(row, col)){
+                switch (bookshelf.getTileByCoord(row, col)) {
                     case GREEN -> strShelf.append("|").append(ColorCLI.GREEN_BACKGROUND).append(row).append(";").append(col).append(ColorCLI.RESET);
                     case BLUE -> strShelf.append("|").append(ColorCLI.BLUE_BACKGROUND).append(row).append(";").append(col).append(ColorCLI.RESET);
                     case WHITE -> strShelf.append("|").append(ColorCLI.WHITE_BACKGROUND).append(row).append(";").append(col).append(ColorCLI.RESET);
@@ -481,7 +471,7 @@ public class TUI extends View {
                     }
                 }
 
-                if(col==4) strShelf.append("|");
+                if (col == 4) strShelf.append("|");
             }
         }
 
@@ -490,35 +480,46 @@ public class TUI extends View {
         return true;
     }
 
+    public boolean plotOtherPlayersShelf() {
+
+        for (Map.Entry<String, Matrix> entry : client.getModel().getOtherPlayers().entrySet()) {
+            out.println(entry.getKey());
+            out.println("\n");
+            plotMatrixShelf(entry.getValue());
+        }
+
+        return true;
+    }
+
     public boolean plotPGC() {
         StringBuilder strPGC = new StringBuilder();
 
-        int temp=5;
+        int temp = 5;
 
-        for(int row=5; row>=0; row--){
-            for(int col=0; col<5; col++){
+        for (int row = 5; row >= 0; row--) {
+            for (int col = 0; col < 5; col++) {
 
-                if(row!=temp) {
+                if (row != temp) {
                     temp--;
                     strPGC.append("\n");
                 }
 
-                if(client.getModel().getPgc().getTileFromMap(Tile.GREEN)[0]==row &&  client.getModel().getPgc().getTileFromMap(Tile.GREEN)[1]==col){
+                if (client.getModel().getPgc().getTileFromMap(Tile.GREEN)[0] == row && client.getModel().getPgc().getTileFromMap(Tile.GREEN)[1] == col) {
                     strPGC.append("|").append(ColorCLI.GREEN_BACKGROUND).append(row).append(";").append(col).append(ColorCLI.RESET);
-                }else if(client.getModel().getPgc().getTileFromMap(Tile.BLUE)[0]==row &&  client.getModel().getPgc().getTileFromMap(Tile.BLUE)[1]==col){
+                } else if (client.getModel().getPgc().getTileFromMap(Tile.BLUE)[0] == row && client.getModel().getPgc().getTileFromMap(Tile.BLUE)[1] == col) {
                     strPGC.append("|").append(ColorCLI.BLUE_BACKGROUND).append(row).append(";").append(col).append(ColorCLI.RESET);
-                } else if (client.getModel().getPgc().getTileFromMap(Tile.WHITE)[0]==row &&  client.getModel().getPgc().getTileFromMap(Tile.WHITE)[1]==col) {
+                } else if (client.getModel().getPgc().getTileFromMap(Tile.WHITE)[0] == row && client.getModel().getPgc().getTileFromMap(Tile.WHITE)[1] == col) {
                     strPGC.append("|").append(ColorCLI.WHITE_BACKGROUND).append(row).append(";").append(col).append(ColorCLI.RESET);
-                }else if(client.getModel().getPgc().getTileFromMap(Tile.PINK)[0]==row &&  client.getModel().getPgc().getTileFromMap(Tile.PINK)[1]==col){
+                } else if (client.getModel().getPgc().getTileFromMap(Tile.PINK)[0] == row && client.getModel().getPgc().getTileFromMap(Tile.PINK)[1] == col) {
                     strPGC.append("|").append(ColorCLI.PINK_BACKGROUND).append(row).append(";").append(col).append(ColorCLI.RESET);
-                }else if(client.getModel().getPgc().getTileFromMap(Tile.YELLOW)[0]==row &&  client.getModel().getPgc().getTileFromMap(Tile.YELLOW)[1]==col){
+                } else if (client.getModel().getPgc().getTileFromMap(Tile.YELLOW)[0] == row && client.getModel().getPgc().getTileFromMap(Tile.YELLOW)[1] == col) {
                     strPGC.append("|").append(ColorCLI.YELLOW_BACKGROUND).append(row).append(";").append(col).append(ColorCLI.RESET);
-                }else if(client.getModel().getPgc().getTileFromMap(Tile.LIGHTBLUE)[0]==row &&  client.getModel().getPgc().getTileFromMap(Tile.LIGHTBLUE)[1]==col){
+                } else if (client.getModel().getPgc().getTileFromMap(Tile.LIGHTBLUE)[0] == row && client.getModel().getPgc().getTileFromMap(Tile.LIGHTBLUE)[1] == col) {
                     strPGC.append("|").append(ColorCLI.LIGHTBLUE_BACKGROUND).append(row).append(";").append(col).append(ColorCLI.RESET);
-                }else{
+                } else {
                     strPGC.append("|   ").append(ColorCLI.RESET);
                 }
-                if(col==4) strPGC.append("|");
+                if (col == 4) strPGC.append("|");
             }
         }
 
@@ -527,25 +528,214 @@ public class TUI extends View {
         return true;
     }
 
-    public boolean checkTiles(List<Integer> tiles){
+    public void commandInsertTiles() {
+        Scanner scan = new Scanner(System.in);
+        boolean goon = false;
 
-        if(tiles.size()==6){
-            if(Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(2), tiles.get(4))) return true;
+        do {
 
-            if(Objects.equals(tiles.get(1), tiles.get(3)) && Objects.equals(tiles.get(3), tiles.get(5))) return true;
+            //---da rendere a prova di scimmia
+            int round = 0;
+            String select = "";
+
+            out.println("Choose tiles from the board!");
+
+            while (!Objects.equals(select, "n")) {
+                do {
+
+                    out.println("Insert x:");
+
+                    int x = Integer.parseInt(scan.next());
+
+                    out.println("Insert y:");
+
+                    int y = Integer.parseInt(scan.next());
+
+                    coord.add(x);
+                    coord.add(y);
+                    chosenTiles.add(client.getModel().getBoard().getTileByCoord(x, y));
+                    round++;
+
+                    if (!checkTiles(coord)) {
+                        out.println("There has been some error!\nChoose tiles from the board!");
+                        coord.clear();
+                        chosenTiles.clear();
+                        round = 0;
+                    }
+
+                } while (!checkTiles(coord));
+
+                if (round == 3) break;
+
+                out.println("Would you like to continue? y/n");
+                select = scan.next();
+
+            }
+            ;
+
+
+            try {
+                client.askBoardTiles(coord);
+                goon = true;
+
+            } catch (InvalidChoiceException e) {
+                e.getMessage();
+                coord.clear();
+                chosenTiles.clear();
+            } catch (NotConnectedException e) {
+                out.println("NotConnectedException occurred trying to choose the tiles!");
+                e.printStackTrace();
+            } catch (NotMyTurnException e) {
+                out.println("NotMyTurnException occurred trying to choose the tiles!");
+                e.printStackTrace();
+            } catch (InvalidParametersException e) {
+                out.println("InvalidParametersException occurred trying to choose the tiles!");
+                e.getMessage();
+            } catch (IOException e) {
+                out.println("IOException occurred trying to choose the tiles!");
+            }
+
+        } while (!goon);
+
+        goon = false;
+
+        do {
+            out.println("Choose the column of your bookshelf for the tiles:\n");
+            int chosenColumn = Integer.parseInt(scan.next());
+
+            try {
+                client.askInsertShelfTiles(chosenColumn, coord);
+                goon = true;
+                chosenTiles.clear();
+                coord.clear();
+            } catch (InvalidChoiceException e) {
+                e.getMessage();
+            } catch (InvalidLenghtException e) {
+                throw new RuntimeException(e);
+            } catch (NotMyTurnException e) {
+                out.println("NotMyTurnException occurred trying to insert tiles!");
+                e.printStackTrace();
+            } catch (NotConnectedException e) {
+                out.println("NotConnectedException occurred trying to insert tiles!");
+                e.printStackTrace();
+            } catch (IOException e) {
+                out.println("IOException occurred trying to choose the tiles!");
+            }
+
+        } while (!goon);
+    }
+
+    public boolean checkTiles(List<Integer> tiles) {
+
+        if (tiles.size() == 6) {
+            if(Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(1), tiles.get(3))) return false;
+
+            if(Objects.equals(tiles.get(2), tiles.get(4)) && Objects.equals(tiles.get(3), tiles.get(5))) return false;
+
+            if(Objects.equals(tiles.get(0), tiles.get(4)) && Objects.equals(tiles.get(1), tiles.get(5))) return false;
+
+            if (Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(2), tiles.get(4))) return true;
+
+            if (Objects.equals(tiles.get(1), tiles.get(3)) && Objects.equals(tiles.get(3), tiles.get(5))) return true;
 
             return false;
-        }else if (tiles.size()==4){
-            if(Objects.equals(tiles.get(0), tiles.get(2))) return true;
+        } else if (tiles.size() == 4) {
+            if(Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(1), tiles.get(3))) return false;
 
-            if(Objects.equals(tiles.get(1), tiles.get(3))) return true;
+            if (Objects.equals(tiles.get(0), tiles.get(2))) return true;
+
+            if (Objects.equals(tiles.get(1), tiles.get(3))) return true;
 
             return false;
-        }else if(tiles.size()==2){
+        } else if (tiles.size() == 2) {
             return true;
         }
 
         return false;
     }
 
+    public void commandListener() {
+        Scanner scan = new Scanner(System.in);
+        String action;
+        boolean flag = true;
+
+        while (flag) {
+            out.println("Command: ");
+
+            action = scan.next();
+
+            switch (action) {
+                case "/help" -> {
+                    System.out.println("/pgc: to show your PersonalGoalCard");
+                    System.out.println("/cgc: to show your CommonGoalCard");
+                    System.out.println("/score: to get your score");
+                    System.out.println("/others: to show other player bookshelf");
+                    System.out.println("/myShelf: to show my bookshelf");
+                    System.out.println("/board: to show the updated board");
+                    System.out.println("/tiles: to choose and insert the tiles from the board");
+                    System.out.println("/chat: to write a message in the chat");
+                    System.out.println("/showChat: to show the chat");
+                    System.out.println("/q: to leave the game");
+                }
+
+                case "/pgc" -> {
+                    plotPGC();
+                }
+
+                case "/cgc" -> {
+                    out.println(client.getModel().getCgc1().getDescription());
+
+                    if (client.getModel().getOtherPlayers().size() > 2) {
+                        out.println(client.getModel().getCgc2().getDescription());
+                    }
+                }
+
+                case "/score" -> {
+                    out.println("This is your score at the moment: ");
+                    out.println(client.getModel().getMyScore());
+                }
+
+                case "/others" -> {
+                    plotOtherPlayersShelf();
+                }
+
+                case "/myShelf" -> {
+                    plotMatrixShelf(client.getModel().getMyBookshelf());
+                }
+
+                case "/board" -> {
+                    plotBoard();
+                }
+
+                case "/tiles" -> {
+                    if (client.isMyTurn()) {
+                        commandInsertTiles();
+                    } else {
+                        out.println("You cannot do this!\nYou have to wait until it's your turn...");
+                    }
+                }
+
+                case "/chat"->{
+                    out.println("Chat");
+                }
+
+                case "/showChat"->{
+                    out.println("");
+                }
+
+                case "/q" -> {
+                    try {
+                        client.askLeaveGame();
+                        flag = false;
+                    } catch (LoginException e) {
+                        e.getMessage();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }
+    }
 }
+

@@ -52,6 +52,8 @@ public class ClientApp {
 
         }
 
+        //ho spostato la chiamata del metodo startGame() direttamente all'interno del costruttore della TUI.
+        /*
         try {
             view.startGame();
         } catch (IOException e) {
@@ -61,7 +63,7 @@ public class ClientApp {
         } catch (NotBoundException e) {
             throw new RuntimeException(e);
         }
-
+        */
         /*
 
         //------------------------------- RMI o Socket ? ----------------------------------
