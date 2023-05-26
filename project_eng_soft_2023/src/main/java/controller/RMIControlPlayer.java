@@ -1,19 +1,12 @@
 package controller;
 
 import client.ClientHandler;
-import model.Board;
 import model.Tile;
-import myShelfieException.InvalidChoiceException;
-import myShelfieException.InvalidParametersException;
-import myShelfieException.NotConnectedException;
-import myShelfieException.NotMyTurnException;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RMIControlPlayer extends ControlPlayer{
@@ -113,6 +106,13 @@ public class RMIControlPlayer extends ControlPlayer{
     @Override
     public void askPing() throws IOException {
             ch.ping();
+    }
+
+    @Override
+    public void notifyNewMessage(String nick, String message) throws IOException {
+
+        ch.reciveMessage(nick, message);
+
     }
 
     @Override

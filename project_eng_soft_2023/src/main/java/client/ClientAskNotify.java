@@ -4,6 +4,7 @@ import myShelfieException.*;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ClientAskNotify {
@@ -62,5 +63,7 @@ public interface ClientAskNotify {
     void askPassMyTurn();
 
     void notifyPong();
+
+    void askPostMessage(String Message, ArrayList<String> recipients);
 
 }

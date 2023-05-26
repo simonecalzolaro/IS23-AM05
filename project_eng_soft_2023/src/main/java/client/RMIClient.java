@@ -180,5 +180,14 @@ public class RMIClient extends Client {
         }
     }
 
+    @Override
+    public void askPostMessage(String message, ArrayList<String> recipients){
+        try {
+            gameHandler.postMessage(message, recipients);
+        } catch (RemoteException e) {
+            System.out.println("---error occurred while posting the message");
+        }
+    }
+
 
 }

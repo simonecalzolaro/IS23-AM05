@@ -1,5 +1,6 @@
 package controller;
 
+import controller.chatPackage.Chat;
 import model.Board;
 
 import java.io.File;
@@ -44,6 +45,9 @@ public class Game implements Serializable {
      */
     private final Board board;
 
+    private final Chat chatRoom;
+
+
     /**
      * Assign GameID and increase game count
      * Create the game board and initialize it
@@ -59,6 +63,7 @@ public class Game implements Serializable {
         board.initializeBoard(players.size());
         this.players = new ArrayList<>();
         (this.players).addAll(players);
+        this.chatRoom=new Chat();
 
         startGame();
     }
@@ -159,6 +164,11 @@ public class Game implements Serializable {
 
     public Board getBoard() {
         return board;
+    }
+
+
+    public Chat getChatRoom() {
+        return chatRoom;
     }
 
     /**

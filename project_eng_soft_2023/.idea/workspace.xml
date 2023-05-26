@@ -9,16 +9,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="server TUI and adjustments">
-      <change afterPath="$PROJECT_DIR$/hs_err_pid15389.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/AsyncClientInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/AsyncClientInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientAskNotify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientAskNotify.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/PingFromServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/PingFromServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControllerAskNotify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControllerAskNotify.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PingPong.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PingPong.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketLobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketLobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/TCPHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TCPHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/GUIApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GUIApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/PersonalGoalCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/PersonalGoalCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/TUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/TUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,27 +95,13 @@
       <recent name="client" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.client2">
+  <component name="RunManager" selected="Application.GUIApplication">
     <configuration name="GUIApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="corretto-17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="view.GUIApplication" />
       <module name="project_eng_soft_2023" />
-      <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/../javafx-sdk-20.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="view.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GuiApplication2" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="view.GUIApplication" />
-      <module name="project_eng_soft_2023" />
-      <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/../javafx-sdk-20.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-20.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.graphics" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="view.*" />
@@ -216,7 +210,6 @@
       <item itemvalue="Application.client3" />
       <item itemvalue="Application.client2" />
       <item itemvalue="Application.ServerApp" />
-      <item itemvalue="Application.GuiApplication2" />
       <item itemvalue="Application.GUIApplication" />
       <item itemvalue="Application.client1" />
       <item itemvalue="JUnit.App test" />
@@ -226,8 +219,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.client1" />
         <item itemvalue="Application.GUIApplication" />
+        <item itemvalue="Application.client1" />
         <item itemvalue="JUnit.ControlPlayerTest" />
         <item itemvalue="JUnit.BoardTest" />
         <item itemvalue="JUnit.BagTest.testGetTilesFullBag" />
@@ -286,7 +279,6 @@
       <workItem from="1684500018753" duration="1004000" />
       <workItem from="1684927954178" duration="1540000" />
       <workItem from="1684930059367" duration="5965000" />
-      <workItem from="1685039460462" duration="4669000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>

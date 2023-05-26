@@ -268,6 +268,24 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
 
     }
 
+
+    @Override
+    public void postMessage(String message, ArrayList<String> recipients) throws RemoteException{
+
+        //creating a list containing all the ControlPlayers related to "recipients"
+        ArrayList<ControlPlayer> getters=new ArrayList<>();
+
+        for(String nick: recipients){
+            for(ControlPlayer cp: game.getPlayers()){
+                if(recipients.contains(cp.getPlayerNickname())){
+                    getters.add(cp);
+                }
+            }
+        }
+
+        this.game.getChatRoom().addMessage(this, message, getters);
+
+    }
     //-------------------------------------- RMI vs Socket layer --------------------------------------
 
 
@@ -352,6 +370,8 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
                 System.out.println(" impossible to set "+nickname+" status from "+this.playerStatus + " to " + ps);
         }
     }
+
+    public abstract void notifyNewMessage(String nick, String message) throws IOException;
 
     abstract public void setClientHandler(ClientHandler cliHnd);
 

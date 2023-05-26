@@ -20,6 +20,9 @@ public class ClientModel {
     private CGC cgc2;
 
 
+    //-----------chat-----------
+    private ClientChat myChat;
+
     public ClientModel() {
 
         this.nickname = "";
@@ -32,6 +35,7 @@ public class ClientModel {
         this.cgc2=null;
         this.GameID=-1;
         myScore=0;
+        myChat=new ClientChat();
     }
 
 
@@ -133,4 +137,10 @@ public class ClientModel {
     public void setMyScore(int myScore) {
         this.myScore = myScore;
     }
+
+    //------------------------getter chat---------------------------
+    public ClientChat getMyChat() {
+        return myChat;
+    }
+
 }

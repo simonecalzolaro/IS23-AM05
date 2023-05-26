@@ -44,5 +44,7 @@ public interface ControllerAskNotify {
      */
     void askPing() throws IOException;
 
+    void notifyNewMessage(String nick, String message) throws IOException;
+
 
 }

@@ -174,6 +174,11 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
     }
 
+    @Override
+    public void reciveMessage(String sender, String message) throws RemoteException{
+        model.getMyChat().addMessage(sender, message);
+    }
+
     /**
      * set up the servers' ports and hostname
      */

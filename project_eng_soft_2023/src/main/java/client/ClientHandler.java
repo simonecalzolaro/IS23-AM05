@@ -13,5 +13,6 @@ public interface ClientHandler extends Remote {
     void endYourTurn() throws RemoteException;
     void startPlaying(int pgcNum, Map<model.Tile, Integer[]> pgcMap, int cgc1num, int cgc2num, int GameID) throws RemoteException;
     void ping() throws RemoteException;
+    void reciveMessage(String sender, String message) throws RemoteException;
 
 }

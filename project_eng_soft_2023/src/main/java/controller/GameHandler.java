@@ -25,5 +25,7 @@ public interface GameHandler extends Remote {
      */
     void passMyTurn() throws RemoteException;
 
+    void postMessage(String message, ArrayList<String> recipients) throws RemoteException;
+
 
 }
