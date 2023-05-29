@@ -1,5 +1,7 @@
 package client;
 
+import view.View;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -8,6 +10,7 @@ public class ClientChat {
 
 
     private Map<String, String> conversation;
+    private static View view;
 
 
     public ClientChat() {
@@ -20,7 +23,7 @@ public class ClientChat {
 
     public void addMessage(String sender, String message){
         conversation.put(sender, message);
-        //view.plotNewMessage(); ----Gabbo ---Elena mettere metodo in view per plottare
+        view.plotNewMessage(message); //----Gabbo ---Elena mettere metodo in view per plottare
     }
 
 

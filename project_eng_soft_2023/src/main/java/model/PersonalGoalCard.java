@@ -180,7 +180,7 @@ public class PersonalGoalCard implements Card, Serializable {
 
         if(goal == 1) score=1;
         if(goal == 2) score=2;
-        if(goal == 3) score=3;
+        if(goal == 3) score=4;
         if(goal == 4) score=6;
         if(goal == 5) score=9;
         if(goal == 6) score=12;

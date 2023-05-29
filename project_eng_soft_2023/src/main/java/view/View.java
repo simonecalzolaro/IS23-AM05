@@ -24,6 +24,6 @@ public abstract class View {
     public abstract void startGame() throws IOException, LoginException, NotBoundException;
     public abstract void endYourTurn();
     public abstract void startPlay();
-
-
+    public abstract void showException(String exception);
+    public abstract void plotNewMessage(String message);
 }

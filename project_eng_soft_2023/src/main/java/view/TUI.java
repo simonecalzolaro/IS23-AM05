@@ -6,9 +6,7 @@ import client.SocketClient;
 import client.Tile;
 import myShelfieException.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -17,16 +15,13 @@ import java.util.*;
 public class TUI extends View {
 
     List<Integer> coord = new ArrayList<>();
-    ArrayList<client.Tile> chosenTiles = new ArrayList<>();
     private final PrintStream out;
-    private final BufferedReader reader;
 
     public TUI() {
 
         super();
 
         out = System.out;
-        reader = new BufferedReader(new InputStreamReader(System.in));
         startGame();
         Thread t = new Thread(this::commandListener);
         t.start();
@@ -319,6 +314,17 @@ public class TUI extends View {
 
             case "1":
 
+                do {
+                    try {
+                        client.askContinueGame();
+                        goon=true;
+                    } catch (LoginException e) {
+                        e.getMessage();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }while (!goon);
+
                 break;
 
 
@@ -362,6 +368,16 @@ public class TUI extends View {
 
     }
 
+    @Override
+    public void showException(String exception) {
+        out.println(exception);
+    }
+
+    @Override
+    public void plotNewMessage(String message) {
+        out.println(message);
+    }
+
 
     //-------------------------------- other methods --------------------------------
 
@@ -394,12 +410,7 @@ public class TUI extends View {
         }
     }
 
-
-    public String getInput() throws IOException {
-        return reader.readLine();
-    }
-
-    public boolean init() {
+    public void init() {
         out.println("""
                 ███      ███ ██    ██   ███████ ██   ██ ██████ ██     ██████ ██ ██████ \s
                 ████    ████  ██  ██    ██      ██   ██ ██     ██     ██     ██ ██     \s
@@ -412,10 +423,28 @@ public class TUI extends View {
         out.println("\nWelcome to My Shelfie Board Game!");
         out.println("\nCreators: Elena Caratti, Gabriele Clara Di Gioacchino, Mirko Calvi, Simone Calzolaro!");
 
-        return true;
     }
 
-    public boolean plotBoard() {
+    public void initMenu(){
+        out.println("+-----------------------------------------------------------+");
+        out.println("|                          MENU:                            |");
+        out.println("|                                                           |");
+        out.println("|   /help : to show all the commands available              |");
+        out.println("|   /pgc: to show your PersonalGoalCard                     |");
+        out.println("|   /cgc: to show your CommonGoalCard                       |");
+        out.println("|   /score: to get your score                               |");
+        out.println("|   /others: to show other player bookshelf                 |");
+        out.println("|   /myShelf: to show my bookshelf                          |");
+        out.println("|   /board: to show the updated board                       |");
+        out.println("|   /tiles: to choose and insert the tiles from the board   |");
+        out.println("|   /chat: to write a message in the chat                   |");
+        out.println("|   /showChat: to show the chat                             |");
+        out.println("|   /q: to leave the game                                   |");
+        out.println("|                                                           |");
+        out.println("+-----------------------------------------------------------+");
+    }
+
+    public void plotBoard() {
 
         StringBuilder strBoard = new StringBuilder();
         int temp = 0;
@@ -442,10 +471,9 @@ public class TUI extends View {
 
         out.println(strBoard.toString());
 
-        return true;
     }
 
-    public boolean plotMatrixShelf(Matrix bookshelf) {
+    public void plotMatrixShelf(Matrix bookshelf) {
 
         StringBuilder strShelf = new StringBuilder();
         int temp = 5;
@@ -477,10 +505,9 @@ public class TUI extends View {
 
         out.println(strShelf.toString());
 
-        return true;
     }
 
-    public boolean plotOtherPlayersShelf() {
+    public void plotOtherPlayersShelf() {
 
         for (Map.Entry<String, Matrix> entry : client.getModel().getOtherPlayers().entrySet()) {
             out.println(entry.getKey());
@@ -488,10 +515,9 @@ public class TUI extends View {
             plotMatrixShelf(entry.getValue());
         }
 
-        return true;
     }
 
-    public boolean plotPGC() {
+    public void plotPGC() {
         StringBuilder strPGC = new StringBuilder();
 
         int temp = 5;
@@ -525,19 +551,19 @@ public class TUI extends View {
 
         System.out.println(strPGC.toString());
 
-        return true;
     }
 
     public void commandInsertTiles() {
         Scanner scan = new Scanner(System.in);
         boolean goon = false;
+        boolean ok=false;
 
         do {
 
             //---da rendere a prova di scimmia
+            int x,y;
             int round = 0;
             String select = "";
-
             out.println("Choose tiles from the board!");
 
             while (!Objects.equals(select, "n")) {
@@ -545,21 +571,36 @@ public class TUI extends View {
 
                     out.println("Insert x:");
 
-                    int x = Integer.parseInt(scan.next());
+                    do {
+                        try {
+                            x = Integer.parseInt(scan.next());
+                            coord.add(x);
+                            ok=true;
+                        } catch (NumberFormatException e) {
+                            out.println("NumberFormatException trying to choose the x tile!");
+                            out.println("Insert x: ");
+                        }
+                    }while (!ok);
 
+                    ok=false;
                     out.println("Insert y:");
 
-                    int y = Integer.parseInt(scan.next());
+                    do {
+                        try {
+                            y = Integer.parseInt(scan.next());
+                            coord.add(y);
+                            ok=true;
+                        } catch (NumberFormatException e) {
+                            out.println("NumberFormatException trying to choose the y tile!");
+                            out.println("Insert y: ");
+                        }
+                    }while (!ok);
 
-                    coord.add(x);
-                    coord.add(y);
-                    chosenTiles.add(client.getModel().getBoard().getTileByCoord(x, y));
                     round++;
 
                     if (!checkTiles(coord)) {
                         out.println("There has been some error!\nChoose tiles from the board!");
                         coord.clear();
-                        chosenTiles.clear();
                         round = 0;
                     }
 
@@ -571,7 +612,6 @@ public class TUI extends View {
                 select = scan.next();
 
             }
-            ;
 
 
             try {
@@ -581,7 +621,6 @@ public class TUI extends View {
             } catch (InvalidChoiceException e) {
                 e.getMessage();
                 coord.clear();
-                chosenTiles.clear();
             } catch (NotConnectedException e) {
                 out.println("NotConnectedException occurred trying to choose the tiles!");
                 e.printStackTrace();
@@ -590,7 +629,6 @@ public class TUI extends View {
                 e.printStackTrace();
             } catch (InvalidParametersException e) {
                 out.println("InvalidParametersException occurred trying to choose the tiles!");
-                e.getMessage();
             } catch (IOException e) {
                 out.println("IOException occurred trying to choose the tiles!");
             }
@@ -598,15 +636,25 @@ public class TUI extends View {
         } while (!goon);
 
         goon = false;
+        ok=false;
 
         do {
             out.println("Choose the column of your bookshelf for the tiles:\n");
-            int chosenColumn = Integer.parseInt(scan.next());
+            int chosenColumn=0;
+
+            do {
+                try {
+                    chosenColumn = Integer.parseInt(scan.next());
+                    ok=true;
+                } catch (NumberFormatException e) {
+                    out.println("NumberFormatException trying to choose the column of your bookshelf!");
+                    out.println("Try again: ");
+                }
+            }while (!ok);
 
             try {
                 client.askInsertShelfTiles(chosenColumn, coord);
                 goon = true;
-                chosenTiles.clear();
                 coord.clear();
             } catch (InvalidChoiceException e) {
                 e.getMessage();
@@ -659,8 +707,10 @@ public class TUI extends View {
         String action;
         boolean flag = true;
 
+        initMenu();
+
         while (flag) {
-            out.println("Command: ");
+            out.println("Command:");
 
             action = scan.next();
 

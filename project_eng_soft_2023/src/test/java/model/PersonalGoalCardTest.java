@@ -94,7 +94,7 @@ class PersonalGoalCardTest {
         matr[2][1] = Tile.YELLOW;
         matr[0][2] = Tile.LIGHTBLUE;
 
-        assertEquals(3, personalGoalCard.getScore(matr));
+        assertEquals(4, personalGoalCard.getScore(matr));
         assertFalse(personalGoalCard.checkGoal(matr));
     }
 

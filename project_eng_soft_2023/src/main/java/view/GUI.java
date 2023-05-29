@@ -19,6 +19,16 @@ public class GUI extends View {
     ClientModel clientModel;
     private RankController rankController;
 
+    @Override
+    public void showException(String exception) {
+
+    }
+
+    @Override
+    public void plotNewMessage(String message) {
+
+    }
+
     public GUI() {
         this.numOfPlayer = 0;
 
