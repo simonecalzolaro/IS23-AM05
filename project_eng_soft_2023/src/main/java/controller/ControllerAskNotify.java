@@ -3,9 +3,15 @@ package controller;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
+/**
+ * interface containing all the method witch implementation differs between RMI and Socket
+ */
 public interface ControllerAskNotify {
 
 
+    /**
+     * asks the client to insert the number of player
+     */
     void askNumberOfPlayers() ;
 
     /**
@@ -44,6 +50,12 @@ public interface ControllerAskNotify {
      */
     void askPing() throws IOException;
 
+    /**
+     * notify to the remote client to add a new message to the conversation in the chat
+     * @param nick: nickname of the sender
+     * @param message: text message
+     * @throws IOException
+     */
     void notifyNewMessage(String nick, String message) throws IOException;
 
 

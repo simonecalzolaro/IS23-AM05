@@ -1,5 +1,8 @@
 package client;
 
+/**
+ * enum class with all the possible type of tiles
+ */
 public enum Tile {
 
     GREEN,
@@ -11,6 +14,10 @@ public enum Tile {
     EMPTY,
     NOTAVAILABLE;
 
+    /**
+     * @param tileNumb: ordinal number of the tle I want to create
+     * @return Tile with retrun.ordinal()=tileNumb
+     */
     public static Tile getTile(int tileNumb){
 
         switch (tileNumb % 12) {

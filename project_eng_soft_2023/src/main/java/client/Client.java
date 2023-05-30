@@ -165,20 +165,20 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     }
 
     /**
-     * @return always true
      * @throws RemoteException RMI exception
      */
     @Override
     public void ping() throws RemoteException{
 
         pingChecker.setConnected(true);
+       // System.out.println("ping() received");
 
         try{
+            //System.out.println("pong() the server");
             notifyPong();
         } catch (RemoteException e) {
             view.showException("---ops..."+e.getMessage());
         }
-
     }
 
     @Override
@@ -216,10 +216,16 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         return gameEnded;
     }
 
+    /**
+     * @return pingChecker
+     */
     public PingFromServer getPingChecker() {
         return pingChecker;
     }
 
+    /**
+     * @return true if the game has started
+     */
     public boolean isGameStarted() {
         return gameStarted;
     }

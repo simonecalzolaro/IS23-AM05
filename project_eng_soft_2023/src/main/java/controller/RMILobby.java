@@ -16,6 +16,10 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * RMI implementation of class "Lobby".
+ * It handles the RMI communication protocol.
+ */
 public class RMILobby extends Lobby{
 
 
@@ -43,7 +47,7 @@ public class RMILobby extends Lobby{
 
         stub = (ClientServerHandler) UnicastRemoteObject.exportObject(this, PORT);
         registry = LocateRegistry.createRegistry(PORT);
-        registry.bind("ServerAppService",stub);
+        registry.bind("ServerAppService", stub);
 
         System.out.println("----RMIServer ready----");
 

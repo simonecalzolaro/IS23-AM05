@@ -172,7 +172,8 @@ public class RMIClient extends Client {
     @Override
     public void notifyPong() throws RemoteException {
 
-            clientServerHandler.pong(model.getNickname(), model.getGameID());
+        System.out.println("notifyPong()");
+        clientServerHandler.pong(model.getNickname(), model.getGameID());
 
     }
 

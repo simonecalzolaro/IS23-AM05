@@ -154,8 +154,8 @@ public class LoginController extends GUIController {
         String nickname = nameField.getText();
         nameField.clear();
        try{
-            client.askLogin(nickname);
             client.getModel().setNickname(nickname);
+            client.askLogin(nickname);
 
         } catch (LoginException e){
             showException("This nickname is not available! Try again!");

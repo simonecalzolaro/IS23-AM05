@@ -31,7 +31,6 @@ public class GUI extends View {
 
     public GUI() {
         this.numOfPlayer = 0;
-
     }
 
     /**

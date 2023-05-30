@@ -6,7 +6,8 @@ import myShelfieException.LoginException;
 import java.io.IOException;
 
 /**
- * check if the player is still connected
+ * check if the player is still connected.
+ * Every 10 seconds checks if in the past 10 seconds he received a ping from the server.
  */
 public class PingFromServer implements Runnable{
 
@@ -15,6 +16,10 @@ public class PingFromServer implements Runnable{
     private int counter;
     private boolean flag;
 
+    /**
+     * PingFromServer constructor.
+     * @param client the associated client
+     */
     public PingFromServer(Client client){
 
         this.client=client;
@@ -24,11 +29,13 @@ public class PingFromServer implements Runnable{
 
     }
 
+
     @Override
     public void run() {
 
         counter=0;
 
+        //System.out.println("pong process starts");
         while( flag  ){
 
             connected=false;
@@ -78,14 +85,24 @@ public class PingFromServer implements Runnable{
         System.out.println("ping stopped");
     }
 
+    /**
+     * @return the ConnectionStatus (true= you are online/server up, false= you are offline/server down
+     */
     public boolean getConnectionStatus(){
         return connected;
     }
 
+    /**
+     * set the connection status
+     * @param connected attribute
+     */
     public void setConnected(boolean connected) {
         this.connected = connected;
     }
 
+    /**
+     * method to stop the ping process
+     */
     public void stopPingProcess(){
         flag=false;
     }

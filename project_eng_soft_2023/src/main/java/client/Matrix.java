@@ -4,10 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * generic class representing a matrix of Tiles
+ */
 public class Matrix {
     private Tile[][] matr;
     private Map<Tile, Integer[]> map;
 
+    /**
+     * constructor 1
+     * @param pgcMap: map
+     */
     public Matrix(Map<model.Tile, Integer[]> pgcMap) {
 
         map=new HashMap<>();
@@ -24,6 +31,10 @@ public class Matrix {
 
     }
 
+    /**
+     * constructor 2
+     * @param matr: Tile[][]
+     */
     public Matrix(model.Tile[][] matr) {
 
         this.matr=new Tile[matr.length][matr[0].length];
@@ -38,13 +49,27 @@ public class Matrix {
 
     }
 
+    /**
+     * @param row: row
+     * @param col: column
+     * @return the tile inside this tile with coordinates [row][col]
+     */
     public Tile getTileByCoord(int row, int col){
         return matr[row][col];
     }
 
+    /**
+     * @param tile: Tile
+     * @return the coord of a given Tile
+     */
     public Integer[] getTileFromMap(Tile tile){
         return map.get(tile);
     }
+
+    /**
+     * @param matr: matrix from witch generate the return
+     * @return a Map
+     */
     private Map<Tile, Integer[]>  generateMapFromMatrix(Tile[][] matr){
 
         Map<Tile, Integer[]> map=new HashMap<>();
@@ -60,6 +85,10 @@ public class Matrix {
         return map;
     }
 
+    /**
+     * @param map: Map from witch generate the return
+     * @return a matrix
+     */
     private Tile[][] generateMatrixFromMap( Map<Tile, Integer[]>  map){
 
         Tile[][] matr= new Tile[6][5];
@@ -80,8 +109,14 @@ public class Matrix {
         return matr;
     }
 
+    /**
+     * @return the matrix of Tile
+     */
     public Tile[][] getMatr() { return matr; }
 
+    /**
+     * @return the correspondent Map of Tiles
+     */
     public Map<Tile, Integer[]> getMap() {
         return map;
     }

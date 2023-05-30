@@ -1,5 +1,8 @@
 package client;
 
+/**
+ * enum class with all the possible type of CommonGoalCard and their description
+ */
 public enum CGC {
 
     CGC1("Six groups each containing at least\n" +
@@ -66,28 +69,27 @@ public enum CGC {
 
     public static CGC getCGC(int cgc1Num){
 
-        switch (cgc1Num % 12) {
-            case 1 : return CGC.CGC1;
-            case 2 : return CGC.CGC2;
-            case 3 : return CGC.CGC3;
-            case 4 : return CGC.CGC4;
-            case 5 : return CGC.CGC5;
-            case 6 : return CGC.CGC6;
-            case 7 : return CGC.CGC7;
-            case 8 : return CGC.CGC8;
-            case 9 : return CGC.CGC9;
-            case 10 : return CGC.CGC10;
-            case 11 : return CGC.CGC11;
-            case 12 : return CGC.CGC12;
-            default: return CGC.CGC1;
-        }
-    }
+        return switch (cgc1Num % 12) {
+            case 0 -> CGC.CGC1;
+            case 1 -> CGC.CGC2;
+            case 2 -> CGC.CGC3;
+            case 3 -> CGC.CGC4;
+            case 4 -> CGC.CGC5;
+            case 5 -> CGC.CGC6;
+            case 6 -> CGC.CGC7;
+            case 7 -> CGC.CGC8;
+            case 8 -> CGC.CGC9;
+            case 9 -> CGC.CGC10;
+            case 10 -> CGC.CGC11;
+            case 11 -> CGC.CGC12;
+            default -> null;
+        };
 
+    }
 
     @Override
     public String toString() {
         return super.toString();
     }
-
 
 }

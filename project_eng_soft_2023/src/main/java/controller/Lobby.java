@@ -23,7 +23,6 @@ public abstract class Lobby implements  ClientServerHandler {
     static int PORT;
     static int currNoP=0;
 
-
     private static Object nowLoggingClient;
     protected static ArrayList<ControlPlayer> clients;
     protected static ArrayList< Game > games;
@@ -133,7 +132,10 @@ public abstract class Lobby implements  ClientServerHandler {
         }
     }
 
-
+    /**
+     * Method to check if the server has to ask a client the number of players he wants in his game.
+     * It is always executed immediately after the login() method.
+     */
     public synchronized void checkAskNumberOfPlayers(){
 
         System.out.println("-> checkAskNuberOfPlayers active");
@@ -170,8 +172,8 @@ public abstract class Lobby implements  ClientServerHandler {
     }
 
     /**
-     * loop function to check the status of the waiting room.
      * If the waiting room size is equal to the number of attended players a new Game starts and all the players are notified
+     * It is always executed immediately after the checkAskNumberOfPlayers() method.
      */
     public synchronized void checkFullWaitingRoom() {
 
@@ -369,11 +371,16 @@ public abstract class Lobby implements  ClientServerHandler {
         }
     }
 
-
+    /**
+     * method called by the client to notify the server that he received the ping
+     * @param nickname: nickname of the client that notify the ping
+     * @param gameID: the game's ID he is part of
+     * @throws RemoteException
+     */
     @Override
     public void pong(String nickname, int gameID) throws RemoteException{
 
-
+       // System.out.println("pong() from "+nickname);
         if(gameID<=0 ){ // if gameId is less than 0 it means that we are still in the waiting room
             for(ControlPlayer cp: tempPlayers){
                 if(cp.getPlayerNickname().equals(nickname) ){

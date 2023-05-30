@@ -13,7 +13,6 @@ public class Stream {
 
     Socket socket;
     int code;
-
     ObjectOutputStream out;
     ObjectInputStream in;
 

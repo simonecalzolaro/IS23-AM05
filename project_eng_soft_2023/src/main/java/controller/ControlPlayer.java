@@ -114,8 +114,6 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
             System.out.println("-----------------------------------------------");
              */
 
-
-            updateScore();
             return true;
         }
 
@@ -167,6 +165,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     public void chooseBoardTiles(List<Integer> coord) throws RemoteException, NotConnectedException, InvalidParametersException, NotMyTurnException, InvalidChoiceException {
 
             catchTile(coord);
+            updateScore();
 
     }
 
@@ -220,6 +219,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
                     cp.notifyEndGame();
                 }
             }catch (IOException e) { throw new RuntimeException(e); }
+            return;
         }
 
         //tell the next player to start his turn
@@ -375,8 +375,6 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
                 System.out.println(" impossible to set "+nickname+" status from "+this.playerStatus + " to " + ps);
         }
     }
-
-    public abstract void notifyNewMessage(String nick, String message) throws IOException;
 
     abstract public void setClientHandler(ClientHandler cliHnd);
 
