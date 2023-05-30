@@ -2,14 +2,12 @@ package client;
 
 import controller.ClientServerHandler;
 import controller.GameHandler;
-import model.Tile;
 import myShelfieException.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import view.View;
 
-import javax.swing.plaf.PanelUI;
 import java.io.*;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -58,7 +56,7 @@ public class RMIClient extends Client {
         Long PORT_pre;
 
         try{
-            Object o = new JSONParser().parse(new FileReader("src/main/config/header.json"));
+            Object o = new JSONParser().parse(new FileReader("C:/Users/Utente/IS23-AM05/project_eng_soft_2023/src/main/config/header.json"));
             JSONObject j =(JSONObject) o;
             Map arg = new LinkedHashMap();
             arg = (Map) j.get("serverSettings");
@@ -68,7 +66,7 @@ public class RMIClient extends Client {
 
             PORT = PORT_pre.intValue();
 
-        } catch (FileNotFoundException e) {
+        }catch (FileNotFoundException e) {
             System.out.println("RMIClient --- FileNotFoundException occurred trying to retrieve server's information from header.json");
             e.printStackTrace();
         } catch (IOException e) {

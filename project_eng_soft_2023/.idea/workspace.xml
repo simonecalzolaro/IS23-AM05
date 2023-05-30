@@ -8,24 +8,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="ping adjustments, debugging">
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="server TUI and adjustments">
+      <change afterPath="$PROJECT_DIR$/shade/client.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shade/server.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/CGC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/CGC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientAskNotify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientAskNotify.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientChat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Matrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Matrix.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/PingFromServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/PingFromServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Stream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Stream.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControllerAskNotify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControllerAskNotify.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMILobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMILobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/TCPHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TCPHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GUIApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GUIApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GUIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GUIController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/RankController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/RankController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/game.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/game.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/rank.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/rank.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/controller/LobbyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/LobbyTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,13 +97,13 @@
       <recent name="client" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.client1">
+  <component name="RunManager" selected="Application.client2">
     <configuration name="GUIApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="corretto-17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="view.GUIApplication" />
       <module name="project_eng_soft_2023" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\Mirko\Documents\javafx-sdk-20.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.graphics" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-20.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.graphics" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="view.*" />
@@ -278,14 +281,6 @@
       <workItem from="1684500018753" duration="1004000" />
       <workItem from="1684927954178" duration="1540000" />
       <workItem from="1684930059367" duration="5965000" />
-      <workItem from="1685174474157" duration="5739000" />
-      <workItem from="1685277273886" duration="8819000" />
-      <workItem from="1685368441883" duration="644000" />
-      <workItem from="1685369259371" duration="6375000" />
-      <workItem from="1685385929929" duration="4426000" />
-      <workItem from="1685434154395" duration="988000" />
-      <workItem from="1685443302295" duration="4793000" />
-      <workItem from="1685450477992" duration="3066000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
@@ -378,21 +373,7 @@
       <option name="project" value="LOCAL" />
       <updated>1684917509459</updated>
     </task>
-    <task id="LOCAL-00014" summary="chat implementation and RMI chat methods">
-      <created>1685112992039</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1685112992040</updated>
-    </task>
-    <task id="LOCAL-00015" summary="ping adjustments, debugging">
-      <created>1685434246314</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1685434246314</updated>
-    </task>
-    <option name="localTasksCounter" value="16" />
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -433,9 +414,7 @@
     <MESSAGE value="synchronization of RMI methods, adjustments on methods signature" />
     <MESSAGE value="GUI" />
     <MESSAGE value="&quot;the big network update&quot;" />
-    <MESSAGE value="chat implementation and RMI chat methods" />
-    <MESSAGE value="ping adjustments, debugging" />
-    <option name="LAST_COMMIT_MESSAGE" value="ping adjustments, debugging" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;the big network update&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -447,5 +426,8 @@
         </breakpoints-dialog>
       </breakpoints-dialog>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/project_eng_soft_2023$GUIApplication2.ic" NAME="GUIApplication2 Coverage Results" MODIFIED="1685436016430" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

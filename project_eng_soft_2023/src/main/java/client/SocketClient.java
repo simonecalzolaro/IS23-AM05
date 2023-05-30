@@ -1,7 +1,5 @@
 package client;
 
-import controller.GameHandler;
-import model.Tile;
 import myShelfieException.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,8 +8,6 @@ import view.View;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -308,8 +304,7 @@ public class SocketClient extends Client{
         try{
 
             Long PORT_pre;
-
-            Object o = new JSONParser().parse(new FileReader("src/main/config/header.json"));
+            Object o = new JSONParser().parse(new FileReader("C:/Users/Utente/IS23-AM05/project_eng_soft_2023/src/main/config/header.json"));
             JSONObject j =(JSONObject) o;
             Map arg = new LinkedHashMap();
             arg = (Map) j.get("serverSettings");

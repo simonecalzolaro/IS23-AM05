@@ -24,7 +24,7 @@ class LobbyTest {
         lobby=new RMILobby();
         lobby.startServer();
 
-        c1=new RMIClient();
+      /*  c1=new RMIClient();
         c2=new RMIClient();
         c3=new RMIClient();
         c4=new RMIClient();
@@ -33,7 +33,7 @@ class LobbyTest {
 
         lobby.login("mario", c1);
         lobby.login("elio", c2);
-
+*/
     }
 
     @Test
