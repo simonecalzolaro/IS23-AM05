@@ -62,11 +62,11 @@ public class TUI extends View {
     @Override
     public void endGame(Map<Integer, String> results) {
 
+        out.println("+---------------The game has ended!---------------+");
         for (Integer key : results.keySet()) {
-            System.out.println(key + " ->   " + results.get(key));
+            System.out.println("   "+key + " ->  " + results.get(key));
         }
-
-        out.println("The game has ended!\n");
+        out.println("+------------------------------------------------+");
 
     }
 
@@ -703,6 +703,7 @@ public class TUI extends View {
     }
 
     public void commandListener() {
+
         Scanner scan = new Scanner(System.in);
         String action;
         boolean flag = true;

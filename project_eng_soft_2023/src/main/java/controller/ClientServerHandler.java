@@ -26,7 +26,7 @@ public interface ClientServerHandler extends Remote {
      * @throws RemoteException
      * @throws LoginException
      */
-    GameHandler continueGame(String nickname, Object client)  throws RemoteException, LoginException;
+    GameHandler continueGame(String nickname, Object client, int ID)  throws RemoteException, LoginException;
 
 
     /**

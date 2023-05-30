@@ -10,6 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class PingPong implements Runnable{
     ControlPlayer controlPlayer;
     private boolean connected;
+    private boolean flag;
 
     static Lock lock=new ReentrantLock();
 
@@ -20,6 +21,7 @@ public class PingPong implements Runnable{
         controlPlayer=cp;
         connected=false;
         counter=0;
+        flag=true;
 
     }
 
@@ -27,14 +29,14 @@ public class PingPong implements Runnable{
     public void run() {
 
 
-        while( true ){
+        while( flag ){
 
             //set the connection to false and sending a ping request
             connected=false;
             try {
                 controlPlayer.askPing();
             } catch (Exception e) {
-                System.out.println(" --- error: impossible to ask ping to "+controlPlayer.getPlayerNickname());
+                if(counter==1) System.out.println(" --- error: impossible to ask ping to "+controlPlayer.getPlayerNickname());
             }
 
 
@@ -62,7 +64,7 @@ public class PingPong implements Runnable{
                 }
 
                 controlPlayer.setPlayerStatus(PlayerStatus.NOT_ONLINE);
-                if (counter==0) System.out.println("    "+controlPlayer.getPlayerNickname()+" went offline ");
+                if (counter==1) System.out.println("    "+controlPlayer.getPlayerNickname()+" went offline ");
 
                 counter++;
 
@@ -77,16 +79,15 @@ public class PingPong implements Runnable{
 
 
             //only if you acquire the lock u'll check the possible game suspension
-            if ( lock.tryLock() && controlPlayer.getPlayerStatus().equals(PlayerStatus.MY_TURN)){
-                try {
-                    // manipulate protected state
-                    verifyGameSuspension();
+            if ( controlPlayer.getPlayerStatus().equals(PlayerStatus.MY_TURN)){
 
-                } finally {
-                    lock.unlock();
-                }
+                new Thread(()-> verifyGameSuspension());
+
             }
         }
+
+        System.out.println(controlPlayer.getPlayerNickname()+" pingPong process stopped");
+
     }
 
 
@@ -101,8 +102,14 @@ public class PingPong implements Runnable{
     public void verifyGameSuspension(){
 
         //se sono presenti meno di due giocatori
-        if(controlPlayer.getGame().getPlayers().size()<2){
+        if( controlPlayer.getGame().getPlayers()
+                                    .stream()
+                                    .filter(x->!x.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE))
+                                    .toList()
+                                    .size()<2 ){
+
             //setto lo stato del gioco a "SUSPENDED"
+            System.out.println("-----setting game ID="+controlPlayer.getGame().getGameID()+" to SUSPENDED with "+controlPlayer.getPlayerNickname());
             controlPlayer.getGame().setGameStatus(GameStatus.SUSPENDED);
 
             //aspetto 20 secondi sperando si riconnetta qualcuno
@@ -113,12 +120,28 @@ public class PingPong implements Runnable{
             }
 
             //se non si è riconnesso nessuno il gioco termina e notifico l'utente del termine del gioco
-            if(controlPlayer.getGame().getPlayers().size()<2){
-                controlPlayer.getGame().setGameStatus(GameStatus.END_GAME);
-                controlPlayer.getGame().endTurn();
-                System.out.println("   Game "+ controlPlayer.getGame().getGameID() + " ended due to a lack of players");
+            if( controlPlayer.getGame().getPlayers()
+                                        .stream()
+                                        .filter(x->!x.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE))
+                                        .toList()
+                                        .size()<2 ){
+                try {
+                    controlPlayer.getGame().setGameStatus(GameStatus.END_GAME);
+                    controlPlayer.getGame().endTurn();
+                    System.out.println("   Game " + controlPlayer.getGame().getGameID() + " ended due to a lack of players");
+                }catch(Exception e){
+                    System.out.println("---error: impossible to end the Game "+controlPlayer.getGame().getGameID()+" in verifyGameSuspension()!");
+                }
+            }
+            else{
+                controlPlayer.getGame().setGameStatus(GameStatus.PLAYING);
             }
         }
     }
+
+    public void stopPingProcess(){
+        flag=false;
+    }
+
 }
 

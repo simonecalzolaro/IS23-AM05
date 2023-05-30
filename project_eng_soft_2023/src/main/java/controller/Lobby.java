@@ -261,36 +261,43 @@ public abstract class Lobby implements  ClientServerHandler {
      * @throws RemoteException
      */
     @Override
-    public synchronized GameHandler continueGame(String nickname, Object client) throws RemoteException, LoginException {
+    public synchronized GameHandler continueGame(String nickname, Object client, int ID) throws RemoteException, LoginException {
 
-            //checking if exists a player called "nickname" now offline
-            Stream<ControlPlayer> cp= null;
-            cp = clients.stream()
-                        .filter(x -> x.getPlayerNickname().equals(nickname));
-
-            if(cp.count()<1) throw new LoginException("This nickname does not exists");
-
-            if(cp.count()!=1) throw new LoginException("try again");
-
-            ControlPlayer controlPlayer = cp.toList().get(0);
-
-            if( ! controlPlayer.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE) ) throw new LoginException("This nickname results to be still online");
-
-            //if exists I'll create a new one, remove the current ClientHandler-ControlPlayer pair from the map, set a new ClientHandler on the ControlPlayer
-
-            if (client instanceof ArrayList<?>) {
-
-                controlPlayer.setStreams((ArrayList<controller.Stream>) client);
-
+        //checking if exists a player called "nickname" now offline inside Game signed ID
+        Game myGame=null;
+        for(Game g: games){
+            if(g.getGameID()==ID){
+                myGame=g;
+                break;
             }
-            else if (client instanceof ClientHandler){
+        }
+        if(myGame==null){
+            throw new LoginException("---error: occurred in continueGame(), does not exists Game ID="+ID);
+        }
 
-                controlPlayer.setClientHandler((ClientHandler) client);
+        for(ControlPlayer cp: clients){
+            if(cp.getPlayerNickname().equals(nickname)){
+                if(cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE) ){
+                    if (client instanceof ArrayList<?>) {
 
+                        cp.setStreams((ArrayList<controller.Stream>) client);
+
+                    }
+                    else if (client instanceof ClientHandler){
+
+                        cp.setClientHandler((ClientHandler) client);
+
+                    }
+                    else{
+                        return null;
+                    }
+                    return cp;
+                }else{
+                    throw new LoginException("This nickname results to be still online");
+                }
             }
-
-            //searching the correspondent Game and return the GameHandler interface
-            return controlPlayer;
+        }
+        throw new LoginException("---error: occurred in continueGame(), nickname "+nickname+" does not exists inside Game ID="+ID);
 
     }
 
@@ -301,42 +308,43 @@ public abstract class Lobby implements  ClientServerHandler {
     @Override
     public synchronized void leaveGame(String nickname, int ID) throws LoginException, RemoteException {
 
-        //checking if exists a player called "nickname" now offline
-        Stream<ControlPlayer> cp = null;
-        cp = clients.stream()
-                .filter(x -> x.getPlayerNickname().equals(nickname));
-
-
-        if (cp.count() < 1) throw new LoginException("This nickname does not exists");
-
-        if (cp.count() != 1) throw new LoginException("try again");
-
-        ControlPlayer controlPlayer = cp.toList().get(0);
-
-        System.out.println("User " + controlPlayer.getPlayerNickname());
-
-        //searching the game controlPlayer was playing
-        Game g = null;
-        for (Game g1 : games) {
-
-            for (ControlPlayer conti : g1.getPlayers()) {
-
-                if (conti.getPlayerNickname().equals(nickname)) {
-                    g = g1;
-                    break;
-                }
+        //checking if exists a player called "nickname" now offline inside Game ID
+        Game myGame=null;
+        for(Game g: games){
+            if(g.getGameID()==ID){
+                myGame=g;
+                break;
             }
         }
+        if(myGame==null){
+            throw new LoginException("---error: does not exists Game ID="+ID);
+        }
 
+        for(ControlPlayer cp: myGame.getPlayers()){
+            if(cp.getPlayerNickname().equals(nickname)){
+                try {
+                    if(cp.getPlayerStatus().equals(PlayerStatus.MY_TURN)){
 
-        boolean res = ((g != null) ? g.removePlayer(controlPlayer) : false);
-        clients.remove(controlPlayer);
-
-        if (res) {
-            System.out.println(" successfully ");
-        } else System.out.println("tried to");
-
-        System.out.println(" leave the game: " + g.getGameID());
+                        myGame.endTurn();
+                        Game finalMyGame = myGame;
+                        new Thread(()-> {
+                            try {
+                                finalMyGame.getPlayers().get(finalMyGame.getCurrPlayer()).notifyStartYourTurn();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }).start();
+                    }
+                    myGame.removePlayer(cp);
+                    clients.remove(cp);
+                    cp.getPingClass().stopPingProcess();
+                }catch(Exception e){
+                    System.out.println("---error: something went wrong while removing "+nickname+" from game:"+ID);
+                }
+                return;
+            }
+        }
+        throw new LoginException("---error: nickname "+nickname+" does not exists inside Game ID="+ID);
 
     }
 
@@ -366,7 +374,7 @@ public abstract class Lobby implements  ClientServerHandler {
     public void pong(String nickname, int gameID) throws RemoteException{
 
 
-        if(gameID<=0 ){ // if gameId is less than 0 it means that we still are in the waiting room
+        if(gameID<=0 ){ // if gameId is less than 0 it means that we are still in the waiting room
             for(ControlPlayer cp: tempPlayers){
                 if(cp.getPlayerNickname().equals(nickname) ){
                     cp.getPingClass().setConnected();
@@ -423,6 +431,7 @@ public abstract class Lobby implements  ClientServerHandler {
 
         tempPlayers.remove(cp);
         clients.remove(cp);
+        cp.getPingClass().stopPingProcess();
 
         //se non è rimasto nessuno nella waiting room :
         if(tempPlayers.size()==0){

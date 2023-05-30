@@ -22,15 +22,13 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     protected int PORT;
 
     protected boolean left;
-    protected int myScore;
 
     protected ClientModel model;
     private View view;
-
     private PingFromServer pingChecker;
-
     protected boolean myTurn;
     protected boolean gameEnded;
+    private boolean gameStarted;
 
 
     /**
@@ -46,6 +44,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         myTurn=false;
         gameEnded=false;
         left=false;
+        gameStarted=false;
         pingChecker=new PingFromServer(this);
         (new Thread(pingChecker)).start();
 
@@ -66,7 +65,12 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     @Override
     public void enterNumberOfPlayers() throws RemoteException{
 
-        view.getNumOfPlayer();
+        try{
+            view.getNumOfPlayer();
+        }catch (RemoteException e){
+            //System.out.println("--- ops... a remote exception occurred while communicating number of players to the server");
+            view.showException("--- ops... a remote exception occurred while communicating number of players to the server");
+        }
 
     }
 
@@ -78,13 +82,18 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     @Override
     public void updateBoard(model.Tile[][] board, model.Tile[][] myShelf, Map<String, model.Tile[][]> otherShelf, int myScore) throws RemoteException{
 
+
         Map<String, Matrix> otherPlayersMatr= new HashMap<>();
         for(String nick: otherShelf.keySet()){
             otherPlayersMatr.put(nick, new Matrix(otherShelf.get(nick)));
         }
 
-        model.initializeMatrixes(new Matrix(board), new Matrix(myShelf), otherPlayersMatr );
-        model.setMyScore(myScore);
+        try {
+            model.initializeMatrixes(new Matrix(board), new Matrix(myShelf), otherPlayersMatr);
+            model.setMyScore(myScore);
+        }catch (Exception e){
+            view.showException("---ops... something went wrong while updating the board and other's bookshelf");
+        }
 
         view.updateBoard();
 
@@ -116,19 +125,12 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         new Thread(() -> {
                             try {
                                 view.isYourTurn();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            } catch (InvalidChoiceException e) {
-                                throw new RuntimeException(e);
-                            } catch (NotConnectedException e) {
-                                throw new RuntimeException(e);
-                            } catch (InvalidParametersException e) {
-                                throw new RuntimeException(e);
-                            } catch (NotMyTurnException e) {
-                                throw new RuntimeException(e);
+                            } catch (InvalidChoiceException | IOException | NotConnectedException |
+                                     InvalidParametersException | NotMyTurnException e) {
+                                view.showException("---ops...something went wrong during your turn");
                             }
-                        }).start();
 
+        }).start();
 
     }
 
@@ -156,7 +158,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
         model.initializeCards(new Matrix(pgcMap), pgcNum, cgc1num, cgc2num );
         model.setGameID(GameID);
-        System.out.println("+++++++++++++++++++++++++++++");
+        gameStarted=true;
         view.startPlay();
 
 
@@ -167,15 +169,20 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws RemoteException RMI exception
      */
     @Override
-    public void ping() throws RemoteException {
+    public void ping() throws RemoteException{
 
         pingChecker.setConnected(true);
-        notifyPong();
+
+        try{
+            notifyPong();
+        } catch (RemoteException e) {
+            view.showException("---ops..."+e.getMessage());
+        }
 
     }
 
     @Override
-    public void reciveMessage(String sender, String message) throws RemoteException{
+    public void receiveMessage(String sender, String message) throws RemoteException{
         model.getMyChat().addMessage(sender, message);
     }
 
@@ -189,6 +196,10 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      */
     public ClientModel getModel(){
         return model;
+    }
+
+    public View getView() {
+        return view;
     }
 
     /**
@@ -205,13 +216,14 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         return gameEnded;
     }
 
+    public PingFromServer getPingChecker() {
+        return pingChecker;
+    }
 
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
 
     //-------------------------------------- RMI vs Socket layer --------------------------------------
-
-
-
-
-
 
 }

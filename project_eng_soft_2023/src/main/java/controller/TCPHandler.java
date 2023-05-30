@@ -28,8 +28,6 @@ public class TCPHandler {
 
     public void startServer(){
 
-        System.out.println("--- Initializing the TCPHandler ...");
-
         getServerSettings();
 
         System.out.println("--- TCPHandler ready ---");

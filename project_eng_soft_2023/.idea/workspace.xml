@@ -8,24 +8,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="server TUI and adjustments">
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="chat implementation and RMI chat methods">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientAskNotify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientAskNotify.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/PingFromServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/PingFromServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControllerAskNotify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControllerAskNotify.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/PingPong.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PingPong.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMILobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMILobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/PersonalGoalCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/PersonalGoalCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/TCPHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TCPHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/TUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/TUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,7 +95,7 @@
       <recent name="client" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GUIApplication">
+  <component name="RunManager" selected="Application.client3">
     <configuration name="GUIApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="corretto-17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -219,8 +219,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GUIApplication" />
         <item itemvalue="Application.client1" />
+        <item itemvalue="Application.GUIApplication" />
         <item itemvalue="JUnit.ControlPlayerTest" />
         <item itemvalue="JUnit.BoardTest" />
         <item itemvalue="JUnit.BagTest.testGetTilesFullBag" />
@@ -279,6 +279,11 @@
       <workItem from="1684500018753" duration="1004000" />
       <workItem from="1684927954178" duration="1540000" />
       <workItem from="1684930059367" duration="5965000" />
+      <workItem from="1685174474157" duration="5739000" />
+      <workItem from="1685277273886" duration="8819000" />
+      <workItem from="1685368441883" duration="644000" />
+      <workItem from="1685369259371" duration="6375000" />
+      <workItem from="1685385929929" duration="4426000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
@@ -371,7 +376,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684917509459</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="chat implementation and RMI chat methods">
+      <created>1685112992039</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1685112992040</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -412,7 +424,8 @@
     <MESSAGE value="synchronization of RMI methods, adjustments on methods signature" />
     <MESSAGE value="GUI" />
     <MESSAGE value="&quot;the big network update&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;the big network update&quot;" />
+    <MESSAGE value="chat implementation and RMI chat methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="chat implementation and RMI chat methods" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -62,7 +62,7 @@ public interface ClientAskNotify {
 
     void askPassMyTurn();
 
-    void notifyPong();
+    void notifyPong() throws RemoteException;
 
     void askPostMessage(String Message, ArrayList<String> recipients);
 

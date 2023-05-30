@@ -292,14 +292,13 @@ public class SocketClient extends Client{
             System.out.println("---> Maybe you're trying to reset/write an input stream");
             throw new RuntimeException();
         }
+
+
     }
-
-
-
 
     @Override
     public void askPostMessage(String Message, ArrayList<String> recipients) {
-        //---SimoSocket
+
     }
 
 

@@ -100,7 +100,7 @@ public class Game implements Serializable {
         board.updateBoard();
 
         //if online, setting the current player to NOT_MY_TURN
-        if(players.get(currPlayer).getPlayerStatus()!=PlayerStatus.NOT_ONLINE) players.get(currPlayer).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
+        if(players.get(currPlayer).getPlayerStatus()!=PlayerStatus.NOT_ONLINE && currPlayer<players.size()) players.get(currPlayer).setPlayerStatus(PlayerStatus.NOT_MY_TURN);
 
         //searching for the next player
         do{
@@ -108,6 +108,7 @@ public class Game implements Serializable {
                 currPlayer++;
             }
             else if (board.getEOG()){
+                System.out.println("set the game "+gameID+"status to END_GAME");
                 gameStatus=GameStatus.END_GAME;
             }
             else {
@@ -122,7 +123,8 @@ public class Game implements Serializable {
         else{
             try {
                 for(ControlPlayer cp: players){
-                    cp.notifyEndGame();
+                    System.out.println("    notify end game to "+cp.getPlayerNickname());
+                    if(!cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE))  cp.notifyEndGame();
                 }
             } catch (IOException e) { throw new RuntimeException(e); }
         }

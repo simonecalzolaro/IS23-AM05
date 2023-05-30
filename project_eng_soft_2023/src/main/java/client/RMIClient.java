@@ -106,7 +106,7 @@ public class RMIClient extends Client {
     @Override
     public void askContinueGame() throws LoginException, RemoteException {
 
-        this.gameHandler= clientServerHandler.continueGame(model.getNickname(), this);
+        this.gameHandler= clientServerHandler.continueGame(model.getNickname(), this, model.getGameID());
     }
 
 
@@ -119,6 +119,7 @@ public class RMIClient extends Client {
     public void askLeaveGame() throws RemoteException, LoginException {
 
         clientServerHandler.leaveGame(model.getNickname(), model.getGameID());
+
     }
 
 
@@ -169,15 +170,10 @@ public class RMIClient extends Client {
     }
 
     @Override
-    public void notifyPong() {
-
-        try {
+    public void notifyPong() throws RemoteException {
 
             clientServerHandler.pong(model.getNickname(), model.getGameID());
 
-        } catch (RemoteException e) {
-            System.out.println("--- an error occur when pong() back the server");
-        }
     }
 
     @Override

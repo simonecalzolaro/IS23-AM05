@@ -46,6 +46,7 @@ public class RMILobby extends Lobby{
         registry.bind("ServerAppService",stub);
 
         System.out.println("----RMIServer ready----");
+
     }
 
 

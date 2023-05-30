@@ -341,6 +341,11 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
                 //se va offline durante il suo turno devo cercare il client successivo
                 if(ps.equals(PlayerStatus.NOT_ONLINE)) {
                     game.endTurn();
+                    try {
+                        game.getPlayers().get(game.getCurrPlayer()).notifyStartYourTurn();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 break;
 

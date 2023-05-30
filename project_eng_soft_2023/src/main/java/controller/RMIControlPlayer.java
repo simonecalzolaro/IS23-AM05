@@ -111,7 +111,7 @@ public class RMIControlPlayer extends ControlPlayer{
     @Override
     public void notifyNewMessage(String nick, String message) throws IOException {
 
-        ch.reciveMessage(nick, message);
+        ch.receiveMessage(nick, message);
 
     }
 
