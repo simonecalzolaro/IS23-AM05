@@ -253,9 +253,9 @@ public class LoginController extends GUIController {
         FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("game.fxml"));
         Scene scene = new Scene(fxmlLoader1.load(), 1250,650);
         GameController gameController=fxmlLoader1.getController();
+        gameController.setClient(client);
         gameController.setScene(gui,stage);
         gui.setGameController(gameController);
-        gameController.setClient(client);
         stage.setScene(scene);
     }
 

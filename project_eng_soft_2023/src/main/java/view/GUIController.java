@@ -1,6 +1,7 @@
 package view;
 
 import client.Client;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -24,6 +25,9 @@ public abstract class GUIController {
         } else {
             button.setStyle("-fx-background-color: #ffd896; -fx-border-color: #ffac37;");
         }
+    }
+
+    public void showChat(ActionEvent actionEvent) {
     }
 
 }

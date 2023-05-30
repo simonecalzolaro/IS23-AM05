@@ -2,10 +2,12 @@ package view;
 
 import javafx.application.Application;
 
-//import javafx.embed.swing.JFXPanel;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import static javafx.application.Platform.exit;
 
 public class GUIApplication extends Application {
     @Override
@@ -20,7 +22,7 @@ public class GUIApplication extends Application {
         stage.show();
         LoginController controller=fxmlLoader.getController();
         GUI gui=new GUI();
-
+        stage.setOnHiding(event->exit());
         gui.setLoginController(controller);
         controller.setScene(gui,stage);
         //GameController controller1=fxmlLoader1.getController();

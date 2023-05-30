@@ -1,11 +1,22 @@
 package client;
 
+import myShelfieException.LoginException;
+import view.GUI;
+import view.GUIApplication;
 import view.TUI;
 import view.View;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
 import java.util.Scanner;
 
+
 public class ClientApp {
+
 
     private static Client client;
     //private static UI userInterface;
@@ -37,7 +48,8 @@ public class ClientApp {
                 break;
 
             case "1":
-                //view = new GUI();
+                view = new GUI();
+                GUIApplication.main(args);
                 break;
 
         }

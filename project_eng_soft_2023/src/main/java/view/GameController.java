@@ -1,7 +1,11 @@
 package view;
 
-
-
+//TODO controlla update board
+//TODO JAR
+//TODO controlla che PGC siano effettivamente corrispondenti
+//TODO istruzioni se togli insert tile
+//TODO show exception
+//TODO end game token
 import client.Client;
 import client.Matrix;
 import client.Tile;
@@ -19,8 +23,10 @@ import javafx.stage.Stage;
 import myShelfieException.*;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 import static javafx.application.Platform.exit;
@@ -77,6 +83,20 @@ public class GameController extends GUIController {
     @FXML
     private ImageView bookshelf0x0, bookshelf1x0, bookshelf2x0, bookshelf3x0, bookshelf4x0, bookshelf4x1, bookshelf3x1, bookshelf2x1, bookshelf1x1, bookshelf0x1, bookshelf0x2, bookshelf1x2, bookshelf2x2, bookshelf3x2, bookshelf4x2, bookshelf0x3, bookshelf1x3, bookshelf2x3, bookshelf3x3, bookshelf4x3, bookshelf0x4, bookshelf1x4, bookshelf2x4, bookshelf3x4, bookshelf4x4, bookshelf5x0, bookshelf5x1, bookshelf5x2, bookshelf5x3, bookshelf5x4;
     private ImageView[][] myBookshelf;
+
+    @FXML
+    private ImageView showMyBookshelf_0x0, showMyBookshelf_1x0, showMyBookshelf_2x0, showMyBookshelf_3x0, showMyBookshelf_4x0, showMyBookshelf_4x1, showMyBookshelf_3x1, showMyBookshelf_2x1, showMyBookshelf_1x1, showMyBookshelf_0x1, showMyBookshelf_0x2, showMyBookshelf_1x2, showMyBookshelf_2x2, showMyBookshelf_3x2, showMyBookshelf_4x2, showMyBookshelf_0x3, showMyBookshelf_1x3, showMyBookshelf_2x3, showMyBookshelf_3x3, showMyBookshelf_4x3, showMyBookshelf_0x4, showMyBookshelf_1x4, showMyBookshelf_2x4, showMyBookshelf_3x4, showMyBookshelf_4x4, showMyBookshelf_5x0, showMyBookshelf_5x1, showMyBookshelf_5x2, showMyBookshelf_5x3, showMyBookshelf_5x4;
+    private ImageView[][] showMyBookshelf;
+
+    @FXML
+    private ImageView showBookshelf1_0x0, showBookshelf1_1x0, showBookshelf1_2x0, showBookshelf1_3x0, showBookshelf1_4x0, showBookshelf1_4x1, showBookshelf1_3x1, showBookshelf1_2x1, showBookshelf1_1x1, showBookshelf1_0x1, showBookshelf1_0x2, showBookshelf1_1x2, showBookshelf1_2x2, showBookshelf1_3x2, showBookshelf1_4x2, showBookshelf1_0x3, showBookshelf1_1x3, showBookshelf1_2x3, showBookshelf1_3x3, showBookshelf1_4x3, showBookshelf1_0x4, showBookshelf1_1x4, showBookshelf1_2x4, showBookshelf1_3x4, showBookshelf1_4x4, showBookshelf1_5x0, showBookshelf1_5x1, showBookshelf1_5x2, showBookshelf1_5x3, showBookshelf1_5x4;
+    private ImageView[][] showBookshelf1;
+    @FXML
+    private ImageView showBookshelf2_0x0, showBookshelf2_1x0, showBookshelf2_2x0, showBookshelf2_3x0, showBookshelf2_4x0, showBookshelf2_4x1, showBookshelf2_3x1, showBookshelf2_2x1, showBookshelf2_1x1, showBookshelf2_0x1, showBookshelf2_0x2, showBookshelf2_1x2, showBookshelf2_2x2, showBookshelf2_3x2, showBookshelf2_4x2, showBookshelf2_0x3, showBookshelf2_1x3, showBookshelf2_2x3, showBookshelf2_3x3, showBookshelf2_4x3, showBookshelf2_0x4, showBookshelf2_1x4, showBookshelf2_2x4, showBookshelf2_3x4, showBookshelf2_4x4, showBookshelf2_5x0, showBookshelf2_5x1, showBookshelf2_5x2, showBookshelf2_5x3, showBookshelf2_5x4;
+    private ImageView[][] showBookshelf2;
+    @FXML
+    private ImageView showBookshelf3_0x0, showBookshelf3_1x0, showBookshelf3_2x0, showBookshelf3_3x0, showBookshelf3_4x0, showBookshelf3_4x1, showBookshelf3_3x1, showBookshelf3_2x1, showBookshelf3_1x1, showBookshelf3_0x1, showBookshelf3_0x2, showBookshelf3_1x2, showBookshelf3_2x2, showBookshelf3_3x2, showBookshelf3_4x2, showBookshelf3_0x3, showBookshelf3_1x3, showBookshelf3_2x3, showBookshelf3_3x3, showBookshelf3_4x3, showBookshelf3_0x4, showBookshelf3_1x4, showBookshelf3_2x4, showBookshelf3_3x4, showBookshelf3_4x4, showBookshelf3_5x0, showBookshelf3_5x1, showBookshelf3_5x2, showBookshelf3_5x3, showBookshelf3_5x4;
+    private ImageView[][] showBookshelf3;
     @FXML
     private ImageView bookshelf1_0x0, bookshelf1_1x0, bookshelf1_2x0, bookshelf1_3x0, bookshelf1_4x0, bookshelf1_4x1, bookshelf1_3x1, bookshelf1_2x1, bookshelf1_1x1, bookshelf1_0x1, bookshelf1_0x2, bookshelf1_1x2, bookshelf1_2x2, bookshelf1_3x2, bookshelf1_4x2, bookshelf1_0x3, bookshelf1_1x3, bookshelf1_2x3, bookshelf1_3x3, bookshelf1_4x3, bookshelf1_0x4, bookshelf1_1x4, bookshelf1_2x4, bookshelf1_3x4, bookshelf1_4x4, bookshelf1_5x0, bookshelf1_5x1, bookshelf1_5x2, bookshelf1_5x3, bookshelf1_5x4;
     private ImageView[][] bookshelf1;
@@ -90,7 +110,7 @@ public class GameController extends GUIController {
 
     private int selectedColumn=-1;
 
-    private final TileImages tileImages=new TileImages();
+    private TileImages tileImages=new TileImages();
 
     private final List<Integer> coord = new ArrayList<>();
 
@@ -98,44 +118,27 @@ public class GameController extends GUIController {
     @Override
     public void setScene(GUI gui, Stage stage) {
         super.setScene(gui, stage);
+        cgc1.setImage(new Image(getCGCImage(client.getModel().getCgc1().ordinal())));
+        cgc2.setImage(new Image(getCGCImage(client.getModel().getCgc2().ordinal())));
+        pgc.setImage(new Image(getPGCImage(client.getModel().getPgcNum())));
         initialize();
-        }
+        setOtherBookshelf();
 
-        public void setClient(Client client){
+    }
+
+
+    public void setClient(Client client){
         this.client=client;
         }
 
-    public void prova(ActionEvent actionEvent){
-updateBoard();
-        /*for(int i=0; i<9; i++){
-            for (int j=0; j<9; j++){
-                if(boardImages[i][j]!=null){
-                    boardImages[i][j].setImage(new Image(tileImages.getImage(Tile.PINK)));
-                }
-            }
-        }
-
-        insertBookshelf[5][0].setImage(new Image(tileImages.getImage(Tile.LIGHTBLUE)));
-        insertBookshelf[4][0].setImage(new Image(tileImages.getImage(Tile.PINK)));
-        insertBookshelf[3][0].setImage(new Image(tileImages.getImage(Tile.BLUE)));
-        insertBookshelf[2][0].setImage(new Image(tileImages.getImage(Tile.LIGHTBLUE)));
-
-        myBookshelf[5][0].setImage( insertBookshelf[5][0].getImage());
-        myBookshelf[4][0].setImage(insertBookshelf[4][0].getImage());
-        myBookshelf[3][0].setImage(insertBookshelf[3][0].getImage());
-        myBookshelf[2][0].setImage(insertBookshelf[2][0].getImage());
-
-        startTurn();*/
+    public void prova(ActionEvent actionEvent) throws IOException {
+    endGame();
     }
     //----------------------------------------------------------- Server vs client-------------------------------------
 
     public void startTurn(){
         ableBoardButton();
         setBoardButton();
-
-        cgc1.setImage(new Image(getCGCImage(client.getModel().getCgc1().ordinal())));
-        cgc2.setImage(new Image(getCGCImage(client.getModel().getCgc2().ordinal())));
-        //pgc.setImage(new Image(getPGCImage(client.getModel().getPgcNum())));
         enterTilesButton.setVisible(true);
         stateLabel.setText("Choose tile!");
     }
@@ -146,10 +149,11 @@ updateBoard();
         FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("rank.fxml"));
         Scene scene = new Scene(fxmlLoader1.load(), 1250,650);
         RankController rankController=fxmlLoader1.getController();
+        rankController.setClient(client);
         rankController.setScene(gui,stage);
         gui.setRankController(rankController);
-        rankController.setClient(client);
         stage.setScene(scene);
+
     }
 
     public void updateAll() {
@@ -165,15 +169,17 @@ updateBoard();
 
     private void updateMyBookshelf() {
         updateBookshelf(myBookshelf,client.getModel().getMyBookshelf());
-        updateBookshelf(insertBookshelf, client.getModel().getMyBookshelf());
+       updateBookshelf(insertBookshelf, myBookshelf);
+       updateBookshelf(showMyBookshelf, myBookshelf);
     }
 
     private void updateBookshelf(ImageView[][] bookshelf, Matrix reference){
         if(bookshelf!=null){
+            int h=5;
             for(int i=0; i<6;i++){
                 for(int j=0; j<5; j++){
-                    if(bookshelf[i][j].getImage()!=null){
-                        Tile tile=reference.getTileByCoord(i, j);
+                    if(bookshelf[i][j].getImage()==null){
+                        Tile tile=reference.getTileByCoord(h, j);
                         if(tile==Tile.NOTAVAILABLE||tile==Tile.EMPTY||tile==null) {
                             bookshelf[i][j].setImage(null);
                         }
@@ -184,11 +190,19 @@ updateBoard();
                     }
 
                 }
+                h--;
             }
         }
 
     }
 
+    private void updateBookshelf(ImageView[][] bookshelf, ImageView[][] reference){
+        for(int i = 0; i<6; i++){
+            for(int j =0; j<5; j++){
+                bookshelf[i][j].setImage(reference[i][j].getImage());
+            }
+        }
+    }
     //------------------------------------------------------------Client vs Server-----------------------------------
     public void enterTiles(ActionEvent actionEvent) {
         for (int i=0; i<9; i++){
@@ -352,6 +366,7 @@ updateBoard();
         bookshelfButton.setOnMouseExited(this::showMyBookshelf);
         bookshelfButton.setOnMouseEntered(this::showMyBookshelf);
         bookshelfButton.setOpacity(0);
+        stateLabel.setText("Click on the bookshelf \nto insert tiles");
     }
 
     public void showMyBookshelf(MouseEvent mouseEvent){
@@ -421,7 +436,7 @@ updateBoard();
                     columnButton.setOpacity(0);
                 }
             }
-            if(!checkColumn(column)) {
+            if(!checkSingleColumn(column)) {
                 stateLabel.setText("Not enough space!");
                 return;
             }
@@ -475,7 +490,7 @@ updateBoard();
 
         selectedColumn=-1;
     }
-    private boolean checkColumn(int column) {
+    private boolean checkSingleColumn(int column) {
         int space=0;
         for(int i=0; i<6; i++){
             if(insertBookshelf[i][column].getImage()==null){
@@ -485,7 +500,7 @@ updateBoard();
         int tile=0;
         if(tile1Image.getImage()!=null) tile++;
         if(tile2Image.getImage()!=null) tile++;
-        if(tile2Image.getImage()!=null) tile++;
+        if(tile3Image.getImage()!=null) tile++;
 
         return space >= tile;
     }
@@ -542,14 +557,23 @@ updateBoard();
             }
     }
 
-    private void updateOtherBookshelf() {/*
+    private void updateOtherBookshelf() {
         int i = 0;
         for (Matrix m : client.getModel().getOtherPlayers().values()) {
             if(i<client.getModel().getOtherPlayers().size()){
                 switch (i) {
-                    case 0 -> updateBookshelf(bookshelf1, m);
-                    case 1 -> updateBookshelf(bookshelf2, m);
-                    case 2 -> updateBookshelf(bookshelf3, m);
+                    case 0 -> {
+                        updateBookshelf(bookshelf1, m);
+                        updateBookshelf(showBookshelf1, bookshelf1);
+                    }
+                    case 1 -> {
+                        updateBookshelf(bookshelf2, m);
+                        updateBookshelf(showBookshelf2, bookshelf2);
+                    }
+                    case 2 -> {
+                        updateBookshelf(bookshelf3, m);
+                        updateBookshelf(showBookshelf3, bookshelf3);
+                    }
                     default -> {
                         return;
                     }
@@ -558,18 +582,23 @@ updateBoard();
             i++;
 
 
-        }*/
+        }
 
     }
     //--------------------------------------------------------------Board methods-----------------------------------------------
 
     public void updateBoard(){
+        int checkRefill=0;
         for (int i = 0; i<9; i++){
             for (int j = 0; j<9; j++){
                 if(boardGroups[j][i]!=null&&(client.getModel().getBoard().getTileByCoord(i,j)==Tile.EMPTY||boardImages[j][i].getImage()==null)){
                     Tile tile=client.getModel().getBoard().getTileByCoord(i,j);
                     if (tile==Tile.EMPTY||tile==Tile.NOTAVAILABLE) boardImages[j][i].setImage(null);
                     else {
+                        if (checkRefill==0){
+                            tileImages=new TileImages();
+                            checkRefill=1;
+                        }
                         String image = tileImages.getImage(tile);
                         if(image!=null){
                             boardImages[j][i].setImage(new Image(image));
@@ -579,6 +608,7 @@ updateBoard();
             }
         }
     }
+
     public void setBoardButton(){
         for (int i=0; i<9; i++){
             for (int j=0; j<9; j++){
@@ -598,35 +628,86 @@ updateBoard();
         }
     }
 
-    private void checkButton(int i, int j) {
-        if (boardButtons[i][j]==null) return;
+    private boolean checkButton(int i, int j) {
+        if (boardButtons[i][j]==null) return false;
         if(boardImages[i][j].getImage()==null) {
             boardButtons[i][j].setDisable(true);
-            return;
+            return false;
         }
         if(i-1<0||i+1>=9||j-1<0||j+1>=9){
             boardButtons[i][j].setDisable(false);
-            return;
+            return true;
         }
         if(boardButtons[i-1][j]==null||boardButtons[i+1][j]==null||boardButtons[i][j+1]==null||boardButtons[i][j-1]==null){
             boardButtons[i][j].setDisable(false);
-            return;
+            return true;
         }
         if(boardImages[i-1][j].getImage()==null||boardImages[i+1][j].getImage()==null||boardImages[i][j+1].getImage()==null||boardImages[i][j-1].getImage()==null){
             boardButtons[i][j].setDisable(false);
-            return;
+            return true;
         }
         boardButtons[i][j].setDisable(true);
+        return false;
     }
 
     public void setButtonsOnSelect(int x, int y){
+        List<Integer> list= new ArrayList<>();
+
+        int space= checkColumnSpace();
         for (int i=0; i<9; i++){
             for (int j=0; j<9; j++){
-                if((i!=x||(j!=y-2&&j!=y-1&&j!=y&&j!=y+1&&j!=y+2))&&(j!=y||(i!=x-2&&i!=x-1&&i!=x+1&&i!=x+2))&&boardButtons[i][j]!=null&&boardButtons[i][j].getOnMouseEntered()!=null){
-                    boardButtons[i][j].setDisable(true);
+                if(boardButtons[i][j]!=null&&boardButtons[i][j].getOnMouseEntered()!=null) {
+                    switch (space) {
+                        case (1)-> {
+                            if (i != x || j != y) boardButtons[i][j].setDisable(true);
+                        }
+                        case (2)-> {
+                            if ((i != x || (j != y - 1 && j != y && j != y + 1)) && (j != y || (i != x - 1 && i != x + 1))) boardButtons[i][j].setDisable(true);
+                        }
+                        default-> {
+                            if ((i != x || (j != y - 2 && j != y - 1 && j != y && j != y + 1 && j != y + 2)) && (j != y || (i != x - 2 && i != x - 1 && i != x + 1 && i != x + 2))) boardButtons[i][j].setDisable(true);
+
+                        }
+                    }
+
+                        if(i==x&&j==y+2&&j<7&&boardButtons[i][y + 1]!=null) {
+                            if (boardButtons[i][y + 1].isDisable()) boardButtons[i][j].setDisable(true);
+                        } else if (i==x&&j==y-2&&j>1&&boardButtons[i][y-1]!=null) {
+                            if(boardButtons[i][y-1].isDisable())boardButtons[i][j].setDisable(true);
+                        } else if (j==y&&i==x+2&&i<7&&boardButtons[i+1][j]!=null){
+                            if(boardButtons[i+1][j].isDisable()) boardButtons[i][j].setDisable(true);
+                        } else if (j==y&&i==x-2&&j<1&&boardButtons[i-1][j]!=null){
+                            if(boardButtons[i-1][j].isDisable())boardButtons[i][j].setDisable(true);
+                        }
+
+                } else if (boardButtons[i][j] != null && boardButtons[i][j].getOnMouseEntered() == null) {
+                    list.add(i);
+                    list.add(j);
                 }
+
             }
         }
+
+        if(list.size()==4){
+            if(Objects.equals(list.get(0), list.get(2)) && (list.get(1)==list.get(3)-2||list.get(1)==list.get(3)+2)){
+                enterTilesButton.setDisable(true);
+            } else if ((list.get(0)==list.get(2)-2||list.get(0)==list.get(2)+2)) {
+                enterTilesButton.setDisable(true);
+            }
+        }
+    }
+
+    private int checkColumnSpace() {
+        int max=0;
+        for(int i=0; i<5; i++){
+            int space=0;
+            for(int j=0; j<6; j++){
+                if (myBookshelf[j][i].getImage()==null) space++;
+            }
+            if (space>max) max=space;
+            if (max>=3) return 3;
+        }
+        return max;
     }
 
     public void selectTile(ActionEvent actionEvent) {
@@ -636,6 +717,7 @@ updateBoard();
             button.setOnMouseEntered(null);
             button.setOpacity(0.5);
             enterTilesButton.setDisable(false);
+
             for (int i=0; i<9; i++){
                 for (int j=0; j<9; j++){
                     if(button.equals(boardButtons[i][j])){
@@ -797,6 +879,38 @@ updateBoard();
                 {bookshelf3_5x0, bookshelf3_5x1,bookshelf3_5x2, bookshelf3_5x3, bookshelf3_5x4},
         };
 
+        showMyBookshelf=new ImageView[][] {        {showMyBookshelf_0x0, showMyBookshelf_0x1, showMyBookshelf_0x2, showMyBookshelf_0x3, showMyBookshelf_0x4},
+                {showMyBookshelf_1x0, showMyBookshelf_1x1,showMyBookshelf_1x2, showMyBookshelf_1x3, showMyBookshelf_1x4},
+                {showMyBookshelf_2x0, showMyBookshelf_2x1,showMyBookshelf_2x2, showMyBookshelf_2x3, showMyBookshelf_2x4},
+                {showMyBookshelf_3x0, showMyBookshelf_3x1,showMyBookshelf_3x2, showMyBookshelf_3x3, showMyBookshelf_3x4},
+                {showMyBookshelf_4x0, showMyBookshelf_4x1,showMyBookshelf_4x2, showMyBookshelf_4x3, showMyBookshelf_4x4},
+                {showMyBookshelf_5x0, showMyBookshelf_5x1,showMyBookshelf_5x2, showMyBookshelf_5x3, showMyBookshelf_5x4},
+        };
+
+        showBookshelf1=new ImageView[][] {        {showBookshelf1_0x0, showBookshelf1_0x1, showBookshelf1_0x2, showBookshelf1_0x3, showBookshelf1_0x4},
+                {showBookshelf1_1x0, showBookshelf1_1x1,showBookshelf1_1x2, showBookshelf1_1x3, showBookshelf1_1x4},
+                {showBookshelf1_2x0, showBookshelf1_2x1,showBookshelf1_2x2, showBookshelf1_2x3, showBookshelf1_2x4},
+                {showBookshelf1_3x0, showBookshelf1_3x1,showBookshelf1_3x2, showBookshelf1_3x3, showBookshelf1_3x4},
+                {showBookshelf1_4x0, showBookshelf1_4x1,showBookshelf1_4x2, showBookshelf1_4x3, showBookshelf1_4x4},
+                {showBookshelf1_5x0, showBookshelf1_5x1,showBookshelf1_5x2, showBookshelf1_5x3, showBookshelf1_5x4},
+        };
+
+        showBookshelf2=new ImageView[][] {        {showBookshelf2_0x0, showBookshelf2_0x1, showBookshelf2_0x2, showBookshelf2_0x3, showBookshelf2_0x4},
+                {showBookshelf2_1x0, showBookshelf2_1x1,showBookshelf2_1x2, showBookshelf2_1x3, showBookshelf2_1x4},
+                {showBookshelf2_2x0, showBookshelf2_2x1,showBookshelf2_2x2, showBookshelf2_2x3, showBookshelf2_2x4},
+                {showBookshelf2_3x0, showBookshelf2_3x1,showBookshelf2_3x2, showBookshelf2_3x3, showBookshelf2_3x4},
+                {showBookshelf2_4x0, showBookshelf2_4x1,showBookshelf2_4x2, showBookshelf2_4x3, showBookshelf2_4x4},
+                {showBookshelf2_5x0, showBookshelf2_5x1,showBookshelf2_5x2, showBookshelf2_5x3, showBookshelf2_5x4},
+        };
+
+        showBookshelf3=new ImageView[][] {        {showBookshelf3_0x0, showBookshelf3_0x1, showBookshelf3_0x2, showBookshelf3_0x3, showBookshelf3_0x4},
+                {showBookshelf3_1x0, showBookshelf3_1x1,showBookshelf3_1x2, showBookshelf3_1x3, showBookshelf3_1x4},
+                {showBookshelf3_2x0, showBookshelf3_2x1,showBookshelf3_2x2, showBookshelf3_2x3, showBookshelf3_2x4},
+                {showBookshelf3_3x0, showBookshelf3_3x1,showBookshelf3_3x2, showBookshelf3_3x3, showBookshelf3_3x4},
+                {showBookshelf3_4x0, showBookshelf3_4x1,showBookshelf3_4x2, showBookshelf3_4x3, showBookshelf3_4x4},
+                {showBookshelf3_5x0, showBookshelf3_5x1,showBookshelf3_5x2, showBookshelf3_5x3, showBookshelf3_5x4},
+        };
+
         columnButtons= new ArrayList<>();
         columnButtons.add(column1Button);
         columnButtons.add(column2Button);
@@ -818,34 +932,34 @@ updateBoard();
 
         public TileImages() {
             greenTiles=new ArrayList<>();
-            greenTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Gatti1.1.png");
-            greenTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Gatti1.1.png");
-            greenTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Gatti1.1.png");
+            greenTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Gatti1.1.png").toString());
+            greenTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Gatti1.2.png").toString());
+            greenTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Gatti1.3.png").toString());
 
             whiteTiles=new ArrayList<>();
-            whiteTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Libri1.1.png");
-            whiteTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Libri1.2.png");
-            whiteTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Libri1.3.png");
+            whiteTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Libri1.1.png").toString());
+            whiteTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Libri1.2.png").toString());
+            whiteTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Libri1.3.png").toString());
 
             blueTiles=new ArrayList<>();
-            blueTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Cornici1.1.png");
-            blueTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Cornici1.2.png");
-            blueTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Cornici1.3.png");
+            blueTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Cornici1.1.png").toString());
+            blueTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Cornici1.2.png").toString());
+            blueTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Cornici1.3.png").toString());
 
             lightblueTiles=new ArrayList<>();
-            lightblueTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Trofei1.1.png");
-            lightblueTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Trofei1.2.png");
-            lightblueTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Trofei1.3.png");
+            lightblueTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Trofei1.1.png").toString());
+            lightblueTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Trofei1.2.png").toString());
+            lightblueTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Trofei1.3.png").toString());
 
             pinkTiles=new ArrayList<>();
-            pinkTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Piante1.1.png");
-            pinkTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Piante1.2.png");
-            pinkTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Piante1.3.png");
+            pinkTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Piante1.1.png").toString());
+            pinkTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Piante1.2.png").toString());
+            pinkTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Piante1.3.png").toString());
 
             yellowTiles=new ArrayList<>();
-            yellowTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Giochi1.1.png");
-            yellowTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Giochi1.2.png");
-            yellowTiles.add("file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/item_tiles/Giochi1.3.png");
+            yellowTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Giochi1.1.png").toString());
+            yellowTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Giochi1.2.png").toString());
+            yellowTiles.add(getClass().getResource("/view/17_MyShelfie_BGA/item_tiles/Giochi1.3.png").toString());
 
         }
 
@@ -889,40 +1003,40 @@ updateBoard();
   private String getPGCImage(int i){
         switch (i){
             case 1 -> {
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals.png";
+                return getClass().getResource("/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals.png").toString();
             }
             case 2 -> {
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals2.png";
+                return getClass().getResource("/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals2.png").toString();
             }
             case 3 -> {
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals3.png";
+                return getClass().getResource("/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals3.png").toString();
             }
             case 4 -> {
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals4.png";
+                return getClass().getResource("/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals4.png").toString();
             }
             case 5 -> {
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals5.png";
+                return getClass().getResource("/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals5.png").toString();
             }
             case 6 -> {
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals6.png";
+                return getClass().getResource("/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals6.png").toString();
             }
             case 7 -> {
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals7.png";
+                return getClass().getResource("/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals7.png").toString();
             }
             case 8 -> {
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals8.png";
+                return getClass().getResource("/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals8.png").toString();
             }
             case 9 -> {
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals9.png";
+                return getClass().getResource("/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals9.png").toString();
             }
             case 10-> {
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals10.png";
+                return getClass().getResource("/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals10.png").toString();
             }
             case 11 -> {
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals11.png";
+                return getClass().getResource("/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals11.png").toString();
             }
             case 12 -> {
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals12.png";
+                return getClass().getResource("/view/17_MyShelfie_BGA/personal_goal_cards/Personal_Goals12.png").toString();
             }
         }
         return null;
@@ -931,40 +1045,40 @@ updateBoard();
   public String getCGCImage(int i){
         switch (i+1){
             case 4->{
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/1.jpg";
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/1.jpg").toString();
             }
             case 9->{
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/2.jpg";
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/2.jpg").toString();
             }
             case 3->{
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/3.jpg";
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/3.jpg").toString();
             }
             case 1->{
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/4.jpg";
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/4.jpg").toString();
             }
             case 5->{
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/5.jpg";
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/5.jpg").toString();
             }
             case 10->{
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/6.jpg";
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/6.jpg").toString();
             }
             case 8->{
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/7.jpg";
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/7.jpg").toString();
             }
             case 2->{
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/8.jpg";
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/8.jpg").toString();
             }
             case 6->{
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/9.jpg";
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/9.jpg").toString();
             }
             case 11->{
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/10.jpg";
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/10.jpg").toString();
             }
             case 7->{
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/11.jpg";
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/11.jpg").toString();
             }
             case 12->{
-                return "file:/C:/Users/Utente/IS23-AM05/project_eng_soft_2023/target/classes/view/17_MyShelfie_BGA/common_goal_cards/12.jpg";
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/12.jpg").toString();
             }
         }
         return null;

@@ -93,7 +93,7 @@ public class GUI extends View {
             });
         } catch (Exception ignored){
         }
-    }
+        }
 
     public void setLoginController(LoginController loginController) {
         this.loginController=loginController;
