@@ -126,7 +126,7 @@ public class AsyncClientInput implements Runnable{
                 //endGame
                 case "notifyEndGame":
                     try{
-                        Map<Integer, String> results = (Map<Integer, String>) request.get("Param1");
+                        Map<String, Integer> results = (Map<String, Integer>) request.get("Param1");
 
                         socketClient.theGameEnd(results);
                     } catch (RemoteException e) {

@@ -192,31 +192,30 @@ public class Game implements Serializable {
     /**
      * @return a map of ordered players from the player with the highest score to the player with the lowest
      */
-    public Map<Integer, String> getGameResults(){
+    public Map<String, Integer> getGameResults(){
 
-        ArrayList<Integer> scores = players.stream()
-                .map(x->x.getBookshelf().getMyScore())
-                .collect(Collectors.toCollection(ArrayList::new));
-
-        ArrayList<String> nicks = players.stream()
-                .map(x->x.getPlayerNickname())
-                .collect(Collectors.toCollection(ArrayList::new));
-
-        Map<Integer, String> res= new HashMap<>();
-
-        for(int i=0; i<scores.size(); i++){
-            res.put(scores.get(i), nicks.get(i));
+        Map<String, Integer> res= new HashMap<>();
+        for(int i=0; i<players.size(); i++){
+            res.put(players.get(i).getPlayerNickname(), players.get(i).getBookshelf().getMyScore());
         }
 
-        return res.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByKey())
-                .collect(Collectors
-                        .toMap(
-                                Map.Entry::getKey,
-                                Map.Entry::getValue,
-                                (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+        // Create a list of map entries
+        List<Map.Entry<String, Integer>> entryList = new ArrayList<>(res.entrySet());
 
+        // Sort the list by value using a custom Comparator
+        entryList.sort(Map.Entry.comparingByValue());
+
+        // Create a LinkedHashMap to preserve the order of sorted entries
+        Map<String, Integer> sortedMap = new LinkedHashMap<>();
+
+        // Populate the sorted map with sorted entries
+        for (Map.Entry<String, Integer> entry : entryList) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        System.out.println("game mapRes.size():"+res.size());
+
+        return res;
 
     }
 

@@ -17,8 +17,9 @@ public class ClientChat {
     /**
      * constructor method
      */
-    public ClientChat() {
+    public ClientChat(View view) {
         conversation=new HashMap<>();
+        this.view=view;
     }
 
     /**
@@ -35,7 +36,6 @@ public class ClientChat {
      */
     public void addMessage(String sender, String message){
         conversation.put(sender, message);
-        view.plotNewMessage(message); //----Gabbo ---Elena mettere metodo in view per plottare
     }
 
 }

@@ -292,11 +292,14 @@ public class SocketLobby implements Runnable{
 
     public void TCPPong(JSONObject json){
 
+        //System.out.println("*** tcpPong()");
+
         try {
             String nickname = (String) json.get("Param1");
             int gameId = (int) json.get("Param2");
 
             lobby.pong(nickname,gameId);
+
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

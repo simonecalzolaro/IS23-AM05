@@ -1,5 +1,7 @@
 package client;
 
+import view.View;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -29,7 +31,7 @@ public class ClientModel {
     /**
      * constructor
      */
-    public ClientModel() {
+    public ClientModel(View view) {
 
         this.nickname = "";
         this.board=null;
@@ -41,7 +43,7 @@ public class ClientModel {
         this.cgc2=null;
         this.GameID=-1;
         myScore=0;
-        myChat=new ClientChat();
+        myChat=new ClientChat(view);
     }
 
 

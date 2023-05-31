@@ -85,34 +85,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         }
         else{
 
-            /*
-            StringBuilder str = new StringBuilder();
-            System.out.println("-----------------------------------------------");
-            System.out.println("    bookshelf.putTiles(stream_tiles, column):");
-            System.out.println("    stream_tiles: ");
-            for (Tile t: stream_tiles) {
-                str.append(t).append(",");
-            }
-            System.out.println(str);
-            str.delete(0,str.length()-1);
-            System.out.println("    col: "+column);
-            //--------------------------------------
-             */
-
             bookshelf.putTiles(stream_tiles, column);
-
-            /*
-            //--------------------------------------
-            System.out.println("    bookshelf :");
-            for(int i=0; i< bookshelf.getShelf().length; i++){
-                for(int j=0; j< bookshelf.getShelf()[0].length; j++){
-                    str.append(bookshelf.getShelf()[i][j]).append(",");
-                }
-                System.out.println( str );
-                str.delete(0,str.length()-1);
-            }
-            System.out.println("-----------------------------------------------");
-             */
 
             return true;
         }
@@ -153,7 +126,6 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
 
 
 
-
     //-------------------------------------- GameHandler implemented methods --------------------------------------
 
     /**
@@ -163,10 +135,8 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
      */
     @Override
     public void chooseBoardTiles(List<Integer> coord) throws RemoteException, NotConnectedException, InvalidParametersException, NotMyTurnException, InvalidChoiceException {
-
             catchTile(coord);
             updateScore();
-
     }
 
     /**

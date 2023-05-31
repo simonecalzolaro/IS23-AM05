@@ -213,6 +213,8 @@ public class SocketControlPlayer extends ControlPlayer {
     @Override
     public void askPing() throws IOException {
 
+        //System.out.println("*** soket askPing()");
+
         JSONObject object = new JSONObject();
 
         object.put("Action","askPing");
@@ -226,7 +228,6 @@ public class SocketControlPlayer extends ControlPlayer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
 
     }
 

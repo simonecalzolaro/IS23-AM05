@@ -24,14 +24,14 @@ public abstract class Lobby implements  ClientServerHandler {
     static int currNoP=0;
 
     private static Object nowLoggingClient;
-    protected static ArrayList<ControlPlayer> clients;
-    protected static ArrayList< Game > games;
-    protected static int attendedPlayers;
-    protected static Board tempBoard;
-    protected static ArrayList<ControlPlayer> tempPlayers;
+    private static ArrayList<ControlPlayer> clients;
+    private static ArrayList< Game > games;
+    private static int attendedPlayers;
+    private static Board tempBoard;
+    private static ArrayList<ControlPlayer> tempPlayers;
 
-    private static boolean flagNoP;
     private static boolean flagLogin;
+    private static boolean flagNoP;
     private static boolean flagWR;
 
 
@@ -41,7 +41,6 @@ public abstract class Lobby implements  ClientServerHandler {
      */
     protected Lobby() throws RemoteException {
         super();
-
     }
 
 
@@ -277,7 +276,7 @@ public abstract class Lobby implements  ClientServerHandler {
             throw new LoginException("---error: occurred in continueGame(), does not exists Game ID="+ID);
         }
 
-        for(ControlPlayer cp: clients){
+        for(ControlPlayer cp: myGame.getPlayers()){
             if(cp.getPlayerNickname().equals(nickname)){
                 if(cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE) ){
                     if (client instanceof ArrayList<?>) {
@@ -312,9 +311,21 @@ public abstract class Lobby implements  ClientServerHandler {
 
         //checking if exists a player called "nickname" now offline inside Game ID
         Game myGame=null;
+        ControlPlayer myPlayer=null;
+
+        System.out.println("--> player "+ nickname+ " wants to leave the Game ID="+ID);
         for(Game g: games){
-            if(g.getGameID()==ID){
+            if( g.getGameID()==ID ){
                 myGame=g;
+                for(ControlPlayer cp: myGame.getPlayers()){
+                    if(cp.getPlayerNickname().equals(nickname)){
+                        myPlayer=cp;
+                        break;
+                    }
+                }
+                if(myPlayer==null){
+                    throw new LoginException("---error: does not exists player ''"+nickname+"'' inside Game ID="+ID);
+                }
                 break;
             }
         }
@@ -322,31 +333,7 @@ public abstract class Lobby implements  ClientServerHandler {
             throw new LoginException("---error: does not exists Game ID="+ID);
         }
 
-        for(ControlPlayer cp: myGame.getPlayers()){
-            if(cp.getPlayerNickname().equals(nickname)){
-                try {
-                    if(cp.getPlayerStatus().equals(PlayerStatus.MY_TURN)){
-
-                        myGame.endTurn();
-                        Game finalMyGame = myGame;
-                        new Thread(()-> {
-                            try {
-                                finalMyGame.getPlayers().get(finalMyGame.getCurrPlayer()).notifyStartYourTurn();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }).start();
-                    }
-                    myGame.removePlayer(cp);
-                    clients.remove(cp);
-                    cp.getPingClass().stopPingProcess();
-                }catch(Exception e){
-                    System.out.println("---error: something went wrong while removing "+nickname+" from game:"+ID);
-                }
-                return;
-            }
-        }
-        throw new LoginException("---error: nickname "+nickname+" does not exists inside Game ID="+ID);
+        quitGameIDandNotify(myGame);
 
     }
 
@@ -380,10 +367,11 @@ public abstract class Lobby implements  ClientServerHandler {
     @Override
     public void pong(String nickname, int gameID) throws RemoteException{
 
-       // System.out.println("pong() from "+nickname);
+        //System.out.println("pong() from "+nickname);
         if(gameID<=0 ){ // if gameId is less than 0 it means that we are still in the waiting room
             for(ControlPlayer cp: tempPlayers){
                 if(cp.getPlayerNickname().equals(nickname) ){
+                    //System.out.println("*** setConnected()");
                     cp.getPingClass().setConnected();
                     return;
                 }
@@ -452,5 +440,30 @@ public abstract class Lobby implements  ClientServerHandler {
             tempPlayers.get(0).setPlayerStatus(PlayerStatus.nOfPlayerAsked);
             tempPlayers.get(0).askNumberOfPlayers();
         }
+    }
+
+    public void quitGameIDandNotify(Game myGame){
+
+        for(ControlPlayer cp: myGame.getPlayers()){
+            try {
+                cp.notifyEndGame();
+                cp.getPingClass().stopPingProcess();
+            }catch(Exception e){
+                System.out.println("---error: something went wrong while notifying the end of the game:"+myGame.getGameID()+" to "+cp.getPlayerNickname());
+            }
+        }
+
+        int size=myGame.getPlayers().size();
+        for(int i=0; i<size; i++){
+            try {
+                clients.remove(myGame.getPlayers().get(0));
+                myGame.removePlayer(myGame.getPlayers().get(0));
+            }catch(Exception e){
+                System.out.println("---error: something went wrong while removing a player from game:"+myGame.getGameID());
+            }
+        }
+
+        games.remove(myGame);
+
     }
 }

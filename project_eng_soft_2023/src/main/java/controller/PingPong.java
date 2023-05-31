@@ -34,6 +34,7 @@ public class PingPong implements Runnable{
             //set the connection to false and sending a ping request
             connected=false;
             try {
+                //System.out.println("*** ask ping to "+controlPlayer.getPlayerNickname());
                 controlPlayer.askPing();
             } catch (Exception e) {
                 if(counter==1) System.out.println(" --- error: impossible to ask ping to "+controlPlayer.getPlayerNickname());
@@ -68,20 +69,13 @@ public class PingPong implements Runnable{
 
                 counter++;
 
-                //when counter reaches 12( -> 1 minute offline ) I disconnect the player from the game
-                if(counter >=12 ){
-
-                    controlPlayer.getGame().removePlayer(controlPlayer);
-                    System.out.println("    "+controlPlayer.getPlayerNickname()+" timeout connection: removed from his game");
-                    break;
-                }
             }
 
 
             //only if you acquire the lock u'll check the possible game suspension
-            if ( controlPlayer.getPlayerStatus().equals(PlayerStatus.MY_TURN)){
-
-                new Thread(()-> verifyGameSuspension());
+            if ( !controlPlayer.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)){
+                //System.out.println(" check game suspension");
+                new Thread(this::verifyGameSuspension);
 
             }
         }
@@ -101,12 +95,13 @@ public class PingPong implements Runnable{
 
     public void verifyGameSuspension(){
 
+        //System.out.println(controlPlayer.getPlayerNickname()+" verifyGameSuspension()");
         //se sono presenti meno di due giocatori
         if( controlPlayer.getGame().getPlayers()
                                     .stream()
                                     .filter(x->!x.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE))
                                     .toList()
-                                    .size()<2 ){
+                                    .size() < 2 ){
 
             //setto lo stato del gioco a "SUSPENDED"
             System.out.println("-----setting game ID="+controlPlayer.getGame().getGameID()+" to SUSPENDED with "+controlPlayer.getPlayerNickname());
@@ -114,6 +109,7 @@ public class PingPong implements Runnable{
 
             //aspetto 20 secondi sperando si riconnetta qualcuno
             try {
+                System.out.println("-----waiting for someone to reconnect");
                 Thread.sleep(20000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -126,9 +122,12 @@ public class PingPong implements Runnable{
                                         .toList()
                                         .size()<2 ){
                 try {
+
+                    System.out.println("   Game " + controlPlayer.getGame().getGameID() + " ended due to a lack of players");
                     controlPlayer.getGame().setGameStatus(GameStatus.END_GAME);
                     controlPlayer.getGame().endTurn();
-                    System.out.println("   Game " + controlPlayer.getGame().getGameID() + " ended due to a lack of players");
+                    ServerApp.lobby.quitGameIDandNotify(controlPlayer.getGame());
+
                 }catch(Exception e){
                     System.out.println("---error: impossible to end the Game "+controlPlayer.getGame().getGameID()+" in verifyGameSuspension()!");
                 }

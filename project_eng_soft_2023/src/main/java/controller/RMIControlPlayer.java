@@ -84,11 +84,11 @@ public class RMIControlPlayer extends ControlPlayer{
     @Override
     public void notifyEndGame() throws RemoteException{
 
-            if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
+        if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
 
-                ch.theGameEnd(game.getGameResults()) ;
+            ch.theGameEnd(game.getGameResults()) ;
 
-            }
+        }
     }
 
     /**

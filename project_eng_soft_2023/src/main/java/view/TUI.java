@@ -23,8 +23,8 @@ public class TUI extends View {
 
         out = System.out;
         startGame();
-        Thread t = new Thread(this::commandListener);
-        t.start();
+        new Thread(this::commandListener).start();
+
     }
 
     //-------------------------------- @Override methods from View --------------------------------
@@ -60,13 +60,16 @@ public class TUI extends View {
     }
 
     @Override
-    public void endGame(Map<Integer, String> results) {
+    public void endGame(Map<String, Integer> results) {
 
         out.println("+---------------The game has ended!---------------+");
-        for (Integer key : results.keySet()) {
-            System.out.println("   "+key + " ->  " + results.get(key));
+
+    System.out.println("               nickname     score       ");
+
+        for (Map.Entry<String, Integer> entry : results.entrySet()) {
+            System.out.println("                 "+ entry.getKey() + "  ->  " + entry.getValue());
         }
-        out.println("+------------------------------------------------+");
+        out.println("+-------------------------------------------------+");
 
     }
 
@@ -75,7 +78,12 @@ public class TUI extends View {
 
         if (client.isMyTurn()) {
 
-            out.println("It's your turn, you have 2 min to complete your task!\n");
+            out.println("""      
+                                    +-------------------------+
+                                    |     IS YOUR TURN!!!     |
+                                    +-------------------------+
+                                                                         """);
+
 
             //updateBoard();
             /*String action;
@@ -340,13 +348,15 @@ public class TUI extends View {
 
         //System.out.println(" Welcome "+ client.getModel().getNickname() +" you are now int the WAITING ROOM...");
 
+        int conti=0;
         while (client.getModel().getPgcNum() == -1) {
             try {
-                Thread.sleep(10000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("...waiting for other players");
+            if(client.getModel().getPgcNum() == -1 && conti%20==0) System.out.println("...waiting for other players");
+            conti++;
         }
     }
 
@@ -374,8 +384,8 @@ public class TUI extends View {
     }
 
     @Override
-    public void plotNewMessage(String message) {
-        out.println(message);
+    public void plotNewMessage(String sender,String message) {
+        out.println(sender+":"+message);
     }
 
 
@@ -411,6 +421,8 @@ public class TUI extends View {
     }
 
     public void init() {
+
+        /*
         out.println("""
                 ███      ███ ██    ██   ███████ ██   ██ ██████ ██     ██████ ██ ██████ \s
                 ████    ████  ██  ██    ██      ██   ██ ██     ██     ██     ██ ██     \s
@@ -420,8 +432,21 @@ public class TUI extends View {
                                                                                        \s
                                                                                        \s""");
 
+         */
+         out.println("""
+                 
+                 ███╗░░░███╗██╗░░░██╗░██████╗██╗░░██╗███████╗██╗░░░░░███████╗██╗███████╗
+                 ████╗░████║╚██╗░██╔╝██╔════╝██║░░██║██╔════╝██║░░░░░██╔════╝██║██╔════╝
+                 ██╔████╔██║░╚████╔╝░╚█████╗░███████║█████╗░░██║░░░░░█████╗░░██║█████╗░░
+                 ██║╚██╔╝██║░░╚██╔╝░░░╚═══██╗██╔══██║██╔══╝░░██║░░░░░██╔══╝░░██║██╔══╝░░
+                 ██║░╚═╝░██║░░░██║░░░██████╔╝██║░░██║███████╗███████╗██║░░░░░██║███████╗
+                 ╚═╝░░░░░╚═╝░░░╚═╝░░░╚═════╝░╚═╝░░╚═╝╚══════╝╚══════╝╚═╝░░░░░╚═╝╚══════╝
+                 
+                 """);
+
         out.println("\nWelcome to My Shelfie Board Game!");
         out.println("\nCreators: Elena Caratti, Gabriele Clara Di Gioacchino, Mirko Calvi, Simone Calzolaro!");
+
 
     }
 
@@ -767,7 +792,9 @@ public class TUI extends View {
                 }
 
                 case "/chat"->{
-                    out.println("Chat");
+                    out.println("type something and press 'enter'");
+                    String mex=scan.next();
+                    client.askPostMessage(mex, new ArrayList(client.getModel().getOtherPlayers().keySet()));
                 }
 
                 case "/showChat"->{
@@ -788,5 +815,6 @@ public class TUI extends View {
 
         }
     }
+
 }
 

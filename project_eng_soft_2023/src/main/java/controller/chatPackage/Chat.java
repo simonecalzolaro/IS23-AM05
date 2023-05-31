@@ -9,20 +9,22 @@ public class Chat {
 
     private ArrayList<Message> conversation;
     //the flag is true when a new message is present
-    private boolean flagNewMessage;
+    private boolean flagNewMessageReceived;
+    private boolean flagNewMessageToSend;
 
 
     public Chat() {
 
         this.conversation = new ArrayList<>();
-        flagNewMessage=false;
+        flagNewMessageReceived=false;
+        flagNewMessageToSend=true;
 
         (new Thread(()->newMessageListener())).start();
     }
 
     public synchronized void addMessage(ControlPlayer sender, String message, ArrayList<ControlPlayer> recipients){
 
-        while(flagNewMessage){
+        while(flagNewMessageReceived){
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -30,10 +32,10 @@ public class Chat {
             }
         }
 
-        flagNewMessage=true;
-
         conversation.add(new Message(sender, message, recipients ));
 
+        flagNewMessageReceived=true;
+        flagNewMessageToSend=false;
         notifyAll();
     }
 
@@ -41,15 +43,13 @@ public class Chat {
 
         while(true){
 
-            while(!flagNewMessage){
+            while(flagNewMessageToSend){
                 try {
                     wait();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
-
-            flagNewMessage=true;
 
             Message lastMessage=conversation.get(conversation.size()-1);
 
@@ -62,6 +62,8 @@ public class Chat {
                 }
             }
 
+            flagNewMessageReceived=false;
+            flagNewMessageToSend=true;
             notifyAll();
 
         }

@@ -41,7 +41,7 @@ public class PingFromServer implements Runnable{
             connected=false;
 
             try {
-                Thread.sleep(10000); //wait for 5 seconds
+                Thread.sleep(12000); //wait for 5 seconds
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

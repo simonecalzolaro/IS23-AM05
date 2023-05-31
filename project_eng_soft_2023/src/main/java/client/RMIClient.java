@@ -56,7 +56,7 @@ public class RMIClient extends Client {
         Long PORT_pre;
 
         try{
-            Object o = new JSONParser().parse(new FileReader("C:/Users/Utente/IS23-AM05/project_eng_soft_2023/src/main/config/header.json"));
+            Object o = new JSONParser().parse(new FileReader("src/main/config/header.json")); //C:/Users/Utente/IS23-AM05/project_eng_soft_2023/
             JSONObject j =(JSONObject) o;
             Map arg = new LinkedHashMap();
             arg = (Map) j.get("serverSettings");
@@ -170,7 +170,7 @@ public class RMIClient extends Client {
     @Override
     public void notifyPong() throws RemoteException {
 
-        System.out.println("notifyPong()");
+        //System.out.println("notifyPong()");
         clientServerHandler.pong(model.getNickname(), model.getGameID());
 
     }

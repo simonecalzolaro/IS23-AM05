@@ -127,9 +127,10 @@ public class ServerApp {
 
                 for(ControlPlayer cp: g.getPlayers()){
 
-                    System.out.println("    PLAYER: "+cp.getPlayerNickname());
+                    System.out.println("   PLAYER: "+cp.getPlayerNickname());
                     System.out.println("         STATUS: "+ cp.getPlayerStatus());
-                    System.out.println("          SHELF: "+ cp.getBookshelf());
+                    System.out.println("         SHELF : "+ cp.getBookshelf());
+                    System.out.println("         SCORE : "+cp.getBookshelf().getMyScore());
                     if(cp instanceof RMIControlPlayer){
                         System.out.println("          CONNECTION: RMI");
                     }

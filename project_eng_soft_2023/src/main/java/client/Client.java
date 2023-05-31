@@ -40,7 +40,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         super();
 
         this.view=view;
-        model=new ClientModel();
+        model= new ClientModel(view);
         myTurn=false;
         gameEnded=false;
         left=false;
@@ -105,10 +105,12 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * @throws RemoteException
      */
     @Override
-    public void theGameEnd(Map< Integer, String> results) throws RemoteException{
+    public void theGameEnd(Map< String, Integer> results) throws RemoteException{
 
         gameEnded=true;
+        pingChecker.stopPingProcess();
         view.endGame(results);
+        System.setProperty("java.rmi.server.hostname","192.168.0.1" );
 
     }
 
@@ -174,7 +176,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
        // System.out.println("ping() received");
 
         try{
-            //System.out.println("pong() the server");
+            //System.out.println("*** pong() the server");
             notifyPong();
         } catch (RemoteException e) {
             view.showException("---ops..."+e.getMessage());
@@ -184,6 +186,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     @Override
     public void receiveMessage(String sender, String message) throws RemoteException{
         model.getMyChat().addMessage(sender, message);
+        view.plotNewMessage(sender, message );
     }
 
     /**
@@ -198,6 +201,9 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         return model;
     }
 
+    /**
+     * @return the view (GUI/TUI)
+     */
     public View getView() {
         return view;
     }

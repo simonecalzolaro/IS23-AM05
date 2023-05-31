@@ -25,7 +25,7 @@ public class GUI extends View {
     }
 
     @Override
-    public void plotNewMessage(String message) {
+    public void plotNewMessage(String Sender,String message) {
 
     }
 
@@ -52,7 +52,7 @@ public class GUI extends View {
     }
 
     @Override
-    public void endGame(Map< Integer, String> results) {
+    public void endGame(Map<String, Integer> results) {
         Platform.runLater(()-> {
             try {
                 gameController.endGame();

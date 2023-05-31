@@ -274,6 +274,8 @@ public class SocketClient extends Client{
     @Override
     public void notifyPong() {
 
+        //System.out.println("*** socket notifyPong()");
+
         JSONObject object = new JSONObject();
         object.put("Interface","ClientServerHandler");
         object.put("Action","pong");
@@ -304,7 +306,7 @@ public class SocketClient extends Client{
         try{
 
             Long PORT_pre;
-            Object o = new JSONParser().parse(new FileReader("C:/Users/Utente/IS23-AM05/project_eng_soft_2023/src/main/config/header.json"));
+            Object o = new JSONParser().parse(new FileReader("src/main/config/header.json")); //C:/Users/Utente/IS23-AM05/project_eng_soft_2023/
             JSONObject j =(JSONObject) o;
             Map arg = new LinkedHashMap();
             arg = (Map) j.get("serverSettings");
