@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 /**
  * check if the player is still connected
@@ -72,10 +73,28 @@ public class PingPong implements Runnable{
             }
 
 
-            //only if you acquire the lock u'll check the possible game suspension
-            if ( !controlPlayer.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)){
-                //System.out.println(" check game suspension");
-                new Thread(this::verifyGameSuspension);
+            if ( !controlPlayer.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE) &&
+                 !controlPlayer.getPlayerStatus().equals(PlayerStatus.WAITING_ROOM) &&
+                 !controlPlayer.getPlayerStatus().equals(PlayerStatus.nOfPlayerAsked)){
+
+                    /*System.out.println(controlPlayer.getPlayerNickname()+" verifyGameSuspension() : "+ controlPlayer.getGame().getPlayers().stream()
+                                                                                                                                            .filter(x -> !x.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE))
+                                                                                                                                            .toList()
+                                                                                                                                            .size());
+
+                     */
+
+                //se sono presenti meno di due giocatori e il gioco è in corso...
+                if( controlPlayer.getGame().getPlayers()
+                        .stream()
+                        .filter(x -> !x.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE))
+                        .toList()
+                        .size() < 2
+                    && controlPlayer.getGame().getGameStatus().equals((GameStatus.PLAYING))) {
+
+                    gameSuspension();
+
+                }
 
             }
         }
@@ -93,15 +112,8 @@ public class PingPong implements Runnable{
         this.connected = true;
     }
 
-    public void verifyGameSuspension(){
+    public void gameSuspension(){
 
-        //System.out.println(controlPlayer.getPlayerNickname()+" verifyGameSuspension()");
-        //se sono presenti meno di due giocatori
-        if( controlPlayer.getGame().getPlayers()
-                                    .stream()
-                                    .filter(x->!x.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE))
-                                    .toList()
-                                    .size() < 2 ){
 
             //setto lo stato del gioco a "SUSPENDED"
             System.out.println("-----setting game ID="+controlPlayer.getGame().getGameID()+" to SUSPENDED with "+controlPlayer.getPlayerNickname());
@@ -124,7 +136,6 @@ public class PingPong implements Runnable{
                 try {
 
                     System.out.println("   Game " + controlPlayer.getGame().getGameID() + " ended due to a lack of players");
-                    controlPlayer.getGame().setGameStatus(GameStatus.END_GAME);
                     controlPlayer.getGame().endTurn();
                     ServerApp.lobby.quitGameIDandNotify(controlPlayer.getGame());
 
@@ -136,7 +147,6 @@ public class PingPong implements Runnable{
                 controlPlayer.getGame().setGameStatus(GameStatus.PLAYING);
             }
         }
-    }
 
     public void stopPingProcess(){
         flag=false;

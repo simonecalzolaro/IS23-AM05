@@ -65,12 +65,14 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     @Override
     public void enterNumberOfPlayers() throws RemoteException{
 
-        try{
-            view.getNumOfPlayer();
-        }catch (RemoteException e){
-            //System.out.println("--- ops... a remote exception occurred while communicating number of players to the server");
-            view.showException("--- ops... a remote exception occurred while communicating number of players to the server");
-        }
+            new Thread(()-> {
+                try {
+                    view.getNumOfPlayer();
+                } catch (RemoteException e) {
+                    //System.out.println("--- ops... a remote exception occurred while communicating number of players to the server");
+                    view.showException("--- ops... a remote exception occurred while communicating number of players to the server");
+                }
+            }).start();
 
     }
 
