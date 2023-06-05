@@ -28,9 +28,9 @@ public class SocketClient extends Client{
      *
      * @throws RemoteException
      */
-    public SocketClient(View view) throws RemoteException {
+    public SocketClient() throws RemoteException {
 
-        super( view);
+        super();
     }
 
     @Override

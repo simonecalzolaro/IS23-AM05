@@ -122,9 +122,12 @@ public class LoginController extends GUIController {
 
         try{
             if(actionEvent.getSource().equals(rmiButton)){
-                client = new RMIClient(gui);
+                client.setView(gui);
+                client = new RMIClient();
+
             } else {
-                client = new SocketClient(gui);
+                client.setView(gui);
+                client = new SocketClient();
             }
             client.initializeClient();
         } catch (Exception e){

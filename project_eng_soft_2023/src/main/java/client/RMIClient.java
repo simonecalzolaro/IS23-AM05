@@ -28,9 +28,9 @@ public class RMIClient extends Client {
      * @throws RemoteException
      */
 
-    public RMIClient(View view) throws RemoteException {
+    public RMIClient() throws RemoteException {
 
-        super(view);
+        super();
 
     }
 

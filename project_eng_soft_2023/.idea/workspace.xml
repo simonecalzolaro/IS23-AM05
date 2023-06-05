@@ -8,12 +8,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="connection/disconnection debug and chat adjustments">
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="lobby debug, ping synchronization, chat debug">
+      <change afterPath="$PROJECT_DIR$/src/test/java/controller/RMILobbyTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/PingPong.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/PingPong.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/TUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/TUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/controller/LobbyTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +32,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
         <option value="Enum" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -76,29 +85,14 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="controller" />
       <recent name="model" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="client" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.client3">
-    <configuration name="GUIApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="corretto-17" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="view.GUIApplication" />
-      <module name="project_eng_soft_2023" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\Mirko\Documents\GitHub\IS23-AM05\IS23-AM05\javafx-sdk-20.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.graphics" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="view.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.client1">
     <configuration name="ServerApp" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="controller.ServerApp" />
       <module name="project_eng_soft_2023" />
@@ -147,38 +141,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BagTest.testGetTilesFullBag" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LobbyMethodsTest" type="JUnit" factoryName="JUnit">
       <module name="project_eng_soft_2023" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="model" />
-      <option name="MAIN_CLASS_NAME" value="model.BagTest" />
-      <option name="METHOD_NAME" value="testGetTilesFullBag" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BoardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="project_eng_soft_2023" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="model" />
-      <option name="MAIN_CLASS_NAME" value="model.BoardTest" />
+      <extension name="coverage" sample_coverage="false" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-17" />
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.RMILobbyTest" />
+      <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea " />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ControlPlayerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RMILobbyTest.getAttendedPlayers" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="project_eng_soft_2023" />
       <extension name="coverage">
         <pattern>
@@ -187,8 +164,57 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="controller" />
-      <option name="MAIN_CLASS_NAME" value="controller.ControlPlayerTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="controller.RMILobbyTest" />
+      <option name="METHOD_NAME" value="getAttendedPlayers" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RMILobbyTest.getAttendedPlayersAndWaitingRoom" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project_eng_soft_2023" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.RMILobbyTest" />
+      <option name="METHOD_NAME" value="getAttendedPlayersAndWaitingRoom" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RMILobbyTest.loginSameNick" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project_eng_soft_2023" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.RMILobbyTest" />
+      <option name="METHOD_NAME" value="loginSameNick" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RMILobbyTest.simulateLoginAndGameCreation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="project_eng_soft_2023" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.RMILobbyTest" />
+      <option name="METHOD_NAME" value="simulateLoginAndGameCreation" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -197,20 +223,21 @@
       <item itemvalue="Application.client3" />
       <item itemvalue="Application.client2" />
       <item itemvalue="Application.ServerApp" />
-      <item itemvalue="Application.GUIApplication" />
       <item itemvalue="Application.client1" />
+      <item itemvalue="JUnit.LobbyMethodsTest" />
       <item itemvalue="JUnit.App test" />
-      <item itemvalue="JUnit.BagTest.testGetTilesFullBag" />
-      <item itemvalue="JUnit.ControlPlayerTest" />
-      <item itemvalue="JUnit.BoardTest" />
+      <item itemvalue="JUnit.RMILobbyTest.getAttendedPlayers" />
+      <item itemvalue="JUnit.RMILobbyTest.getAttendedPlayersAndWaitingRoom" />
+      <item itemvalue="JUnit.RMILobbyTest.loginSameNick" />
+      <item itemvalue="JUnit.RMILobbyTest.simulateLoginAndGameCreation" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.client1" />
-        <item itemvalue="Application.GUIApplication" />
-        <item itemvalue="JUnit.ControlPlayerTest" />
-        <item itemvalue="JUnit.BoardTest" />
-        <item itemvalue="JUnit.BagTest.testGetTilesFullBag" />
+        <item itemvalue="JUnit.RMILobbyTest.simulateLoginAndGameCreation" />
+        <item itemvalue="JUnit.RMILobbyTest.getAttendedPlayersAndWaitingRoom" />
+        <item itemvalue="JUnit.RMILobbyTest.getAttendedPlayers" />
+        <item itemvalue="JUnit.RMILobbyTest.loginSameNick" />
       </list>
     </recent_temporary>
   </component>
@@ -278,7 +305,10 @@
       <workItem from="1685519374848" duration="8644000" />
       <workItem from="1685545685034" duration="3114000" />
       <workItem from="1685558407773" duration="4579000" />
-      <workItem from="1685600634147" duration="7852000" />
+      <workItem from="1685600634147" duration="8157000" />
+      <workItem from="1685815196358" duration="10124000" />
+      <workItem from="1685893452237" duration="3303000" />
+      <workItem from="1685966366794" duration="570000" />
     </task>
     <task id="LOCAL-00001" summary="Correzione metodi EOGToken">
       <created>1679347133576</created>
@@ -392,7 +422,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685562367942</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="lobby debug, ping synchronization, chat debug">
+      <created>1685608575025</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1685608575025</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -436,10 +473,17 @@
     <MESSAGE value="chat implementation and RMI chat methods" />
     <MESSAGE value="ping adjustments, debugging" />
     <MESSAGE value="connection/disconnection debug and chat adjustments" />
-    <option name="LAST_COMMIT_MESSAGE" value="connection/disconnection debug and chat adjustments" />
+    <MESSAGE value="lobby debug, ping synchronization, chat debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="lobby debug, ping synchronization, chat debug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog>
           <selected-grouping-rules>

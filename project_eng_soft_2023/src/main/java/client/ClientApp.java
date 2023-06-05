@@ -23,7 +23,7 @@ public class ClientApp {
     private static View view;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NotBoundException, LoginException, IOException {
 
         String nickName="";
 
@@ -45,6 +45,7 @@ public class ClientApp {
             case "0":
 
                 view = new TUI();
+
                 break;
 
             case "1":

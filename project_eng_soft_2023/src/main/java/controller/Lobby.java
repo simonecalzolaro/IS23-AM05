@@ -43,7 +43,9 @@ public abstract class Lobby implements  ClientServerHandler {
         super();
     }
 
-
+    /**
+     * initialize the Lobby's server
+     */
     public static void initializeServer(){
 
         clients = new ArrayList<>();
@@ -313,6 +315,12 @@ public abstract class Lobby implements  ClientServerHandler {
     @Override
     public synchronized void leaveGame(String nickname, int ID) throws LoginException, RemoteException {
 
+        if(ID==-1){
+            ControlPlayer myPlayer=getPlayerFromNickInWaitingRoom(nickname);
+            if(myPlayer!=null) removeFromWaitingRoom(myPlayer);
+            return;
+        }
+
         //checking if exists a player called "nickname" now offline inside Game ID
         Game myGame=null;
         ControlPlayer myPlayer=null;
@@ -353,7 +361,7 @@ public abstract class Lobby implements  ClientServerHandler {
 
         //searching the controlPlayer called "nick" int the waiting room and if I found him I'll set attendedPlayers to n
         //System.out.println("...setting new number of players...");
-        if(tempPlayers.get(0).getPlayerNickname().equals(nick) && tempPlayers.size()>0){
+        if(tempPlayers.get(0).getPlayerNickname().equals(nick) && tempPlayers.get(0).getPlayerStatus().equals(PlayerStatus.nOfPlayerAsked)  && tempPlayers.size()>0){
             if (n>=2 && n<=4) {
                 attendedPlayers = n;
                 System.out.println("--> new number of attendedPlayers:"+attendedPlayers);
@@ -361,7 +369,9 @@ public abstract class Lobby implements  ClientServerHandler {
                 flagWR=true;
                 notifyAll();
             }
+            else throw new IllegalArgumentException("---error: invalid number of attendedPlayers");
         }
+        else throw new IllegalArgumentException("---error: invalid action");
     }
 
     /**
@@ -413,6 +423,19 @@ public abstract class Lobby implements  ClientServerHandler {
     }
 
     /**
+     * @param nick: nickname of the player I want
+     * @return the ControlPlayer obj with nickname equals to "nick"
+     */
+    public ControlPlayer getPlayerFromNickInWaitingRoom(String nick){
+
+        for(ControlPlayer cp: tempPlayers){
+            if(cp.getPlayerNickname().equals(nick)) return cp;
+        }
+
+        return null;
+    }
+
+    /**
      * @return clients present in the lobby
      */
     public static ArrayList<ControlPlayer> getClients() {
@@ -448,6 +471,10 @@ public abstract class Lobby implements  ClientServerHandler {
         }
     }
 
+    /**
+     * interrupt game "myGame" and tells to all the players that the game is ended
+     * @param myGame: the Game I want to interrupt
+     */
     public void quitGameIDandNotify(Game myGame){
 
         for(ControlPlayer cp: myGame.getPlayers()){
@@ -472,4 +499,5 @@ public abstract class Lobby implements  ClientServerHandler {
         games.remove(myGame);
 
     }
+
 }

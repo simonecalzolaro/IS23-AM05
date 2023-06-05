@@ -31,7 +31,7 @@ public class ClientModel {
     /**
      * constructor
      */
-    public ClientModel(View view) {
+    public ClientModel() {
 
         this.nickname = "";
         this.board=null;
@@ -43,7 +43,7 @@ public class ClientModel {
         this.cgc2=null;
         this.GameID=-1;
         myScore=0;
-        myChat=new ClientChat(view);
+        myChat=new ClientChat();
     }
 
 

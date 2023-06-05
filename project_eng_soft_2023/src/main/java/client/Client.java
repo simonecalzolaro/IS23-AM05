@@ -24,7 +24,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     protected boolean left;
 
     protected ClientModel model;
-    private View view;
+    private static View view;
     private PingFromServer pingChecker;
     protected boolean myTurn;
     protected boolean gameEnded;
@@ -35,12 +35,10 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * constructor of ClientApp
      * @throws RemoteException
      */
-    protected Client(View view) throws RemoteException {
+    protected Client() throws RemoteException {
 
         super();
-
-        this.view=view;
-        model= new ClientModel(view);
+        model= new ClientModel();
         myTurn=false;
         gameEnded=false;
         left=false;
@@ -71,9 +69,10 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
                 } catch (RemoteException e) {
                     //System.out.println("--- ops... a remote exception occurred while communicating number of players to the server");
                     view.showException("--- ops... a remote exception occurred while communicating number of players to the server");
+                } catch (NullPointerException e){
+                    System.out.println("--- error: view is null");
                 }
             }).start();
-
     }
 
     /**
@@ -208,6 +207,11 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      */
     public View getView() {
         return view;
+    }
+
+
+    public static void setView(View view1){
+        view=view1;
     }
 
     /**

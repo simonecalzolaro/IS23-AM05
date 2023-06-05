@@ -259,7 +259,10 @@ public class TUI extends View {
 
             if (connection.equals("0")) {
                 try {
-                    client = new RMIClient(this);
+
+                    client.setView(this);
+                    client = new RMIClient();
+
                 } catch (RemoteException e) {
                     out.println("RemoteException occurred trying to initialize the client");
                     e.printStackTrace();
@@ -268,7 +271,10 @@ public class TUI extends View {
 
             if (connection.equals("1")) {
                 try {
-                    client = new SocketClient(this);
+
+                    client.setView(this);
+                    client = new SocketClient();
+
                 } catch (RemoteException e) {
                     out.println("RemoteException occurred trying to initialize the client");
                     e.printStackTrace();

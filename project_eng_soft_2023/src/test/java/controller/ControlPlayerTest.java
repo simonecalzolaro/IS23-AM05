@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ControlPlayerTest {
 
-    ClientHandler ch= (ClientHandler) new RMIClient(new TUI());
+    ClientHandler ch= (ClientHandler) new RMIClient();
 
     ControlPlayerTest() throws RemoteException {
     }

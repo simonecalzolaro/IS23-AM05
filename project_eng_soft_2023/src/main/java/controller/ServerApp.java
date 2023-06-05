@@ -9,6 +9,10 @@ public class ServerApp {
     public static TCPHandler client_server_bridge;
     public static Lobby lobby;
 
+    public ServerApp() {
+
+    }
+
     /**
      * main program of the server, he will just start the server app with startServer()
      * @param args
@@ -24,10 +28,8 @@ public class ServerApp {
         Lobby.initializeServer();
 
         try {
-            lobby = new RMILobby();
-            lobby.startServer();
-            new Thread(()-> lobby.checkFullWaitingRoom()).start();
-            new Thread(()-> lobby.checkAskNumberOfPlayers()).start();
+
+            startRMIServer();
 
         } catch (RemoteException e) {
             System.out.println("ServerApp --- RemoteException occurred while starting a new RMIServer");
@@ -39,8 +41,9 @@ public class ServerApp {
 
 
         try {
-            client_server_bridge = new TCPHandler(lobby);
-            client_server_bridge.startServer();
+
+            startSocketBridge();
+
         } catch (Exception e) {
             System.out.println("ServerApp --- Unexptected exception occurred trying to start the TCPHandler ");
             throw new RuntimeException();
@@ -48,6 +51,21 @@ public class ServerApp {
 
 
 
+    }
+
+
+    public static void startRMIServer() throws RemoteException, AlreadyBoundException {
+
+        lobby = new RMILobby();
+        lobby.startServer();
+        new Thread(()-> lobby.checkFullWaitingRoom()).start();
+        new Thread(()-> lobby.checkAskNumberOfPlayers()).start();
+
+    }
+
+    public static void startSocketBridge(){
+        client_server_bridge = new TCPHandler(lobby);
+        client_server_bridge.startServer();
     }
 
     static class Menu implements Runnable{

@@ -12,14 +12,12 @@ import java.util.Set;
 public class ClientChat {
 
     private Map<String, String> conversation;
-    private static View view;
 
     /**
      * constructor method
      */
-    public ClientChat(View view) {
+    public ClientChat() {
         conversation=new HashMap<>();
-        this.view=view;
     }
 
     /**
