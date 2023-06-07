@@ -5,7 +5,11 @@ import client.RMIClient;
 import client.SocketClient;
 import client.Tile;
 import myShelfieException.*;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.NotBoundException;
@@ -17,6 +21,7 @@ public class TUI extends View {
 
     List<Integer> coord = new ArrayList<>();
     private final PrintStream out;
+    private boolean connectionType;
 
     public TUI() {
 
@@ -139,6 +144,40 @@ public class TUI extends View {
 
     @Override
     public void startGame() {
+
+        boolean fileFound = false;
+
+
+
+        //Verifico che ci sia un file da cui recuperare il tipo di connessione per poi creare il client
+        //Se tale file non esiste procedo con la procedura standard di login
+
+
+        //Devo vedere con Elena come le è più comodo eseguire questo controllo sulla GUI
+
+        fileFound = checkForBackupFile();
+
+        init();
+
+
+        if (fileFound){
+
+            backupLogin();
+
+        }
+
+        else{
+
+            standardLogin();
+
+        }
+
+
+
+    }
+
+    @Override
+    public void standardLogin() {
         Scanner scan = new Scanner(System.in);
         String connection;
         String num;
@@ -257,6 +296,68 @@ public class TUI extends View {
             if(client.getModel().getPgcNum() == -1 && conti%20==0) System.out.println("...waiting for other players");
             conti++;
         }
+    }
+
+    public void backupLogin(){
+
+        JSONObject j = new JSONObject();
+
+        if(!connectionType){
+
+            try {
+                client = new RMIClient();
+            } catch (RemoteException e) {
+                System.out.println("Error encountered while starting the application --> try to reboot the application");
+                throw new RuntimeException(e);
+            }
+
+        }
+        else{
+            try {
+                client = new SocketClient();
+            } catch (RemoteException e) {
+                System.out.println("Error encountered while starting the application --> try to reboot the application");
+                throw new RuntimeException(e);
+            }
+        }
+
+        try {
+
+            try{
+                Object o = new JSONParser().parse(new FileReader("src/main/config/backup.json"));
+
+                j = (JSONObject) o;
+
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            Long num_pre;
+            client.initializeClient();
+            client.getModel().setNickname((String) j.get("nickname"));
+            num_pre = (Long) j.get("gameID");
+            client.getModel().setGameID(num_pre.intValue());
+
+        } catch (RemoteException e) {
+            System.out.println("Error encountered while starting the application --> try to reboot the application");
+            throw new RuntimeException(e);
+        } catch (NotBoundException e) {
+            System.out.println("Error encountered while starting the application --> try to reboot the application");
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            System.out.println("Error encountered while starting the application --> try to reboot the application");
+            throw new RuntimeException(e);
+        }
+
+        try{
+            client.askContinueGame();
+        } catch (LoginException e) {
+
+            client.getExceptionHandler().loginExceptionHandler(true);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
@@ -640,6 +741,24 @@ public class TUI extends View {
         return false;
     }
 
+    public boolean checkForBackupFile(){
+        JSONObject j = new JSONObject();
+        try{
+            Object o = new JSONParser().parse(new FileReader("src/main/config/backup.json")); //C:/Users/Utente/IS23-AM05/project_eng_soft_2023/
+            j =(JSONObject) o;
+
+            connectionType = (boolean) j.get("connection");
+
+            return true;
+
+
+        } catch (Exception e) {
+            System.out.println("No cached file available restoring the session");
+
+            return false;
+
+        }
+    }
     private static String waitForInput(Scanner scanner, ExecutorService executor) {
         try {
             // Avvia un'attività per leggere l'input dell'utente
