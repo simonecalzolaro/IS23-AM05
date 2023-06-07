@@ -28,8 +28,7 @@ public class TUI extends View {
         super();
 
         out = System.out;
-        startGame();
-        new Thread(this::commandListener).start();
+
 
     }
 
@@ -173,6 +172,7 @@ public class TUI extends View {
         }
 
 
+        new Thread(this::commandListener).start();
 
     }
 
@@ -228,53 +228,25 @@ public class TUI extends View {
             e.printStackTrace();
         }
 
-        do {
-            System.out.println("0 --> start a new game");
-            System.out.println("1 --> continue a Game");
-            num = scan.next();
-
-            if (!num.equals("0") && !num.equals("1")) System.out.println("ClientApp --- Invalid code --> Try again !");
-
-        } while (!num.equals("0") && !num.equals("1"));
 
         boolean goon = false;
-        switch (num) {
-            case "0":
-                do {
-                    out.println("Choose your nickname:");
-                    String nickname = scan.next();
-                    try {
 
-                        client.getModel().setNickname(nickname);
-                        client.askLogin(nickname);
+        do {
+            out.println("Choose your nickname:");
+            String nickname = scan.next();
+            try {
+                client.getModel().setNickname(nickname);
+                client.askLogin(nickname);
 
-                        goon = true;
-                    } catch (LoginException e) {
-                        e.getMessage();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } while (!goon);
+                goon = true;
 
-                break;
+            } catch (LoginException e) {
+                e.getMessage();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } while (!goon);
 
-            case "1":
-
-                do {
-                    try {
-                        client.askContinueGame();
-                        goon=true;
-                    } catch (LoginException e) {
-                        e.getMessage();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }while (!goon);
-
-                break;
-
-
-        }
         /*
         try {
             client.askCheckFullWaitingRoom();
