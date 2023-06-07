@@ -277,6 +277,7 @@ public class TUI extends View {
         if(!connectionType){
 
             try {
+                client.setView(this);
                 client = new RMIClient();
             } catch (RemoteException e) {
                 System.out.println("Error encountered while starting the application --> try to reboot the application");
@@ -286,6 +287,7 @@ public class TUI extends View {
         }
         else{
             try {
+                client.setView(this);
                 client = new SocketClient();
             } catch (RemoteException e) {
                 System.out.println("Error encountered while starting the application --> try to reboot the application");
