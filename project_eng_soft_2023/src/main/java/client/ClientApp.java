@@ -45,6 +45,7 @@ public class ClientApp {
             case "0":
 
                 view = new TUI();
+                view.startGame();
 
                 break;
 

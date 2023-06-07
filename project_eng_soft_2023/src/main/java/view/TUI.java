@@ -182,7 +182,6 @@ public class TUI extends View {
         String connection;
         String num;
 
-        init();
         out.println("What kind of connection do you want?\n");
 
         do {

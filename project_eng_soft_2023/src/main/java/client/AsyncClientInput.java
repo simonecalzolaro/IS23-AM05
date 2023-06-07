@@ -60,11 +60,14 @@ public class AsyncClientInput implements Runnable{
 
                 //enterNumberOfPlayers
                 case "askNumberOfPlayers":
-                    try{
-                        socketClient.enterNumberOfPlayers();
-                    } catch (RemoteException e) {
-                        throw new RuntimeException(e);
-                    }
+                        new Thread(() -> {
+                            try {
+                                socketClient.enterNumberOfPlayers();
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }).start();
+
                     break;
 
 
