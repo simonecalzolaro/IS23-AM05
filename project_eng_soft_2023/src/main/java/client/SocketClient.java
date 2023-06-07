@@ -4,7 +4,6 @@ import myShelfieException.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import view.View;
 
 import java.io.*;
 import java.net.Socket;
@@ -30,7 +29,8 @@ public class SocketClient extends Client{
      */
     public SocketClient() throws RemoteException {
 
-        super();
+        super( view);
+        model.setConnectionType(true);
     }
 
     @Override
@@ -95,9 +95,6 @@ public class SocketClient extends Client{
             throw new RuntimeException();
         }
 
-
-
-
     }
 
 
@@ -122,7 +119,7 @@ public class SocketClient extends Client{
         object.put("Interface","ClientServerHandler");
         object.put("Action","continueGame");
         object.put("Param1",model.getNickname());
-        object.put("Param2",this);
+        object.put("Param2",model.getGameID());
 
         try{
             outClient.reset();
@@ -297,6 +294,20 @@ public class SocketClient extends Client{
     @Override
     public void askPostMessage(String Message, ArrayList<String> recipients) {
 
+        JSONObject object = new JSONObject();
+        object.put("Interface","GameHandler");
+        object.put("Action","postMessage");
+        object.put("Param1",Message);
+        object.put("Param2", recipients);
+
+        try{
+            outClient.reset();
+            outClient.write(object);
+        } catch (InvalidOperationException | IOException e) {
+            System.out.println("SocketClient --- InvalidOperationException occurred trying to reset/write the stream");
+            System.out.println("---> Maybe you're trying to reset/write an input stream");
+            throw new RuntimeException();
+        }
     }
 
 
@@ -339,14 +350,7 @@ public class SocketClient extends Client{
     }
 
 
-    public synchronized void redLight(){
-        isPaused = true;
-    }
 
-    public synchronized void greenLight(){
-        isPaused = false;
-        notifyAll();
-    }
 
 
 }

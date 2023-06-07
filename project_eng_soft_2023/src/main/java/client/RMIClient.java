@@ -6,7 +6,6 @@ import myShelfieException.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import view.View;
 
 import java.io.*;
 import java.rmi.NotBoundException;
@@ -30,7 +29,8 @@ public class RMIClient extends Client {
 
     public RMIClient() throws RemoteException {
 
-        super();
+        super(view);
+        model.setConnectionType(false);
 
     }
 
@@ -105,6 +105,8 @@ public class RMIClient extends Client {
     public void askContinueGame() throws LoginException, RemoteException {
 
         this.gameHandler= clientServerHandler.continueGame(model.getNickname(), this, model.getGameID());
+
+        gameHandler.restoreSession();
     }
 
 
@@ -117,6 +119,7 @@ public class RMIClient extends Client {
     public void askLeaveGame() throws RemoteException, LoginException {
 
         clientServerHandler.leaveGame(model.getNickname(), model.getGameID());
+
 
     }
 

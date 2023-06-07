@@ -10,6 +10,7 @@ import java.util.Map;
  */
 public class ClientModel {
 
+    private boolean connectionType; //false --> RMI; true --> Socket
     private int GameID;
     private String nickname;
     private Matrix board;
@@ -209,5 +210,17 @@ public class ClientModel {
     public ClientChat getMyChat() {
         return myChat;
     }
+
+    public void setConnectionType(boolean connectionType){
+
+        this.connectionType = connectionType;
+
+    }
+
+
+    public boolean getConnectionType(){
+        return connectionType;
+    }
+
 
 }

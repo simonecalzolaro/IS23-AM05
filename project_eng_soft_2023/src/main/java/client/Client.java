@@ -2,7 +2,11 @@ package client;
 
 
 
+import model.Tile;
 import myShelfieException.*;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import view.ExceptionHandler;
 import view.View;
 
 
@@ -20,9 +24,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     //----- tutti sti attributi sono da spostare in classi o sottoclassi più specifiche
     protected String hostname;
     protected int PORT;
-
-    protected boolean left;
-
     protected ClientModel model;
     private static View view;
     private PingFromServer pingChecker;
@@ -30,18 +31,22 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     protected boolean gameEnded;
     private boolean gameStarted;
 
+    private ExceptionHandler exceptionHandler;
+
 
     /**
      * constructor of ClientApp
      * @throws RemoteException
      */
-    protected Client() throws RemoteException {
+    protected Client(View view) throws RemoteException {
 
         super();
+
+        exceptionHandler = new ExceptionHandler(this);
+        this.view=view;
         model= new ClientModel();
         myTurn=false;
         gameEnded=false;
-        left=false;
         gameStarted=false;
         pingChecker=new PingFromServer(this);
         (new Thread(pingChecker)).start();
@@ -69,19 +74,20 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
                 } catch (RemoteException e) {
                     //System.out.println("--- ops... a remote exception occurred while communicating number of players to the server");
                     view.showException("--- ops... a remote exception occurred while communicating number of players to the server");
-                } catch (NullPointerException e){
-                    System.out.println("--- error: view is null");
                 }
             }).start();
+
     }
 
     /**
      * method called by the server to update the board of this client
+     *
      * @param board
+     * @param gameID
      * @throws RemoteException
      */
     @Override
-    public void updateBoard(model.Tile[][] board, model.Tile[][] myShelf, Map<String, model.Tile[][]> otherShelf, int myScore) throws RemoteException{
+    public void updateBoard(Tile[][] board, Tile[][] myShelf, Map<String, Tile[][]> otherShelf, int myScore, int gameID) throws RemoteException{
 
 
         Map<String, Matrix> otherPlayersMatr= new HashMap<>();
@@ -92,11 +98,33 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         try {
             model.initializeMatrixes(new Matrix(board), new Matrix(myShelf), otherPlayersMatr);
             model.setMyScore(myScore);
+            model.setGameID(gameID);
         }catch (Exception e){
             view.showException("---ops... something went wrong while updating the board and other's bookshelf");
         }
 
         view.updateBoard();
+
+        backup();
+
+    }
+
+
+    @Override
+    public void restoreSession(model.Tile[][] board, model.Tile[][] myShelf, Map<String, model.Tile[][]> otherShelf, int myScore,int gameID, int pgcNum, Map<model.Tile, Integer[]> pgcMap, int cgc1num, int cgc2num){
+        Map<String, Matrix> otherPlayersMatr= new HashMap<>();
+        for(String nick: otherShelf.keySet()){
+            otherPlayersMatr.put(nick, new Matrix(otherShelf.get(nick)));
+        }
+
+        try {
+
+            updateBoard(board,myShelf,otherShelf,myScore,gameID);
+            startPlaying(pgcNum,pgcMap,cgc1num,cgc2num,gameID);
+            backup();
+        }catch (Exception e){
+            view.showException("---ops... something went wrong while updating the board and other's bookshelf");
+        }
 
     }
 
@@ -190,6 +218,38 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         view.plotNewMessage(sender, message );
     }
 
+
+    public void backup(){
+
+        FileWriter file = null;
+        FileWriter connect = null;
+
+       try{
+           file = new FileWriter("src/main/config/backup.json");
+
+
+       } catch (IOException e) {
+           throw new RuntimeException(e);
+       }
+
+       JSONObject clientBackup = new JSONObject();
+
+       clientBackup.put("nickname",model.getNickname());
+       clientBackup.put("gameID",model.getGameID());
+       clientBackup.put("connection",model.getConnectionType());
+
+       try{
+           file.write(clientBackup.toJSONString());
+           file.flush();
+           file.close();
+       } catch (IOException e) {
+           throw new RuntimeException(e);
+       }
+    }
+
+
+
+
     /**
      * set up the servers' ports and hostname
      */
@@ -207,11 +267,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      */
     public View getView() {
         return view;
-    }
-
-
-    public static void setView(View view1){
-        view=view1;
     }
 
     /**
@@ -235,12 +290,28 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         return pingChecker;
     }
 
+    public void setGameStarted(){
+        gameStarted = true;
+    }
+
     /**
      * @return true if the game has started
      */
     public boolean isGameStarted() {
         return gameStarted;
     }
+
+    public ExceptionHandler getExceptionHandler(){
+        return exceptionHandler;
+    }
+
+    public static void setView(View view1){
+
+        view = view1;
+
+    }
+
+
 
     //-------------------------------------- RMI vs Socket layer --------------------------------------
 

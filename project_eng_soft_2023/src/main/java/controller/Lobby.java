@@ -224,7 +224,7 @@ public abstract class Lobby implements  ClientServerHandler {
                     for (ControlPlayer cp : g.getPlayers()) {
                         cp.initializeControlPlayer(tempBoard);
                         cp.setGame(g);
-                        cp.getBookshelf().initializePGC(tempBoard);
+
                     }
 
 
@@ -288,11 +288,13 @@ public abstract class Lobby implements  ClientServerHandler {
                     if (client instanceof ArrayList<?>) {
 
                         cp.setStreams((ArrayList<controller.Stream>) client);
+                        cp.setPlayerStatus(PlayerStatus.NOT_MY_TURN);
 
                     }
                     else if (client instanceof ClientHandler){
 
                         cp.setClientHandler((ClientHandler) client);
+                        cp.setPlayerStatus(PlayerStatus.NOT_MY_TURN);
 
                     }
                     else{
