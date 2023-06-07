@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.concurrent.*;
 
 public class TUI extends View {
 
@@ -30,23 +31,52 @@ public class TUI extends View {
     //-------------------------------- @Override methods from View --------------------------------
 
     @Override
-    public void getNumOfPlayer() throws RemoteException {
+    public void getNumOfPlayer(){
 
+        String input;
         int num;
+        boolean goon=false;
         Scanner scan = new Scanner(System.in);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
 
         do {
 
             System.out.print("Enter the number of players: ");
             // This method reads the number provided using keyboard
-            num = scan.nextInt();
+            input = waitForInput(scan, executor);
 
-            if (num < 2 || num > 4) System.out.println("The number of players must be between 2 and 4");
+            if(!Objects.equals(input, "")) {
+                num = Integer.parseInt(input);
+                if (num < 2 || num > 4) System.out.println("The number of players must be between 2 and 4");
+            }else {
+                num=0;
+                goon=true;
+                break;
+            }
 
         } while (num < 2 || num > 4);
 
-        client.askSetNumberOfPlayers(num, client.getModel().getNickname());
+        if(!goon) {
+            client.askSetNumberOfPlayers(num, client.getModel().getNickname());
+        }else {
+            try {
+                client.askLeaveGame();
+            }catch (LoginException e){
+                e.printStackTrace();
+            }catch (IOException e){
+                e.getMessage();
+            }
 
+            try {
+                client.askLogin(client.getModel().getNickname());
+            } catch (LoginException e) {
+                e.getMessage();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        executor.shutdown();
 
     }
 
@@ -61,6 +91,8 @@ public class TUI extends View {
 
     @Override
     public void endGame(Map<String, Integer> results) {
+        Scanner scan = new Scanner(System.in);
+        String input;
 
         out.println("+---------------The game has ended!---------------+");
 
@@ -70,6 +102,24 @@ public class TUI extends View {
             System.out.println("                 "+ entry.getKey() + "  ->  " + entry.getValue());
         }
         out.println("+-------------------------------------------------+");
+
+
+        do {
+            out.println("Do you want to leave the game? y/n");
+            input = scan.next();
+        }while (!input.equals("y") && !input.equals("n"));
+
+        if(input.equals("y")){
+        try {
+            client.askLeaveGame();
+        }catch (LoginException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.getMessage();
+        }
+        }
+
+
 
     }
 
@@ -83,163 +133,6 @@ public class TUI extends View {
                                     |     IS YOUR TURN!!!     |
                                     +-------------------------+
                                                                          """);
-
-
-            //updateBoard();
-            /*String action;
-            int request = 0;
-
-            do {
-                out.println("+-----------------------------------+");
-                out.println("|     What do you want to do?       |");
-                out.println("|        0 --> ShowPGC              |");
-                out.println("|        1 --> ShowCGC              |");
-                out.println("|        2 --> GetMyScore           |");
-                out.println("|        3 --> MakeYourMove         |");
-                out.println("|        4 --> ShowOtherPlayerShelf |");
-                out.println("|        5 --> leave the game       |");
-                out.println("+-----------------------------------+");
-                out.println("---> ");
-
-                action = getInput();
-
-                switch (action) {
-
-                    case "0" -> {
-
-                        out.println("This is your PersonalGoalCard:\n");
-                        plotPGC();
-                        request++;
-                    }
-
-                    case "1" -> {
-                        if (client.getModel().getOtherPlayers().size() < 3) {
-                            out.println("This is the CommonGoalCard:\n");
-                            out.println(client.getModel().getCgc1().getDescription());
-                        } else {
-                            out.println("These are the CommonGoalCards:\n");
-                            out.println(client.getModel().getCgc1().getDescription());
-                            out.println(client.getModel().getCgc2().getDescription());
-                        }
-                        request++;
-                    }
-
-                    case "2" ->{
-                        out.println(client.getModel().getMyScore());
-                        request++;
-                    }
-
-                    case "4" ->{
-                        plotOtherPlayersShelf();
-                    }
-
-                    case "5" -> {
-
-                        try {
-                            client.askLeaveGame();
-                        } catch (LoginException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }
-            }while(!action.equals("3") && request!=3);
-
-            boolean goon = false;
-
-            do {
-
-                //---da rendere a prova di scimmia
-                //  ->puù scegliere più volte la stessa tile
-                //  ->può scegliere tiles non adiacenti
-                //  ->substring funziona male senza fflush(), io ti consiglierei di fare un loop del tipo
-                //      Inserisci x:
-                //      Inserisci y:
-                //      Continuare? y/n
-                //  ->scritto così è sempre costretto a pescarne 3
-
-                int round = 0;
-                String select;
-
-                out.println("Choose tiles from the board!");
-
-                do {
-                    do{
-
-                        out.println("Insert x:");
-
-                        int x = Integer.parseInt(getInput());
-
-                        out.println("Insert y:");
-
-                        int y = Integer.parseInt(getInput());
-
-                        coord.add(x);
-                        coord.add(y);
-                        chosenTiles.add(client.getModel().getBoard().getTileByCoord(x,y));
-
-                        if (!checkTiles(coord)) {
-                            out.println("There has been some error!\nChoose tiles from the board!");
-                            coord.clear();
-                            chosenTiles.clear();
-                            round=0;
-                        }
-
-                    }while(!checkTiles(coord));
-
-                    round++;
-
-                    out.println("Would you like to continue? y/n");
-                    select = getInput();
-
-                }while (round!=3 && !Objects.equals(select, "n"));
-
-
-                try {
-                    client.askBoardTiles(coord);
-                    goon = true;
-
-                } catch (InvalidChoiceException e) {
-                    e.getMessage();
-                    coord.clear();
-                    chosenTiles.clear();
-                }catch (NotConnectedException e){
-                    out.println("NotConnectedException occurred trying to choose the tiles!");
-                    e.printStackTrace();
-                }catch (NotMyTurnException e){
-                    out.println("NotMyTurnException occurred trying to choose the tiles!");
-                    e.printStackTrace();
-                }catch (InvalidParametersException e){
-                    out.println("InvalidParametersException occurred trying to choose the tiles!");
-                    e.getMessage();
-                }
-
-            } while (!goon);
-
-            goon=false;
-
-            do{
-                out.println("Choose the column of your bookshelf for the tiles:\n");
-                int chosenColumn = Integer.parseInt(getInput());
-
-                try {
-                    client.askInsertShelfTiles( chosenColumn, coord);
-                    goon = true;
-                    chosenTiles.clear();
-                    coord.clear();
-                }catch (InvalidChoiceException e){
-                    e.getMessage();
-                } catch (InvalidLenghtException e) {
-                    throw new RuntimeException(e);
-                }catch (NotMyTurnException e){
-                    out.println("NotMyTurnException occurred trying to insert tiles!");
-                    e.printStackTrace();
-                }catch (NotConnectedException e){
-                    out.println("NotConnectedException occurred trying to insert tiles!");
-                    e.printStackTrace();
-                }
-
-            }while (!goon);
-*/
         }
 
     }
@@ -357,7 +250,7 @@ public class TUI extends View {
         int conti=0;
         while (client.getModel().getPgcNum() == -1) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -460,7 +353,7 @@ public class TUI extends View {
         out.println("+-----------------------------------------------------------+");
         out.println("|                          MENU:                            |");
         out.println("|                                                           |");
-        out.println("|   /help : to show all the commands available              |");
+        out.println("|   /help: to show all the commands available               |");
         out.println("|   /pgc: to show your PersonalGoalCard                     |");
         out.println("|   /cgc: to show your CommonGoalCard                       |");
         out.println("|   /score: to get your score                               |");
@@ -639,8 +532,10 @@ public class TUI extends View {
 
                 if (round == 3) break;
 
-                out.println("Would you like to continue? y/n");
-                select = scan.next();
+                do {
+                    out.println("Would you like to continue? y/n");
+                    select = scan.next();
+                }while (!select.equals("y") && !select.equals("n"));
 
             }
 
@@ -670,7 +565,7 @@ public class TUI extends View {
         ok=false;
 
         do {
-            out.println("Choose the column of your bookshelf for the tiles:\n");
+            out.println("Choose the column of your bookshelf for the tiles:");
             int chosenColumn=0;
 
             do {
@@ -681,6 +576,11 @@ public class TUI extends View {
                     out.println("NumberFormatException trying to choose the column of your bookshelf!");
                     out.println("Try again: ");
                 }
+                if(chosenColumn>4) {
+                    ok=false;
+                    out.println("You have chosen a column that doesn't exist!\nTry again:");
+                }
+
             }while (!ok);
 
             try {
@@ -705,6 +605,13 @@ public class TUI extends View {
     }
 
     public boolean checkTiles(List<Integer> tiles) {
+
+        for(Integer t: tiles){
+            if(t>=9) {
+                out.println("You're trying to get tiles that are not on the board!");
+                return false;
+            }
+        }
 
         if (tiles.size() == 6) {
             if(Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(1), tiles.get(3))) return false;
@@ -733,6 +640,20 @@ public class TUI extends View {
         return false;
     }
 
+    private static String waitForInput(Scanner scanner, ExecutorService executor) {
+        try {
+            // Avvia un'attività per leggere l'input dell'utente
+            Future<String> future = executor.submit(scanner::nextLine);
+
+            // Imposta il timeout
+            String input = future.get(30, TimeUnit.SECONDS);
+            return input;
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            // Se si verifica un'eccezione, restituisce una stringa vuota
+            return "";
+        }
+    }
+
     public void commandListener() {
 
         Scanner scan = new Scanner(System.in);
@@ -756,7 +677,7 @@ public class TUI extends View {
                     System.out.println("/board: to show the updated board");
                     System.out.println("/tiles: to choose and insert the tiles from the board");
                     System.out.println("/chat: to write a message in the chat");
-                    System.out.println("/showChat: to show the chat");
+                    System.out.println("/showChat: to show your last message received");
                     System.out.println("/q: to leave the game");
                 }
 
@@ -798,13 +719,25 @@ public class TUI extends View {
                 }
 
                 case "/chat"->{
+                    boolean c=false;
                     out.println("type something and press 'enter'");
-                    String mex=scan.next();
-                    client.askPostMessage(mex, new ArrayList(client.getModel().getOtherPlayers().keySet()));
+                    out.println("to leave the chat /qChat ");
+                    scan.nextLine();
+
+                    do {
+                        String mex = scan.nextLine();
+
+                        if(mex.equals("/qChat")) {
+                            c=true;
+                        }else {
+                            client.askPostMessage(mex, new ArrayList(client.getModel().getOtherPlayers().keySet()));
+                        }
+                    }while (!c);
                 }
 
                 case "/showChat"->{
-                    out.println("");
+                    out.println("This is your last message: ");
+                    out.println(client.getModel().getMyChat().getConversation());
                 }
 
                 case "/q" -> {

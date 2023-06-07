@@ -52,7 +52,7 @@ public class PersonalGoalCard implements Card, Serializable {
                 map.put(Tile.WHITE, new int[]{1, 1});
                 map.put(Tile.PINK, new int[]{2, 3});
                 map.put(Tile.YELLOW, new int[]{5, 4});
-                map.put(Tile.LIGHTBLUE, new int[]{3, 2});
+                map.put(Tile.LIGHTBLUE, new int[]{3, 0});
             }
             case 5 -> {
                 map.put(Tile.GREEN, new int[]{0, 3});
