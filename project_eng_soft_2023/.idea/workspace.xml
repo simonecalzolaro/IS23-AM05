@@ -8,12 +8,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="gabbo">
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/ExceptionHandler.java" afterDir="false" />
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="GUI update and fixes">
+      <change afterPath="$PROJECT_DIR$/src/main/config/backup.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/AsyncClientInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/AsyncClientInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shade/client.jar" beforeDir="false" afterPath="$PROJECT_DIR$/shade/client.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMILobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMILobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/TCPHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TCPHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GUIApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GUIApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GUIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GUIController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/RankController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/RankController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/TUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/TUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/View.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/game.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/game.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +38,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Class" />
         <option value="Enum" />
         <option value="JUnit5 Test Class" />
-        <option value="Class" />
       </list>
     </option>
   </component>
@@ -83,7 +98,7 @@
       <recent name="client" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ServerApp">
+  <component name="RunManager" selected="Application.client1">
     <configuration name="ServerApp" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="controller.ServerApp" />
       <module name="project_eng_soft_2023" />
@@ -427,14 +442,7 @@
       <option name="project" value="LOCAL" />
       <updated>1686167267432</updated>
     </task>
-    <task id="LOCAL-00019" summary="TUI update 2">
-      <created>1686167906621</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1686167906621</updated>
-    </task>
-    <option name="localTasksCounter" value="20" />
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -480,8 +488,7 @@
     <MESSAGE value="connection/disconnection debug and chat adjustments" />
     <MESSAGE value="lobby debug, ping synchronization, chat debug" />
     <MESSAGE value="TUI update" />
-    <MESSAGE value="TUI update 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="TUI update 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="TUI update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -490,6 +497,11 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/view/GUI.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog>
@@ -499,5 +511,8 @@
         </breakpoints-dialog>
       </breakpoints-dialog>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/project_eng_soft_2023$GUIApplication2.ic" NAME="GUIApplication2 Coverage Results" MODIFIED="1685436016430" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

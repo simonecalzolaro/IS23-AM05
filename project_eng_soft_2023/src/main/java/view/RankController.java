@@ -3,11 +3,16 @@ package view;
 import client.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
+import myShelfieException.LoginException;
 
-import static com.sun.javafx.application.PlatformImpl.exit;
-import static com.sun.javafx.application.PlatformImpl.isCaspian;
+import java.io.IOException;
+import java.rmi.RemoteException;
+
+import static javafx.application.Platform.exit;
 
 public class RankController extends GUIController {
     @FXML
@@ -36,7 +41,25 @@ public class RankController extends GUIController {
         exit();
     }
 
-    public void startNewGame(ActionEvent actionEvent) {
+    public void startNewGame(ActionEvent actionEvent) throws IOException {
+        try {
+            client.askLogin(client.getModel().getNickname());
+        } catch (LoginException e) {
+            throw new RuntimeException(e);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1250,650);
+        stage.setScene(scene);
+        LoginController controller=fxmlLoader.getController();
+        gui.setLoginController(controller);
+        controller.setScene(gui,stage);
+
+        controller.showWaitingScene();
     }
 
 }

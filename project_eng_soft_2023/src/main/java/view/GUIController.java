@@ -30,4 +30,10 @@ public abstract class GUIController {
     public void showChat(ActionEvent actionEvent) {
     }
 
+    public void showException() {
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 }

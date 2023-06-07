@@ -17,6 +17,8 @@ public class ClientModel {
     private Matrix myBookshelf;
     private Map<String, Matrix> otherPlayers;
 
+    private int numOtherPlayers;
+
     private int myScore;
 
     //------------cards-------------
@@ -24,6 +26,8 @@ public class ClientModel {
     private int pgcNum;
     private CGC cgc1;
     private CGC cgc2;
+
+
 
 
     //-----------chat-----------
@@ -59,6 +63,7 @@ public class ClientModel {
         this.board=board;
         this.myBookshelf=myBookshelf;
         this.otherPlayers=otherPlayers;
+        this.numOtherPlayers = otherPlayers.size();
         System.out.println("...all shelf and board successfully initialized...");
 
     }
@@ -217,10 +222,15 @@ public class ClientModel {
 
     }
 
+    public void setNumOtherPlayers(int numOtherPlayers) {
+        this.numOtherPlayers = numOtherPlayers;
+    }
 
     public boolean getConnectionType(){
         return connectionType;
     }
 
-
+    public int getNumOtherPlayers() {
+        return numOtherPlayers;
+    }
 }

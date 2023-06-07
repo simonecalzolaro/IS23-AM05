@@ -71,13 +71,13 @@ public class TCPHandler {
             PORT = PORT_pre.intValue();
 
         } catch (FileNotFoundException e) {
-            System.out.println("SocketClient --- FileNotFoundException occurred trying to retrieve server's information from header.json");
+            System.out.println(" --- FileNotFoundException occurred trying to retrieve server's information from header.json");
             e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("SocketClient --- IOException occurred trying to retrieve server's information from header.json");
+            System.out.println(" --- IOException occurred trying to retrieve server's information from header.json");
             e.printStackTrace();
         } catch (ParseException e) {
-            System.out.println("SocketClient --- ParseException occurred trying to retrieve server's information from header.json");
+            System.out.println(" --- ParseException occurred trying to retrieve server's information from header.json");
             e.printStackTrace();
         }
     }

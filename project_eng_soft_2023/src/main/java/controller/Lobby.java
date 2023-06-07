@@ -5,6 +5,7 @@ import model.*;
 import myShelfieException.*;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 
@@ -35,6 +36,8 @@ public abstract class Lobby implements  ClientServerHandler {
     private static boolean flagWR;
 
 
+
+
     /**
      * constructor for the ServerApp
      * @throws RemoteException
@@ -43,9 +46,7 @@ public abstract class Lobby implements  ClientServerHandler {
         super();
     }
 
-    /**
-     * initialize the Lobby's server
-     */
+
     public static void initializeServer(){
 
         clients = new ArrayList<>();
@@ -77,13 +78,14 @@ public abstract class Lobby implements  ClientServerHandler {
 
         //questo while è a mutua esclusione con quello all'interno di checkFullWaitingRoom()
 
-        while ( flagNoP || flagWR ) {
+        while ( !flagLogin ) {
             try {
                 wait();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
+        flagLogin=false;
 
         nowLoggingClient=client;
 
@@ -125,15 +127,11 @@ public abstract class Lobby implements  ClientServerHandler {
             pl.setPlayerStatus(PlayerStatus.WAITING_ROOM);
             System.out.println("-->player " + nickname + " entered the game. Waiting room now contains " + tempPlayers.size() + "/" + (attendedPlayers<0? "0": attendedPlayers));
 
-            //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
-            flagWR=true;
             flagNoP=true;
-            //flagLogin=false;
-
             notifyAll();
+
             return pl;
         }
-
     }
 
     /**
@@ -146,33 +144,36 @@ public abstract class Lobby implements  ClientServerHandler {
         //if there isn't any waiting room it means that "client" is the first player
         while(true) {
 
-            System.out.println("->while checkAskNuberOfPlayers");
-
-            while(!flagNoP){
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                while(!flagNoP){
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-            }
+                flagNoP=false;
 
-            if (attendedPlayers == -1 && tempPlayers.size()>0 ) {
 
-                attendedPlayers = -2;
-                ControlPlayer pl = tempPlayers.get(0);
+                 if (attendedPlayers == -1 ) {
 
-                //server asks client how many players he wants in his match
-                pl.askNumberOfPlayers();
-                System.out.println("    ...asking the number of players to "+pl.getPlayerNickname());
-               // System.out.println("-> " + pl.getPlayerNickname() + " chooses " + attendedPlayers + " number of players");
+                     attendedPlayers = -2;
+                     ControlPlayer pl = tempPlayers.get(0);
 
-                //setting the status of this Player as nOfPlayerAsked
-                pl.setPlayerStatus(PlayerStatus.nOfPlayerAsked);
+                     //server asks client how many players he wants in his match
+                     System.out.println("    ...asking the number of players to "+pl.getPlayerNickname());
+                     pl.askNumberOfPlayers();
+                     // System.out.println("-> " + pl.getPlayerNickname() + " chooses " + attendedPlayers + " number of players");
 
-            }
 
-            flagNoP=false;
-            notifyAll();
+
+                     //setting the status of this Player as nOfPlayerAsked
+                     pl.setPlayerStatus(PlayerStatus.nOfPlayerAsked);
+
+                 }
+
+
+                flagWR=true;
+                notifyAll();
         }
     }
 
@@ -184,10 +185,7 @@ public abstract class Lobby implements  ClientServerHandler {
 
         System.out.println("-> checkFullWaitingRoom active");
 
-
         while(true) {
-
-            System.out.println("->while checkFullWaitingRoom");
 
             while( !flagWR){
                 try {
@@ -196,17 +194,21 @@ public abstract class Lobby implements  ClientServerHandler {
                     throw new RuntimeException(e);
                 }
             }
+            flagWR=false;
 
-            if (tempPlayers.size() >= attendedPlayers && attendedPlayers>0){
+
+            //System.out.println("... checkFullWaitingRoom, tempPlayers.size():"+ tempPlayers.size() + ", attendedPlayers:"+attendedPlayers);
+            //once the waiting room (tempPlayers) is full the Game is created and all the players are notified
+            if (tempPlayers.size() >= attendedPlayers && attendedPlayers>0) {
 
                 System.out.println("    ...Loading game , participants: " + tempPlayers.stream().map(ControlPlayer::getPlayerNickname));
 
                 try {
 
-                    ArrayList<ControlPlayer> newPlayers = new ArrayList<>();
+                    ArrayList<ControlPlayer> newPlayers= new ArrayList<>();
 
                     //creating a list with the first "attendedPlayer" players in tempPlayers
-                    for (int i = 0; i < attendedPlayers; i++) {
+                    for(int i=0; i<attendedPlayers; i++){
                         newPlayers.add(tempPlayers.get(0));
                         tempPlayers.remove(0);
                     }
@@ -216,7 +218,7 @@ public abstract class Lobby implements  ClientServerHandler {
                     System.out.println("    ...creating a game with " + attendedPlayers + " players...");
 
 
-                    Game g = new Game(newPlayers, tempBoard);
+                    Game g = new Game( newPlayers, tempBoard);
                     games.add(g);
 
                     //initializing each client, this for CAN'T be inside the next one otherwise when notifyUpdatedBoard()
@@ -233,7 +235,7 @@ public abstract class Lobby implements  ClientServerHandler {
                         try {
                             cp.notifyUpdatedBoard();
                             cp.notifyStartPlaying();
-                            if (cp.equals(newPlayers.get(0))) {
+                            if (cp.equals(newPlayers.get(0))){
                                 cp.setPlayerStatus(PlayerStatus.MY_TURN);
                                 cp.notifyStartYourTurn();
                             }
@@ -249,16 +251,15 @@ public abstract class Lobby implements  ClientServerHandler {
                     e.printStackTrace();
                 }
 
-                tempBoard = null;
+                tempBoard=null;
                 attendedPlayers = -1;
 
             }
 
-            flagWR=false;
+            flagLogin=true;
             notifyAll();
 
         }
-
     }
 
     /**
@@ -317,12 +318,6 @@ public abstract class Lobby implements  ClientServerHandler {
     @Override
     public synchronized void leaveGame(String nickname, int ID) throws LoginException, RemoteException {
 
-        if(ID==-1){
-            ControlPlayer myPlayer=getPlayerFromNickInWaitingRoom(nickname);
-            if(myPlayer!=null) removeFromWaitingRoom(myPlayer);
-            return;
-        }
-
         //checking if exists a player called "nickname" now offline inside Game ID
         Game myGame=null;
         ControlPlayer myPlayer=null;
@@ -359,21 +354,17 @@ public abstract class Lobby implements  ClientServerHandler {
      * @throws RemoteException
      */
     @Override
-    public synchronized void setNumberOfPlayers(int n, String nick) throws RemoteException{
+    public void setNumberOfPlayers(int n, String nick) throws RemoteException{
 
         //searching the controlPlayer called "nick" int the waiting room and if I found him I'll set attendedPlayers to n
         //System.out.println("...setting new number of players...");
-        if(tempPlayers.get(0).getPlayerNickname().equals(nick) && tempPlayers.get(0).getPlayerStatus().equals(PlayerStatus.nOfPlayerAsked)  && tempPlayers.size()>0){
+        if(tempPlayers.get(0).getPlayerNickname().equals(nick) && tempPlayers.size()>0){
             if (n>=2 && n<=4) {
                 attendedPlayers = n;
                 System.out.println("--> new number of attendedPlayers:"+attendedPlayers);
                 tempPlayers.get(0).setPlayerStatus(PlayerStatus.WAITING_ROOM);
-                flagWR=true;
-                notifyAll();
             }
-            else throw new IllegalArgumentException("---error: invalid number of attendedPlayers");
         }
-        else throw new IllegalArgumentException("---error: invalid action");
     }
 
     /**
@@ -425,19 +416,6 @@ public abstract class Lobby implements  ClientServerHandler {
     }
 
     /**
-     * @param nick: nickname of the player I want
-     * @return the ControlPlayer obj with nickname equals to "nick"
-     */
-    public ControlPlayer getPlayerFromNickInWaitingRoom(String nick){
-
-        for(ControlPlayer cp: tempPlayers){
-            if(cp.getPlayerNickname().equals(nick)) return cp;
-        }
-
-        return null;
-    }
-
-    /**
      * @return clients present in the lobby
      */
     public static ArrayList<ControlPlayer> getClients() {
@@ -473,10 +451,7 @@ public abstract class Lobby implements  ClientServerHandler {
         }
     }
 
-    /**
-     * interrupt game "myGame" and tells to all the players that the game is ended
-     * @param myGame: the Game I want to interrupt
-     */
+
     public void quitGameIDandNotify(Game myGame){
 
         for(ControlPlayer cp: myGame.getPlayers()){
@@ -501,5 +476,9 @@ public abstract class Lobby implements  ClientServerHandler {
         games.remove(myGame);
 
     }
+
+
+
+
 
 }

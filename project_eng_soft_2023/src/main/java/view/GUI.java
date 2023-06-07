@@ -16,12 +16,20 @@ public class GUI extends View {
     private GameController gameController;
 
     private Timer timer;
-    ClientModel clientModel;
-    private RankController rankController;
+
+    @Override
+    public void standardLogin() {
+        Platform.runLater(()->{
+            loginController.showLogin();
+        });
+    }
+
 
     @Override
     public void showException(String exception) {
-
+        if(gameController!=null){
+            Platform.runLater(()-> gameController.showException(exception));
+            }
     }
 
     @Override
@@ -29,15 +37,7 @@ public class GUI extends View {
 
     }
 
-    @Override
-    public void standardLogin() {
 
-    }
-
-    @Override
-    public void backupLogin() {
-
-    }
 
     public GUI() {
         this.numOfPlayer = 0;
@@ -80,6 +80,20 @@ public class GUI extends View {
 
     @Override
     public void startGame() {
+        if(checkForBackupFile()){
+            Platform.runLater(()-> {
+                try {
+                    while(client==null);
+                    loginController.setClient(client);
+                    loginController.showGameScene();
+                    gameController.showGame();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } else {
+            standardLogin();
+        }
     }
 
     /**
@@ -121,8 +135,4 @@ public class GUI extends View {
         this.timer=timer;
     }
 
-
-    public void setRankController(RankController rankController) {
-        this.rankController=rankController;
-    }
 }

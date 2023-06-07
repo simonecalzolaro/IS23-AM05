@@ -115,6 +115,11 @@ public class LoginController extends GUIController {
         timer1.schedule(task1, 3000, 3000);
         timer2.schedule(task2, 750, 750);
     }
+
+
+    public void showLogin(){
+        stage.show();
+    }
     public void chooseProtocol(ActionEvent actionEvent) {
 
         loginExceptionLabel.setDisable(true);
@@ -122,12 +127,13 @@ public class LoginController extends GUIController {
 
         try{
             if(actionEvent.getSource().equals(rmiButton)){
-                client.setView(gui);
+
                 client = new RMIClient();
+                RMIClient.setView(gui);
 
             } else {
-                client.setView(gui);
                 client = new SocketClient();
+                SocketClient.setView(gui);
             }
             client.initializeClient();
         } catch (Exception e){
@@ -151,23 +157,21 @@ public class LoginController extends GUIController {
         loginButton.setVisible(true);
 
     }
-    public void enterNickname(ActionEvent actionEvent) throws IOException {
+    public void enterNickname(ActionEvent actionEvent){
         loginExceptionLabel.setDisable(true);
         loginExceptionLabel.setVisible(false);
         String nickname = nameField.getText();
         nameField.clear();
-       try{
+        try{
             client.getModel().setNickname(nickname);
             client.askLogin(nickname);
+            showWaitingScene();
 
         } catch (LoginException e){
             showException("This nickname is not available! Try again!");
         } catch (Exception e){
             showException("Error! Try again!");
-
         }
-
-        showWaitingScene();
     }
 
     public void showEnterNumOfPlayer(){
@@ -252,7 +256,11 @@ public class LoginController extends GUIController {
     }
 
     public void showGameScene() throws IOException {
-        timer1.cancel();
+        if(timer1!=null){
+            timer1.cancel();
+            timer1=null;
+        }
+
         FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("game.fxml"));
         Scene scene = new Scene(fxmlLoader1.load(), 1250,650);
         GameController gameController=fxmlLoader1.getController();
@@ -267,4 +275,6 @@ public class LoginController extends GUIController {
         gui.setLoginController(this);
         super.setScene(gui, stage);
     }
+
+
 }

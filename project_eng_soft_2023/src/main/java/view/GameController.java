@@ -1,14 +1,14 @@
 package view;
 
-//TODO controlla update board
-//TODO JAR
-//TODO controlla che PGC siano effettivamente corrispondenti
-//TODO istruzioni se togli insert tile
 //TODO show exception
 //TODO end game token
+//TODO timer enter num of player
+//TODO chat
+//TODO controllare matrix board e bookshelf
 import client.Client;
 import client.Matrix;
 import client.Tile;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,24 +23,27 @@ import javafx.stage.Stage;
 import myShelfieException.*;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 import static javafx.application.Platform.exit;
 
 public class GameController extends GUIController {
     @FXML
-    public Label scoreLabel;
-    public Group bookshelfPlayer1, bookshelfPlayer2, bookshelfPlayer3;
+    private Label exceptionLabel;
     @FXML
-    public ImageView pgc;
+    private Label scoreLabel;
     @FXML
-    public ImageView cgc1;
+    private Group  bookshelfPlayer2, bookshelfPlayer3;
     @FXML
-    public ImageView cgc2;
+    private ImageView pgc;
+    @FXML
+    private ImageView cgc1;
+    @FXML
+    private ImageView cgc2;
+    @FXML
+    private Label timeLabel;
+    Timer timer;
     @FXML
     private  Button tile1Button, tile2Button, tile3Button;
     @FXML
@@ -114,55 +117,88 @@ public class GameController extends GUIController {
 
     private final List<Integer> coord = new ArrayList<>();
 
-
     @Override
     public void setScene(GUI gui, Stage stage) {
         super.setScene(gui, stage);
-        cgc1.setImage(new Image(getCGCImage(client.getModel().getCgc1().ordinal())));
-        cgc2.setImage(new Image(getCGCImage(client.getModel().getCgc2().ordinal())));
-        pgc.setImage(new Image(getPGCImage(client.getModel().getPgcNum())));
+        if(client.getModel().getCgc1()!=null){
+            cgc1.setImage(new Image(getCGCImage(client.getModel().getCgc1().ordinal())));
+            cgc2.setImage(new Image(getCGCImage(client.getModel().getCgc2().ordinal())));
+            pgc.setImage(new Image(getPGCImage(client.getModel().getPgcNum())));
+        }
         initialize();
         setOtherBookshelf();
 
     }
 
+    private Timer timerExc;
+    private final TimerTask taskExc = new TimerTask() {
+        @Override
+        public void run() {
+            Platform.runLater(()->{
+                exceptionLabel.setVisible(false);
+                exceptionLabel.setDisable(true);
+            });
+
+            if(timerExc!=null){
+                timerExc.cancel();
+                timerExc=null;
+            }
+
+        }
+    };
 
     public void setClient(Client client){
         this.client=client;
         }
 
-    public void prova(ActionEvent actionEvent) throws IOException {
-    endGame();
+    @FXML
+    private void prova(ActionEvent actionEvent) throws IOException {
+
     }
     //----------------------------------------------------------- Server vs client-------------------------------------
 
+    /**
+     * Set GUI on StarTurn notify
+     */
     public void startTurn(){
         ableBoardButton();
         setBoardButton();
         enterTilesButton.setVisible(true);
         stateLabel.setText("Choose tile!");
+        setTimer();
     }
 
 
-
+    /**
+     * Set the GUI on endGame notify
+     * @throws IOException
+     */
     public void endGame() throws IOException {
         FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("rank.fxml"));
         Scene scene = new Scene(fxmlLoader1.load(), 1250,650);
         RankController rankController=fxmlLoader1.getController();
         rankController.setClient(client);
         rankController.setScene(gui,stage);
-        gui.setRankController(rankController);
         stage.setScene(scene);
 
     }
 
+    /**
+     * Set the GUI on update notify
+     */
     public void updateAll() {
         updateBoard();
         updateScore();
         updateMyBookshelf();
         updateOtherBookshelf();
+        if(cgc1.getImage()!=null){
+            cgc1.setImage(new Image(getCGCImage(client.getModel().getCgc1().ordinal())));
+            cgc2.setImage(new Image(getCGCImage(client.getModel().getCgc2().ordinal())));
+            pgc.setImage(new Image(getPGCImage(client.getModel().getPgcNum())));
+        }
     }
 
+//------------------------------------------------------------------------------Update Method----------------------------------------------
     private void updateScore() {
        scoreLabel.setText(Integer.toString(client.getModel().getMyScore()));
     }
@@ -203,7 +239,7 @@ public class GameController extends GUIController {
             }
         }
     }
-    //------------------------------------------------------------Client vs Server-----------------------------------
+
     public void enterTiles(ActionEvent actionEvent) {
         for (int i=0; i<9; i++){
             for (int j=0; j<9; j++){
@@ -230,19 +266,111 @@ public class GameController extends GUIController {
         }
         disableBoardButton();
         setTile();
-        removeTiles();
+
         for(Button button:columnButtons){
             button.setDisable(true);
         }
         enterTilesButton.setDisable(true);
         enterTilesButton.setVisible(false);
+        removeTiles();
         for(Button button:columnButtons){
             button.setDisable(false);
         }
 
         selectMyBookshelf(actionEvent);
         bookshelfButton.setOnAction(this::selectMyBookshelf);
+        if(timer!=null){
+            timer.cancel();
+            timer=null;
+        }
+        setTimer();
     }
+
+    public void leaveGame(ActionEvent actionEvent){
+
+        try {
+            client.askLeaveGame();
+            exit();
+        } catch (LoginException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void insertTile(ActionEvent actionEvent) {
+        try {
+            client.askInsertShelfTiles(selectedColumn, coord);
+            for(int i=0; i<6; i++){
+                myBookshelf[i][selectedColumn].setImage(insertBookshelf[i][selectedColumn].getImage());
+            }
+        } catch (InvalidChoiceException e) {
+            throw new RuntimeException(e);
+        } catch (NotConnectedException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidLenghtException e) {
+            throw new RuntimeException(e);
+        } catch (NotMyTurnException e) {
+            throw new RuntimeException(e);
+        }
+
+        endInsertTiles(actionEvent);
+    }
+
+    public void endTurn(){
+        coord.clear();
+        enterColumnButton.setDisable(true);
+        enterTilesButton.setDisable(true);
+        enterTilesButton.setVisible(false);
+        bookshelfButton.setOnAction(null);
+        stateLabel.setText("Not your turn!");
+    }
+
+    public void showException(String exception){
+        if(timerExc!=null){
+            timerExc.cancel();
+            timerExc=null;
+        }
+
+
+        exceptionLabel.setText(exception);
+        exceptionLabel.setVisible(true);
+        exceptionLabel.setDisable(false);
+
+        timerExc = new Timer();
+        timerExc.schedule(taskExc, 3000);
+
+    }
+    //------------------------------------------------------------Client vs Server-----------------------------------
+
+    private void passTurn() {
+        if(timer!=null){
+            timer.cancel();
+            timer=null;
+        }
+
+        updateBookshelf(myBookshelf, client.getModel().getMyBookshelf());
+        disableBoardButton();
+        coord.clear();
+        enterTilesButton.setDisable(true);
+        enterTilesButton.setVisible(false);
+        removeTiles();
+        updateBoard();
+        endInsertTiles(new ActionEvent());
+        stateLabel.setText("Not you're turn!");
+        try{
+            client.askPassMyTurn();
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
     private void setTile() {
         for(int i=0; i<coord.size();i=i+2){
@@ -265,40 +393,14 @@ public class GameController extends GUIController {
         }
     }
 
-    public void leaveGame(ActionEvent actionEvent){
-
-        try {
-            client.askLeaveGame();
-            exit();
-        } catch (LoginException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void insertTile(ActionEvent actionEvent) {
-        try {
-            client.askInsertShelfTiles(selectedColumn, coord);
-
-        } catch (InvalidChoiceException e) {
-            throw new RuntimeException(e);
-        } catch (NotConnectedException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidLenghtException e) {
-            throw new RuntimeException(e);
-        } catch (NotMyTurnException e) {
-            throw new RuntimeException(e);
-        }
-
+    private void endInsertTiles(ActionEvent actionEvent) {
         closeBookshelf(actionEvent);
+if (timer!=null){
+    timer.cancel();
+    timer=null;
+}
 
-        for(int i=0; i<6; i++){
-                myBookshelf[i][selectedColumn].setImage(insertBookshelf[i][selectedColumn].getImage());
-        }
-
+        timeLabel.setVisible(false);
 
         tile1Image.setImage(null);
         tile2Image.setImage(null);
@@ -332,18 +434,13 @@ public class GameController extends GUIController {
 
     }
 
-    public void endTurn(){
-        coord.clear();
-        enterColumnButton.setDisable(true);
-        bookshelfButton.setOnAction(null);
-        stateLabel.setText("Not your turn!");
-    }
+
 
 
     //------------------------------------------------------------Bookshelf methods----------------------------------------------------------------
 
 
-    public void selectMyBookshelf(ActionEvent actionEvent) {
+    private void selectMyBookshelf(ActionEvent actionEvent) {
         Button button = (Button) actionEvent.getSource();
         if(button.getOnMouseEntered()!=null) {
             stateLabel.setText("Choose column");
@@ -360,7 +457,8 @@ public class GameController extends GUIController {
         }
     }
 
-    public void closeBookshelf(ActionEvent actionEvent) {
+    @FXML
+    private void closeBookshelf(ActionEvent actionEvent) {
         showBookshelfGroup.setDisable(true);
         showBookshelfGroup.setVisible(false);
         bookshelfButton.setOnMouseExited(this::showMyBookshelf);
@@ -369,7 +467,8 @@ public class GameController extends GUIController {
         stateLabel.setText("Click on the bookshelf \nto insert tiles");
     }
 
-    public void showMyBookshelf(MouseEvent mouseEvent){
+    @FXML
+    private void showMyBookshelf(MouseEvent mouseEvent){
         Button button = (Button) mouseEvent.getSource();
         if(mouseEvent.getEventType().getName().equals("MOUSE_ENTERED")){
             button.setOpacity(0.5);
@@ -383,7 +482,8 @@ public class GameController extends GUIController {
         }
     }
 
-    public void showOtherPlayerBookshelf(MouseEvent mouseEvent){
+    @FXML
+    private void showOtherPlayerBookshelf(MouseEvent mouseEvent){
         Button button = (Button) mouseEvent.getSource();
         if(mouseEvent.getEventType().getName().equals("MOUSE_ENTERED")){
             button.setOpacity(0.5);
@@ -415,7 +515,8 @@ public class GameController extends GUIController {
         }
     }
 
-    public void selectColumn(ActionEvent actionEvent){
+    @FXML
+    private void selectColumn(ActionEvent actionEvent){
         if(tile1Button.getOnMouseEntered()==null||tile2Button.getOnMouseEntered()==null||tile3Button.getOnMouseEntered()==null) return;
         stateLabel.setText("Insert tiles");
         Button button = (Button) actionEvent.getSource();
@@ -466,7 +567,7 @@ public class GameController extends GUIController {
         }
     }
 
-    public void unselectColumn(){
+    private void unselectColumn(){
         Button button=null;
         if(selectedColumn<0||selectedColumn>4) return;
         switch (selectedColumn){
@@ -505,7 +606,8 @@ public class GameController extends GUIController {
         return space >= tile;
     }
 
-    public void putTile(ActionEvent actionEvent) {
+    @FXML
+    private void putTile(ActionEvent actionEvent) {
         if(selectedColumn<0||selectedColumn>4) return;
         Button button = (Button) actionEvent.getSource();
         Image image;
@@ -589,27 +691,31 @@ public class GameController extends GUIController {
 
     public void updateBoard(){
         int checkRefill=0;
+        for (int i = 0; i<9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (boardGroups[j][i]!=null&&boardImages[j][i]==null&&client.getModel().getBoard().getTileByCoord(i,j)!=Tile.NOTAVAILABLE&&client.getModel().getBoard().getTileByCoord(i,j)!=Tile.EMPTY) {
+                    checkRefill=1;
+                    break;
+                }
+            }
+            if (checkRefill==1) break;
+        }
         for (int i = 0; i<9; i++){
             for (int j = 0; j<9; j++){
+                if(checkRefill==1&&boardGroups[j][i]!=null)  boardImages[j][i].setImage(null);
                 if(boardGroups[j][i]!=null&&(client.getModel().getBoard().getTileByCoord(i,j)==Tile.EMPTY||boardImages[j][i].getImage()==null)){
                     Tile tile=client.getModel().getBoard().getTileByCoord(i,j);
                     if (tile==Tile.EMPTY||tile==Tile.NOTAVAILABLE) boardImages[j][i].setImage(null);
                     else {
-                        if (checkRefill==0){
-                            tileImages=new TileImages();
-                            checkRefill=1;
-                        }
                         String image = tileImages.getImage(tile);
-                        if(image!=null){
-                            boardImages[j][i].setImage(new Image(image));
-                        }
+                        if(image!=null) boardImages[j][i].setImage(new Image(image));
                     }
                 }
             }
         }
     }
 
-    public void setBoardButton(){
+    private void setBoardButton(){
         for (int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 checkButton(i,j);
@@ -650,7 +756,7 @@ public class GameController extends GUIController {
         return false;
     }
 
-    public void setButtonsOnSelect(int x, int y){
+    private void setButtonsOnSelect(int x, int y){
         List<Integer> list= new ArrayList<>();
 
         int space= checkColumnSpace();
@@ -710,7 +816,8 @@ public class GameController extends GUIController {
         return max;
     }
 
-    public void selectTile(ActionEvent actionEvent) {
+    @FXML
+    private void selectTile(ActionEvent actionEvent) {
         Button button = (Button) actionEvent.getSource();
         if(button.getOnMouseEntered()!=null){
             button.setOnMouseExited(null);
@@ -740,15 +847,15 @@ public class GameController extends GUIController {
                 if(boardButtons[i][j]!=null){
                     if(boardButtons[i][j].getOnMouseEntered()==null){
                         boardButtons[i][j].setOpacity(0);
-                        boardImages[i][j].setImage(null);
                         boardButtons[i][j].setOnMouseExited(this::highlightTile);
                         boardButtons[i][j].setOnMouseEntered(this::highlightTile);
+                        boardImages[i][j].setImage(null);
                     }
                 }
             }
         }
     }
-    public void ableBoardButton(){
+    private void ableBoardButton(){
         for(int i=0; i<9; i++){
             for(int j=0; j<9; j++){
                 if(boardGroups[i][j]!=null){
@@ -758,17 +865,21 @@ public class GameController extends GUIController {
             }
         }
     }
-    public void disableBoardButton(){
+    private void disableBoardButton(){
         for (int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 if(boardButtons[i][j]!=null){
+                    boardButtons[i][j].setOnMouseExited(this::highlightTile);
+                    boardButtons[i][j].setOnMouseExited(this::highlightTile);
+                    boardButtons[i][j].setOpacity(0);
                     boardButtons[i][j].setDisable(true);
                 }
             }
         }
     }
     //------------------------------------------------------------Button methods-----------------------------------------------------------------
-    public void highlightTile(MouseEvent mouseEvent) {
+    @FXML
+    private void highlightTile(MouseEvent mouseEvent) {
         Button button = (Button) mouseEvent.getSource();
         if(mouseEvent.getEventType().getName().equals("MOUSE_ENTERED")){
             button.setOpacity(0.5);
@@ -780,32 +891,43 @@ public class GameController extends GUIController {
     //-------------------------------------------------------------Group methods-------------------------------------
 
 
-    public void showExitGroup(ActionEvent actionEvent) {
+    @FXML
+    private void showExitGroup(ActionEvent actionEvent) {
         exitGroup.setVisible(true);
         exitGroup.setDisable(false);
     }
 
-    public void closeExit(ActionEvent actionEvent) {
+    @FXML
+    private void closeExit(ActionEvent actionEvent) {
         exitGroup.setVisible(false);
         exitGroup.setDisable(true);
     }
     //----------------------------------------------------------Inizialization methods---------------------------------
    private void setOtherBookshelf(){
-        switch (client.getModel().getOtherPlayers().size()){
-            case 1->{
-                bookshelfPlayer3.setDisable(true);
-                bookshelfPlayer3.setVisible(false);
+        switch (client.getModel().getNumOtherPlayers()){
+                case 1->{
+                    bookshelfPlayer3.setDisable(true);
+                    bookshelfPlayer3.setVisible(false);
 
-                bookshelfPlayer2.setDisable(true);
-                bookshelfPlayer2.setVisible(false);
-            }
+                    bookshelfPlayer2.setDisable(true);
+                    bookshelfPlayer2.setVisible(false);
+                }
 
-            case 2->{
-                bookshelfPlayer3.setDisable(true);
-                bookshelfPlayer3.setVisible(false);
+                case 2->{
+                    bookshelfPlayer3.setDisable(true);
+                    bookshelfPlayer3.setVisible(false);
+                }
             }
-        }
    }
+
+    private void setTimer(){
+        timer = new Timer();
+        timeLabel.setVisible(true);
+        timeLabel.setText("59");
+        Task task= new Task() ;
+        timer.schedule(task, 1000, 1000);
+    }
+
 
     private void initialize() {
         boardGroups=new Group[][] {  {null,      null,       null,       null,       board0x4,   board0x5,   null,       null,       null},
@@ -919,9 +1041,25 @@ public class GameController extends GUIController {
         columnButtons.add(column5Button);
     }
 
+    public void showGame() {
+        stage.show();
+    }
 
 
     //--------------------------------------------------------Private class--------------------------------------------
+
+
+   private class Task extends TimerTask{
+       @Override
+       public void run() {
+               int n=Integer.parseInt(timeLabel.getText())-1;
+               if (n==-1){
+                   Platform.runLater(GameController.this::passTurn);
+               }else{
+                   Platform.runLater(()-> timeLabel.setText(Integer.toString(n)));
+               }
+       }
+   }
     private static class TileImages {
         List<String> greenTiles;
         List<String> whiteTiles;

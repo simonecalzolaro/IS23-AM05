@@ -234,6 +234,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
        clientBackup.put("nickname",model.getNickname());
        clientBackup.put("gameID",model.getGameID());
        clientBackup.put("connection",model.getConnectionType());
+       clientBackup.put("numOtherPlayers",model.getOtherPlayers().size());
 
        try{
            file.write(clientBackup.toJSONString());

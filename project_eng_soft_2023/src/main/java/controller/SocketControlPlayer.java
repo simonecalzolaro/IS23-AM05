@@ -18,6 +18,8 @@ public class SocketControlPlayer extends ControlPlayer {
     Stream inCP;
 
 
+
+
     /**
      * Assign player id
      * Initialize score
@@ -124,13 +126,6 @@ public class SocketControlPlayer extends ControlPlayer {
         }
     }
 
-/*
-    @Override
-    public void askPing() throws IOException {
-        return false;
-    }
-
- */
 
 
     public void notifyEndGame() throws IOException {
@@ -201,7 +196,7 @@ public class SocketControlPlayer extends ControlPlayer {
             outCP.reset();
             outCP.write(object);
         } catch (InvalidOperationException e) {
-            System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyStartPlaying trying to reset/write the stream");
+            System.out.println("SocketControlPlayer --- InvalidOperationException occurred in  trying to reset/write the stream");
             System.out.println("---> Maybe you're trying to reset/write an input stream");
             throw new RuntimeException();
         } catch (IOException e) {
@@ -252,6 +247,8 @@ public class SocketControlPlayer extends ControlPlayer {
 
     }
 
+
+
     @Override
     public void askPing() throws IOException {
 
@@ -264,7 +261,7 @@ public class SocketControlPlayer extends ControlPlayer {
             outCP.reset();
             outCP.write(object);
         } catch (InvalidOperationException e) {
-            System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyStartPlaying trying to reset/write the stream");
+            System.out.println("SocketControlPlayer --- InvalidOperationException occurred in trying to reset/write the stream");
             System.out.println("---> Maybe you're trying to reset/write an input stream");
             throw new RuntimeException();
         } catch (IOException e) {

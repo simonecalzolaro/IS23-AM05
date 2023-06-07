@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="940.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GameController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="940.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GameController">
    <ImageView fx:id="closeBookshelf" fitHeight="1271.0" fitWidth="1975.0" layoutX="-126.0" layoutY="-218.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@17_MyShelfie_BGA/misc/sfondo_parquet-1.png" />
@@ -911,7 +913,7 @@
          <Image url="@17_MyShelfie_BGA/publisher_material/banner_1386x400px.png" />
       </image>
    </ImageView>
-   <Label alignment="CENTER" disable="true" layoutX="969.0" layoutY="289.0" prefHeight="22.0" prefWidth="82.0" text="#" textFill="#623e00" visible="false">
+   <Label fx:id="timeLabel" alignment="CENTER" layoutX="969.0" layoutY="289.0" prefHeight="22.0" prefWidth="82.0" text="#" textFill="#623e00" visible="false">
       <font>
          <Font name="Bodoni MT Bold" size="48.0" />
       </font>
@@ -1227,4 +1229,10 @@
          </Button>
       </children>
    </Group>
+
+   <Label fx:id="exceptionLabel" disable="true" layoutX="59.0" layoutY="590.0" prefHeight="70.0" prefWidth="1575.0" text="Exception" textFill="#9f0000" visible="false">
+      <font>
+         <Font name="Bodoni MT" size="18.0" />
+      </font>
+   </Label>
 </Pane>
