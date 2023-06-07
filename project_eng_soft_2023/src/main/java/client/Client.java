@@ -5,8 +5,6 @@ package client;
 import model.Tile;
 import myShelfieException.*;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import view.ExceptionHandler;
 import view.View;
 
 
@@ -38,12 +36,11 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * constructor of ClientApp
      * @throws RemoteException
      */
-    protected Client(View view) throws RemoteException {
+    protected Client() throws RemoteException {
 
         super();
 
         exceptionHandler = new ExceptionHandler(this);
-        this.view=view;
         model= new ClientModel();
         myTurn=false;
         gameEnded=false;

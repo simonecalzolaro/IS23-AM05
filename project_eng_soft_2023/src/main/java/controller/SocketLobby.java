@@ -19,6 +19,7 @@ public class SocketLobby implements Runnable{
     Socket socketServer;
     Stream outServer;
     Stream inServer;
+
     GameHandler cp;
 
     private static Lobby lobby;
@@ -75,6 +76,8 @@ public class SocketLobby implements Runnable{
         JSONObject request = new JSONObject();
         JSONObject response = new JSONObject();
 
+
+
         while(true) {
 
             if (!request.equals(null)) request.clear();
@@ -122,7 +125,9 @@ public class SocketLobby implements Runnable{
 
                         //continueGame
                         case "continueGame":
-                            TCPContinueGame(request);
+                            cp = TCPContinueGame(request);
+                            cp.restoreSession();
+
                             break;
 
                         //pong
@@ -135,14 +140,6 @@ public class SocketLobby implements Runnable{
                     break;
 
 
-                //ControllerAskNotify
-                case "ControllerAskNotify":
-
-                    switch (Action){
-
-                    }
-
-                    break;
 
 
                 //GameHandler
@@ -163,6 +160,11 @@ public class SocketLobby implements Runnable{
                         //passMyTurn
                         case "passMyTurn":
                             TCPPassMyTurn();
+                            break;
+
+                        //postMessage
+                        case "postMessage":
+                            TCPPostMessage(request);
                             break;
 
 
@@ -238,9 +240,24 @@ public class SocketLobby implements Runnable{
     }
 
 
-    public void TCPContinueGame(JSONObject json){
+    public GameHandler TCPContinueGame(JSONObject json){
 
-        // --> Work-in-progress
+        String nickname = (String) json.get("Param1");
+        int gameID = (int) json.get("Param2");
+
+        ArrayList<Stream> streams = new ArrayList<>();
+        streams.add(outServer);
+        streams.add(inServer);
+
+        try{
+            return lobby.continueGame(nickname,streams,gameID);
+        } catch (LoginException e) {
+            throwLoginException(true);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
 
     }
 
@@ -318,6 +335,42 @@ public class SocketLobby implements Runnable{
 
     }
 
+
+
+    public void TCPPostMessage(JSONObject json){
+
+        String message = (String) json.get("Param1");
+        ArrayList<String> recipients = (ArrayList<String>) json.get("Param2");
+
+        try{
+            cp.postMessage(message,recipients);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+
+    public void throwLoginException(boolean kind){
+
+        JSONObject object = new JSONObject();
+
+        object.put("Action","throwLoginException");
+        object.put("Param1",kind);
+
+        try{
+            outServer.reset();
+            outServer.write(object);
+        } catch (InvalidOperationException e) {
+            System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyStartPlaying trying to reset/write the stream");
+            System.out.println("---> Maybe you're trying to reset/write an input stream");
+            throw new RuntimeException();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 
 

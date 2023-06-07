@@ -8,21 +8,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="lobby debug, ping synchronization, chat debug">
-      <change afterPath="$PROJECT_DIR$/src/test/java/controller/RMILobbyTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="034cdcf1-ec4b-4d58-9464-e777f20796fa" name="Changes" comment="gabbo">
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/ExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/config/header.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/config/header.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/AsyncClientInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/AsyncClientInput.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientChat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/RMIClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/SocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Lobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ServerApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/TUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/TUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/controller/ControlPlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/controller/LobbyTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ClientServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ControllerAskNotify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ControllerAskNotify.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/GameHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RMIControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketControlPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/SocketLobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/SocketLobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bookshelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/View.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -429,7 +432,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685608575025</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="TUI update">
+      <created>1686167267432</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1686167267432</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -474,7 +484,8 @@
     <MESSAGE value="ping adjustments, debugging" />
     <MESSAGE value="connection/disconnection debug and chat adjustments" />
     <MESSAGE value="lobby debug, ping synchronization, chat debug" />
-    <option name="LAST_COMMIT_MESSAGE" value="lobby debug, ping synchronization, chat debug" />
+    <MESSAGE value="TUI update" />
+    <option name="LAST_COMMIT_MESSAGE" value="TUI update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

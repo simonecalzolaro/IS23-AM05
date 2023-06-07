@@ -76,8 +76,10 @@ public class AsyncClientInput implements Runnable{
                         Tile[][] shelf = (Tile[][]) request.get("Param2");
                         Map<String, Tile[][]> map = (Map<String, Tile[][]>) request.get("Param3");
                         int score = (int) request.get("Param4");
+                        int gameID = (int) request.get("Param5");
 
-                        socketClient.updateBoard(board,shelf,map,score);
+
+                        socketClient.updateBoard(board,shelf,map,score, gameID);
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);
                     }
@@ -141,7 +143,48 @@ public class AsyncClientInput implements Runnable{
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);
                     }
+                    break;
 
+                //receive Message
+                case "notifyNewMessage":
+                    String nick = (String) request.get("Param1");
+                    String message = (String) request.get("Param2");
+
+                    try{
+                        socketClient.receiveMessage(nick,message);
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+
+
+                //restore session
+                case "restoreSession":
+
+                   try{
+                       Tile[][] board = (Tile[][]) request.get("Param1");
+                       Tile[][] shelf = (Tile[][]) request.get("Param2");
+                       Map<String, Tile[][]> map = (Map<String, Tile[][]>) request.get("Param3");
+                       int score = (int) request.get("Param4");
+                       int gameID = (int) request.get("Param5");
+                       int pgcNum = (int) request.get("Param6");
+                       Map<Tile, Integer[]> cardMap = (Map<Tile, Integer[]>) request.get("Param7");
+                       int cgc1 = (int) request.get("Param8");
+                       int cgc2 = (int) request.get("Param9");
+
+                       socketClient.restoreSession(board,shelf,map,score,gameID,pgcNum,cardMap,cgc1,cgc2);
+
+                   } catch (Exception e) {
+                       throw new RuntimeException(e);
+                   }
+                    break;
+
+
+                //loginexception
+                case "throwLoginException":
+                    boolean kind = (boolean) request.get("Param1");
+                    socketClient.getExceptionHandler().loginExceptionHandler(kind);
+                    break;
 
             }
 

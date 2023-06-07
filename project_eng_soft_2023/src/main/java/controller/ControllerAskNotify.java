@@ -59,4 +59,5 @@ public interface ControllerAskNotify {
     void notifyNewMessage(String nick, String message) throws IOException;
 
 
+
 }

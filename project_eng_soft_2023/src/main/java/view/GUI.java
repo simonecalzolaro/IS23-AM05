@@ -29,6 +29,16 @@ public class GUI extends View {
 
     }
 
+    @Override
+    public void standardLogin() {
+
+    }
+
+    @Override
+    public void backupLogin() {
+
+    }
+
     public GUI() {
         this.numOfPlayer = 0;
     }

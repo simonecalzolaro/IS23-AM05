@@ -44,4 +44,5 @@ public interface ClientServerHandler extends Remote {
      * @throws RemoteException
      */
     void pong(String nickname, int gameID) throws RemoteException;
+
 }

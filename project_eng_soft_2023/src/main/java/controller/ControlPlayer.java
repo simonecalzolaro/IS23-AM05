@@ -346,6 +346,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         }
     }
 
+
     abstract public void setClientHandler(ClientHandler cliHnd);
 
     abstract public void setStreams(ArrayList<Stream> streams);

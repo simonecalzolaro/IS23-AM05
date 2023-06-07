@@ -60,16 +60,12 @@ public class Bookshelf implements Serializable {
         tokenCG1 = null;
         tokenCG2 = null;
         tokenEOG = 0;
-        pgc=null;
+        pgc= board.getDeck().getRandPGC();
 
 
     }
 
-    public void initializePGC(Board board){
 
-        pgc = board.getDeck().getRandPGC();
-
-    }
 
     //CLASS USED FOR TESTING : IT MUSTN'T BE USED DURING THE GAME
     public void setPGC(PersonalGoalCard pgc){

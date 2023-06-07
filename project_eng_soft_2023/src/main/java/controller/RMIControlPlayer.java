@@ -76,7 +76,7 @@ public class RMIControlPlayer extends ControlPlayer{
                 if(! cp.equals(this))  map.put(cp.getPlayerNickname(), cp.getBookshelf().getShelf());
 
             }
-            ch.updateBoard(game.getBoard().getBoard(), this.bookshelf.getShelf(), map , bookshelf.getMyScore());
+            ch.updateBoard(game.getBoard().getBoard(), this.bookshelf.getShelf(), map , bookshelf.getMyScore(), game.getGameID());
         }
     }
 
@@ -121,6 +121,25 @@ public class RMIControlPlayer extends ControlPlayer{
             ch.enterNumberOfPlayers();
         } catch (Exception e) {
             System.out.println(" --- an error occured while asking enterNumberOfPlayers() to "+ nickname);
+        }
+    }
+
+
+
+    @Override
+    public void restoreSession() throws RemoteException {
+        if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
+
+            Map<String, Tile[][]> map= new HashMap<>();
+
+            //in this for I'm creating the map to send, I'm NOT notifying each player
+            for(ControlPlayer cp: game.getPlayers()){
+
+                if(! cp.equals(this))  map.put(cp.getPlayerNickname(), cp.getBookshelf().getShelf());
+
+            }
+            ch.restoreSession(game.getBoard().getBoard(),this.bookshelf.getShelf(),map,bookshelf.getMyScore(),game.getGameID(),bookshelf.getPgc().getCardNumber(),bookshelf.getPgc().getCardMap(),game.getBoard().getCommonGoalCard1().getCGCnumber(),game.getBoard().getCommonGoalCard2().getCGCnumber());
+
         }
     }
 

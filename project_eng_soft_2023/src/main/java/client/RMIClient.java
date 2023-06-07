@@ -29,7 +29,7 @@ public class RMIClient extends Client {
 
     public RMIClient() throws RemoteException {
 
-        super(view);
+        super();
         model.setConnectionType(false);
 
     }

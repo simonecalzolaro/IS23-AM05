@@ -27,5 +27,7 @@ public interface GameHandler extends Remote {
 
     void postMessage(String message, ArrayList<String> recipients) throws RemoteException;
 
+    void restoreSession() throws RemoteException;
+
 
 }

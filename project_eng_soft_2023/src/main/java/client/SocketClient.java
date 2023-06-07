@@ -29,7 +29,7 @@ public class SocketClient extends Client{
      */
     public SocketClient() throws RemoteException {
 
-        super( view);
+        super();
         model.setConnectionType(true);
     }
 
