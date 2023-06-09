@@ -495,7 +495,6 @@ public class TUI extends View {
 
         do {
 
-            //---da rendere a prova di scimmia
             int x,y;
             int round = 0;
             String select = "";

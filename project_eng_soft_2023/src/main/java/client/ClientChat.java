@@ -2,6 +2,7 @@ package client;
 
 import view.View;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -11,20 +12,34 @@ import java.util.Set;
  */
 public class ClientChat {
 
-    private Map<String, String> conversation;
+    private ArrayList<Message> conversation;
+    private int lastReadMessage;
 
     /**
      * constructor method
      */
     public ClientChat() {
-        conversation=new HashMap<>();
+        conversation=new ArrayList<>();
+        lastReadMessage=0;
+
     }
 
     /**
      * @return all the conversation as a Map<sender, message>
      */
-    public Map<String, String> getConversation() {
-        return conversation;
+    public ArrayList<ArrayList <String>> getConversation() {
+
+        ArrayList<ArrayList <String>> conv= new ArrayList<>();
+
+        for(int i=lastReadMessage; i< conversation.size(); i++){
+            Message m= conversation.get(i);
+            conv.add(new ArrayList<>());
+            conv.get(i).add(m.getSender());
+            conv.get(i).add(m.getMessage());
+            lastReadMessage++;
+        }
+
+        return conv;
     }
 
     /**
@@ -33,7 +48,27 @@ public class ClientChat {
      * @param message: message to insert in the chat
      */
     public void addMessage(String sender, String message){
-        conversation.put(sender, message);
+        conversation.add(new Message(sender, message));
     }
 
+
+}
+
+class Message{
+
+    private final String sender;
+    private final String message;
+
+    public Message(String sender, String message) {
+        this.sender = sender;
+        this.message = message;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

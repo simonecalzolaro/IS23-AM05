@@ -362,8 +362,10 @@ public class GameController extends GUIController {
         endInsertTiles(new ActionEvent());
         stateLabel.setText("Not you're turn!");
         try{
-            client.askPassMyTurn();
 
+            System.out.println("ask pass my turn");
+            client.setMyTurn(false);
+            client.askPassMyTurn();
 
         } catch (Exception e) {
             throw new RuntimeException(e);

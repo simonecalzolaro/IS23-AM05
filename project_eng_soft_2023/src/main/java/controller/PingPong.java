@@ -65,8 +65,11 @@ public class PingPong implements Runnable{
                     break;
                 }
 
-                controlPlayer.setPlayerStatus(PlayerStatus.NOT_ONLINE);
-                if (counter==1) System.out.println("    "+controlPlayer.getPlayerNickname()+" went offline ");
+
+                if (counter==1){
+                    controlPlayer.setPlayerStatus(PlayerStatus.NOT_ONLINE);
+                    System.out.println("    "+controlPlayer.getPlayerNickname()+" went offline ");
+                }
 
                 counter++;
 
@@ -92,7 +95,7 @@ public class PingPong implements Runnable{
                         .size() < 2
                     && controlPlayer.getGame().getGameStatus().equals((GameStatus.PLAYING))) {
 
-                    gameSuspension();
+                    new Thread(()->gameSuspension()).start();
 
                 }
 
@@ -122,7 +125,7 @@ public class PingPong implements Runnable{
             //aspetto 20 secondi sperando si riconnetta qualcuno
             try {
                 System.out.println("-----waiting for someone to reconnect");
-                Thread.sleep(20000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -135,8 +138,8 @@ public class PingPong implements Runnable{
                                         .size()<2 ){
                 try {
 
-                    System.out.println("   Game " + controlPlayer.getGame().getGameID() + " ended due to a lack of players");
-                    controlPlayer.getGame().endTurn();
+                    System.out.println("-----Game " + controlPlayer.getGame().getGameID() + " ended due to a lack of players");
+                    //controlPlayer.getGame().endTurn();
                     ServerApp.lobby.quitGameIDandNotify(controlPlayer.getGame());
 
                 }catch(Exception e){
@@ -145,6 +148,7 @@ public class PingPong implements Runnable{
             }
             else{
                 controlPlayer.getGame().setGameStatus(GameStatus.PLAYING);
+                //controlPlayer.getGame().endTurn();
             }
         }
 

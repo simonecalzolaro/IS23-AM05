@@ -76,7 +76,7 @@ public class RMIControlPlayer extends ControlPlayer{
                 if(! cp.equals(this))  map.put(cp.getPlayerNickname(), cp.getBookshelf().getShelf());
 
             }
-            ch.updateBoard(game.getBoard().getBoard(), this.bookshelf.getShelf(), map , bookshelf.getMyScore(), game.getGameID());
+            ch.updateBoard(game.getBoard().getBoard(), this.bookshelf.getShelf(), map , bookshelf.getMyScore());
         }
     }
 
@@ -128,6 +128,7 @@ public class RMIControlPlayer extends ControlPlayer{
 
     @Override
     public void restoreSession() throws RemoteException {
+
         if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
 
             Map<String, Tile[][]> map= new HashMap<>();

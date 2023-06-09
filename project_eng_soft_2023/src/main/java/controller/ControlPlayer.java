@@ -38,8 +38,6 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
      */
     protected Game game;
 
-
-
     private PingPong pingClass;
 
 
@@ -136,7 +134,6 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     @Override
     public void chooseBoardTiles(List<Integer> coord) throws RemoteException, NotConnectedException, InvalidParametersException, NotMyTurnException, InvalidChoiceException {
             catchTile(coord);
-            updateScore();
     }
 
     /**
@@ -159,6 +156,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         //inserting the tiles in the bookshelf
         goOn=insertTiles(choosenTiles, choosenColumn);
         if( !goOn  ) return;
+        updateScore();
 
         //and subtracting the same tiles from the board
         game.getBoard().subTiles(coord);
@@ -171,33 +169,26 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         //Game.endTurn() is called to update the turn to the next player and update the game status
         game.endTurn();
 
-        //notify the updated board to all the clients participating in the same game of ch
-        try {
+        if( ! game.getGameStatus().equals(GameStatus.END_GAME)){
 
-            for(ControlPlayer cp: game.getPlayers()){
-                //if player cp is online ill update his board
-                if(!cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)) cp.notifyUpdatedBoard();
-            }
-
-        } catch (IOException e) { throw new RuntimeException(e); }
-
-
-        //if the game is ended every player is notified and the results are shown
-        if(game.getGameStatus().equals(GameStatus.END_GAME)){
+            //notify the updated board to all the clients participating in the same game of ch
             try {
+
                 for(ControlPlayer cp: game.getPlayers()){
-                    cp.notifyEndGame();
+                    //if player cp is online ill update his board
+                    if(!cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)) cp.notifyUpdatedBoard();
                 }
-            }catch (IOException e) { throw new RuntimeException(e); }
-            return;
+
+            } catch (IOException e) { throw new RuntimeException(e); }
+
+            //tell the next player to start his turn
+            try {
+
+                ControlPlayer nextPlayer= game.getPlayers().get(game.getCurrPlayer());
+                nextPlayer.notifyStartYourTurn();
+
+            } catch (IOException e) { throw new RuntimeException(e); }
         }
-
-        //tell the next player to start his turn
-        try {
-            ControlPlayer nextPlayer= game.getPlayers().get(game.getCurrPlayer());
-            nextPlayer.notifyStartYourTurn();
-        } catch (IOException e) { throw new RuntimeException(e); }
-
     }
 
 
@@ -208,33 +199,38 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     @Override
     public void passMyTurn() throws RemoteException{
 
-        game.endTurn();
 
-        //notify the updated board to all the clients participating in the same game of ch
+        System.out.println("      "+nickname+" called passMyTurn()");
+
         try {
-
-            for(ControlPlayer cp: game.getPlayers()){
-                //if player cp is online ill update his board
-                if(!cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)) cp.notifyUpdatedBoard();
-            }
-
-        } catch (IOException e) { throw new RuntimeException(e); }
-
-
-        //if the game is ended every player is notified and the results are shown
-        if(game.getGameStatus().equals(GameStatus.END_GAME)){
-            try {
-                for(ControlPlayer cp: game.getPlayers()){
-                    cp.notifyEndGame();
-                }
-            }catch (IOException e) { throw new RuntimeException(e); }
+            game.getPlayers().get(game.getCurrPlayer()).notifyEndYourTurn();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        //tell the next player to start his turn
-        try {
-            ControlPlayer nextPlayer= game.getPlayers().get(game.getCurrPlayer());
-            nextPlayer.notifyStartYourTurn();
-        } catch (IOException e) { throw new RuntimeException(e); }
+        game.endTurn();
+
+        if( ! game.getGameStatus().equals(GameStatus.END_GAME)){
+
+            //notify the updated board to all the clients participating in the same game of ch
+            try {
+
+                for(ControlPlayer cp: game.getPlayers()){
+                    //if player cp is online ill update his board
+                    if(!cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)) cp.notifyUpdatedBoard();
+                }
+
+            } catch (IOException e) { throw new RuntimeException(e); }
+
+
+            //tell the next player to start his turn
+            try {
+                ControlPlayer nextPlayer= game.getPlayers().get(game.getCurrPlayer());
+                System.out.println("      notifyStartYourTurn() to "+nextPlayer.getPlayerNickname()+" ");
+                nextPlayer.notifyStartYourTurn();
+            } catch (IOException e) { throw new RuntimeException(e); }
+
+        }
 
     }
 

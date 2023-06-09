@@ -19,9 +19,9 @@ class CommonGoalCardTest {
 
          CommonGoalCard c;
 
-        for(int i=0; i<10; i++){
+        for(int i=1; i<=12; i++){
 
-             c = new CommonGoalCard(i%5, 4);
+             c = new CommonGoalCard(i, 4);
 
             assertTrue(Arrays.asList(Token.values())
                     .contains(c.getTopStack()));
@@ -34,7 +34,7 @@ class CommonGoalCardTest {
 
         CommonGoalCard c;
 
-        for(int i=0; i<5; i++){
+        for(int i=2; i<5; i++){
 
             c = new CommonGoalCard(1, i);
 

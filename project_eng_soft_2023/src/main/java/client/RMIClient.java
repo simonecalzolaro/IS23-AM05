@@ -107,6 +107,7 @@ public class RMIClient extends Client {
         this.gameHandler= clientServerHandler.continueGame(model.getNickname(), this, model.getGameID());
 
         gameHandler.restoreSession();
+
     }
 
 
@@ -119,6 +120,7 @@ public class RMIClient extends Client {
     public void askLeaveGame() throws RemoteException, LoginException {
 
         clientServerHandler.leaveGame(model.getNickname(), model.getGameID());
+        super.getPingChecker().stopPingProcess();
 
 
     }
@@ -162,6 +164,7 @@ public class RMIClient extends Client {
     public void askPassMyTurn() {
 
         try {
+            System.out.println(" timeout!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
             gameHandler.passMyTurn();
         } catch (RemoteException e) {
             System.out.println("---error occurred when asking to skip the turn");

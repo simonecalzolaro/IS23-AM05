@@ -29,7 +29,6 @@ public class CommonGoalCard implements Card, Serializable {
     }
 
 
-
     @Override
     public boolean checkGoal(Tile[][] shelf) {
 
@@ -237,7 +236,6 @@ public class CommonGoalCard implements Card, Serializable {
         return false;
     }
 
-
     /**
      * recursive function
      * @param row current row
@@ -276,7 +274,6 @@ public class CommonGoalCard implements Card, Serializable {
         }
         return nElem;
     }
-
 
     /**
      * depending on the parameter nShape, verify if that specific shape is present
@@ -417,7 +414,6 @@ public class CommonGoalCard implements Card, Serializable {
 
     }
 
-
     /**
      * check if in the shelf exists at least totNumbOfLines (columns or rows) with maxNumbOfDiffTypes different type of tiles
      * @param totNumbOfLines number of row or columns to satisfy the request
@@ -463,7 +459,6 @@ public class CommonGoalCard implements Card, Serializable {
 
     }
 
-
     /**
      * check if in the shelf exists at least totNumbOfLines (columns or rows) without two or more tiles of the same type
      * @param totNumbOfLines number of row or columns to satisfy the request
@@ -506,7 +501,6 @@ public class CommonGoalCard implements Card, Serializable {
         return false;
     }
 
-
     /**
      * verify the common goal card number 6
      * @param shelf
@@ -539,7 +533,6 @@ public class CommonGoalCard implements Card, Serializable {
 
         return false;
     }
-
 
     /**
      * verify the common goal card number 12

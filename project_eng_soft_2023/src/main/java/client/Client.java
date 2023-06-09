@@ -2,7 +2,6 @@ package client;
 
 
 
-import model.Tile;
 import myShelfieException.*;
 import org.json.simple.JSONObject;
 import view.View;
@@ -71,6 +70,8 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
                 } catch (RemoteException e) {
                     //System.out.println("--- ops... a remote exception occurred while communicating number of players to the server");
                     view.showException("--- ops... a remote exception occurred while communicating number of players to the server");
+                } catch (NullPointerException e){
+                    System.out.println("--- error: view is null");
                 }
             }).start();
 
@@ -80,11 +81,10 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      * method called by the server to update the board of this client
      *
      * @param board
-     * @param gameID
      * @throws RemoteException
      */
     @Override
-    public void updateBoard(Tile[][] board, Tile[][] myShelf, Map<String, Tile[][]> otherShelf, int myScore, int gameID) throws RemoteException{
+    public void updateBoard(model.Tile[][] board, model.Tile[][] myShelf, Map<String, model.Tile[][]> otherShelf, int myScore) throws RemoteException{
 
 
         Map<String, Matrix> otherPlayersMatr= new HashMap<>();
@@ -95,7 +95,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         try {
             model.initializeMatrixes(new Matrix(board), new Matrix(myShelf), otherPlayersMatr);
             model.setMyScore(myScore);
-            model.setGameID(gameID);
         }catch (Exception e){
             view.showException("---ops... something went wrong while updating the board and other's bookshelf");
         }
@@ -116,9 +115,10 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
         try {
 
-            updateBoard(board,myShelf,otherShelf,myScore,gameID);
+            updateBoard(board,myShelf,otherShelf,myScore);
             startPlaying(pgcNum,pgcMap,cgc1num,cgc2num,gameID);
             backup();
+
         }catch (Exception e){
             view.showException("---ops... something went wrong while updating the board and other's bookshelf");
         }
@@ -134,9 +134,9 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     public void theGameEnd(Map< String, Integer> results) throws RemoteException{
 
         gameEnded=true;
-        pingChecker.stopPingProcess();
-        view.endGame(results);
-        System.setProperty("java.rmi.server.hostname","192.168.0.1" );
+        //pingChecker.stopPingProcess();
+        new Thread(()->view.endGame(results)).start();
+        //System.setProperty("java.rmi.server.hostname","192.168.0.1" );
 
     }
 
@@ -209,6 +209,12 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         }
     }
 
+    /**
+     * method called by the server to notify a new message in the chat
+     * @param sender: nickname of the sender
+     * @param message: text of the message
+     * @throws RemoteException
+     */
     @Override
     public void receiveMessage(String sender, String message) throws RemoteException{
         model.getMyChat().addMessage(sender, message);
@@ -267,6 +273,10 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         return view;
     }
 
+    public static void setView(View view1){
+        view=view1;
+    }
+
     /**
      * @return true if is your turn
      */
@@ -292,22 +302,25 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         gameStarted = true;
     }
 
+    public void setMyTurn(Boolean turn){
+
+        gameStarted = turn;
+    }
+
     /**
      * @return true if the game has started
      */
     public boolean isGameStarted() {
         return gameStarted;
     }
+    public boolean isGameEnded() {
+        return gameEnded;
+    }
 
     public ExceptionHandler getExceptionHandler(){
         return exceptionHandler;
     }
 
-    public static void setView(View view1){
-
-        view = view1;
-
-    }
 
 
 

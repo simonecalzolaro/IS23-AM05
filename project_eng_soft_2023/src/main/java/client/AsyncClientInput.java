@@ -82,7 +82,7 @@ public class AsyncClientInput implements Runnable{
                         int gameID = (int) request.get("Param5");
 
 
-                        socketClient.updateBoard(board,shelf,map,score, gameID);
+                        socketClient.updateBoard(board,shelf,map,score);
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);
                     }

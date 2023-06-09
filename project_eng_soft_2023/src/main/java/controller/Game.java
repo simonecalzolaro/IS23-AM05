@@ -124,7 +124,7 @@ public class Game implements Serializable {
             try {
                 for(ControlPlayer cp: players){
                     System.out.println("    notify end game to "+cp.getPlayerNickname());
-                    if(!cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE))  cp.notifyEndGame();
+                    if( !cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE))  cp.notifyEndGame();
                 }
             } catch (IOException e) { throw new RuntimeException(e); }
         }
@@ -144,6 +144,15 @@ public class Game implements Serializable {
         return players;
     }
 
+    public ControlPlayer getPlayerByNickname(String nick){
+
+        for(ControlPlayer cp: players){
+            if(cp.getPlayerNickname().equals(nick)){
+                return cp;
+            }
+        }
+        return null;
+    }
     /**
      * @return gameStatus
      */
@@ -185,6 +194,9 @@ public class Game implements Serializable {
         }catch (Exception e){
             return false;
         }
+
+        //check how many players are still present
+
 
     }
 

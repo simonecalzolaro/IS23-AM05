@@ -60,11 +60,15 @@ public class Bookshelf implements Serializable {
         tokenCG1 = null;
         tokenCG2 = null;
         tokenEOG = 0;
-        pgc= board.getDeck().getRandPGC();
 
 
     }
 
+    public void initializePGC(Board tempBoard) {
+
+        pgc= tempBoard.getDeck().getRandPGC();
+
+    }
 
 
     //CLASS USED FOR TESTING : IT MUSTN'T BE USED DURING THE GAME
@@ -345,13 +349,10 @@ public class Bookshelf implements Serializable {
                 for(int j=0; j<c;j++)
                     if(shelf[i][j] == Tile.EMPTY) end = false;
 
-            if(end == true){
+            if(end){
                 tokenEOG = 1;
                 board.setEOG();
             }
-
-
-
             return end;
         }
     }
@@ -361,6 +362,9 @@ public class Bookshelf implements Serializable {
      */
 
     public int getScoreEOG(){
+
+        checkEOG();
+
         return tokenEOG;
     }
 
@@ -375,4 +379,5 @@ public class Bookshelf implements Serializable {
 
         this.shelf = shelf;
     }
+
 }
