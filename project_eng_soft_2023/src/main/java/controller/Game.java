@@ -195,9 +195,6 @@ public class Game implements Serializable {
             return false;
         }
 
-        //check how many players are still present
-
-
     }
 
 
@@ -214,8 +211,8 @@ public class Game implements Serializable {
         // Create a list of map entries
         List<Map.Entry<String, Integer>> entryList = new ArrayList<>(res.entrySet());
 
-        // Sort the list by value using a custom Comparator
-        entryList.sort(Map.Entry.comparingByValue());
+        // Sort the list by value using a reverseOrder Comparator
+        entryList.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
 
         // Create a LinkedHashMap to preserve the order of sorted entries
         Map<String, Integer> sortedMap = new LinkedHashMap<>();
@@ -225,10 +222,16 @@ public class Game implements Serializable {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
 
-        System.out.println("game mapRes.size():"+res.size());
+        //if the game is not ended and I'm pushing this map because someone left the game I'll set all the scores to their negative module
+        if(getGameStatus().equals(GameStatus.END_GAME)) return sortedMap;
+
+        res= new HashMap<>();
+        //setting everything to negatives
+        for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
+            res.put(entry.getKey(), - entry.getValue());
+        }
 
         return res;
-
     }
 
     public void setGameStatus(GameStatus gs){

@@ -59,35 +59,31 @@ public class PingPong implements Runnable{
 
             }else{
 
-                if(controlPlayer.getPlayerStatus().equals(PlayerStatus.WAITING_ROOM) || controlPlayer.getPlayerStatus().equals(PlayerStatus.nOfPlayerAsked)){
-                    ServerApp.lobby.removeFromWaitingRoom(controlPlayer);
-                    System.out.println("    "+controlPlayer.getPlayerNickname()+"  left the waiting room ");
-                    break;
-                }
-
-
                 if (counter==1){
-                    controlPlayer.setPlayerStatus(PlayerStatus.NOT_ONLINE);
-                    System.out.println("    "+controlPlayer.getPlayerNickname()+" went offline ");
+
+                    if(controlPlayer.getPlayerStatus().equals(PlayerStatus.WAITING_ROOM) || controlPlayer.getPlayerStatus().equals(PlayerStatus.nOfPlayerAsked)){
+                        ServerApp.lobby.removeFromWaitingRoom(controlPlayer);
+                        System.out.println("    "+controlPlayer.getPlayerNickname()+"  left the waiting room ");
+                        stopPingProcess();
+                        return;
+                    }else{
+                        controlPlayer.setPlayerStatus(PlayerStatus.NOT_ONLINE);
+                        System.out.println("    "+controlPlayer.getPlayerNickname()+" went offline ");
+                    }
+
                 }
 
                 counter++;
 
             }
 
-
+            //se sono online e all'interno di un gioco attivo:
             if ( !controlPlayer.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE) &&
                  !controlPlayer.getPlayerStatus().equals(PlayerStatus.WAITING_ROOM) &&
                  !controlPlayer.getPlayerStatus().equals(PlayerStatus.nOfPlayerAsked)){
 
-                    /*System.out.println(controlPlayer.getPlayerNickname()+" verifyGameSuspension() : "+ controlPlayer.getGame().getPlayers().stream()
-                                                                                                                                            .filter(x -> !x.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE))
-                                                                                                                                            .toList()
-                                                                                                                                            .size());
 
-                     */
-
-                //se sono presenti meno di due giocatori e il gioco è in corso...
+                //se sono presenti meno di due giocatori se il gioco è in corso...
                 if( controlPlayer.getGame().getPlayers()
                         .stream()
                         .filter(x -> !x.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE))
@@ -95,6 +91,7 @@ public class PingPong implements Runnable{
                         .size() < 2
                     && controlPlayer.getGame().getGameStatus().equals((GameStatus.PLAYING))) {
 
+                    //...lancio una gameSuspension() così
                     new Thread(()->gameSuspension()).start();
 
                 }
@@ -130,7 +127,7 @@ public class PingPong implements Runnable{
                 throw new RuntimeException(e);
             }
 
-            //se non si è riconnesso nessuno il gioco termina e notifico l'utente del termine del gioco
+            //se non si è riconnesso nessuno negli scorsi 10 secondi il gioco termina e notifico l'utente del termine del gioco
             if( controlPlayer.getGame().getPlayers()
                                         .stream()
                                         .filter(x->!x.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE))

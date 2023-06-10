@@ -101,7 +101,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
         view.updateBoard();
 
-        backup();
 
     }
 
@@ -117,7 +116,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
             updateBoard(board,myShelf,otherShelf,myScore);
             startPlaying(pgcNum,pgcMap,cgc1num,cgc2num,gameID);
-            backup();
 
         }catch (Exception e){
             view.showException("---ops... something went wrong while updating the board and other's bookshelf");
@@ -187,8 +185,8 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         model.initializeCards(new Matrix(pgcMap), pgcNum, cgc1num, cgc2num );
         model.setGameID(GameID);
         gameStarted=true;
+        backup();
         view.startPlay();
-
 
     }
 

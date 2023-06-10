@@ -41,7 +41,7 @@ public class PingFromServer implements Runnable{
             connected=false;
 
             try {
-                Thread.sleep(12000); //wait for 5 seconds
+                Thread.sleep(12000); //wait for 12 seconds
             } catch (InterruptedException e) {
                 client.getView().showException("--- error occurred while waiting ping from server");
             }
@@ -60,21 +60,7 @@ public class PingFromServer implements Runnable{
 
                     //when counter reaches 6 ( 6 -> 60 sec offline ) I disconnect the player from the game
                     if(counter ==1 ) client.getView().showException("---ops...you are offline");
-                        //System.out.println("    OPSSS... the server is offline, wait for the reconnection...");
-
-                        /*
-                    if (counter >= 3) {
-
-                        System.out.println("   trying to reconnect");
-
-                        try {
-                            client.askContinueGame();
-                        } catch (LoginException | IOException e) {
-                            client.getView().showException(e.getMessage());
-                            client.getView().showException("---ops ...reconnection failed...");
-                        }
-
-                         */
+                    client.getView().showException("---trying to reconnect...");
                 }
             }
         }

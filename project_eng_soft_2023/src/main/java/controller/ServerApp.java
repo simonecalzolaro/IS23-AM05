@@ -14,6 +14,7 @@ public class ServerApp {
      * @param args
      */
     public static void main(String[] args) {
+
         System.out.println("+-----------------------------+");
         System.out.println("|    Hello from ServerApp!    |" );
         System.out.println("+-----------------------------+");

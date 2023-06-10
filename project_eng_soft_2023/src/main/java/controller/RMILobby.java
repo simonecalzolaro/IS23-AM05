@@ -45,10 +45,11 @@ public class RMILobby extends Lobby{
         Registry registry = null;
         ClientServerHandler stub = null;
 
+        System.setProperty("java.rmi.server.hostname", hostname);
+
         stub = (ClientServerHandler) UnicastRemoteObject.exportObject(this, PORT);
         registry = LocateRegistry.createRegistry(PORT);
         registry.bind("ServerAppService", stub);
-
         System.out.println("----RMIServer ready----");
 
     }

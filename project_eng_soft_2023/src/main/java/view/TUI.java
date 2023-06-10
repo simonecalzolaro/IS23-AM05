@@ -170,9 +170,6 @@ public class TUI extends View {
 
         }
 
-
-        new Thread(this::commandListener).start();
-
     }
 
     @Override
@@ -285,6 +282,8 @@ public class TUI extends View {
         System.out.println("|        The game has started !     |");
         System.out.println("|     is your turn? make a move =)  |");
         System.out.println("+-----------------------------------+");
+
+        new Thread(this::commandListener).start();
 
     }
 

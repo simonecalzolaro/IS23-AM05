@@ -271,48 +271,50 @@ public abstract class Lobby implements  ClientServerHandler {
     public synchronized GameHandler continueGame(String nickname, Object client, int ID) throws RemoteException, LoginException {
 
         //checking if exists a player called "nickname" now offline inside Game signed ID
-        Game myGame=null;
-        for(Game g: games){
-            if(g.getGameID()==ID){
-                myGame=g;
-                break;
-            }
-        }
-
+        Game myGame=getGameByID(ID);
         if(myGame==null){
             throw new LoginException("---error: occurred in continueGame(), does not exists Game ID="+ID);
         }
-
-        for(ControlPlayer cp: myGame.getPlayers()){
-            if(cp.getPlayerNickname().equals(nickname)){
-                if(cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE) ){
-                    if (client instanceof ArrayList<?>) {
-
-                        cp.setStreams((ArrayList<controller.Stream>) client);
-
-                    }
-                    else if (client instanceof ClientHandler){
-
-                        cp.setClientHandler((ClientHandler) client);
-
-                    }
-                    else{
-                        return null;
-                    }
-                    cp.setPlayerStatus(PlayerStatus.NOT_MY_TURN);
-
-                    return cp;
-                }else{
-                    throw new LoginException("This nickname results to be still online");
-                }
-            }
+        if(myGame.getGameStatus().equals(GameStatus.END_GAME)){
+            throw new LoginException("---error: Game whit ID="+ID+" is ended, yuo can't enter an ended game");
         }
-        throw new LoginException("---error: occurred in continueGame(), nickname "+nickname+" does not exists inside Game ID="+ID);
+
+
+        ControlPlayer myPlayer=myGame.getPlayerByNickname(nickname);
+        if(myPlayer==null ){
+            throw new LoginException("---error: does not exists player ''"+nickname+"'' inside Game ID="+ID);
+        }
+        if(!myPlayer.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)){
+            throw new LoginException("---error:player ''"+nickname+"'' results to be still online");
+        }
+
+
+        if (client instanceof ArrayList<?>) {
+
+            myPlayer.setStreams((ArrayList<controller.Stream>) client);
+
+        }
+        else if (client instanceof ClientHandler){
+
+            myPlayer.setClientHandler((ClientHandler) client);
+
+        }
+        else{
+            return null;
+        }
+
+        myPlayer.setPlayerStatus(PlayerStatus.NOT_MY_TURN);
+
+        return myPlayer;
 
     }
 
     /**
-     * method called by a client to leave the game he is playing
+     * method called by a client to leave the game he is playing.
+     * -check if exists GameID=ID
+     * -check if exists a player called "nickname" now offline inside Game ID
+     *  -if the game is suspended or active, the game is finished and all the players are notified
+     *  -if the game is ended the player is removed from the lobby and if there are less than 2 players the game is finished
      * @return true if the client nickname left the game correctly
      */
     @Override
@@ -334,8 +336,11 @@ public abstract class Lobby implements  ClientServerHandler {
         }
 
         ControlPlayer myPlayer=myGame.getPlayerByNickname(nickname);
-        if(myPlayer==null){
+        if(myPlayer==null ){
             throw new LoginException("---error: does not exists player ''"+nickname+"'' inside Game ID="+ID);
+        }
+        if(myPlayer.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)){
+            throw new LoginException("---error: player ''"+nickname+"''results to be offline");
         }
 
         System.out.println("--> player "+ nickname+ " wants to leave the Game ID="+ID);
@@ -368,17 +373,18 @@ public abstract class Lobby implements  ClientServerHandler {
                 clients.remove(myPlayer);
 
                 if(myGame.getPlayers().size()<2){
+
                     myGame.removePlayer(myGame.getPlayers().get(0));
                     myPlayer.getPingClass().stopPingProcess();
                     clients.remove(myPlayer);
                     games.remove(myGame);
+
                 }
 
                 break;
             }
         }
     }
-
 
     /**
      * method to set the number of players
@@ -431,6 +437,8 @@ public abstract class Lobby implements  ClientServerHandler {
             }
         }
     }
+
+
     //-------------------------------- getter and setter--------------------------------
 
     /**
@@ -486,26 +494,29 @@ public abstract class Lobby implements  ClientServerHandler {
      */
     public synchronized void removeFromWaitingRoom (ControlPlayer cp){
 
-        //se il primo se ne va ancor prima di chedergli in nuber Of PLayers:
-        if(cp.equals(tempPlayers.get(0))){
-            attendedPlayers=-1;
-        }
+        if(tempPlayers.size()>0){
 
-        tempPlayers.remove(cp);
-        clients.remove(cp);
-        cp.getPingClass().stopPingProcess();
+            //se il primo se ne va ancor prima di chedergli in nuber Of PLayers:
+            if(cp.equals(tempPlayers.get(0))){
+                attendedPlayers=-1;
+            }
 
-        //se non è rimasto nessuno nella waiting room :
-        if(tempPlayers.size()==0){
-            attendedPlayers=-1;
-            return;
-        }
+            tempPlayers.remove(cp);
+            clients.remove(cp);
+            cp.getPingClass().stopPingProcess();
 
-        //se il primo se ne va ma da lui mi aspettavo il NoP:
-        if(cp.getPlayerStatus().equals(PlayerStatus.nOfPlayerAsked)){
-            attendedPlayers = -2;
-            tempPlayers.get(0).setPlayerStatus(PlayerStatus.nOfPlayerAsked);
-            tempPlayers.get(0).askNumberOfPlayers();
+            //se non è rimasto nessuno nella waiting room :
+            if(tempPlayers.size()==0){
+                attendedPlayers=-1;
+                return;
+            }
+
+            //se il primo se ne va ma da lui mi aspettavo il NoP:
+            if(cp.getPlayerStatus().equals(PlayerStatus.nOfPlayerAsked)){
+                attendedPlayers = -2;
+                tempPlayers.get(0).setPlayerStatus(PlayerStatus.nOfPlayerAsked);
+                tempPlayers.get(0).askNumberOfPlayers();
+            }
         }
     }
 

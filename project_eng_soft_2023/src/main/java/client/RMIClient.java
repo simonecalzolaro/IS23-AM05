@@ -37,7 +37,6 @@ public class RMIClient extends Client {
     @Override
     public void initializeClient() throws IOException, NotBoundException {
 
-
         //System.out.println("--- initialize the RMI Client --- ");
 
         getServerSettings();
