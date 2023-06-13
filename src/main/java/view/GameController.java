@@ -4,7 +4,7 @@ package view;
 //TODO end game token
 //TODO timer enter num of player
 //TODO chat
-//TODO controllare matrix board e bookshelf
+
 import client.Client;
 import client.Matrix;
 import client.Tile;
@@ -25,10 +25,11 @@ import myShelfieException.*;
 import java.io.IOException;
 import java.util.*;
 
-
 import static javafx.application.Platform.exit;
 
 public class GameController extends GUIController {
+    @FXML
+    private ImageView endGameToken;
     @FXML
     private Label exceptionLabel;
     @FXML
@@ -116,7 +117,7 @@ public class GameController extends GUIController {
     private TileImages tileImages=new TileImages();
 
     private final List<Integer> coord = new ArrayList<>();
-
+    private final List<Integer> sortedCoord = new ArrayList<>();
     @Override
     public void setScene(GUI gui, Stage stage) {
         super.setScene(gui, stage);
@@ -173,12 +174,13 @@ public class GameController extends GUIController {
      * Set the GUI on endGame notify
      * @throws IOException
      */
-    public void endGame() throws IOException {
+    public void endGame(Map<String, Integer> results) throws IOException {
         FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("rank.fxml"));
         Scene scene = new Scene(fxmlLoader1.load(), 1250,650);
         RankController rankController=fxmlLoader1.getController();
         rankController.setClient(client);
         rankController.setScene(gui,stage);
+        rankController.setRank(results);
         stage.setScene(scene);
 
     }
@@ -191,6 +193,7 @@ public class GameController extends GUIController {
         updateScore();
         updateMyBookshelf();
         updateOtherBookshelf();
+        if(client.GameEnded()) endGameToken.setVisible(false);
         if(cgc1.getImage()!=null){
             cgc1.setImage(new Image(getCGCImage(client.getModel().getCgc1().ordinal())));
             cgc2.setImage(new Image(getCGCImage(client.getModel().getCgc2().ordinal())));
@@ -301,7 +304,7 @@ public class GameController extends GUIController {
 
     public void insertTile(ActionEvent actionEvent) {
         try {
-            client.askInsertShelfTiles(selectedColumn, coord);
+            client.askInsertShelfTiles(selectedColumn, sortedCoord);
             for(int i=0; i<6; i++){
                 myBookshelf[i][selectedColumn].setImage(insertBookshelf[i][selectedColumn].getImage());
             }
@@ -322,6 +325,7 @@ public class GameController extends GUIController {
 
     public void endTurn(){
         coord.clear();
+        sortedCoord.clear();
         enterColumnButton.setDisable(true);
         enterTilesButton.setDisable(true);
         enterTilesButton.setVisible(false);
@@ -355,6 +359,7 @@ public class GameController extends GUIController {
         updateBookshelf(myBookshelf, client.getModel().getMyBookshelf());
         disableBoardButton();
         coord.clear();
+        sortedCoord.clear();
         enterTilesButton.setDisable(true);
         enterTilesButton.setVisible(false);
         removeTiles();
@@ -362,9 +367,6 @@ public class GameController extends GUIController {
         endInsertTiles(new ActionEvent());
         stateLabel.setText("Not you're turn!");
         try{
-
-            System.out.println("ask pass my turn");
-            client.setMyTurn(false);
             client.askPassMyTurn();
 
         } catch (Exception e) {
@@ -613,13 +615,27 @@ if (timer!=null){
         if(selectedColumn<0||selectedColumn>4) return;
         Button button = (Button) actionEvent.getSource();
         Image image;
+        int tileNum=-1;
         switch(button.getId()) {
-            case ("tile1Button")-> image=tile1Image.getImage();
-            case ("tile2Button")-> image=tile2Image.getImage();
-            case ("tile3Button")-> image=tile3Image.getImage();
+            case ("tile1Button")-> {
+                image=tile1Image.getImage();
+                tileNum=0;
+            }
+            case ("tile2Button")-> {
+                image=tile2Image.getImage();
+                tileNum=2;
+            }
+            case ("tile3Button")-> {
+                image=tile3Image.getImage();
+                tileNum=4;
+            }
             default -> image=null;
         }
         if(button.getOnMouseEntered()!=null){
+            if(tileNum!=-1){
+                sortedCoord.add(coord.get(tileNum));
+                sortedCoord.add(coord.get(tileNum+1));
+            }
 
             for (int i=5; i>=0; i--){
                 if(insertBookshelf[i][selectedColumn].getImage()==null){
@@ -640,6 +656,11 @@ if (timer!=null){
             }
         } else {
             enterColumnButton.setDisable(true);
+            if(sortedCoord.size()!=0&&sortedCoord.size()!=1){
+                sortedCoord.remove(sortedCoord.size()-1);
+                sortedCoord.remove(sortedCoord.size()-1);
+            }
+
             for (int i=0; i<6; i++){
                 if(insertBookshelf[i][selectedColumn].getImage()!=null){
                     if(!insertBookshelf[i][selectedColumn].getImage().equals(image)) return;

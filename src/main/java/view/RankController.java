@@ -6,15 +6,33 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import myShelfieException.LoginException;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.Map;
 
 import static javafx.application.Platform.exit;
 
 public class RankController extends GUIController {
+    @FXML
+    private Label score1Label;
+    @FXML
+    private Label score2Label;
+    @FXML
+    private Label score3Label;
+    @FXML
+    private Label score4Label;
+    @FXML
+    private Label player1Label;
+    @FXML
+    private Label player2Label;
+    @FXML
+    private Label player3Label;
+    @FXML
+    private Label player4Label;
     @FXML
     private Group player2Group;
     @FXML
@@ -58,8 +76,32 @@ public class RankController extends GUIController {
         LoginController controller=fxmlLoader.getController();
         gui.setLoginController(controller);
         controller.setScene(gui,stage);
-
         controller.showWaitingScene();
     }
 
+    public void setRank(Map<String, Integer> results) {
+        int i=0;
+        for (String name: results.keySet()){
+            switch (i){
+                case (0)-> {
+                    player1Label.setText(name);
+                    score1Label.setText(Integer.toString(results.get(name)));
+                }
+                case (1)-> {
+                    player2Label.setText(name);
+                    score2Label.setText(Integer.toString(results.get(name)));
+                }
+                case (2)-> {
+                    player3Label.setText(name);
+                    score3Label.setText(Integer.toString(results.get(name)));
+                }
+                case (3)-> {
+                    player4Label.setText(name);
+                    score4Label.setText(Integer.toString(results.get(name)));
+                }
+            }
+            i++;
+        }
+
+    }
 }

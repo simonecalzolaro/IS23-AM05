@@ -1,14 +1,10 @@
 package view;
 
-import client.ClientModel;
-
 import javafx.application.Platform;
-
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class GUI extends View {
     private int numOfPlayer;
@@ -58,14 +54,13 @@ public class GUI extends View {
         if(gameController!=null){
             Platform.runLater(()->gameController.updateAll());
         }
-
     }
 
     @Override
     public void endGame(Map<String, Integer> results) {
         Platform.runLater(()-> {
             try {
-                gameController.endGame();
+                gameController.endGame(results);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
