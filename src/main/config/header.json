@@ -1,0 +1,11 @@
+
+{
+	"serverSettings":{
+
+		"hostname":"172.20.10.7",
+		"RMIPORT":2000,
+		"TCPPORT":3000,
+		"PINGPORT": 4000
+
+	}
+}
