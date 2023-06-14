@@ -38,6 +38,7 @@ public class BagTest {
         Tile tile;
         tile=bag.getTile();
         assertEquals(Tile.EMPTY,tile);
+        bag.getTilesBag();
         bag= null;
     }
 }
