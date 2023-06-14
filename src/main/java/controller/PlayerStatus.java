@@ -7,7 +7,6 @@ public enum PlayerStatus implements Serializable {
     NOT_MY_TURN,
     NOT_ONLINE,
     WAITING_ROOM,
-
     nOfPlayerAsked;
 
 }

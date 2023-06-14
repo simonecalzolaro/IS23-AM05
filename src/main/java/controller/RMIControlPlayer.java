@@ -5,6 +5,7 @@ import model.Tile;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,14 +54,27 @@ public class RMIControlPlayer extends ControlPlayer{
     @Override
     public void notifyStartYourTurn() throws RemoteException {
 
-        System.out.println("    ->notify StartYourTurn to "+ nickname);
-        ch.startYourTurn();
-
+        if( !playerStatus.equals(PlayerStatus.NOT_ONLINE)){
+            try{
+                System.out.println("    ->notify StartYourTurn to "+ nickname);
+                ch.startYourTurn();
+            }catch(Exception e){
+                System.out.println("---something went wrong while notifyStartYourTurn() to "+ nickname);
+            }
+        }
     }
 
     @Override
     public void notifyEndYourTurn() throws RemoteException {
-        ch.endYourTurn();
+
+
+        if(!playerStatus.equals(PlayerStatus.NOT_ONLINE)){
+            try{
+                ch.endYourTurn();
+            }catch(Exception e){
+                System.out.println("---error: something went wrong while notifyStartYourTurn() to "+ nickname);
+            }
+        }
     }
 
     @Override
@@ -98,9 +112,10 @@ public class RMIControlPlayer extends ControlPlayer{
     @Override
     public void notifyStartPlaying() throws RemoteException {
 
-        System.out.println("    ->notify startPlaying to "+ nickname);
-        ch.startPlaying(bookshelf.getPgc().getCardNumber(), bookshelf.getPgc().getCardMap(), game.getBoard().getCommonGoalCard1().getCGCnumber(), game.getBoard().getCommonGoalCard2().getCGCnumber(), game.getGameID());
-
+        if( !playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
+            System.out.println("    ->notify startPlaying to " + nickname);
+            ch.startPlaying(bookshelf.getPgc().getCardNumber(), bookshelf.getPgc().getCardMap(), game.getBoard().getCommonGoalCard1().getCGCnumber(), game.getBoard().getCommonGoalCard2().getCGCnumber(), game.getGameID());
+        }
     }
 
     @Override
@@ -111,8 +126,9 @@ public class RMIControlPlayer extends ControlPlayer{
     @Override
     public void notifyNewMessage(String nick, String message) throws IOException {
 
-        ch.receiveMessage(nick, message);
-
+        if( !playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
+            ch.receiveMessage(nick, message);
+        }
     }
 
     @Override
@@ -171,8 +187,5 @@ public class RMIControlPlayer extends ControlPlayer{
 
     @Override
     public void setStreams(ArrayList<Stream> streams) { }
-
-
-
 
 }
