@@ -114,6 +114,8 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
         try {
 
+            getView().continueSession();
+
             updateBoard(board,myShelf,otherShelf,myScore);
             startPlaying(pgcNum,pgcMap,cgc1num,cgc2num,gameID);
 

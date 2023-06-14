@@ -43,22 +43,24 @@ public class SocketControlPlayer extends ControlPlayer {
     @Override
     public void notifyStartYourTurn() throws RemoteException {
 
-        System.out.println("    ->notify StartYourTurn to "+ nickname);
+        if (!playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
 
-        JSONObject object = new JSONObject();
+            System.out.println("    ->notify StartYourTurn to "+ nickname);
 
-        object.put("Action","notifyStartYourTurn");
+            JSONObject object = new JSONObject();
 
-        try{
-            outCP.reset();
-            outCP.write(object);
-        } catch (InvalidOperationException e) {
-            System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyStartYourTurn trying to reset/write the stream");
-            System.out.println("---> Maybe you're trying to reset/write an input stream");
-            throw new RuntimeException();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            object.put("Action","notifyStartYourTurn");
+
+            try{
+                outCP.reset();
+                outCP.write(object);
+            } catch (InvalidOperationException e) {
+                System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyStartYourTurn trying to reset/write the stream");
+                System.out.println("---> Maybe you're trying to reset/write an input stream");
+                throw new RuntimeException();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }        }
 
 
     }
@@ -66,20 +68,22 @@ public class SocketControlPlayer extends ControlPlayer {
     @Override
     public void notifyEndYourTurn() throws IOException {
 
-        JSONObject object = new JSONObject();
+       if(!playerStatus.equals(PlayerStatus.NOT_ONLINE)){
+           JSONObject object = new JSONObject();
 
-        object.put("Action","notifyEndYourTurn");
+           object.put("Action","notifyEndYourTurn");
 
-        try{
-            outCP.reset();
-            outCP.write(object);
-        } catch (InvalidOperationException e) {
-            System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyStartYourTurn trying to reset/write the stream");
-            System.out.println("---> Maybe you're trying to reset/write an input stream");
-            throw new RuntimeException();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+           try{
+               outCP.reset();
+               outCP.write(object);
+           } catch (InvalidOperationException e) {
+               System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyStartYourTurn trying to reset/write the stream");
+               System.out.println("---> Maybe you're trying to reset/write an input stream");
+               throw new RuntimeException();
+           } catch (IOException e) {
+               throw new RuntimeException(e);
+           }
+       }
 
 
 
@@ -180,28 +184,30 @@ public class SocketControlPlayer extends ControlPlayer {
     @Override
     public void notifyStartPlaying() throws RemoteException {
 
-        System.out.println("    ->notify startPlaying to "+ nickname);
+       if(!playerStatus.equals(PlayerStatus.NOT_ONLINE)){
+           System.out.println("    ->notify startPlaying to "+ nickname);
 
-        JSONObject object = new JSONObject();
+           JSONObject object = new JSONObject();
 
-        object.put("Action", "notifyStartPlaying");
-        object.put("Param1",bookshelf.getPgc().getCardNumber());
-        object.put("Param2",bookshelf.getPgc().getCardMap());
-        object.put("Param3",game.getBoard().getCommonGoalCard1().getCGCnumber());
-        object.put("Param4",game.getBoard().getCommonGoalCard2().getCGCnumber());
-        object.put("Param5",game.getGameID());
+           object.put("Action", "notifyStartPlaying");
+           object.put("Param1",bookshelf.getPgc().getCardNumber());
+           object.put("Param2",bookshelf.getPgc().getCardMap());
+           object.put("Param3",game.getBoard().getCommonGoalCard1().getCGCnumber());
+           object.put("Param4",game.getBoard().getCommonGoalCard2().getCGCnumber());
+           object.put("Param5",game.getGameID());
 
 
-        try{
-            outCP.reset();
-            outCP.write(object);
-        } catch (InvalidOperationException e) {
-            System.out.println("SocketControlPlayer --- InvalidOperationException occurred in  trying to reset/write the stream");
-            System.out.println("---> Maybe you're trying to reset/write an input stream");
-            throw new RuntimeException();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+           try{
+               outCP.reset();
+               outCP.write(object);
+           } catch (InvalidOperationException e) {
+               System.out.println("SocketControlPlayer --- InvalidOperationException occurred in  trying to reset/write the stream");
+               System.out.println("---> Maybe you're trying to reset/write an input stream");
+               throw new RuntimeException();
+           } catch (IOException e) {
+               throw new RuntimeException(e);
+           }
+       }
 
 
     }
@@ -280,23 +286,25 @@ public class SocketControlPlayer extends ControlPlayer {
     public void notifyNewMessage(String nick, String message) throws IOException {
 
 
-        JSONObject object = new JSONObject();
+       if(!playerStatus.equals(PlayerStatus.NOT_ONLINE)){
+           JSONObject object = new JSONObject();
 
-        object.put("Action","notifyNewMessage");
-        object.put("Param1",nick);
-        object.put("Param2",message);
+           object.put("Action","notifyNewMessage");
+           object.put("Param1",nick);
+           object.put("Param2",message);
 
-        try{
-            outCP.reset();
-            outCP.write(object);
-        } catch (InvalidOperationException e) {
-            System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyStartPlaying trying to reset/write the stream");
-            System.out.println("---> Maybe you're trying to reset/write an input stream");
-            throw new RuntimeException();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+           try{
+               outCP.reset();
+               outCP.write(object);
+           } catch (InvalidOperationException e) {
+               System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyStartPlaying trying to reset/write the stream");
+               System.out.println("---> Maybe you're trying to reset/write an input stream");
+               throw new RuntimeException();
+           } catch (IOException e) {
+               throw new RuntimeException(e);
+           }
 
+       }
 
     }
 

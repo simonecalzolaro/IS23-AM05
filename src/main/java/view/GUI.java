@@ -20,6 +20,22 @@ public class GUI extends View {
         });
     }
 
+    @Override
+    public void continueSession() {
+
+        Platform.runLater(()-> {
+            try {
+                while(client==null);
+                loginController.setClient(client);
+                loginController.showGameScene();
+                gameController.showGame();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+    }
+
 
     @Override
     public void showException(String exception) {
@@ -76,16 +92,7 @@ public class GUI extends View {
     @Override
     public void startGame() {
         if(checkForBackupFile()){
-            Platform.runLater(()-> {
-                try {
-                    while(client==null);
-                    loginController.setClient(client);
-                    loginController.showGameScene();
-                    gameController.showGame();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+           backupLogin();
         } else {
             standardLogin();
         }
