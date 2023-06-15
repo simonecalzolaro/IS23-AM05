@@ -188,7 +188,11 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         model.setGameID(GameID);
         gameStarted=true;
         backup();
-        view.startPlay();
+        try {
+            view.startPlay();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
