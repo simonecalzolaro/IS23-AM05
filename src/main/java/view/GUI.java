@@ -1,7 +1,6 @@
 package view;
 
 import javafx.application.Platform;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Map;
@@ -11,16 +10,30 @@ public class GUI extends View {
     private int numOfPlayer;
     private LoginController loginController;
     private GameController gameController;
-    private ChatController chatController;
-    private Timer timer;
 
-    private Stage chatStage;
+    private Timer timer;
 
     @Override
     public void standardLogin() {
         Platform.runLater(()->{
             loginController.showLogin();
         });
+    }
+
+    @Override
+    public void continueSession() {
+
+        Platform.runLater(()-> {
+            try {
+                while(client==null);
+                loginController.setClient(client);
+                loginController.showGameScene();
+                gameController.showGame();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 
 
@@ -79,18 +92,7 @@ public class GUI extends View {
     @Override
     public void startGame() {
         if(checkForBackupFile()){
-            backupLogin();
-            Platform.runLater(()-> {
-                try {
-                    while(client==null);
-                    loginController.setClient(client);
-                    loginController.showGameScene();
-                    gameController.showGame();
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+           backupLogin();
         } else {
             standardLogin();
         }
@@ -105,22 +107,19 @@ public class GUI extends View {
     }
 
     @Override
-    public void startPlay()  {
+    public void startPlay() {
         try{
             Platform.runLater(()-> {
                 try {
                     loginController.showGameScene();
                     gameController.updateAll();
-                    gameController.showGame();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
         } catch (Exception ignored){
         }
-
-
-    }
+        }
 
     public void setLoginController(LoginController loginController) {
         this.loginController=loginController;
@@ -138,15 +137,4 @@ public class GUI extends View {
         this.timer=timer;
     }
 
-    public void setChatController(ChatController chatController) {
-        this.chatController=chatController;
-    }
-
-    public void setChatStage(Stage chatStage) {
-        this.chatStage=chatStage;
-    }
-
-    public Stage getChatStage(){
-        return chatStage;
-    }
 }

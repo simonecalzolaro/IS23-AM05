@@ -34,6 +34,8 @@ public abstract class View {
     public abstract void showException(String exception);
     public abstract void plotNewMessage(String Sender, String message);
     public abstract  void standardLogin();
+
+    public abstract void continueSession();
     public boolean checkForBackupFile(){
         JSONObject j = new JSONObject();
         try{

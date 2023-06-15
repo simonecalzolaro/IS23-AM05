@@ -90,7 +90,6 @@ public abstract class Lobby implements  ClientServerHandler {
         //check if the nickname is available
         if (tempPlayers.stream().map(x -> x.getPlayerNickname()).toList().contains(nickname))
             throw new LoginException("this nickname is not available at the moment");
-
         else {
 
             ControlPlayer pl = null;
@@ -133,7 +132,6 @@ public abstract class Lobby implements  ClientServerHandler {
             notifyAll();
             return pl;
         }
-
     }
 
     /**
