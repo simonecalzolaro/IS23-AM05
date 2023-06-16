@@ -625,6 +625,7 @@ public class TUI extends View {
         }
 
         if (tiles.size() == 6) {
+
             if(Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(1), tiles.get(3))) return false;
 
             if(Objects.equals(tiles.get(2), tiles.get(4)) && Objects.equals(tiles.get(3), tiles.get(5))) return false;
@@ -745,6 +746,7 @@ public class TUI extends View {
                             client.askPostMessage(mex, new ArrayList(client.getModel().getOtherPlayers().keySet()));
                         }
                     }while (!c);
+
                 }
 
                 case "/showChat"->{

@@ -99,13 +99,11 @@ public class RMIControlPlayer extends ControlPlayer{
     public void notifyEndGame() throws RemoteException{
 
         if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
-
             try{
                 ch.theGameEnd(game.getGameResults()) ;
             }catch (RemoteException e){
                 System.out.println("---error: something went wrong while notifyEndGame() to "+ nickname);
             }
-
         }
     }
 
@@ -115,7 +113,6 @@ public class RMIControlPlayer extends ControlPlayer{
      */
     @Override
     public void notifyStartPlaying() throws RemoteException {
-
         if( !playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
             try {
                 System.out.println("    ->notify startPlaying to " + nickname);

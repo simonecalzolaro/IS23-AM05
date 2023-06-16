@@ -37,6 +37,7 @@ public class Chat {
         flagNewMessageReceived=true;
         flagNewMessageToSend=false;
         notifyAll();
+
     }
 
     public synchronized void newMessageListener(){
