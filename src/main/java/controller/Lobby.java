@@ -137,7 +137,7 @@ public abstract class Lobby implements  ClientServerHandler {
      * Method to check if the server has to ask a client the number of players he wants in his game.
      * It is always executed immediately after the login() method.
      */
-    public synchronized void checkAskNumberOfPlayers() throws LoginException, RemoteException {
+    public synchronized void checkAskNumberOfPlayers(){
 
         System.out.println("-> checkAskNuberOfPlayers active");
         //if there isn't any waiting room it means that "client" is the first player
@@ -162,7 +162,13 @@ public abstract class Lobby implements  ClientServerHandler {
                 try {
                     pl.askNumberOfPlayers();
                 } catch (FatalException e) {
-                    leaveGame(e.getNickname(),e.getID());
+                    try {
+                        leaveGame(e.getNickname(), e.getID());
+                    } catch (LoginException ex) {
+                        System.out.println(e.getMessage());
+                    } catch (RemoteException ex) {
+                        System.out.println("---error: something went wrong while leaveGame() inside checkAskNumberOfPlayers()");
+                    }
                 }
 
                 System.out.println("    ...asking the number of players to "+pl.getPlayerNickname());
@@ -244,7 +250,7 @@ public abstract class Lobby implements  ClientServerHandler {
                                 cp.notifyStartYourTurn();
                             }
                         } catch (IOException | LoginException e) {
-                            throw new RuntimeException(e);
+                            System.out.println("---error: something went wrong inside checkFullWaitingRoom()");
                         }
                     }
 
@@ -498,7 +504,7 @@ public abstract class Lobby implements  ClientServerHandler {
      * removes Player cp from his waiting room and, if cp is the only one present, the waiting room il reinitialized
      * @param cp ControlPlayer to be removed from the waiting room
      */
-    public synchronized void removeFromWaitingRoom (ControlPlayer cp) throws LoginException, RemoteException {
+    public synchronized void removeFromWaitingRoom (ControlPlayer cp) {
 
         if(tempPlayers.size()>0){
 
@@ -524,7 +530,13 @@ public abstract class Lobby implements  ClientServerHandler {
                 try{
                     tempPlayers.get(0).askNumberOfPlayers();
                 } catch (FatalException e) {
-                    leaveGame(e.getNickname(),e.getID());
+                    try {
+                        leaveGame(e.getNickname(),e.getID());
+                    } catch (LoginException ex) {
+                        System.out.println(e.getMessage());
+                    } catch (RemoteException ex) {
+                        System.out.println("---error: something went wrong while leaveGame() inside removeFromWaitingRoom()");
+                    }
                 }
             }
         }

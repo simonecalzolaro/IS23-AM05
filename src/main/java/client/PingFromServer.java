@@ -51,7 +51,6 @@ public class PingFromServer implements Runnable{
                 if(counter>1) client.getView().showException("---you are online again");
                 counter=0;
             }
-
             else{
 
                 counter++;
@@ -59,8 +58,13 @@ public class PingFromServer implements Runnable{
                 if(client.isGameStarted() && !client.isGameEnded()) {
 
                     //when counter reaches 6 ( 6 -> 60 sec offline ) I disconnect the player from the game
-                    if(counter ==1 ) client.getView().showException("---ops...you are offline");
+                    if(counter ==1 ) {
+                        client.getView().showException("---ops...you are offline");
+                        client.setMyTurn(false);
+                    }
+
                     client.getView().showException("---trying to reconnect...");
+
                 }
             }
         }
