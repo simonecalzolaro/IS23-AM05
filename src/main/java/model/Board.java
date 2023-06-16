@@ -235,38 +235,19 @@ public class Board implements Serializable {
     protected boolean singleTile(int i, int j){
         //check if a tiles has no adjacent tile
         return switch (i) {
-            case 0 -> switch (j) {
-                case 0 -> (board[i + 1][j] == Tile.NOTAVAILABLE ||
-                        board[i + 1][j] == Tile.EMPTY) &&
-                        (board[i][j + 1] == Tile.NOTAVAILABLE ||
-                                board[i][j + 1] == Tile.EMPTY);
-                case 8 -> (board[i + 1][j] == Tile.NOTAVAILABLE ||
-                        board[i + 1][j] == Tile.EMPTY) &&
-                        (board[i][j - 1] == Tile.NOTAVAILABLE ||
-                                board[i][j - 1] == Tile.EMPTY);
-                default -> (board[i + 1][j] == Tile.NOTAVAILABLE ||
+            case 0 -> (board[i + 1][j] == Tile.NOTAVAILABLE ||
                         board[i + 1][j] == Tile.EMPTY) &&
                         (board[i][j - 1] == Tile.NOTAVAILABLE ||
                                 board[i][j - 1] == Tile.EMPTY) &&
                         (board[i][j + 1] == Tile.NOTAVAILABLE ||
                                 board[i][j + 1] == Tile.EMPTY);
-            };
-            case 8 -> switch (j) {
-                case 0 -> (board[i - 1][j] == Tile.NOTAVAILABLE ||
-                        board[i - 1][j] == Tile.EMPTY) &&
-                        (board[i][j + 1] == Tile.NOTAVAILABLE ||
-                                board[i][j + 1] == Tile.EMPTY);
-                case 8 -> (board[i - 1][j] == Tile.NOTAVAILABLE ||
-                        board[i - 1][j] == Tile.EMPTY) &&
-                        (board[i][j - 1] == Tile.NOTAVAILABLE ||
-                                board[i][j - 1] == Tile.EMPTY);
-                default -> (board[i - 1][j] == Tile.NOTAVAILABLE ||
+
+            case 8 ->  (board[i - 1][j] == Tile.NOTAVAILABLE ||
                         board[i - 1][j] == Tile.EMPTY) &&
                         (board[i][j - 1] == Tile.NOTAVAILABLE ||
                                 board[i][j - 1] == Tile.EMPTY) &&
                         (board[i][j + 1] == Tile.NOTAVAILABLE ||
                                 board[i][j + 1] == Tile.EMPTY);
-            };
             default -> switch (j) {
                 case 0 -> (board[i - 1][j] == Tile.NOTAVAILABLE ||
                         board[i - 1][j] == Tile.EMPTY) &&
@@ -525,15 +506,6 @@ public class Board implements Serializable {
      */
     public void setEOG() {
         this.EOG = true;
-    }
-
-
-    /**
-     *
-     * @param nPlayers number of player of the current game
-     */
-    private void setNPlayers(int nPlayers) {
-        this.nPlayers = nPlayers;
     }
 
     /**

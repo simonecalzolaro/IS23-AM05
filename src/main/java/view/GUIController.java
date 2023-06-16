@@ -28,6 +28,7 @@ public abstract class GUIController {
     }
 
     public void showChat(ActionEvent actionEvent) {
+        gui.getChatStage().show();
     }
 
     public void showException() {

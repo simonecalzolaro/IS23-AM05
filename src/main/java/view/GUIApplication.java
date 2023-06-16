@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import static javafx.application.Platform.exit;
 
 public class GUIApplication extends Application {
+
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -24,8 +25,22 @@ public class GUIApplication extends Application {
         gui.setLoginController(controller);
         controller.setScene(gui,stage);
         gui.startGame();
+
+
+        FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("chat.fxml"));
+        Stage stage1=new Stage();
+        Scene scene1 = new Scene(fxmlLoader1.load(), 250,300);
+        stage1.setScene(scene1);
+        stage1.setTitle("Chat");
+        ChatController chatController= fxmlLoader1.getController();
+        gui.setChatController(chatController);
+
+        gui.setChatStage(stage1);
     }
     public static void main(String[] args) {
+
         launch();
+
     }
+
 }

@@ -3,6 +3,7 @@ package view;
 import client.Client;
 import client.RMIClient;
 import client.SocketClient;
+import model.Bookshelf;
 import myShelfieException.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -29,7 +30,7 @@ public abstract class View {
     public abstract void isYourTurn() throws IOException, InvalidChoiceException, NotConnectedException, InvalidParametersException, NotMyTurnException;
     public abstract void startGame() throws IOException, LoginException, NotBoundException;
     public abstract void endYourTurn();
-    public abstract void startPlay();
+    public abstract void startPlay() throws Exception;
     public abstract void showException(String exception);
     public abstract void plotNewMessage(String Sender, String message);
     public abstract  void standardLogin();
@@ -53,7 +54,7 @@ public abstract class View {
 
         }
     }
-    public void backupLogin(){
+    public boolean backupLogin(){
 
         JSONObject j = new JSONObject();
 
@@ -113,12 +114,12 @@ public abstract class View {
             client.askContinueGame();
 
         } catch (LoginException e) {
-
             client.getExceptionHandler().loginExceptionHandler(true);
-
+            return false;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+        return true;
     }
 }

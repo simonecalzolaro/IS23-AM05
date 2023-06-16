@@ -1,6 +1,8 @@
 package view;
 
 import javafx.application.Platform;
+import javafx.scene.control.ChoiceBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Map;
@@ -10,8 +12,9 @@ public class GUI extends View {
     private int numOfPlayer;
     private LoginController loginController;
     private GameController gameController;
-
+    private ChatController chatController;
     private Timer timer;
+    private Stage chatStage;
 
     @Override
     public void standardLogin() {
@@ -137,4 +140,15 @@ public class GUI extends View {
         this.timer=timer;
     }
 
+    public void setChatController(ChatController chatController) {
+        this.chatController=chatController;
+    }
+
+    public void setChatStage(Stage chatStage){
+        this.chatStage=chatStage;
+    }
+
+    public Stage getChatStage() {
+        return chatStage;
+    }
 }
