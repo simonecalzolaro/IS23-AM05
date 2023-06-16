@@ -13,12 +13,8 @@ import java.util.Map;
 
 public class SocketControlPlayer extends ControlPlayer {
 
-
     Stream outCP;
     Stream inCP;
-
-
-
 
     /**
      * Assign player id

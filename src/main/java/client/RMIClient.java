@@ -90,8 +90,15 @@ public class RMIClient extends Client {
     @Override
     public void askLogin(String nick) throws LoginException, IOException, RemoteException{
 
-        this.gameHandler= clientServerHandler.login(nick , this);
-
+        try{
+            this.gameHandler= clientServerHandler.login(nick , this);
+        }catch (RemoteException e){
+            getView().showException("ops... something went wrong while Login");
+            throw e;
+        }catch (LoginException e){
+            getView().showException(e.getMessage());
+            throw e;
+        }
     }
 
 

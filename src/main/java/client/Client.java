@@ -107,10 +107,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
     @Override
     public void restoreSession(model.Tile[][] board, model.Tile[][] myShelf, Map<String, model.Tile[][]> otherShelf, int myScore,int gameID, int pgcNum, Map<model.Tile, Integer[]> pgcMap, int cgc1num, int cgc2num){
-        Map<String, Matrix> otherPlayersMatr= new HashMap<>();
-        for(String nick: otherShelf.keySet()){
-            otherPlayersMatr.put(nick, new Matrix(otherShelf.get(nick)));
-        }
 
         try {
 

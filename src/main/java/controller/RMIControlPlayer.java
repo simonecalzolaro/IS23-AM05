@@ -67,12 +67,11 @@ public class RMIControlPlayer extends ControlPlayer{
     @Override
     public void notifyEndYourTurn() throws RemoteException {
 
-
         if(!playerStatus.equals(PlayerStatus.NOT_ONLINE)){
             try{
                 ch.endYourTurn();
             }catch(Exception e){
-                System.out.println("---error: something went wrong while notifyStartYourTurn() to "+ nickname);
+                System.out.println("---error: something went wrong while notifyEndYourTurn() to "+ nickname);
             }
         }
     }
@@ -80,17 +79,18 @@ public class RMIControlPlayer extends ControlPlayer{
     @Override
     public void notifyUpdatedBoard() throws RemoteException{
 
-        if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
+        if(!playerStatus.equals(PlayerStatus.NOT_ONLINE)){
+            try{
+                Map<String, Tile[][]> map= new HashMap<>();
+                //in this for I'm creating the map to send, I'm NOT notifying each player
+                for(ControlPlayer cp: game.getPlayers()){
+                    if(! cp.equals(this))  map.put(cp.getPlayerNickname(), cp.getBookshelf().getShelf());
+                }
+                ch.updateBoard(game.getBoard().getBoard(), this.bookshelf.getShelf(), map , bookshelf.getMyScore());
 
-            Map<String, Tile[][]> map= new HashMap<>();
-
-            //in this for I'm creating the map to send, I'm NOT notifying each player
-            for(ControlPlayer cp: game.getPlayers()){
-
-                if(! cp.equals(this))  map.put(cp.getPlayerNickname(), cp.getBookshelf().getShelf());
-
+            }catch(Exception e){
+                System.out.println("---error: something went wrong while notifyUpdatedBoard() to "+ nickname);
             }
-            ch.updateBoard(game.getBoard().getBoard(), this.bookshelf.getShelf(), map , bookshelf.getMyScore());
         }
     }
 
@@ -100,7 +100,11 @@ public class RMIControlPlayer extends ControlPlayer{
 
         if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
 
-            ch.theGameEnd(game.getGameResults()) ;
+            try{
+                ch.theGameEnd(game.getGameResults()) ;
+            }catch (RemoteException e){
+                System.out.println("---error: something went wrong while notifyEndGame() to "+ nickname);
+            }
 
         }
     }
@@ -113,21 +117,31 @@ public class RMIControlPlayer extends ControlPlayer{
     public void notifyStartPlaying() throws RemoteException {
 
         if( !playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
-            System.out.println("    ->notify startPlaying to " + nickname);
-            ch.startPlaying(bookshelf.getPgc().getCardNumber(), bookshelf.getPgc().getCardMap(), game.getBoard().getCommonGoalCard1().getCGCnumber(), game.getBoard().getCommonGoalCard2().getCGCnumber(), game.getGameID());
+            try {
+                System.out.println("    ->notify startPlaying to " + nickname);
+                ch.startPlaying(bookshelf.getPgc().getCardNumber(), bookshelf.getPgc().getCardMap(), game.getBoard().getCommonGoalCard1().getCGCnumber(), game.getBoard().getCommonGoalCard2().getCGCnumber(), game.getGameID());
+            }catch (RemoteException e){
+                System.out.println("---error: something went wrong while notifyStartPlaying() to "+ nickname);
+            }
         }
     }
 
     @Override
     public void askPing() throws IOException {
-            ch.ping();
+
+        ch.ping();
+
     }
 
     @Override
     public void notifyNewMessage(String nick, String message) throws IOException {
 
         if( !playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
-            ch.receiveMessage(nick, message);
+            try {
+                ch.receiveMessage(nick, message);
+            }catch (RemoteException e){
+                System.out.println("---error: something went wrong while notifyNewMessage() to "+ nickname);
+            }
         }
     }
 
@@ -155,18 +169,12 @@ public class RMIControlPlayer extends ControlPlayer{
                 if(! cp.equals(this))  map.put(cp.getPlayerNickname(), cp.getBookshelf().getShelf());
 
             }
+
             ch.restoreSession(game.getBoard().getBoard(),this.bookshelf.getShelf(),map,bookshelf.getMyScore(),game.getGameID(),bookshelf.getPgc().getCardNumber(),bookshelf.getPgc().getCardMap(),game.getBoard().getCommonGoalCard1().getCGCnumber(),game.getBoard().getCommonGoalCard2().getCGCnumber());
 
         }
     }
 
-    /*
-    @Override
-    public void askPing() throws RemoteException {
-        ch.pong();
-    }
-
-     */
 
 
     /**
