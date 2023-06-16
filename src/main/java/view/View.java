@@ -65,7 +65,7 @@ public abstract class View {
                 client = new RMIClient();
             } catch (RemoteException e) {
                 System.out.println("Error encountered while starting the application --> try to reboot the application");
-                throw new RuntimeException(e);
+                return false;
             }
 
         }
@@ -75,7 +75,7 @@ public abstract class View {
                 client = new SocketClient();
             } catch (RemoteException e) {
                 System.out.println("Error encountered while starting the application --> try to reboot the application");
-                throw new RuntimeException(e);
+                return false;
             }
         }
 
@@ -87,7 +87,7 @@ public abstract class View {
                 j = (JSONObject) o;
 
             } catch (ParseException e) {
-                throw new RuntimeException(e);
+                System.out.println("Error encountered while reading the file!");
             }
             Long num_pre;
             Long num_other;
@@ -101,13 +101,10 @@ public abstract class View {
 
         } catch (RemoteException e) {
             System.out.println("Error encountered while starting the application --> try to reboot the application");
-            throw new RuntimeException(e);
         } catch (NotBoundException e) {
             System.out.println("Error encountered while starting the application --> try to reboot the application");
-            throw new RuntimeException(e);
         } catch (IOException e) {
             System.out.println("Error encountered while starting the application --> try to reboot the application");
-            throw new RuntimeException(e);
         }
 
         try{
@@ -117,7 +114,7 @@ public abstract class View {
             client.getExceptionHandler().loginExceptionHandler(true);
             return false;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error encountered while starting the application --> try to reboot the application");
         }
 
         return true;

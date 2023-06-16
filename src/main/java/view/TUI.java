@@ -14,20 +14,24 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.ServerException;
 import java.util.*;
 import java.util.concurrent.*;
 
+import static java.lang.Math.abs;
+
 public class TUI extends View {
 
+    boolean serverEndedGame=false;
     List<Integer> coord = new ArrayList<>();
     private final PrintStream out;
+    private boolean insideChat=false;
 
     public TUI() {
 
         super();
 
         out = System.out;
-
 
     }
 
@@ -65,17 +69,17 @@ public class TUI extends View {
             try {
                 client.askLeaveGame();
             }catch (LoginException e){
-                e.printStackTrace();
+                out.println("LoginException occurred trying to leave the game (not getting num of players)!");
             }catch (IOException e){
-                e.getMessage();
+                out.println("IOException occurred trying to leave the game (not getting num of players)!");
             }
 
             try {
                 client.askLogin(client.getModel().getNickname());
             } catch (LoginException e) {
-                e.getMessage();
+                out.println("LoginException occurred trying to log in (not getting num of players)!");
             } catch (IOException e) {
-                e.printStackTrace();
+                out.println("IOException occurred trying to log in (not getting num of players)!");
             }
         }
 
@@ -94,35 +98,43 @@ public class TUI extends View {
 
     @Override
     public void endGame(Map<String, Integer> results) {
+
         Scanner scan = new Scanner(System.in);
         String input;
 
-        out.println("+---------------The game has ended!---------------+");
+            out.println("+---------------The game has ended!---------------+");
 
-    System.out.println("               nickname     score       ");
+            out.println("               nickname     score       ");
+
+            if(results.values().stream().toList().get(0)<=0){
+                serverEndedGame=true;
+
+            }
 
         for (Map.Entry<String, Integer> entry : results.entrySet()) {
-            System.out.println("                 "+ entry.getKey() + "  ->  " + entry.getValue());
+            out.println("               "+ entry.getKey() + "      ->     " + abs(entry.getValue()));
+
         }
-        out.println("+-------------------------------------------------+");
+            out.println("+-------------------------------------------------+");
 
+        if(!serverEndedGame) {
+            do {
+                out.println("Do you want to leave the game? y/n");
+                input = scan.next();
+            } while (!input.equals("y") && !input.equals("n"));
 
-        do {
-            out.println("Do you want to leave the game? y/n");
-            input = scan.next();
-        }while (!input.equals("y") && !input.equals("n"));
-
-        if(input.equals("y")){
-        try {
-            client.askLeaveGame();
-        }catch (LoginException e){
-            e.printStackTrace();
-        }catch (IOException e){
-            e.getMessage();
+            if (input.equals("y")) {
+                try {
+                    client.askLeaveGame();
+                } catch (LoginException e) {
+                    out.println("LoginException occured trying to leave the game (game ended)!");
+                } catch (IOException e) {
+                    out.println("IOExcpetion occured trying to leave the game (game ended)!");
+                }
+            }
+        }else{
+            System.exit(0);
         }
-        }
-
-
 
     }
 
@@ -183,16 +195,21 @@ public class TUI extends View {
         do {
             out.println("0 --> RMI\n1 --> Socket");
             connection = scan.next();
+            out.println("...");
 
             if (connection.equals("0")) {
                 try {
 
                     client.setView(this);
                     client = new RMIClient();
+                    out.println("..");
 
                 } catch (RemoteException e) {
                     out.println("RemoteException occurred trying to initialize the client");
-                    e.printStackTrace();
+                    return;
+                }catch (Exception e){
+                    out.println("Exception occurred trying to initialize the client");
+                    return;
                 }
             }
 
@@ -204,23 +221,25 @@ public class TUI extends View {
 
                 } catch (RemoteException e) {
                     out.println("RemoteException occurred trying to initialize the client");
-                    e.printStackTrace();
+                    return;
+                }catch (Exception e){
+                    out.println("Exception occurred trying to initialize the client");
+                    return;
                 }
             }
         } while (!connection.equals("0") && !connection.equals("1"));
 
         try {
             client.initializeClient();
+            out.println(".");
         } catch (RemoteException e) {
             out.println("RemoteException occurred trying to initialize the client");
-            e.printStackTrace();
+
         } catch (NotBoundException e) {
             out.println("NotBoundException occurred trying to initialize the RMIClient");
-            e.printStackTrace();
         } catch (IOException e) {
             out.println("IOException occurred trying to initialize the SocketClient");
             out.println("---> Socket hasn't been created");
-            e.printStackTrace();
         }
 
 
@@ -236,9 +255,10 @@ public class TUI extends View {
                 goon = true;
 
             } catch (LoginException e) {
-                e.getMessage();
+                out.println("LoginException occured trying to log in!");
+
             } catch (IOException e) {
-                e.printStackTrace();
+                out.println("IOException occured trying to log in!");
             }
         } while (!goon);
 
@@ -266,13 +286,8 @@ public class TUI extends View {
     }
 
     @Override
-    public void continueSession() {}
-
-
-    @Override
     public void endYourTurn() {
         out.println("Your turn is over!\n");
-
     }
 
     @Override
@@ -296,9 +311,31 @@ public class TUI extends View {
 
     @Override
     public void plotNewMessage(String sender,String message) {
-        out.println(sender+":"+message);
+        StringBuilder strSender = new StringBuilder();
+        ColorCLI color = null;
+
+        Set<String> otherPlayers = client.getModel().getOtherPlayers().keySet();
+        List<String> player = otherPlayers.stream().toList();
+        
+        if(sender.equals(player.get(0))){
+            color = ColorCLI.GREEN;
+        } else if (sender.equals(player.get(1))) {
+            color = ColorCLI.BLUE;
+        } else if (sender.equals(player.get(2))) {
+            color = ColorCLI.PINK;
+        }
+
+
+        if(!client.isMyTurn() || insideChat) {
+            strSender.append(color).append(sender).append(ColorCLI.RESET);
+            out.println(strSender + ":" + message);
+        }
     }
 
+    @Override
+    public void continueSession() {
+        out.println("Your session can continue!");
+    }
 
     //-------------------------------- other methods --------------------------------
 
@@ -556,14 +593,12 @@ public class TUI extends View {
                 goon = true;
 
             } catch (InvalidChoiceException e) {
-                e.getMessage();
+                out.println("InvalidChoiceException occurred trying to choose the tiles!");
                 coord.clear();
             } catch (NotConnectedException e) {
                 out.println("NotConnectedException occurred trying to choose the tiles!");
-                e.printStackTrace();
             } catch (NotMyTurnException e) {
                 out.println("NotMyTurnException occurred trying to choose the tiles!");
-                e.printStackTrace();
             } catch (InvalidParametersException e) {
                 out.println("InvalidParametersException occurred trying to choose the tiles!");
             } catch (IOException e) {
@@ -599,15 +634,13 @@ public class TUI extends View {
                 goon = true;
                 coord.clear();
             } catch (InvalidChoiceException e) {
-                e.getMessage();
+                out.println("InvalidChoiceException occurred trying to insert tiles!");
             } catch (InvalidLenghtException e) {
-                throw new RuntimeException(e);
+                out.println("InvalidLengthException occurred trying to insert tiles!");
             } catch (NotMyTurnException e) {
                 out.println("NotMyTurnException occurred trying to insert tiles!");
-                e.printStackTrace();
             } catch (NotConnectedException e) {
                 out.println("NotConnectedException occurred trying to insert tiles!");
-                e.printStackTrace();
             } catch (IOException e) {
                 out.println("IOException occurred trying to choose the tiles!");
             }
@@ -625,7 +658,6 @@ public class TUI extends View {
         }
 
         if (tiles.size() == 6) {
-
             if(Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(1), tiles.get(3))) return false;
 
             if(Objects.equals(tiles.get(2), tiles.get(4)) && Objects.equals(tiles.get(3), tiles.get(5))) return false;
@@ -652,7 +684,6 @@ public class TUI extends View {
         return false;
     }
 
-
     private static String waitForInput(Scanner scanner, ExecutorService executor) {
         try {
             // Avvia un'attività per leggere l'input dell'utente
@@ -671,11 +702,11 @@ public class TUI extends View {
 
         Scanner scan = new Scanner(System.in);
         String action;
-        boolean flag = true;
 
         initMenu();
 
-        while (flag) {
+        while (!serverEndedGame) {
+
             out.println("Command:");
 
             action = scan.next();
@@ -732,6 +763,7 @@ public class TUI extends View {
                 }
 
                 case "/chat"->{
+                    insideChat=true;
                     boolean c=false;
                     out.println("type something and press 'enter'");
                     out.println("to leave the chat /qChat ");
@@ -741,28 +773,40 @@ public class TUI extends View {
                         String mex = scan.nextLine();
 
                         if(mex.equals("/qChat")) {
-                            c=true;
+                            insideChat=false;
+                            c = true;
+                        }else if(mex.equals("")){
+                            out.println("You have tried sending an empty message");
                         }else {
                             client.askPostMessage(mex, new ArrayList(client.getModel().getOtherPlayers().keySet()));
                         }
                     }while (!c);
-
                 }
 
                 case "/showChat"->{
-                    out.println("This is your last message: ");
+                    out.println("These are your last messages: ");
                     out.println(client.getModel().getMyChat().getConversation());
                 }
 
                 case "/q" -> {
                     try {
                         client.askLeaveGame();
-                        flag = false;
+                        serverEndedGame = true;
                     } catch (LoginException e) {
                         e.getMessage();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
+
+                case "/info" -> {
+                    out.println("IS MY TURN:" + client.isMyTurn());
+                    out.println("IS GAME ENDED:" + client.isGameEnded());
+                    out.println("IS GAME STARTED" + client.isGameStarted());
+                    out.println("GAME ID:" + client.getModel().getGameID());
+                    out.println("CONNECTION TYPE:" + client.getModel().getConnectionType());
+                    out.println("PING:" +client.getPingChecker());
+                    out.println("SCORE:" + client.getModel().getMyScore());
                 }
             }
 
