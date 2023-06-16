@@ -136,6 +136,7 @@ public class LoginController extends GUIController {
                 SocketClient.setView(gui);
             }
             client.initializeClient();
+            gui.getChatController().setClient(client);
         } catch (Exception e){
             showException("Error! Try again!");
             return;

@@ -151,4 +151,8 @@ public class GUI extends View {
     public Stage getChatStage() {
         return chatStage;
     }
+
+    public ChatController getChatController() {
+        return chatController;
+    }
 }

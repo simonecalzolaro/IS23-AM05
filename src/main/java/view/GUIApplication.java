@@ -33,6 +33,7 @@ public class GUIApplication extends Application {
         stage1.setScene(scene1);
         stage1.setTitle("Chat");
         ChatController chatController= fxmlLoader1.getController();
+        chatController.setScene(gui, stage1);
         gui.setChatController(chatController);
 
         gui.setChatStage(stage1);
