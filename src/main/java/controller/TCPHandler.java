@@ -26,6 +26,15 @@ public class TCPHandler {
         this.lobby = lobby;
     }
 
+
+    /**
+     * This method is always listening requests of connection from the clients
+     * It implements a server-socket functionality
+     * When a client try to connect to a server it creates a new socket then it creates a new SocketLobby linked to the client through the socket just created
+     * The threads are cached into CachedThreadPool
+     * It necessary in order to create a client-server connection via socket
+     */
+
     public void startServer(){
 
         getServerSettings();
@@ -58,6 +67,9 @@ public class TCPHandler {
 
 
 
+    /**
+     * This method set the server properties set the PORT where the server wants to receive the request from the client
+     */
     protected void getServerSettings() {
         try{
             Object o = new JSONParser().parse(new FileReader("src/main/config/header.json")); //C:/Users/Utente/IS23-AM05/project_eng_soft_2023/

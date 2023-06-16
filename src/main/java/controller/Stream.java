@@ -24,9 +24,10 @@ public class Stream {
      * @param code indicates the direction of the stream
      *             ==> code = 1: input
      *             ==> code = 0: output
-     * @throws IOException
-     * @throws InvalidParametersException
+     * @throws IOException thrown when a network error occurs
+     * @throws InvalidParametersException thrown then the code is not 1 or 0
      */
+
 
     public Stream(Socket socket, int code) throws IOException, InvalidParametersException {
 
@@ -46,7 +47,6 @@ public class Stream {
      * @throws IOException method unable to create the stream
      * @throws InvalidParametersException users gave a wrong code to the method
      */
-
     private void initializeStream() throws IOException, InvalidParametersException {
 
         switch (code){
@@ -87,7 +87,7 @@ public class Stream {
      * Read the object coming from the network and return it to the users
      * @return JSONObject from the network
      * @throws IOException thrown if the method is not able to read the object from the network
-     * @throws ClassNotFoundException
+     * @throws ClassNotFoundException thrown when the class hasn't been found
      * @throws InvalidOperationException thrown when the stream had been built has an output stream ,i.e, code = 0
      */
 
@@ -106,8 +106,7 @@ public class Stream {
 
     /**
      * Reset the stream
-     *
-     * @throws IOException
+     * @throws IOException thrown when a network error occurs
      * @throws InvalidOperationException thrown when the stream had been built has an input stream ,i.e, code = 1
      */
 

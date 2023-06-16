@@ -23,8 +23,9 @@ public class RMIControlPlayer extends ControlPlayer{
      * Assign player id
      * Initialize score
      * Set player status as NOT_MY_TURN
-     *
-     * @param nickname : unique player nickname
+     * @param nickname of the player who logged in the game
+     * @param clientHandler reference/RMI stream for communicating with the client
+     * @throws RemoteException thrown when a network error occurs
      */
     public RMIControlPlayer(String nickname, ClientHandler clientHandler) throws RemoteException {
 
@@ -48,8 +49,7 @@ public class RMIControlPlayer extends ControlPlayer{
 
     /**
      * this method tells to "nextClient" to start his turn, is divided in RMI and socket
-     * @return true if everything went fine
-     * @throws RemoteException
+     * @throws RemoteException thrown when a network error occurs
      */
     @Override
     public void notifyStartYourTurn() throws RemoteException {
@@ -64,6 +64,11 @@ public class RMIControlPlayer extends ControlPlayer{
         }
     }
 
+
+    /**
+     * This method tells the client to end its turn
+     * @throws RemoteException thrown when a network error occurs
+     */
     @Override
     public void notifyEndYourTurn() throws RemoteException {
 
@@ -76,6 +81,11 @@ public class RMIControlPlayer extends ControlPlayer{
         }
     }
 
+
+    /**
+     * This method update the board of every client playing the game
+     * @throws RemoteException thrown when a network error occurs
+     */
     @Override
     public void notifyUpdatedBoard() throws RemoteException{
 
@@ -95,6 +105,10 @@ public class RMIControlPlayer extends ControlPlayer{
     }
 
 
+    /**
+     * This method tells the client to end the game
+     * @throws RemoteException thrown when a network error occurs
+     */
     @Override
     public void notifyEndGame() throws RemoteException{
 
@@ -109,7 +123,7 @@ public class RMIControlPlayer extends ControlPlayer{
 
     /**
      * this method tells to all users that the game has started and that they aren't anymore in the waiting room, is divided in RMI and socket
-     * @throws RemoteException
+     * @throws RemoteException thrown when a network error occurs
      */
     @Override
     public void notifyStartPlaying() throws RemoteException {
@@ -123,6 +137,12 @@ public class RMIControlPlayer extends ControlPlayer{
         }
     }
 
+
+
+    /**
+     * This method send the ping to the client in order to verify if it's online or not
+     * @throws IOException thrown when a network error occurs
+     */
     @Override
     public void askPing() throws IOException {
 
@@ -130,6 +150,13 @@ public class RMIControlPlayer extends ControlPlayer{
 
     }
 
+
+    /**
+     * This method is used in order to warn the client about a new message received from another client
+     * @param nick: nickname of the sender
+     * @param message: text message
+     * @throws IOException thrown when a network error occurs
+     */
     @Override
     public void notifyNewMessage(String nick, String message) throws IOException {
 
@@ -142,6 +169,11 @@ public class RMIControlPlayer extends ControlPlayer{
         }
     }
 
+
+    /**
+     * This method tells the client to insert the number of players of the game
+     * That means that the current client is the first player
+     */
     @Override
     public void askNumberOfPlayers() {
         try {
@@ -153,6 +185,10 @@ public class RMIControlPlayer extends ControlPlayer{
 
 
 
+    /**
+     * This method is invoked when a client tries to continue a game and succeed in it, so it's necessary that he receives the updated board and its attributes stored in the server
+     * @throws RemoteException thrown when a network error occurs
+     */
     @Override
     public void restoreSession() throws RemoteException {
 
@@ -190,6 +226,11 @@ public class RMIControlPlayer extends ControlPlayer{
         this.ch=cliHnd;
     }
 
+
+    /**
+     * Not used in RMIControlPlayer
+     * @param streams not important here
+     */
     @Override
     public void setStreams(ArrayList<Stream> streams) { }
 

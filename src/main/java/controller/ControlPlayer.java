@@ -57,6 +57,10 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
 
     }
 
+    /**
+     * This method assigns a new bookshelf to the player
+     * @param board needed to set a new bookshelf
+     */
     public void initializeControlPlayer(Board board){
 
         bookshelf = new Bookshelf(board);
@@ -66,6 +70,8 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     }
 
     /**
+     *
+     /**
      *
      * @param stream_tiles ordered list of tiles to insert
      * @param column column where to insert the tiles
@@ -91,6 +97,9 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     }
 
 
+    /**
+     * Update the player score after every bookshelf update
+     */
     private void updateScore(){
         score = bookshelf.getMyScore();
     }
@@ -129,7 +138,6 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     /**
      * method called by the clients to choose tiles from the board of their game
      * @param coord coordinates of the chosen tiles
-     * @return true if the chosen tiles are valid
      */
     @Override
     public void chooseBoardTiles(List<Integer> coord) throws RemoteException, NotConnectedException, InvalidParametersException, NotMyTurnException, InvalidChoiceException {
@@ -140,8 +148,8 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
      * method called by clients to insert the tiles they choose from the board into their bookshelf
      * @param choosenColumn column where to insert the tiles
      * @param coord tile coordinates
-     * @throws NotConnectedException
-     * @throws NotMyTurnException
+     * @throws NotConnectedException thrown when the player is not connected
+     * @throws NotMyTurnException thrown when the client makes an action when it's not his turn
      */
     @Override
     public void insertShelfTiles( int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidLenghtException, InvalidChoiceException {
@@ -194,7 +202,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
 
     /**
      * method called by the client to pass his turn to the next player (like timeout or others)
-     * @throws RemoteException
+     * @throws RemoteException thrown when a network error occurs
      */
     @Override
     public void passMyTurn() throws RemoteException{
@@ -235,6 +243,12 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     }
 
 
+    /**
+     * This method is used for sending a message through the chat to another player
+     * @param message the client wants so send
+     * @param recipients pool of messages
+     * @throws RemoteException thrown when a network error occurs
+     */
     @Override
     public void postMessage(String message, ArrayList<String> recipients) throws RemoteException{
 

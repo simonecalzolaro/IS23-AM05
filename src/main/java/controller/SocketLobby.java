@@ -26,16 +26,16 @@ public class SocketLobby implements Runnable{
 
 
     /**
-     * SocketLobby is responsible for all the requests coming from the client, it receive a JSONObject then execute the parsing of the Object's fields
+     * SocketLobby is responsible for all the requests coming from the client, it receives a JSONObject then execute the parsing of the Object's fields
      * in order to individuate the action invoked by the client with the respective parameters, then invokes the method on the Lobby through the lobby attribute
      * The constructor assigns the two parameters lobby and socket in order to execute request from the client on the server and sending/receiving data from the client
      * through the Socket
      * The input/output streams are abstracted with a Stream object which contains all method and attribute that enable the communication between client and the server over
      * the network
      *
-     * @param lobby reference to the lobby, so that every request for the server will invokes a method on this attribute
+     * @param lobby reference to the lobby, so that every request for the server will invoke a method on this attribute
      * @param socket created by the TCPHandler() this links the communication from the client to the server
-     * @throws IOException
+     * @throws IOException thrown when a fatal error occurs, it forces the thread to stop
      */
     public SocketLobby(Lobby lobby, Socket socket) throws IOException {
 
@@ -64,12 +64,11 @@ public class SocketLobby implements Runnable{
 
     /**
      * Responsible for receiving request, as JSONObjects, then it parse the field 'Action' of the object received that indicates
-     * which method of the Lobby/ControlPlayer has to be invoked and then it invokes the method through specific local methods
-     * --> These local methods are used for separating the parsing from the invokation of the methods, and for having a cleaner code
-     *
-     * The method can parse 3 type of request coming from the 3 interfaces ClientServerHandler, ControllerAksNotify and GameHandler
-     *  --> Before to parse the Action it parses the Interface field in order to individuate the correct branch of the incoming request
-     * @throws RemoteException
+     * which method of the Lobby/ControlPlayer has to be invoked, then it invokes the method through specific local methods
+     * --> These local methods are used for separating the parsing from the invocation of the methods, and for having a cleaner code
+     * The method can parse 3 type of request coming from the 2 kind of interfaces: ClientServerHandler, GameHandler
+     * @throws IOException thrown from here when fatal errors occurs and force the thread to stop
+     * @throws LoginException thrown from here when fatal errors occurs and force the thread to stop
      */
     public synchronized void startServer() throws RemoteException {
 
@@ -185,9 +184,10 @@ public class SocketLobby implements Runnable{
     /**
      * It parses the nickname field and store the value into the nickname String then create an ArrayList<> that stores the input/output streams
      * Then invokes the lobby.login() method passing the nickname and the ArrayList as parameters
-     * @param json object received from the client, it has been passed to this method in order to parse the nickname chose by the client
-     *
+     * @param json contains all the parameters to parse
      * @return GameHandler object in order to bind the class to its own ControlPlayer
+     * @throws LoginException this exception occurs when the client is unable to login, it forces the ending of the thread
+     * @throws IOException this exception may occur for several reasons, it forces the ending of the thread
      */
     public GameHandler TCPLogin(JSONObject json){
 
@@ -210,6 +210,11 @@ public class SocketLobby implements Runnable{
     }
 
 
+    /**
+     * It parses the number of players received from the client and its nickname
+     * Then invokes the Lobby.setNumberOfPlayers() for setting the number of players of the game that it's going to be started
+     * @param json contains all the parameters to parse
+     */
     public void TCPSetNumberOfPlayers(JSONObject json){
 
         int n = (int) json.get("Param1");
@@ -224,6 +229,12 @@ public class SocketLobby implements Runnable{
     }
 
 
+    /**
+     * It parses the nickname of the player that wants to leave the game and the ID of the game that the player wants to leave
+     * Then invokes the Lobby.leaveGame() for leaving the game
+     * @param json contains all the parameters to parse
+     * @throws LoginException occurs when the client is unable to leave the game
+     */
     public void TCPLeaveGame(JSONObject json){
 
         String nickname = (String) json.get("Param1");
@@ -240,6 +251,15 @@ public class SocketLobby implements Runnable{
     }
 
 
+
+    /**
+     * It parses the nickname of the client who wants to continue the game he was playing before a disconnection/crash, then it parses the gameID of the game he wants to continue
+     * Then it calls the Lobby.continueGame()
+     * If some errors occurs it invoke the throwLoginException() method which tells the client that he's unable to continue the game and returns null
+     * @param json contains all the parameters to parse
+     * @return GameHandler object which is the reference of the ControlPlayer used for playing, null if some errors occurs trying to continue the game
+     * @throws LoginException thrown when the client is unable to continue the game that he was playing, this is caught in the startServer() in order to invoke the throwLoginException() method
+     */
     public GameHandler TCPContinueGame(JSONObject json){
 
         String nickname = (String) json.get("Param1");
@@ -262,6 +282,15 @@ public class SocketLobby implements Runnable{
     }
 
 
+    /**
+     *It parses the coordinates of the tiles that the client has chosen from the board
+     *Then it invokes the ControlPlayer.chooseBoardTiles() which will communicate this coordinated to the model
+     * @param json contains all the parameters to parse
+     * @throws InvalidChoiceException thrown when client picks a wrong tile from the board
+     * @throws NotConnectedException thrown when the client is not connected
+     * @throws InvalidParametersException thrown when the client asks for wrong parameters
+     * @throws NotMyTurnException thrown when a client try to make a move while it's not its turn
+     */
     public void TCPChooseBoardTiles(JSONObject json){
 
         List<Integer> coord = (List<Integer>) json.get("Param1");
@@ -284,7 +313,14 @@ public class SocketLobby implements Runnable{
 
 
 
-
+    /**
+     * It parses the columns of the shelf where the player wants to insert the tiles, then parses the tiles to insert in it
+     * Then invokes the ControlPlayer.insertShelfTiles() method
+     * @param json contains all the parameters to parse
+     * @throws InvalidChoiceException thrown when client picks a wrong tile from the board
+     * @throws NotConnectedException thrown when the client is not connected
+     * @throws NotMyTurnException thrown when a client try to make a move while it's not its turn
+     */
     public void TCPInsertShelfTiles(JSONObject json){
 
         int column = (int) json.get("Param1");
@@ -307,6 +343,10 @@ public class SocketLobby implements Runnable{
     }
 
 
+    /**
+     * It parses the nickname of the clients who responded the ping with a pong and the gameID he's playing
+     * @param json contains all the parameters to parse
+     */
     public void TCPPong(JSONObject json){
 
         //System.out.println("*** tcpPong()");
@@ -325,6 +365,9 @@ public class SocketLobby implements Runnable{
 
 
 
+    /**
+     * Calls the ControlPlayer.passMyTurn()
+     */
     public void TCPPassMyTurn(){
 
         try{
@@ -337,6 +380,10 @@ public class SocketLobby implements Runnable{
 
 
 
+    /**
+     * It parses the message and the recipient of the message that client wants to send through the chat abstraction
+     * @param json contains all the parameters to parse
+     */
     public void TCPPostMessage(JSONObject json){
 
         String message = (String) json.get("Param1");
@@ -352,6 +399,9 @@ public class SocketLobby implements Runnable{
 
 
 
+    /**
+     * This method is used for telling the client that a LoginException occurred in order let him know how to behave
+     */
     public void throwLoginException(boolean kind){
 
         JSONObject object = new JSONObject();
@@ -376,6 +426,9 @@ public class SocketLobby implements Runnable{
 
 
 
+    /**
+     * Starts the SocketLobby thread for each client who wants to play
+     */
     @Override
     public void run() {
         try {
