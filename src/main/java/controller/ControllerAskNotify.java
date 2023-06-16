@@ -1,5 +1,7 @@
 package controller;
 
+import myShelfieException.FatalException;
+
 import java.io.IOException;
 import java.rmi.RemoteException;
 
@@ -12,7 +14,7 @@ public interface ControllerAskNotify {
     /**
      * asks the client to insert the number of player
      */
-    void askNumberOfPlayers() ;
+    void askNumberOfPlayers() throws FatalException;
 
     /**
      * this method tells to "nextClient" to start his turn, is divided in RMI and socket
@@ -42,7 +44,7 @@ public interface ControllerAskNotify {
      * this method tells to all users that the game has started and that they aren't anymore in the waiting room, is divided in RMI and socket
      * @throws RemoteException
      */
-    void notifyStartPlaying() throws IOException;
+    void notifyStartPlaying() throws IOException, FatalException;
 
     /**
      * send an ask request to the client

@@ -9,7 +9,6 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 
 /**
@@ -138,7 +137,7 @@ public abstract class Lobby implements  ClientServerHandler {
      * Method to check if the server has to ask a client the number of players he wants in his game.
      * It is always executed immediately after the login() method.
      */
-    public synchronized void checkAskNumberOfPlayers(){
+    public synchronized void checkAskNumberOfPlayers() throws LoginException, RemoteException {
 
         System.out.println("-> checkAskNuberOfPlayers active");
         //if there isn't any waiting room it means that "client" is the first player
@@ -160,7 +159,12 @@ public abstract class Lobby implements  ClientServerHandler {
                 ControlPlayer pl = tempPlayers.get(0);
 
                 //server asks client how many players he wants in his match
-                pl.askNumberOfPlayers();
+                try {
+                    pl.askNumberOfPlayers();
+                } catch (FatalException e) {
+                    leaveGame(e.getNickname(),e.getID());
+                }
+
                 System.out.println("    ...asking the number of players to "+pl.getPlayerNickname());
                // System.out.println("-> " + pl.getPlayerNickname() + " chooses " + attendedPlayers + " number of players");
 
@@ -230,12 +234,16 @@ public abstract class Lobby implements  ClientServerHandler {
 
                         try {
                             cp.notifyUpdatedBoard();
-                            cp.notifyStartPlaying();
+                            try {
+                                cp.notifyStartPlaying();
+                            } catch (FatalException e) {
+                                leaveGame(e.getNickname(),e.getID());
+                            }
                             if (cp.equals(newPlayers.get(0))) {
                                 cp.setPlayerStatus(PlayerStatus.MY_TURN);
                                 cp.notifyStartYourTurn();
                             }
-                        } catch (IOException e) {
+                        } catch (IOException | LoginException e) {
                             throw new RuntimeException(e);
                         }
                     }
@@ -490,7 +498,7 @@ public abstract class Lobby implements  ClientServerHandler {
      * removes Player cp from his waiting room and, if cp is the only one present, the waiting room il reinitialized
      * @param cp ControlPlayer to be removed from the waiting room
      */
-    public synchronized void removeFromWaitingRoom (ControlPlayer cp){
+    public synchronized void removeFromWaitingRoom (ControlPlayer cp) throws LoginException, RemoteException {
 
         if(tempPlayers.size()>0){
 
@@ -513,7 +521,11 @@ public abstract class Lobby implements  ClientServerHandler {
             if(cp.getPlayerStatus().equals(PlayerStatus.nOfPlayerAsked)){
                 attendedPlayers = -2;
                 tempPlayers.get(0).setPlayerStatus(PlayerStatus.nOfPlayerAsked);
-                tempPlayers.get(0).askNumberOfPlayers();
+                try{
+                    tempPlayers.get(0).askNumberOfPlayers();
+                } catch (FatalException e) {
+                    leaveGame(e.getNickname(),e.getID());
+                }
             }
         }
     }

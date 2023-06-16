@@ -1,14 +1,10 @@
 package controller;
 
 
-import client.ClientHandler;
-import model.Tile;
+
 import myShelfieException.*;
 import org.json.simple.JSONObject;
-
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -19,6 +15,9 @@ public class SocketLobby implements Runnable{
     Socket socketServer;
     Stream outServer;
     Stream inServer;
+
+    JSONObject request;
+    JSONObject response;
 
     GameHandler cp;
 
@@ -46,19 +45,13 @@ public class SocketLobby implements Runnable{
 
         try{
             outServer = new Stream(socketServer,0);
-        } catch (InvalidParametersException e) {
-            System.out.println("SocketClient --- InvalidParameterException occurred trying to create the output stream");
-            System.out.println("---> Change it with a valid one");
-            throw new RuntimeException();
+            inServer = new Stream(socketServer,1);
+        }catch (InvalidParametersException e){
+            System.out.println("SocketLobby --- Fatal error encountered while setting up the socket stream\n---> Socket closed\n---> Thread stopped");
+            socket.close();
         }
 
-        try{
-            inServer = new Stream(socketServer,1);
-        } catch (InvalidParametersException e) {
-            System.out.println("SocketClient --- InvalidParameterException occurred trying to create the input stream");
-            System.out.println("---> Change it with a valid one");
-            throw new RuntimeException();
-        }
+
     }
 
 
@@ -70,29 +63,22 @@ public class SocketLobby implements Runnable{
      * @throws IOException thrown from here when fatal errors occurs and force the thread to stop
      * @throws LoginException thrown from here when fatal errors occurs and force the thread to stop
      */
-    public synchronized void startServer() throws RemoteException {
+    public synchronized void startServer() throws IOException,ClassNotFoundException {
 
-        JSONObject request = new JSONObject();
-        JSONObject response = new JSONObject();
+        request = new JSONObject();
+        response = new JSONObject();
 
 
 
         while(true) {
 
-            if (!request.equals(null)) request.clear();
-            if (!response.equals(null)) response.clear();
+            request.clear();
+            response.clear();
 
             try {
                 request = inServer.read();
             } catch (InvalidOperationException e) {
-                System.out.println("SocketLobby --- InvalidOperationException occurred trying to read a new request");
-                e.printStackTrace();
-            } catch (IOException e) {
-                System.out.println("SocketLobby --- IOException occurred trying to read a new request");
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                System.out.println("SocketLobby --- ClassNotFoundException occurred trying to read a new request");
-                e.printStackTrace();
+                System.out.println("SocketLobby --- InvalidOperationException occurred trying to read a new request\n---> Application keeps running");
             }
 
             String Interface = (String) request.get("Interface");
@@ -200,12 +186,14 @@ public class SocketLobby implements Runnable{
         try{
             return lobby.login(nickname,streams);
         } catch (LoginException e) {
-            throw new RuntimeException(e);
+           // --> Da gestire per TUI e GUI
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println("");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketLobby --- IOException encountered trying to read the file");
         }
+
+        return null;
 
     }
 
@@ -222,8 +210,12 @@ public class SocketLobby implements Runnable{
 
         try{
             lobby.setNumberOfPlayers(n,nickname);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
+        }
+        catch (RemoteException e) {
+            System.out.println("");
+        }
+        catch (IllegalArgumentException e){
+            System.out.println("SocketLobby --- Client tried to perform an invalid action");
         }
 
     }
@@ -243,9 +235,9 @@ public class SocketLobby implements Runnable{
         try{
             lobby.leaveGame(nickname,gameId);
         } catch (LoginException e) {
-            throw new RuntimeException(e);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            e.getMessage();
+        } catch (RemoteException e){
+            System.out.println("");
         }
 
     }
@@ -274,7 +266,7 @@ public class SocketLobby implements Runnable{
         } catch (LoginException e) {
             throwLoginException(true);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println("");
         }
 
         return null;
@@ -298,15 +290,15 @@ public class SocketLobby implements Runnable{
         try{
             cp.chooseBoardTiles(coord);
         } catch (InvalidChoiceException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketLobby --- Invalid choice performed by the client");
         } catch (NotConnectedException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketLobby --- Client not connected");
         } catch (InvalidParametersException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketLobby --- Invalid parameter inserted by the client");
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+           System.out.println("");
         } catch (NotMyTurnException e) {
-            throw new RuntimeException(e);
+           System.out.println("SocketLobby --- Client performed an action while is not its turn");
         }
 
     }
@@ -329,15 +321,15 @@ public class SocketLobby implements Runnable{
         try{
             cp.insertShelfTiles(column,coord);
         } catch (InvalidChoiceException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketLobby --- Invalid choice performed by the client");
         } catch (NotConnectedException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketLobby --- Client not connected");
         } catch (InvalidLenghtException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketLobby --- Invalid length !!!");
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+           System.out.println("");
         } catch (NotMyTurnException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketLobby --- Client performed an action while is not its turn");
         }
 
     }
@@ -358,7 +350,7 @@ public class SocketLobby implements Runnable{
             lobby.pong(nickname,gameId);
 
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+           System.out.println("");
         }
 
     }
@@ -373,7 +365,7 @@ public class SocketLobby implements Runnable{
         try{
             cp.passMyTurn();
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println("");
         }
 
     }
@@ -392,7 +384,7 @@ public class SocketLobby implements Runnable{
         try{
             cp.postMessage(message,recipients);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println("");
         }
 
     }
@@ -415,9 +407,8 @@ public class SocketLobby implements Runnable{
         } catch (InvalidOperationException e) {
             System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyStartPlaying trying to reset/write the stream");
             System.out.println("---> Maybe you're trying to reset/write an input stream");
-            throw new RuntimeException();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("SocketLobby --- IOException occurred trying to flush throwLoginException through the channel");
         }
 
     }
@@ -433,8 +424,16 @@ public class SocketLobby implements Runnable{
     public void run() {
         try {
             startServer();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
+        }
+        catch (IOException | ClassNotFoundException e){
+            System.out.println("SocketLobby --- An Exception caused a fatal error while running the application\n---> Socket stopped\n---> Thread stopped");
+        }
+        finally {
+            try {
+                socketServer.close();
+            } catch (IOException e) {
+                System.out.println("SocketLobby --- Unable to close the socket stream safely");
+            }
         }
     }
 

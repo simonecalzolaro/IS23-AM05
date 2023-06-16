@@ -1,5 +1,7 @@
 package controller;
 
+import myShelfieException.LoginException;
+
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
@@ -28,7 +30,15 @@ public class ServerApp {
             lobby = new RMILobby();
             lobby.startServer();
             new Thread(()-> lobby.checkFullWaitingRoom()).start();
-            new Thread(()-> lobby.checkAskNumberOfPlayers()).start();
+            new Thread(()-> {
+                try {
+                    lobby.checkAskNumberOfPlayers();
+                } catch (LoginException e) {
+                    System.out.println("");
+                } catch (RemoteException e) {
+                    System.out.println("");
+                }
+            }).start();
 
         } catch (RemoteException e) {
             System.out.println("ServerApp --- RemoteException occurred while starting a new RMIServer");
