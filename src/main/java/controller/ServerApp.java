@@ -31,13 +31,7 @@ public class ServerApp {
             lobby.startServer();
             new Thread(()-> lobby.checkFullWaitingRoom()).start();
             new Thread(()-> {
-                try {
                     lobby.checkAskNumberOfPlayers();
-                } catch (LoginException e) {
-                    System.out.println("");
-                } catch (RemoteException e) {
-                    System.out.println("");
-                }
             }).start();
 
         } catch (RemoteException e) {

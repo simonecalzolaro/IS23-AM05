@@ -199,7 +199,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
     public void ping() throws RemoteException{
 
         pingChecker.setConnected(true);
-       // System.out.println("ping() received");
+        //System.out.println("ping() received");
 
         try{
             //System.out.println("*** pong() the server");
