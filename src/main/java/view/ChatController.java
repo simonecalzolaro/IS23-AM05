@@ -13,8 +13,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -48,13 +46,13 @@ public class ChatController extends GUIController{
         if(broadcastCheckBox.isSelected()){
             recipients.addAll(client.getModel().getOtherPlayers().keySet());
         } else {
-            if (player1CheckBox.isSelected()&&player1CheckBox.isDisabled()) recipients.add(player1CheckBox.getText());
-            if (player2CheckBox.isSelected()&&player2CheckBox.isDisabled()) recipients.add(player2CheckBox.getText());
-            if (player3CheckBox.isSelected()&&player3CheckBox.isDisabled()) recipients.add(player3CheckBox.getText());
+            if (player1CheckBox.isSelected()&&!player1CheckBox.isDisabled()) recipients.add(player1CheckBox.getText());
+            if (player2CheckBox.isSelected()&&!player2CheckBox.isDisabled()) recipients.add(player2CheckBox.getText());
+            if (player3CheckBox.isSelected()&&!player3CheckBox.isDisabled()) recipients.add(player3CheckBox.getText());
         }
 
         try {
-            //client.askPostMessage(textField.getText(), recipients);
+            client.askPostMessage(textField.getText(), recipients);
             plotMessage("You", textField.getText());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -64,6 +62,7 @@ public class ChatController extends GUIController{
     }
 
     public void plotMessage(String player, String message){
+
         Text text = new Text(player + ": " +message);
         chatPane.getChildren().add(text);
         text.setLayoutX(5);
@@ -77,22 +76,28 @@ public class ChatController extends GUIController{
         double textHeight = bounds.getHeight();
 
         height=textHeight+10+height;
+        if(chatPane.getHeight()<200) chatPane.setPrefHeight(200);
 
         if (height >= chatPane.getHeight()){
             chatPane.setPrefHeight(height+10);
             scrollPane.setVvalue(scrollPane.getVmax());
         }
+
     }
     @FXML
     private void setRecipient(ActionEvent event){
+            if(event.getSource()==broadcastCheckBox){
+                player1CheckBox.setSelected(false);
+                player2CheckBox.setSelected(false);
+                player3CheckBox.setSelected(false);
+            } else {
+                broadcastCheckBox.setSelected(false);
+            }
 
-        if(event.getSource()==broadcastCheckBox){
-            player1CheckBox.setSelected(false);
-            player2CheckBox.setSelected(false);
-            player3CheckBox.setSelected(false);
-        } else {
-            broadcastCheckBox.setSelected(false);
+        if(!player1CheckBox.isSelected()&&player2CheckBox.isSelected()&&!player3CheckBox.isSelected()){
+            broadcastCheckBox.setSelected(true);
         }
+
     }
 
     @FXML
@@ -112,12 +117,23 @@ public class ChatController extends GUIController{
             case 1:{
                 player2CheckBox.setVisible(false);
                 player2CheckBox.setDisable(true);
+
             }
 
             case 2: {
                 player3CheckBox.setDisable(true);
                 player3CheckBox.setVisible(false);
             }
+        }
+        int i=0;
+        for(String s: client.getModel().getOtherPlayers().keySet()){
+            switch (i){
+                case 0-> player1CheckBox.setText(s);
+                case 1-> player2CheckBox.setText(s);
+                case 2-> player3CheckBox.setText(s);
+            }
+
+            i++;
         }
 
     }

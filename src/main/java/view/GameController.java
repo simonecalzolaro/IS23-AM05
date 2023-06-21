@@ -3,8 +3,7 @@ package view;
 //TODO show exception
 //TODO end game token
 //TODO timer enter num of player
-//TODO chat
-
+//commenti
 import client.Client;
 import client.Matrix;
 import client.Tile;
@@ -128,7 +127,7 @@ public class GameController extends GUIController {
         }
         initialize();
         setOtherBookshelf();
-
+        gui.getChatController().setPlayer();
     }
 
     private Timer timerExc;

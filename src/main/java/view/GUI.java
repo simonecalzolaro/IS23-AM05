@@ -1,7 +1,6 @@
 package view;
 
 import javafx.application.Platform;
-import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -49,7 +48,7 @@ public class GUI extends View {
 
     @Override
     public void plotNewMessage(String Sender,String message) {
-
+        Platform.runLater(()->chatController.plotMessage(Sender, message));
     }
 
 

@@ -2,7 +2,7 @@
 {
 	"serverSettings":{
 
-		"hostname":"192.168.0.3",
+		"hostname":"127.0.0.1",
 		"RMIPORT":2000,
 		"TCPPORT":3000
 
