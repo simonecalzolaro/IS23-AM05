@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import myShelfieException.LoginException;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.Map;
 
 import static javafx.application.Platform.exit;
@@ -62,12 +61,8 @@ public class RankController extends GUIController {
     public void startNewGame(ActionEvent actionEvent) throws IOException {
         try {
             client.askLogin(client.getModel().getNickname());
-        } catch (LoginException e) {
-            throw new RuntimeException(e);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (LoginException | IOException ignored) {
+
         }
 
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("login.fxml"));

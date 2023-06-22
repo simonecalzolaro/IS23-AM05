@@ -3,7 +3,8 @@ package view;
 //TODO show exception
 //TODO end game token
 //TODO timer enter num of player
-//commenti
+//TODO commenti
+//TODO sistema rank
 import client.Client;
 import client.Matrix;
 import client.Tile;
@@ -113,7 +114,7 @@ public class GameController extends GUIController {
 
     private int selectedColumn=-1;
 
-    private TileImages tileImages=new TileImages();
+    private final TileImages tileImages=new TileImages();
 
     private final List<Integer> coord = new ArrayList<>();
     private final List<Integer> sortedCoord = new ArrayList<>();
@@ -151,10 +152,6 @@ public class GameController extends GUIController {
         this.client=client;
         }
 
-    @FXML
-    private void prova(ActionEvent actionEvent) throws IOException {
-
-    }
     //----------------------------------------------------------- Server vs client-------------------------------------
 
     /**
@@ -255,16 +252,14 @@ public class GameController extends GUIController {
         }
         try{
             client.askBoardTiles(coord);
-        } catch (InvalidChoiceException e) {
-            throw new RuntimeException(e);
+        } catch (InvalidChoiceException | InvalidParametersException e) {
+            showException("This move is invalid!");
         } catch (NotConnectedException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidParametersException e) {
-            throw new RuntimeException(e);
+            showException("You're not online");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            showException("IOException");
         } catch (NotMyTurnException e) {
-            throw new RuntimeException(e);
+            showException("It's not your turn!");
         }
         disableBoardButton();
         setTile();
@@ -274,6 +269,8 @@ public class GameController extends GUIController {
         }
         enterTilesButton.setDisable(true);
         enterTilesButton.setVisible(false);
+
+
         removeTiles();
         for(Button button:columnButtons){
             button.setDisable(false);
@@ -288,15 +285,16 @@ public class GameController extends GUIController {
         setTimer();
     }
 
-    public void leaveGame(ActionEvent actionEvent){
+    @FXML
+    private void leaveGame(ActionEvent actionEvent){
 
         try {
             client.askLeaveGame();
-            exit();
+            System.exit(0);
         } catch (LoginException e) {
-            throw new RuntimeException(e);
+            showException("An error occurred while trying to leave the game");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            showException("IOException");
         }
     }
 
@@ -307,16 +305,14 @@ public class GameController extends GUIController {
             for(int i=0; i<6; i++){
                 myBookshelf[i][selectedColumn].setImage(insertBookshelf[i][selectedColumn].getImage());
             }
-        } catch (InvalidChoiceException e) {
-            throw new RuntimeException(e);
+        } catch (InvalidChoiceException | InvalidLenghtException e) {
+            showException("This move is invalid!");
         } catch (NotConnectedException e) {
-            throw new RuntimeException(e);
+            showException("You're not online!");
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidLenghtException e) {
-            throw new RuntimeException(e);
+            showException("IOException");
         } catch (NotMyTurnException e) {
-            throw new RuntimeException(e);
+            showException("It's not your turn!");
         }
 
         endInsertTiles(actionEvent);
@@ -343,6 +339,10 @@ public class GameController extends GUIController {
         exceptionLabel.setVisible(true);
         exceptionLabel.setDisable(false);
 
+        if(timerExc!=null){
+            timerExc.cancel();
+            timerExc=null;
+        }
         timerExc = new Timer();
         timerExc.schedule(taskExc, 3000);
 
@@ -369,7 +369,7 @@ public class GameController extends GUIController {
             client.askPassMyTurn();
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            showException("An error occurred while trying to pass the turn!");
         }
     }
 
@@ -711,11 +711,11 @@ if (timer!=null){
     }
     //--------------------------------------------------------------Board methods-----------------------------------------------
 
-    public void updateBoard(){
+    private void updateBoard(){
         int checkRefill=0;
         for (int i = 0; i<9; i++) {
             for (int j = 0; j < 9; j++) {
-                if (boardGroups[j][i]!=null&&boardImages[j][i]==null&&client.getModel().getBoard().getTileByCoord(i,j)!=Tile.NOTAVAILABLE&&client.getModel().getBoard().getTileByCoord(i,j)!=Tile.EMPTY) {
+                if (boardGroups[j][i]!=null&&boardImages[j][i].getImage()==null&&client.getModel().getBoard().getTileByCoord(i,j)!=Tile.NOTAVAILABLE&&client.getModel().getBoard().getTileByCoord(i,j)!=Tile.EMPTY) {
                     checkRefill=1;
                     break;
                 }
@@ -924,7 +924,7 @@ if (timer!=null){
         exitGroup.setVisible(false);
         exitGroup.setDisable(true);
     }
-    //----------------------------------------------------------Inizialization methods---------------------------------
+    //----------------------------------------------------------Initialization methods---------------------------------
    private void setOtherBookshelf(){
         switch (client.getModel().getNumOtherPlayers()){
                 case 1->{
@@ -1203,7 +1203,7 @@ if (timer!=null){
   }
 
   public String getCGCImage(int i){
-        switch (i+1){
+        switch (i){
             case 4->{
                 return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/1.jpg").toString();
             }

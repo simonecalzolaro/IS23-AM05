@@ -35,7 +35,7 @@
       </Button>
       <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutY="60.0" prefHeight="187.0" prefWidth="250.0" style="-fx-background-color: #ffd896;" vbarPolicy="ALWAYS">
         <content>
-          <AnchorPane fx:id="chatPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="234.0" style="-fx-background-color: #ffd896;">
+          <AnchorPane fx:id="chatPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="190.0" prefWidth="234.0" style="-fx-background-color: #ffd896;">
                <children>
 
                </children></AnchorPane>

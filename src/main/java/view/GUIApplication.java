@@ -19,7 +19,7 @@ public class GUIApplication extends Application {
         //stage.setMaximized(true);
         LoginController controller=fxmlLoader.getController();
         GUI gui=new GUI();
-        stage.setOnHidden(event->exit());
+        stage.setOnHidden(event->System.exit(0));
         gui.setLoginController(controller);
         controller.setScene(gui,stage);
         gui.startGame();

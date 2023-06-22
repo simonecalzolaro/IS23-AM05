@@ -8,18 +8,16 @@ import java.util.Map;
 import java.util.Timer;
 
 public class GUI extends View {
-    private int numOfPlayer;
+
     private LoginController loginController;
     private GameController gameController;
     private ChatController chatController;
-    private Timer timer;
+
     private Stage chatStage;
 
     @Override
     public void standardLogin() {
-        Platform.runLater(()->{
-            loginController.showLogin();
-        });
+        Platform.runLater(()-> loginController.showLoginScene());
     }
 
     @Override
@@ -53,9 +51,6 @@ public class GUI extends View {
 
 
 
-    public GUI() {
-        this.numOfPlayer = 0;
-    }
 
     /**
      * asks the player to enter the number of players in the game
@@ -131,13 +126,6 @@ public class GUI extends View {
         this.gameController=gameController;
     }
 
-    public Timer getTimer(){
-        return timer;
-    }
-
-    public void setTimer(Timer timer) {
-        this.timer=timer;
-    }
 
     public void setChatController(ChatController chatController) {
         this.chatController=chatController;

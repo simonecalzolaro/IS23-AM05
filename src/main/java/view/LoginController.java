@@ -62,26 +62,14 @@ public class LoginController extends GUIController {
             @Override
             public void run() {
                 switch (n%4) {
-                    case 0 -> {
-                        Platform.runLater(() -> {image1.setVisible(false);
-                            image2.setVisible(true);});
-
-                    }
-                    case 1 -> {
-                        Platform.runLater(() -> {image2.setVisible(false);
-                            image3.setVisible(true);});
-
-                    }
-                    case 2 -> {
-                        Platform.runLater(() -> {image3.setVisible(false);
-                            image4.setVisible(true);});
-
-                    }
-                    case 3 -> {
-                        Platform.runLater(() -> {image4.setVisible(false);
-                                               image1.setVisible(true);});
-
-                    }
+                    case 0 -> Platform.runLater(() -> {image1.setVisible(false);
+                        image2.setVisible(true);});
+                    case 1 -> Platform.runLater(() -> {image2.setVisible(false);
+                        image3.setVisible(true);});
+                    case 2 -> Platform.runLater(() -> {image3.setVisible(false);
+                        image4.setVisible(true);});
+                    case 3 -> Platform.runLater(() -> {image4.setVisible(false);
+                                           image1.setVisible(true);});
                 }
                 n++;
                 if(n==200) timer1.cancel();
@@ -92,18 +80,10 @@ public class LoginController extends GUIController {
             @Override
             public void run() {
                 switch (num%4){
-                    case 0 -> {
-                        Platform.runLater(() -> waitingLabel.setText("Waiting for players"));
-                    }
-                    case 1 -> {
-                        Platform.runLater(() -> waitingLabel.setText("Waiting for players."));
-                    }
-                    case 2 -> {
-                        Platform.runLater(() -> waitingLabel.setText("Waiting for players.."));
-                    }
-                    case 3 -> {
-                        Platform.runLater(() -> waitingLabel.setText("Waiting for players..."));
-                    }
+                    case 0 -> Platform.runLater(() -> waitingLabel.setText("Waiting for players"));
+                    case 1 -> Platform.runLater(() -> waitingLabel.setText("Waiting for players."));
+                    case 2 -> Platform.runLater(() -> waitingLabel.setText("Waiting for players.."));
+                    case 3 -> Platform.runLater(() -> waitingLabel.setText("Waiting for players..."));
                 }
                 num++;
                 if(num==800) timer2.cancel();
@@ -115,7 +95,7 @@ public class LoginController extends GUIController {
     }
 
 
-    public void showLogin(){
+    public void showLoginScene(){
         stage.show();
     }
     public void chooseProtocol(ActionEvent actionEvent) {
@@ -148,13 +128,18 @@ public class LoginController extends GUIController {
         chooseLabel.isDisable();
         chooseLabel.setVisible(false);
 
+        showEnterNickname();
+
+    }
+
+    private void showEnterNickname(){
+        enterNicknameLabel.setText("Enter your nickname:");
         enterNicknameLabel.setVisible(true);
         enterNicknameLabel.setDisable(false);
         nameField.setDisable(false);
         nameField.setVisible(true);
         loginButton.setDisable(false);
         loginButton.setVisible(true);
-
     }
     public void enterNickname(ActionEvent actionEvent){
         loginExceptionLabel.setDisable(true);
@@ -215,11 +200,9 @@ public class LoginController extends GUIController {
             }
 
         try {
-            showWaitingScene(); //da cambiare
+            showWaitingScene();
         } catch (IOException e){
-
-        } catch (Exception e){
-
+            showException("IOException");
         }
     }
 

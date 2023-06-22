@@ -35,8 +35,8 @@ public class ChatController extends GUIController{
     private Button enterButton;
 
     @FXML
-    private Font font = new Font( 14);
-    private double height = 15;
+    private final Font font = new Font( 14);
+    private double height = 20;
     @FXML
     private void plotMyMessage(ActionEvent event){
         if(textField.getText().equals("")){
@@ -76,7 +76,9 @@ public class ChatController extends GUIController{
         double textHeight = bounds.getHeight();
 
         height=textHeight+10+height;
-        if(chatPane.getHeight()<200) chatPane.setPrefHeight(200);
+        if(chatPane.getHeight()<190) {
+            chatPane.setPrefHeight(190);
+        }
 
         if (height >= chatPane.getHeight()){
             chatPane.setPrefHeight(height+10);
@@ -108,7 +110,7 @@ public class ChatController extends GUIController{
     @Override
     public void setScene(GUI gui, Stage stage) {
         super.setScene(gui, stage);
-
+        chatPane.setMinHeight(190);
 
     }
 

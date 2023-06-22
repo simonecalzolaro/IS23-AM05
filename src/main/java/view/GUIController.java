@@ -31,7 +31,8 @@ public abstract class GUIController {
         gui.getChatStage().show();
     }
 
-    public void showException() {
+    public void showException(String exception) {
+
     }
 
     public void setClient(Client client) {

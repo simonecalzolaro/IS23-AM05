@@ -99,11 +99,7 @@ public abstract class View {
             client.getModel().setNumOtherPlayers(num_other.intValue());
 
 
-        } catch (RemoteException e) {
-            System.out.println("Error encountered while starting the application --> try to reboot the application");
-        } catch (NotBoundException e) {
-            System.out.println("Error encountered while starting the application --> try to reboot the application");
-        } catch (IOException e) {
+        } catch (IOException | NotBoundException e) {
             System.out.println("Error encountered while starting the application --> try to reboot the application");
         }
 
