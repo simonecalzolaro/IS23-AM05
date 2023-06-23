@@ -257,7 +257,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
 
         for(String nick: recipients){
             for(ControlPlayer cp: game.getPlayers()){
-                if(recipients.contains(cp.getPlayerNickname())){
+                if(nick.equals(cp.getPlayerNickname())){
                     getters.add(cp);
                 }
             }
