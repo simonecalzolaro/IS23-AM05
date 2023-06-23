@@ -25,6 +25,7 @@ public class ClientApp {
 
     public static void main(String[] args) throws NotBoundException, LoginException, IOException {
 
+        System.out.println(System.getProperty("user.dir"));
         String nickName="";
 
         //--------------------------------- TUI o GUI ? ----------------------------------

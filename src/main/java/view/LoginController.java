@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import myShelfieException.LoginException;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -52,6 +53,7 @@ public class LoginController extends GUIController {
     private Timer timer1;
     private Timer timer2;
 
+    private Timer enterNumTimer;
 
     public void timer(){
         timer1 = new Timer();
@@ -185,6 +187,26 @@ public class LoginController extends GUIController {
         numField.setVisible(true);
         numButton.setDisable(false);
         numButton.setVisible(true);
+
+
+        if(enterNumTimer!=null){
+            enterNumTimer.cancel();
+            enterNumTimer=null;
+        }
+
+        enterNumTimer=new Timer();
+        TimerTask showWaitingScemeTask = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    showWaitingScene();
+                    client.askLeaveGame();
+                } catch (IOException | LoginException ignore) {
+                }
+            }
+        };
+
+        enterNumTimer.schedule(showWaitingScemeTask, 30000);
     }
 
     public void enterNumOfPlayer(ActionEvent actionEvent) {

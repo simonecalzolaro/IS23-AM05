@@ -64,7 +64,7 @@ public class RMILobby extends Lobby{
         Long PORT_pre;
 
         try{
-            Object o = new JSONParser().parse(new FileReader("src/main/config/header.json")); //C:/Users/Utente/IS23-AM05/project_eng_soft_2023/
+            Object o = new JSONParser().parse(new FileReader(System.getProperty("user.dir")+"/config/header.json"));
             JSONObject j =(JSONObject) o;
             Map arg = new LinkedHashMap();
             arg = (Map) j.get("serverSettings");

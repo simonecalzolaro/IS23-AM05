@@ -39,7 +39,7 @@ public abstract class View {
     public boolean checkForBackupFile(){
         JSONObject j = new JSONObject();
         try{
-            Object o = new JSONParser().parse(new FileReader("src/main/config/backup.json")); //C:/Users/Utente/IS23-AM05/project_eng_soft_2023/
+            Object o = new JSONParser().parse(new FileReader(System.getProperty("user.dir")+"/config/backup.json"));
             j =(JSONObject) o;
 
             connectionType = (boolean) j.get("connection");
@@ -82,7 +82,7 @@ public abstract class View {
         try {
 
             try{
-                Object o = new JSONParser().parse(new FileReader("src/main/config/backup.json"));
+                Object o = new JSONParser().parse(new FileReader(System.getProperty("user.dir")+"/config/backup.json"));
 
                 j = (JSONObject) o;
 

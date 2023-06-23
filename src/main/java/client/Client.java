@@ -228,7 +228,7 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
         FileWriter connect = null;
 
        try{
-           file = new FileWriter("src/main/config/backup.json");
+           file = new FileWriter(System.getProperty("user.dir")+"/config/backup.json");
 
 
        } catch (IOException e) {
