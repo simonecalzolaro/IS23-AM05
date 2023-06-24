@@ -2,9 +2,9 @@ package view;
 
 //TODO show exception
 //TODO end game token
-//TODO timer enter num of player
 //TODO commenti
 //TODO sistema rank
+//TODO sistema path
 import client.Client;
 import client.Matrix;
 import client.Tile;
@@ -25,7 +25,7 @@ import myShelfieException.*;
 import java.io.IOException;
 import java.util.*;
 
-import static javafx.application.Platform.exit;
+
 
 public class GameController extends GUIController {
     @FXML

@@ -142,6 +142,10 @@ public class LoginController extends GUIController {
         nameField.setVisible(true);
         loginButton.setDisable(false);
         loginButton.setVisible(true);
+        numField.setVisible(false);
+        numField.setDisable(true);
+        numButton.setDisable(true);
+        numButton.setVisible(false);
     }
     public void enterNickname(ActionEvent actionEvent){
         loginExceptionLabel.setDisable(true);
@@ -199,7 +203,10 @@ public class LoginController extends GUIController {
             @Override
             public void run() {
                 try {
-                    showWaitingScene();
+                    Platform.runLater(()->{
+                        showEnterNickname();
+                        showException("Time is up! Login again!");
+                    });
                     client.askLeaveGame();
                 } catch (IOException | LoginException ignore) {
                 }
@@ -210,7 +217,10 @@ public class LoginController extends GUIController {
     }
 
     public void enterNumOfPlayer(ActionEvent actionEvent) {
-
+            if(enterNumTimer!=null){
+                enterNumTimer.cancel();
+                enterNumTimer=null;
+            }
             loginExceptionLabel.setDisable(true);
             loginExceptionLabel.setVisible(false);
             int n=Integer.parseInt(numField.getText());
