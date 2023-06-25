@@ -33,7 +33,6 @@ public class ChatController extends GUIController{
     private AnchorPane chatPane;
     @FXML
     private Button enterButton;
-
     @FXML
     private final Font font = new Font( 14);
     private double height = 20;

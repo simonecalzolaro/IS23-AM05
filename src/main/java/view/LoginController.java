@@ -22,7 +22,7 @@ import java.util.TimerTask;
 
 public class LoginController extends GUIController {
     @FXML
-    public Label waitingLabel;
+    private Label waitingLabel;
     @FXML
     private Button rmiButton;
     @FXML
@@ -42,20 +42,20 @@ public class LoginController extends GUIController {
     @FXML
     private TextField numField;
     @FXML
-    public ImageView image1;
+    private ImageView image1;
     @FXML
-    public ImageView image2;
+    private ImageView image2;
     @FXML
-    public ImageView image3;
+    private ImageView image3;
     @FXML
-    public ImageView image4;
+    private ImageView image4;
 
     private Timer timer1;
     private Timer timer2;
 
     private Timer enterNumTimer;
 
-    public void timer(){
+    private void timer(){
         timer1 = new Timer();
         timer2= new Timer();
         TimerTask task1=new TimerTask() {
@@ -96,11 +96,14 @@ public class LoginController extends GUIController {
         timer2.schedule(task2, 750, 750);
     }
 
-
+    /**
+     * Method invoked by the GUI View to show the login scene if there are no active game to restore
+     */
     public void showLoginScene(){
         stage.show();
     }
-    public void chooseProtocol(ActionEvent actionEvent) {
+    @FXML
+    private void chooseProtocol(ActionEvent actionEvent) {
 
         loginExceptionLabel.setDisable(true);
         loginExceptionLabel.setVisible(false);
@@ -147,7 +150,8 @@ public class LoginController extends GUIController {
         numButton.setDisable(true);
         numButton.setVisible(false);
     }
-    public void enterNickname(ActionEvent actionEvent){
+    @FXML
+    private void enterNickname(ActionEvent actionEvent){
         loginExceptionLabel.setDisable(true);
         loginExceptionLabel.setVisible(false);
         String nickname = nameField.getText();
@@ -164,6 +168,9 @@ public class LoginController extends GUIController {
         }
     }
 
+    /**
+     * Method invoked by the GUI View to ask the user to enter the number of player to create a new game
+     */
     public void showEnterNumOfPlayer(){
 
         if(timer1!=null){
@@ -215,8 +222,8 @@ public class LoginController extends GUIController {
 
         enterNumTimer.schedule(showWaitingScemeTask, 30000);
     }
-
-    public void enterNumOfPlayer(ActionEvent actionEvent) {
+    @FXML
+    private void enterNumOfPlayer(ActionEvent actionEvent) {
             if(enterNumTimer!=null){
                 enterNumTimer.cancel();
                 enterNumTimer=null;
@@ -231,15 +238,26 @@ public class LoginController extends GUIController {
                 gui.getNumOfPlayer();
             }
 
-        try {
             showWaitingScene();
-        } catch (IOException e){
-            showException("IOException");
-        }
+
     }
 
+    /**
+     * Method invoked to show the user that the game is waiting for other players
+     */
+    public void showWaitingScene() {
+        chooseLabel.setVisible(false);
+        chooseLabel.setDisable(true);
 
-    public void showWaitingScene() throws IOException {
+        nameField.setVisible(false);
+        nameField.setDisable(true);
+
+        rmiButton.setVisible(false);
+        rmiButton.setDisable(true);
+
+        socketButton.setVisible(false);
+        socketButton.setDisable(true);
+
         enterNicknameLabel.setVisible(false);
         enterNicknameLabel.setDisable(true);
         nameField.setVisible(false);
@@ -269,6 +287,10 @@ public class LoginController extends GUIController {
         loginExceptionLabel.setText(e);
     }
 
+    /**
+     * Method invoked by the GUI View when the game start. The Game Scene is shown.
+     * @throws IOException
+     */
     public void showGameScene() throws IOException {
         if(timer1!=null){
             timer1.cancel();

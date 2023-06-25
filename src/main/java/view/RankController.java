@@ -1,6 +1,7 @@
 package view;
 
 import client.Client;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import static javafx.application.Platform.exit;
+import static javafx.application.Platform.isFxApplicationThread;
 
 public class RankController extends GUIController {
     @FXML
@@ -53,27 +55,32 @@ public class RankController extends GUIController {
             case 2:  player4Group.setVisible(false);
         }
     }
-
-    public void askExit(ActionEvent actionEvent) {
-        exit();
+    @FXML
+    private void askExit(ActionEvent actionEvent) {
+        System.exit(0);
     }
+    @FXML
+    private void startNewGame(ActionEvent actionEvent) throws IOException {
 
-    public void startNewGame(ActionEvent actionEvent) throws IOException {
-        try {
-            client.askLogin(client.getModel().getNickname());
-        } catch (LoginException | IOException ignored) {
 
-        }
-
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("login.fxml"));
+        /*FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1250,650);
         stage.setScene(scene);
         LoginController controller=fxmlLoader.getController();
         gui.setLoginController(controller);
         controller.setScene(gui,stage);
         controller.showWaitingScene();
+        try {
+            client.askLogin(client.getModel().getNickname());
+        } catch (LoginException e) {
+            controller.showLoginScene();
+        }*/
     }
 
+    /**
+     * Method invoked by the GUI View to set the final rank.
+     * @param results results of the ended game
+     */
     public void setRank(Map<String, Integer> results) {
         int i=0;
         for (String name: results.keySet()){

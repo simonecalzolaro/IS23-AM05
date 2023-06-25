@@ -9,6 +9,7 @@ import static javafx.application.Platform.exit;
 
 public class GUIApplication extends Application {
 
+    private static String[] args;
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -19,6 +20,7 @@ public class GUIApplication extends Application {
         //stage.setMaximized(true);
         LoginController controller=fxmlLoader.getController();
         GUI gui=new GUI();
+        gui.setArgs(args);
         stage.setOnHidden(event->System.exit(0));
         gui.setLoginController(controller);
         controller.setScene(gui,stage);
@@ -37,7 +39,7 @@ public class GUIApplication extends Application {
         gui.setChatStage(stage1);
     }
     public static void main(String[] args) {
-
+        GUIApplication.args=args;
         launch();
 
     }

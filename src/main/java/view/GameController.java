@@ -1,10 +1,8 @@
 package view;
 
 //TODO show exception
-//TODO end game token
 //TODO commenti
 //TODO sistema rank
-//TODO sistema path
 import client.Client;
 import client.Matrix;
 import client.Tile;
@@ -155,7 +153,7 @@ public class GameController extends GUIController {
     //----------------------------------------------------------- Server vs client-------------------------------------
 
     /**
-     * Set GUI on StarTurn notify
+     * Method invoked by the GUI View to set GUI on StarTurn notify
      */
     public void startTurn(){
         ableBoardButton();
@@ -167,7 +165,7 @@ public class GameController extends GUIController {
 
 
     /**
-     * Set the GUI on endGame notify
+     * Method invoked by the GUI View to set the GUI on endGame notify
      * @throws IOException
      */
     public void endGame(Map<String, Integer> results) throws IOException {
@@ -182,7 +180,7 @@ public class GameController extends GUIController {
     }
 
     /**
-     * Set the GUI on update notify
+     * Method invoked by the GUI View to set the GUI on update notify
      */
     public void updateAll() {
         updateBoard();
@@ -196,6 +194,47 @@ public class GameController extends GUIController {
             pgc.setImage(new Image(getPGCImage(client.getModel().getPgcNum())));
         }
     }
+
+    /**
+     * Method invoked by the GUI View to end the turn.
+     */
+    public void endTurn(){
+        coord.clear();
+        sortedCoord.clear();
+        enterColumnButton.setDisable(true);
+        enterTilesButton.setDisable(true);
+        enterTilesButton.setVisible(false);
+        bookshelfButton.setOnAction(null);
+        stateLabel.setText("Not your turn!");
+    }
+
+    /**
+     * Method invoked my the GUI View to show the stage if there is an active game to restore
+     */
+    public void showGame() {
+        stage.show();
+    }
+
+    @Override
+    public void showException(String exception){
+        if(timerExc!=null){
+            timerExc.cancel();
+            timerExc=null;
+        }
+
+        exceptionLabel.setText(exception);
+        exceptionLabel.setVisible(true);
+        exceptionLabel.setDisable(false);
+
+        if(timerExc!=null){
+            timerExc.cancel();
+            timerExc=null;
+        }
+        timerExc = new Timer();
+        timerExc.schedule(taskExc, 3000);
+
+    }
+
 
 //------------------------------------------------------------------------------Update Method----------------------------------------------
     private void updateScore() {
@@ -239,7 +278,12 @@ public class GameController extends GUIController {
         }
     }
 
-    public void enterTiles(ActionEvent actionEvent) {
+
+
+    //------------------------------------------------------------Client vs Server-----------------------------------
+
+    @FXML
+    private void enterTiles(ActionEvent actionEvent) {
         for (int i=0; i<9; i++){
             for (int j=0; j<9; j++){
                 if(boardButtons[i][j]!=null){
@@ -298,8 +342,8 @@ public class GameController extends GUIController {
         }
     }
 
-
-    public void insertTile(ActionEvent actionEvent) {
+    @FXML
+    private void insertTile(ActionEvent actionEvent) {
         try {
             client.askInsertShelfTiles(selectedColumn, sortedCoord);
             for(int i=0; i<6; i++){
@@ -317,37 +361,6 @@ public class GameController extends GUIController {
 
         endInsertTiles(actionEvent);
     }
-
-    public void endTurn(){
-        coord.clear();
-        sortedCoord.clear();
-        enterColumnButton.setDisable(true);
-        enterTilesButton.setDisable(true);
-        enterTilesButton.setVisible(false);
-        bookshelfButton.setOnAction(null);
-        stateLabel.setText("Not your turn!");
-    }
-
-    public void showException(String exception){
-        if(timerExc!=null){
-            timerExc.cancel();
-            timerExc=null;
-        }
-
-
-        exceptionLabel.setText(exception);
-        exceptionLabel.setVisible(true);
-        exceptionLabel.setDisable(false);
-
-        if(timerExc!=null){
-            timerExc.cancel();
-            timerExc=null;
-        }
-        timerExc = new Timer();
-        timerExc.schedule(taskExc, 3000);
-
-    }
-    //------------------------------------------------------------Client vs Server-----------------------------------
 
     private void passTurn() {
         if(timer!=null){
@@ -375,6 +388,11 @@ public class GameController extends GUIController {
 
 
 
+
+
+
+    //------------------------------------------------------------GUI setting methods----------------------------------------------------------------
+
     private void setTile() {
         for(int i=0; i<coord.size();i=i+2){
             switch (i){
@@ -398,10 +416,10 @@ public class GameController extends GUIController {
 
     private void endInsertTiles(ActionEvent actionEvent) {
         closeBookshelf(actionEvent);
-if (timer!=null){
-    timer.cancel();
-    timer=null;
-}
+        if (timer!=null){
+            timer.cancel();
+            timer=null;
+        }
 
         timeLabel.setVisible(false);
 
@@ -436,13 +454,6 @@ if (timer!=null){
         }
 
     }
-
-
-
-
-    //------------------------------------------------------------Bookshelf methods----------------------------------------------------------------
-
-
     private void selectMyBookshelf(ActionEvent actionEvent) {
         Button button = (Button) actionEvent.getSource();
         if(button.getOnMouseEntered()!=null) {
@@ -542,6 +553,9 @@ if (timer!=null){
             }
             if(!checkSingleColumn(column)) {
                 stateLabel.setText("Not enough space!");
+                tile1.setDisable(true);
+                tile2.setDisable(true);
+                tile3.setDisable(true);
                 return;
             }
 
@@ -612,6 +626,7 @@ if (timer!=null){
     @FXML
     private void putTile(ActionEvent actionEvent) {
         if(selectedColumn<0||selectedColumn>4) return;
+        if(selectedColumn==-1) return;
         Button button = (Button) actionEvent.getSource();
         Image image;
         int tileNum=-1;
@@ -709,7 +724,6 @@ if (timer!=null){
         }
 
     }
-    //--------------------------------------------------------------Board methods-----------------------------------------------
 
     private void updateBoard(){
         int checkRefill=0;
@@ -910,8 +924,6 @@ if (timer!=null){
         }
     }
 
-    //-------------------------------------------------------------Group methods-------------------------------------
-
 
     @FXML
     private void showExitGroup(ActionEvent actionEvent) {
@@ -1063,9 +1075,6 @@ if (timer!=null){
         columnButtons.add(column5Button);
     }
 
-    public void showGame() {
-        stage.show();
-    }
 
 
     //--------------------------------------------------------Private class--------------------------------------------
@@ -1214,6 +1223,9 @@ if (timer!=null){
                 return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/3.jpg").toString();
             }
             case 1->{
+                return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/4.jpg").toString();
+            }
+            case 0->{
                 return getClass().getResource("/view/17_MyShelfie_BGA/common_goal_cards/4.jpg").toString();
             }
             case 5->{

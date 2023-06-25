@@ -14,6 +14,7 @@ public class GUI extends View {
     private ChatController chatController;
 
     private Stage chatStage;
+    private String[] args;
 
     @Override
     public void standardLogin() {
@@ -142,4 +143,12 @@ public class GUI extends View {
     public ChatController getChatController() {
         return chatController;
     }
+
+    public void setArgs(String[] args) {
+        this.args=args;
+    }
+
+    public String[] getArgs(){
+        return args;
+    };
 }
