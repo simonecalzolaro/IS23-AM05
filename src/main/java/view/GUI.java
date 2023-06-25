@@ -51,11 +51,6 @@ public class GUI extends View {
     }
 
 
-
-
-    /**
-     * asks the player to enter the number of players in the game
-     */
     @Override
     public void getNumOfPlayer() {
         Platform.runLater(()-> loginController.showEnterNumOfPlayer());
@@ -96,9 +91,6 @@ public class GUI extends View {
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void endYourTurn() {
         Platform.runLater(()->gameController.endTurn());
