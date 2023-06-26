@@ -145,17 +145,6 @@ public class ChatController extends GUIController{
             i++;
         }
 
-
-        if(client.getModel().getMyChat()!=null){
-            restoreChat(client.getModel().getMyChat());
-        }
-    }
-
-    private void restoreChat(ClientChat chat){
-        ArrayList<ArrayList<String>> conversation=chat.getConversation();
-        for(ArrayList<String> m: conversation){
-            plotMessage(m.get(0), m.get(1));
-        }
     }
 
 
