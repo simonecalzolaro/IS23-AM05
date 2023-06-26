@@ -126,7 +126,8 @@ public class GameController extends GUIController {
         }
         initialize();
         setOtherBookshelf();
-        gui.getChatController().setPlayer();
+        gui.getChatController().setClient(client);
+        gui.getChatController().initializeChat();
     }
 
     private Timer timerExc;

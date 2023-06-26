@@ -1,5 +1,7 @@
 package view;
 
+import client.ClientChat;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -60,6 +62,11 @@ public class ChatController extends GUIController{
         textField.clear();
     }
 
+    /**
+     * Method invoked by the GUI View to plot the message
+     * @param player Nickname of the player who sent the message
+     * @param message Text of the message
+     */
     public void plotMessage(String player, String message){
 
         Text text = new Text(player + ": " +message);
@@ -95,7 +102,7 @@ public class ChatController extends GUIController{
                 broadcastCheckBox.setSelected(false);
             }
 
-        if(!player1CheckBox.isSelected()&&player2CheckBox.isSelected()&&!player3CheckBox.isSelected()){
+        if(!player1CheckBox.isSelected()&&!player2CheckBox.isSelected()&&!player3CheckBox.isSelected()){
             broadcastCheckBox.setSelected(true);
         }
 
@@ -113,7 +120,8 @@ public class ChatController extends GUIController{
 
     }
 
-    public void setPlayer(){
+
+    protected void initializeChat(){
         switch (client.getModel().getNumOtherPlayers()){
             case 1:{
                 player2CheckBox.setVisible(false);
@@ -137,6 +145,17 @@ public class ChatController extends GUIController{
             i++;
         }
 
+
+        if(client.getModel().getMyChat()!=null){
+            restoreChat(client.getModel().getMyChat());
+        }
+    }
+
+    private void restoreChat(ClientChat chat){
+        ArrayList<ArrayList<String>> conversation=chat.getConversation();
+        for(ArrayList<String> m: conversation){
+            plotMessage(m.get(0), m.get(1));
+        }
     }
 
 
