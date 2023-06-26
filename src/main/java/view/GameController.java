@@ -1,8 +1,4 @@
 package view;
-
-//TODO show exception
-//TODO commenti
-
 import client.Client;
 import client.Matrix;
 import client.Tile;
