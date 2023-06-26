@@ -100,7 +100,13 @@ public class LoginController extends GUIController {
      * Method invoked by the GUI View to show the login scene if there are no active game to restore
      */
     public void showLoginScene(){
-        stage.show();
+        if(client==null){
+            stage.show();
+        } else {
+            showEnterNickname();
+            showException("This nickname already exists!");
+        }
+
     }
     @FXML
     private void chooseProtocol(ActionEvent actionEvent) {
@@ -138,6 +144,9 @@ public class LoginController extends GUIController {
     }
 
     private void showEnterNickname(){
+
+        hideWaitingScene();
+        image1.setVisible(false);
         enterNicknameLabel.setText("Enter your nickname:");
         enterNicknameLabel.setVisible(true);
         enterNicknameLabel.setDisable(false);
@@ -173,19 +182,10 @@ public class LoginController extends GUIController {
      */
     public void showEnterNumOfPlayer(){
 
-        if(timer1!=null){
-            timer2.cancel();
-            timer1.cancel();
-            timer1=null;
-            timer2=null;
-        }
-
+        hideWaitingScene();
 
         enterNicknameLabel.setVisible(true);
         enterNicknameLabel.setDisable(false);
-        waitingLabel.setVisible(false);
-        waitingLabel.setDisable(true);
-
         loginExceptionLabel.setDisable(true);
         loginExceptionLabel.setVisible(false);
         enterNicknameLabel.setText("Enter number of player to create a new game:");
@@ -279,8 +279,20 @@ public class LoginController extends GUIController {
         timer();
     }
 
+    private void hideWaitingScene(){
+        if(timer1!=null){
+            timer2.cancel();
+            timer1.cancel();
+            timer1=null;
+            timer2=null;
+        }
 
 
+        waitingLabel.setVisible(false);
+        waitingLabel.setDisable(true);
+
+    }
+    @Override
     public void showException(String e){
         loginExceptionLabel.setDisable(false);
         loginExceptionLabel.setVisible(true);
