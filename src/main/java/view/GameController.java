@@ -2,7 +2,7 @@ package view;
 
 //TODO show exception
 //TODO commenti
-//TODO sistema rank
+
 import client.Client;
 import client.Matrix;
 import client.Tile;

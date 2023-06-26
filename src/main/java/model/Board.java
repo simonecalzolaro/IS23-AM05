@@ -7,44 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board implements Serializable {
-    /**
-     * Represent the living room board of the game
-     */
     private final Tile[][] board;
-
-    /**
-     * Mark the tiles that can be caught by a player during the round
-     */
     private final boolean[][] catchableTiles;
-
-    /**
-     * number of players in the current game
-     */
     private int nPlayers;
-
-    /**
-     * Common Goal card of the current game
-     */
     private CommonGoalCard commonGoalCard1;
     private CommonGoalCard commonGoalCard2;
-
-    /**
-     * Set as false if the EOGToken is not taken yet
-     */
     private boolean EOG;
+     private final Bag bag;
+     private DeckCards deck;
 
     /**
-     * Tiles bag of the current game
-     */
-    private final Bag bag;
-
-    /**
-     * Cards deck of the current game
-     */
-    private DeckCards deck;
-
-    /**
-     * constructor
+     * Constructor: initialization of the tiles bag and some attributes.
      */
     public Board() {
         this.board = new Tile[9][9];
@@ -55,11 +28,11 @@ public class Board implements Serializable {
     }
 
     /**
-     * set number of player
-     * initialize the board by setting N.A. tiles depending on the number of players
-     * fill completely the board
-     * update board
-     * set common goal cards
+     * Set number of player
+     * Initialize the board by setting N.A. tiles depending on the number of players
+     * Fill completely the board
+     * Update board
+     * Set common goal cards
      * @param nPlayers number of player
      */
     public void initializeBoard(int nPlayers){
@@ -123,10 +96,7 @@ public class Board implements Serializable {
         setCommonGoalCard();
     }
 
-    /**
-     * Get tiles from the bag and fill randomly the board
-     */
-    public void fill(){
+    protected void fill(){
         //if there are enough tiles in the bag, fill completely the board
         if (getEmptyTilesNum() <= bag.getTilesNum()){
             for (int i = 0; i<9; i++) {
@@ -183,12 +153,6 @@ public class Board implements Serializable {
         }
     }
 
-    /**
-     *
-     * @param min int
-     * @param max int
-     * @return random int between min and max (included)
-     */
     private int RandomInt(int min, int max){
         return (int) (Math.floor(Math.random() * ( max - min + 1 ) ) + min);
     }
@@ -208,10 +172,7 @@ public class Board implements Serializable {
         }
     }
 
-    /**
-     * check if there is only tiles with no adjacent tiles
-     * @return true if the board is to be filled
-     */
+
     protected boolean emptyBoard(){
 
         //check if there is only tiles with no adjacent tiles
@@ -226,12 +187,7 @@ public class Board implements Serializable {
         return true;
     }
 
-    /**
-     * A tile is a single tiles if it has no adjacent tiles
-     * @param i row
-     * @param j column
-     * @return if a tile in (i,j) position in the board is a single tile
-     * */
+
     protected boolean singleTile(int i, int j){
         //check if a tiles has no adjacent tile
         return switch (i) {
@@ -273,12 +229,7 @@ public class Board implements Serializable {
         };
     }
 
-    /**
-     * check if tiles have at least one side free that means that the tile is catchable
-     * @param i row
-     * @param j column
-     * @return if the tile in (i, j) position is catchable
-     */
+
     protected boolean okTile(int i, int j){
         //check if tiles have at least one side free and then are catchable
         if(board[i][j]== Tile.NOTAVAILABLE||board[i][j]==Tile.EMPTY) return false;
@@ -340,14 +291,7 @@ public class Board implements Serializable {
         }
     }
 
-    /**
-     * the tiles have to be in line and adjacent to be taken
-     * @param i1 row first tile
-     * @param j1 column first tile
-     * @param i2 row second tile
-     * @param j2 column second tile
-     * @return true if the move is allowed
-     */
+
     protected boolean inLine(int i1, int j1, int i2, int j2){
         //check if two tiles are adjacent
         return (i1==i2 && (j1==j2-1||j1==j2+1)) ||
@@ -383,16 +327,7 @@ public class Board implements Serializable {
         }
     }
 
-    /**
-     * the tiles have to be in line and adjacent to be taken
-     * @param i1 row first tile
-     * @param j1 column fist tile
-     * @param i2 row second tile
-     * @param j2 column second tile
-     * @param i3 row third tile
-     * @param j3 column third tile
-     * @return true if the move is allowed
-     */
+
     protected boolean inLine(int i1, int j1, int i2, int j2, int i3, int j3){
         //check if three tiles ar adjacent and in line
         if((i1!=i2||i2!=i3)&&(j1!=j2&&j2!=j3)) return false;
@@ -436,10 +371,7 @@ public class Board implements Serializable {
         }
 
     }
-    /**
-     *
-     * @return number of empty tiles
-     */
+
     protected int getEmptyTilesNum(){
         //return number of empty tiles in the board
         int num=0;
@@ -451,87 +383,47 @@ public class Board implements Serializable {
         return num;
     }
 
-    /**
-     *
-     * @return the board
-     */
     public Tile[][] getBoard() {
         return board;
     }
 
-    /**
-     *
-     * @return the number of player of the current game
-     */
     protected int getNPlayers() {
         return nPlayers;
     }
 
-    /**
-     * set the common goal cards
-     */
     private void setCommonGoalCard() {
 
         commonGoalCard1=deck.getRandCGC();
         commonGoalCard2=deck.getRandCGC();
     }
 
-    /**
-     *
-     * @return common goal card 1
-     */
     public CommonGoalCard getCommonGoalCard1() {
         return commonGoalCard1;
     }
-
-    /**
-     *
-     * @return common goal card 2
-     */
 
     public CommonGoalCard getCommonGoalCard2() {
         return commonGoalCard2;
     }
 
-    /**
-     *
-     * @return true if the EOG token is not taken yet
-     */
     public boolean getEOG() {
         return EOG;
     }
 
-    /**
-     * set EOG true if the EOG token is assigned
-     */
     public void setEOG() {
         this.EOG = true;
     }
 
-    /**
-     *
-     * @param i row
-     * @param j column
-     * @param tile tile type
-     */
+
     protected void setTile(int i, int j, Tile tile){
         if(board[i][j]!=Tile.NOTAVAILABLE){
             board[i][j]= tile;
         }
     }
 
-    /**
-     *
-     * @return bag
-     */
     public Bag getBag() {
         return bag;
     }
 
-    /**
-     *
-     * @return deck
-     */
     public DeckCards getDeck() {
         return deck;
     }

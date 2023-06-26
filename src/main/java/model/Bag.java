@@ -7,13 +7,11 @@ import java.util.List;
 import static java.util.Collections.shuffle;
 
 public class Bag implements Serializable {
-    /**
-     * tiles bag
-     */
+
     private List<Tile> tilesBag;
 
     /**
-     * constructor
+     * Constructor
      */
     public Bag() {
         tilesBag=new ArrayList<Tile>();
@@ -57,18 +55,11 @@ public class Bag implements Serializable {
         return Tile.EMPTY;
     }
 
-    /**
-     *
-     * @return tiles bag
-     */
+
     public List<Tile> getTilesBag() {
         return tilesBag;
     }
 
-    /**
-     *
-     * @return number of tiles in the bag
-     */
     public int getTilesNum(){
         return tilesBag.size();
     }
