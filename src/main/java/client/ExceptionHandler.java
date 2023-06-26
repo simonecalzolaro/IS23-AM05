@@ -35,6 +35,8 @@ public class ExceptionHandler {
         }
         else{
 
+            System.out.println("Unable to log-in ---> Try with new nickname");
+            client.getView().standardLogin();
         }
 
     }

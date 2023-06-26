@@ -81,6 +81,7 @@ public class SocketLobby implements Runnable{
                 System.out.println("SocketLobby --- InvalidOperationException occurred trying to read a new request\n---> Application keeps running");
             }
 
+
             String Interface = (String) request.get("Interface");
             String Action = (String) request.get("Action");
 
@@ -158,6 +159,10 @@ public class SocketLobby implements Runnable{
 
                     break;
 
+                default:
+                    System.out.println("SocketLobby --- Unknown request received from client ---> "+Interface+" "+Action);
+                    break;
+
 
             }
 
@@ -186,7 +191,7 @@ public class SocketLobby implements Runnable{
         try{
             return lobby.login(nickname,streams);
         } catch (LoginException e) {
-           // --> Da gestire per TUI e GUI
+           throwLoginException(false);
         } catch (RemoteException e) {
             System.out.println("");
         } catch (IOException e) {
@@ -426,7 +431,7 @@ public class SocketLobby implements Runnable{
             startServer();
         }
         catch (IOException | ClassNotFoundException e){
-            System.out.println("SocketLobby --- An Exception caused a fatal error while running the application\n---> Socket stopped\n---> Thread stopped");
+            System.out.println("SocketLobby --- An Exception caused a fatal error while running the application by \n---> Socket stopped\n---> Thread stopped");
         }
         finally {
             try {

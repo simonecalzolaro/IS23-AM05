@@ -38,7 +38,7 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
      */
     protected Game game;
 
-    private PingPong pingClass;
+    protected PingPong pingClass;
 
 
     /**

@@ -23,7 +23,7 @@ public class SocketClient extends Client{
 
 
     /**
-     * constructor of ClientApp
+     * constructor of SocketClient
      *
      * @throws RemoteException
      */
@@ -33,6 +33,12 @@ public class SocketClient extends Client{
         model.setConnectionType(true);
     }
 
+
+    /**
+     * This method initializes the connection with the server creating the socket binding between itself and the server
+     * and instantiating the input/output stream for communicate
+     * @throws IOException when the streams are reset or corrupted
+     */
     @Override
     public void initializeClient() throws IOException {
 
@@ -42,8 +48,20 @@ public class SocketClient extends Client{
         //Getting server's information about IPAddress and PORT
         getServerSettings();
         isPaused = false;
+        boolean goon = false;
+        boolean firstAttempt = true;
 
-        socketClient = new Socket(hostname,PORT);
+        while(!goon){
+            try{
+                socketClient = new Socket(hostname,PORT);
+                goon = true;
+            } catch (Exception e) {
+                if(firstAttempt) System.out.println("Server is down ---> Wait for reconnection or close the application");
+                firstAttempt = false;
+                goon = false;
+            }
+        }
+
 
         try{
             outClient = new Stream(socketClient,0);
@@ -73,12 +91,11 @@ public class SocketClient extends Client{
     /**
      * asks the server to log in, is divided in RMI and socket
      * @return GameHandler interface
-     * @throws LoginException
-     * @throws IOException
-     * @throws RemoteException
+     * @throws IOException when the streams are corrupted
+     * @throws RemoteException occurs in SocketClient
      */
     @Override
-    public synchronized void askLogin(String nick) throws LoginException, IOException, RemoteException {
+    public synchronized void askLogin(String nick) throws IOException, RemoteException {
 
         JSONObject object = new JSONObject();
 
@@ -107,12 +124,10 @@ public class SocketClient extends Client{
     /**
      * asks the server to continue a game, is divided in RMI and socket
      * @return GameHandler interface
-     * @throws LoginException
-     * @throws RemoteException
      */
 
     @Override
-    public synchronized void askContinueGame() throws LoginException, IOException {
+    public synchronized void askContinueGame() {
 
         JSONObject object = new JSONObject();
 
@@ -135,12 +150,11 @@ public class SocketClient extends Client{
 
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
-     * @return true if everything went fine
-     * @throws RemoteException
+     * @throws RemoteException not handled in SocketClient
      */
 
     @Override
-    public void askLeaveGame() throws RemoteException, LoginException {
+    public void askLeaveGame() throws RemoteException{
 
         JSONObject object = new JSONObject();
 
@@ -173,7 +187,7 @@ public class SocketClient extends Client{
      */
 
     @Override
-    public void askBoardTiles( List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, RemoteException, NotMyTurnException {
+    public void askBoardTiles( List<Integer> coord) throws RemoteException {
 
         JSONObject object = new JSONObject();
 
@@ -194,9 +208,14 @@ public class SocketClient extends Client{
     }
 
 
-
+    /**
+     * Communicates the server the chosen tiles and the columns of the shelf
+     * @param choosenColumn is the column where to insert the tiles
+     * @param coord board coordinates
+     * @throws RemoteException not handled in SocketClient
+     */
     @Override
-    public void askInsertShelfTiles( int choosenColumn, List<Integer> coord) throws RemoteException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException{
+    public void askInsertShelfTiles( int choosenColumn, List<Integer> coord) throws RemoteException{
 
         JSONObject object = new JSONObject();
 
@@ -218,7 +237,9 @@ public class SocketClient extends Client{
     }
 
 
-
+    /**
+     * Communicates the server to pass the turn
+     */
     @Override
     public void askPassMyTurn() {
 
@@ -242,9 +263,9 @@ public class SocketClient extends Client{
 
 
     /**
-     *
-     * @param n
-     * @param nick
+     * Communicated the number of players to the server
+     * @param n chosen number of players
+     * @param nick your nickname
      */
     @Override
     public void askSetNumberOfPlayers(int n, String nick) {
@@ -267,7 +288,9 @@ public class SocketClient extends Client{
     }
 
 
-
+    /**
+     * Notify the pong to the client
+     */
     @Override
     public void notifyPong() {
 
@@ -291,6 +314,12 @@ public class SocketClient extends Client{
 
     }
 
+
+    /**
+     * Send the message to the server which will deliver it to the right client/clients
+     * @param Message string to send to the
+     * @param recipients 
+     */
     @Override
     public void askPostMessage(String Message, ArrayList<String> recipients) {
 

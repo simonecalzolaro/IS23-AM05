@@ -16,6 +16,8 @@ public class SocketControlPlayer extends ControlPlayer {
     Stream outCP;
     Stream inCP;
 
+    int contPing=0;
+
     /**
      * Assign player id
      * Initialize score
@@ -35,7 +37,7 @@ public class SocketControlPlayer extends ControlPlayer {
      * @throws RemoteException thrown when a network error occurs
      */
     @Override
-    public void notifyStartYourTurn() throws RemoteException {
+    public synchronized void notifyStartYourTurn() throws RemoteException {
 
         if (!playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
 
@@ -51,11 +53,9 @@ public class SocketControlPlayer extends ControlPlayer {
             } catch (InvalidOperationException e) {
                 System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyStartYourTurn trying to reset/write the stream");
                 System.out.println("---> Maybe you're trying to reset/write an input stream");
-                passMyTurn();
 
             } catch (IOException e) {
-                System.out.println("SocketControlPlayer --- IOException occurred trying to flush the stream");
-                passMyTurn();
+                System.out.println("SocketControlPlayer --- IOException occurred in notifyStartYourTurn");
             }
 
         }
@@ -68,7 +68,7 @@ public class SocketControlPlayer extends ControlPlayer {
      * This method tells the client to end its turn
      */
     @Override
-    public void notifyEndYourTurn() throws IOException {
+    public synchronized void notifyEndYourTurn() throws IOException {
 
        if(!playerStatus.equals(PlayerStatus.NOT_ONLINE)){
            JSONObject object = new JSONObject();
@@ -83,7 +83,7 @@ public class SocketControlPlayer extends ControlPlayer {
                System.out.println("---> Maybe you're trying to reset/write an input stream");
 
            } catch (IOException e) {
-               System.out.println("SocketControlPlayer --- IOException occurred trying to flush the stream");
+               System.out.println("SocketControlPlayer --- IOException occurred in notifyEndYourTurn");
 
            }
        }
@@ -102,7 +102,7 @@ public class SocketControlPlayer extends ControlPlayer {
      * @throws RemoteException thrown when a network error occurs
      */
     @Override
-    public void notifyUpdatedBoard() throws RemoteException{
+    public synchronized void notifyUpdatedBoard() throws RemoteException{
 
         if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
 
@@ -132,7 +132,7 @@ public class SocketControlPlayer extends ControlPlayer {
                 System.out.println("---> Maybe you're trying to reset/write an input stream");
 
             } catch (IOException e) {
-                System.out.println("SocketControlPlayer --- IOException occurred trying to flush the stream");
+                System.out.println("SocketControlPlayer --- IOException occurred in notifyUpdateboard");
             }
         }
     }
@@ -142,7 +142,7 @@ public class SocketControlPlayer extends ControlPlayer {
     /**
      * This method tells the client to end the game
      */
-    public void notifyEndGame(){
+    public synchronized void notifyEndGame(){
 
         if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
 
@@ -158,7 +158,7 @@ public class SocketControlPlayer extends ControlPlayer {
                 System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyStartYourTurn trying to reset/write the stream");
                 System.out.println("---> Maybe you're trying to reset/write an input stream");
             } catch (IOException e) {
-                System.out.println("SocketControlPlayer --- IOException occurred trying to flush the stream");
+                System.out.println("SocketControlPlayer --- IOException occurred in notifyEndGame");
             }
 
         }
@@ -171,31 +171,23 @@ public class SocketControlPlayer extends ControlPlayer {
      * That means that the current client is the first player
      */
     @Override
-    public void askNumberOfPlayers() throws FatalException {
+    public synchronized void askNumberOfPlayers() {
 
         JSONObject object = new JSONObject();
         object.put("Action","askNumberOfPlayers");
 
-        boolean goon = false;
-        int i = 0;
 
-       while(!goon && !playerStatus.equals(PlayerStatus.NOT_ONLINE) && i < 10){
            try{
-               i++;
                outCP.reset();
                outCP.write(object);
-               goon = true;
            } catch (InvalidOperationException e) {
                System.out.println("SocketControlPlayer --- InvalidOperationException occurred in askNumberOfPlayers trying to reset/write the stream");
                System.out.println("---> Maybe you're trying to reset/write an input stream");
-               goon = false;
            } catch (IOException e) {
-               goon = false;
+               System.out.println("SocketControlPlayer --- IOException occurred in askNumberOfPlayers");
            }
        }
 
-       if(i == 10) throw new FatalException(getPlayerNickname(), game.getGameID());
-    }
 
 
     /**
@@ -203,11 +195,9 @@ public class SocketControlPlayer extends ControlPlayer {
      * @throws RemoteException thrown when a network error occurs
      */
     @Override
-    public void notifyStartPlaying() throws RemoteException, FatalException {
+    public synchronized void notifyStartPlaying() throws RemoteException, FatalException {
 
-        boolean goon = false;
-        int i = 0;
-        while (!goon && !playerStatus.equals(PlayerStatus.NOT_ONLINE) && i< 10){
+
             if(!playerStatus.equals(PlayerStatus.NOT_ONLINE)){
                 System.out.println("    ->notify startPlaying to "+ nickname);
 
@@ -222,25 +212,19 @@ public class SocketControlPlayer extends ControlPlayer {
 
 
                 try{
-                    i++;
+
                     outCP.reset();
                     outCP.write(object);
-                    goon = true;
+
                 } catch (InvalidOperationException e) {
                     System.out.println("SocketControlPlayer --- InvalidOperationException occurred in  trying to reset/write the stream");
                     System.out.println("---> Maybe you're trying to reset/write an input stream");
-                    goon = false;
+
 
                 } catch (IOException e) {
-                    goon = false;
+                    System.out.println("SocketControlPlayer --- IOException occurred in notifyStartPlaying" );
                 }
             }
-        }
-
-        if(i == 10) throw new FatalException(getPlayerNickname(), game.getGameID());
-
-
-
 
     }
 
@@ -249,7 +233,7 @@ public class SocketControlPlayer extends ControlPlayer {
      * This method is invoked when a client tries to continue a game and succeed in it, so it's necessary that he receives the updated board and its attributes stored in the server
      */
     @Override
-    public void restoreSession(){
+    public synchronized void restoreSession(){
 
         if( ! playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
 
@@ -282,7 +266,7 @@ public class SocketControlPlayer extends ControlPlayer {
                 System.out.println("SocketControlPlayer --- InvalidOperationException occurred in notifyUpdateBoard trying to reset/write the stream");
                 System.out.println("---> Maybe you're trying to reset/write an input stream");
             } catch (IOException e) {
-                System.out.println("SocketControlPlayer --- IOException occurred");
+                System.out.println("SocketControlPlayer --- IOException occurred in restoreSession");
             }
         }
 
@@ -294,7 +278,7 @@ public class SocketControlPlayer extends ControlPlayer {
      * This method sends the ping to the client in order to verify if it's online or not
      */
     @Override
-    public void askPing() throws IOException {
+    public synchronized void askPing() throws IOException {
 
         //System.out.println("*** soket askPing()");
 
@@ -308,7 +292,14 @@ public class SocketControlPlayer extends ControlPlayer {
             System.out.println("SocketControlPlayer --- InvalidOperationException occurred in trying to reset/write the stream");
             System.out.println("---> Maybe you're trying to reset/write an input stream");
         } catch (IOException e) {
-            System.out.println("SocketControlPlayer --- IOException occurred");
+            System.out.println("SocketControlPlayer --- IOException occurred in askPing");
+            contPing++;
+            if(contPing == 13){
+                pingClass.stopPingProcess();
+                contPing = 0;
+
+            }
+
         }
 
     }
@@ -319,7 +310,7 @@ public class SocketControlPlayer extends ControlPlayer {
      * @param streams to set in order to communicate with the client
      */
     @Override
-    public void setStreams(ArrayList<Stream> streams) {
+    public synchronized void setStreams(ArrayList<Stream> streams) {
         outCP = streams.get(0);
         inCP = streams.get(1);
     }
@@ -331,7 +322,7 @@ public class SocketControlPlayer extends ControlPlayer {
      * @param message: text message
      */
     @Override
-    public void notifyNewMessage(String nick, String message) throws IOException {
+    public synchronized void notifyNewMessage(String nick, String message) throws IOException {
 
 
        if(!playerStatus.equals(PlayerStatus.NOT_ONLINE)){

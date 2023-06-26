@@ -8,6 +8,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -23,7 +24,7 @@ public class RMIClient extends Client {
     private Registry registry;
 
     /**
-     * constructor of ClientApp
+     * constructor of RMIClientApp
      * @throws RemoteException
      */
 
@@ -40,13 +41,27 @@ public class RMIClient extends Client {
         //System.out.println("--- initialize the RMI Client --- ");
 
         getServerSettings();
+        boolean goon = false;
+        boolean firstAttempt = true;
 
         // Getting the registry
-        registry = LocateRegistry.getRegistry(hostname, PORT);
 
-        // Looking up the registry for the remote object
-        this.clientServerHandler = (ClientServerHandler) registry.lookup("ServerAppService");
 
+        while(!goon){
+            try{
+
+                registry = LocateRegistry.getRegistry(hostname, PORT);
+
+                // Looking up the registry for the remote object
+                this.clientServerHandler = (ClientServerHandler) registry.lookup("ServerAppService");
+
+                goon = true;
+            } catch (Exception e) {
+                if(firstAttempt) System.out.println("Server is down ---> Wait for reconnection or close the application");
+                firstAttempt = false;
+                goon = false;
+            }
+        }
 
     }
 

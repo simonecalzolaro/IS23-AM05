@@ -1,4 +1,5 @@
-/*package controller;
+/*
+package controller;
 
 import client.ClientHandler;
 import client.RMIClient;
