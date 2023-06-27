@@ -191,7 +191,7 @@ public class RMIClient extends Client {
     public void askPassMyTurn() {
 
         try {
-            System.out.println(" timeout!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+            System.out.println(" timeout!");
             gameHandler.passMyTurn();
         } catch (RemoteException e) {
             System.out.println("---error occurred when asking to skip the turn");

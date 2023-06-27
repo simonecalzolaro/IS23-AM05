@@ -5,16 +5,11 @@ import client.RMIClient;
 import client.SocketClient;
 import client.Tile;
 import myShelfieException.*;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.ServerException;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -22,6 +17,8 @@ import static java.lang.Math.abs;
 
 public class TUI extends View {
 
+    private boolean TurnTimer=false;
+    private boolean gameEnded=false;
     boolean serverEndedGame=false;
     List<Integer> coord = new ArrayList<>();
     private final PrintStream out;
@@ -35,6 +32,8 @@ public class TUI extends View {
 
     }
 
+    Timer timer = new Timer();
+    TimerTask task;
     //-------------------------------- @Override methods from View --------------------------------
 
     @Override
@@ -98,40 +97,25 @@ public class TUI extends View {
 
     @Override
     public void endGame(Map<String, Integer> results) {
+        TurnTimer = false;
+        gameEnded=true;
 
-        Scanner scan = new Scanner(System.in);
-        String input;
+        out.println("+---------------The game has ended!---------------+");
 
-            out.println("+---------------The game has ended!---------------+");
+        out.println("               nickname     score       ");
 
-            out.println("               nickname     score       ");
-
-            if(results.values().stream().toList().get(0)<=0){
-                serverEndedGame=true;
-
-            }
+        if(results.values().stream().toList().get(0)<=0){
+            serverEndedGame=true;
+        }
 
         for (Map.Entry<String, Integer> entry : results.entrySet()) {
             out.println("               "+ entry.getKey() + "      ->     " + abs(entry.getValue()));
 
         }
-            out.println("+-------------------------------------------------+");
+        out.println("+-------------------------------------------------+");
 
         if(!serverEndedGame) {
-            do {
-                out.println("Do you want to leave the game? y/n");
-                input = scan.next();
-            } while (!input.equals("y") && !input.equals("n"));
-
-            if (input.equals("y")) {
-                try {
-                    client.askLeaveGame();
-                } catch (LoginException e) {
-                    out.println("LoginException occured trying to leave the game (game ended)!");
-                } catch (IOException e) {
-                    out.println("IOExcpetion occured trying to leave the game (game ended)!");
-                }
-            }
+            out.println("Do you want to leave the game? y/n");
         }else{
             System.exit(0);
         }
@@ -140,6 +124,7 @@ public class TUI extends View {
 
     @Override
     public void isYourTurn() {
+        TurnTimer = false;
 
         if (client.isMyTurn()) {
 
@@ -148,6 +133,19 @@ public class TUI extends View {
                                     |     IS YOUR TURN!!!     |
                                     +-------------------------+
                                                                          """);
+
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    System.out.println("Do a move! You are out of time!");
+                    // Assegna 'true' alla variabile booleana quando il timer scade
+                    // Esegui qui altre azioni desiderate
+                    TurnTimer = true;
+                }
+            };
+
+            int limitTime = 120;
+            timer.schedule(task, limitTime*1000);
         }
 
     }
@@ -155,7 +153,7 @@ public class TUI extends View {
     @Override
     public void startGame() {
 
-        boolean fileFound = false;
+        boolean fileFound;
 
 
 
@@ -188,7 +186,6 @@ public class TUI extends View {
     public void standardLogin() {
         Scanner scan = new Scanner(System.in);
         String connection;
-        String num;
 
         out.println("What kind of connection do you want?\n");
 
@@ -287,6 +284,7 @@ public class TUI extends View {
 
     @Override
     public void endYourTurn() {
+        task.cancel();
         out.println("Your turn is over!\n");
     }
 
@@ -316,7 +314,7 @@ public class TUI extends View {
 
         Set<String> otherPlayers = client.getModel().getOtherPlayers().keySet();
         List<String> player = otherPlayers.stream().toList();
-        
+
         if(sender.equals(player.get(0))){
             color = ColorCLI.GREEN;
         } else if (sender.equals(player.get(1))) {
@@ -328,7 +326,7 @@ public class TUI extends View {
 
         if(!client.isMyTurn() || insideChat) {
             strSender.append(color).append(sender).append(ColorCLI.RESET);
-            out.println(strSender + ":" + message);
+            out.println(strSender + ": " + message);
         }
     }
 
@@ -368,7 +366,7 @@ public class TUI extends View {
         }
     }
 
-    public void init() {
+    private void init() {
 
         /*
         out.println("""
@@ -381,7 +379,7 @@ public class TUI extends View {
                                                                                        \s""");
 
          */
-         out.println("""
+        out.println("""
                  
                  ███╗░░░███╗██╗░░░██╗░██████╗██╗░░██╗███████╗██╗░░░░░███████╗██╗███████╗
                  ████╗░████║╚██╗░██╔╝██╔════╝██║░░██║██╔════╝██║░░░░░██╔════╝██║██╔════╝
@@ -398,7 +396,7 @@ public class TUI extends View {
 
     }
 
-    public void initMenu(){
+    private void initMenu(){
         out.println("+-----------------------------------------------------------+");
         out.println("|                          MENU:                            |");
         out.println("|                                                           |");
@@ -417,7 +415,7 @@ public class TUI extends View {
         out.println("+-----------------------------------------------------------+");
     }
 
-    public void plotBoard() {
+    private void plotBoard() {
 
         StringBuilder strBoard = new StringBuilder();
         int temp = 0;
@@ -442,11 +440,11 @@ public class TUI extends View {
             }
         }
 
-        out.println(strBoard.toString());
+        out.println(strBoard);
 
     }
 
-    public void plotMatrixShelf(Matrix bookshelf) {
+    private void plotMatrixShelf(Matrix bookshelf) {
 
         StringBuilder strShelf = new StringBuilder();
         int temp = 5;
@@ -476,11 +474,11 @@ public class TUI extends View {
             }
         }
 
-        out.println(strShelf.toString());
+        out.println(strShelf);
 
     }
 
-    public void plotOtherPlayersShelf() {
+    private void plotOtherPlayersShelf() {
 
         for (Map.Entry<String, Matrix> entry : client.getModel().getOtherPlayers().entrySet()) {
             out.println(entry.getKey());
@@ -490,7 +488,7 @@ public class TUI extends View {
 
     }
 
-    public void plotPGC() {
+    private void plotPGC() {
         StringBuilder strPGC = new StringBuilder();
 
         int temp = 5;
@@ -522,11 +520,12 @@ public class TUI extends View {
             }
         }
 
-        System.out.println(strPGC.toString());
+        System.out.println(strPGC);
 
     }
 
-    public void commandInsertTiles() {
+    private void commandInsertTiles() {
+        List<Integer> tile = new ArrayList<>();
         Scanner scan = new Scanner(System.in);
         boolean goon = false;
         boolean ok=false;
@@ -538,15 +537,24 @@ public class TUI extends View {
             String select = "";
             out.println("Choose tiles from the board!");
 
+            if(!client.isMyTurn()) return; //controllo ogni volta per disconnessioni
+
             while (!Objects.equals(select, "n")) {
                 do {
 
                     out.println("Insert x:");
 
                     do {
+
+                        if(!client.isMyTurn()) {
+                            coord.clear();
+                            return; //controllo ogni volta per disconnessioni
+                        }
+
                         try {
                             x = Integer.parseInt(scan.next());
                             coord.add(x);
+                            tile.add(x);
                             ok=true;
                         } catch (NumberFormatException e) {
                             out.println("NumberFormatException trying to choose the x tile!");
@@ -558,9 +566,16 @@ public class TUI extends View {
                     out.println("Insert y:");
 
                     do {
+
+                        if(!client.isMyTurn()) {
+                            coord.clear();
+                            return; //controllo ogni volta per disconnessioni
+                        }
+
                         try {
                             y = Integer.parseInt(scan.next());
                             coord.add(y);
+                            tile.add(y);
                             ok=true;
                         } catch (NumberFormatException e) {
                             out.println("NumberFormatException trying to choose the y tile!");
@@ -570,13 +585,23 @@ public class TUI extends View {
 
                     round++;
 
-                    if (!checkTiles(coord)) {
-                        out.println("There has been some error!\nChoose tiles from the board!");
+                    if (checkTiles(coord)) {
+                        out.println("There has been some error!\nChoose tiles from the board! (from the beginning)");
                         coord.clear();
                         round = 0;
                     }
 
-                } while (!checkTiles(coord));
+                    if(!checkCatchable(tile)){
+                        out.println("You cannot choose this tile! It has no free side!\nChoose tiles from the board! (from the beginning)");
+                        coord.clear();
+                        tile.clear();
+                        ok=false;
+                        round=0;
+                    }
+
+                    tile.clear();
+
+                } while (checkTiles(coord) || !ok);
 
                 if (round == 3) break;
 
@@ -587,6 +612,10 @@ public class TUI extends View {
 
             }
 
+            if(!client.isMyTurn()) {
+                coord.clear();
+                return; //controllo ogni volta per disconnessioni
+            }
 
             try {
                 client.askBoardTiles(coord);
@@ -597,18 +626,29 @@ public class TUI extends View {
                 coord.clear();
             } catch (NotConnectedException e) {
                 out.println("NotConnectedException occurred trying to choose the tiles!");
+                coord.clear();
+                return;
             } catch (NotMyTurnException e) {
                 out.println("NotMyTurnException occurred trying to choose the tiles!");
+                coord.clear();
+                return;
             } catch (InvalidParametersException e) {
                 out.println("InvalidParametersException occurred trying to choose the tiles!");
             } catch (IOException e) {
                 out.println("IOException occurred trying to choose the tiles!");
+                coord.clear();
+                return;
             }
 
         } while (!goon);
 
         goon = false;
         ok=false;
+
+        if(!client.isMyTurn()) {
+            coord.clear();
+            return; //controllo ogni volta per disconnessioni
+        }
 
         do {
             out.println("Choose the column of your bookshelf for the tiles:");
@@ -624,10 +664,20 @@ public class TUI extends View {
                 }
                 if(chosenColumn>4) {
                     ok=false;
-                    out.println("You have chosen a column that doesn't exist!\nTry again:");
+                    out.println("You have chosen a column that doesn't exist!\nTry again: ");
+                }
+
+                if(!checkColumn(chosenColumn)){
+                    ok=false;
+                    out.println("You have chosen a full column OR you have chosen too many tiles for this column!\nTry again: ");
                 }
 
             }while (!ok);
+
+            if(!client.isMyTurn()) {
+                coord.clear();
+                return; //controllo ogni volta per disconnessioni
+            }
 
             try {
                 client.askInsertShelfTiles(chosenColumn, coord);
@@ -639,48 +689,104 @@ public class TUI extends View {
                 out.println("InvalidLengthException occurred trying to insert tiles!");
             } catch (NotMyTurnException e) {
                 out.println("NotMyTurnException occurred trying to insert tiles!");
+                coord.clear();
+                return;
             } catch (NotConnectedException e) {
                 out.println("NotConnectedException occurred trying to insert tiles!");
+                coord.clear();
+                return;
             } catch (IOException e) {
                 out.println("IOException occurred trying to choose the tiles!");
+                coord.clear();
+                return;
             }
 
         } while (!goon);
+
     }
 
-    public boolean checkTiles(List<Integer> tiles) {
+    private boolean checkTiles(List<Integer> tiles) {
 
         for(Integer t: tiles){
             if(t>=9) {
                 out.println("You're trying to get tiles that are not on the board!");
-                return false;
+                return true;
             }
         }
 
         if (tiles.size() == 6) {
-            if(Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(1), tiles.get(3))) return false;
+            if(client.getModel().getBoard().getTileByCoord(tiles.get(0), tiles.get(1)).equals(Tile.NOTAVAILABLE)
+                    || client.getModel().getBoard().getTileByCoord(tiles.get(0), tiles.get(1)).equals(Tile.EMPTY)) return true;
 
-            if(Objects.equals(tiles.get(2), tiles.get(4)) && Objects.equals(tiles.get(3), tiles.get(5))) return false;
+            if(client.getModel().getBoard().getTileByCoord(tiles.get(2), tiles.get(3)).equals(Tile.NOTAVAILABLE)
+                    || client.getModel().getBoard().getTileByCoord(tiles.get(2), tiles.get(3)).equals(Tile.EMPTY)) return true;
 
-            if(Objects.equals(tiles.get(0), tiles.get(4)) && Objects.equals(tiles.get(1), tiles.get(5))) return false;
+            if(client.getModel().getBoard().getTileByCoord(tiles.get(4), tiles.get(5)).equals(Tile.NOTAVAILABLE)
+                    || client.getModel().getBoard().getTileByCoord(tiles.get(4), tiles.get(5)).equals(Tile.EMPTY)) return true;
 
-            if (Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(2), tiles.get(4))) return true;
 
-            if (Objects.equals(tiles.get(1), tiles.get(3)) && Objects.equals(tiles.get(3), tiles.get(5))) return true;
+            if(Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(1), tiles.get(3))) return true;
 
-            return false;
+            if(Objects.equals(tiles.get(2), tiles.get(4)) && Objects.equals(tiles.get(3), tiles.get(5))) return true;
+
+            if(Objects.equals(tiles.get(0), tiles.get(4)) && Objects.equals(tiles.get(1), tiles.get(5))) return true;
+
+            if (Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(2), tiles.get(4))) return false;
+
+            return !Objects.equals(tiles.get(1), tiles.get(3)) || !Objects.equals(tiles.get(3), tiles.get(5));
         } else if (tiles.size() == 4) {
-            if(Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(1), tiles.get(3))) return false;
+            if(client.getModel().getBoard().getTileByCoord(tiles.get(0), tiles.get(1)).equals(Tile.NOTAVAILABLE)
+                    || client.getModel().getBoard().getTileByCoord(tiles.get(0), tiles.get(1)).equals(Tile.EMPTY)) return true;
 
-            if (Objects.equals(tiles.get(0), tiles.get(2))) return true;
+            if(client.getModel().getBoard().getTileByCoord(tiles.get(2), tiles.get(3)).equals(Tile.NOTAVAILABLE)
+                    || client.getModel().getBoard().getTileByCoord(tiles.get(2), tiles.get(3)).equals(Tile.EMPTY)) return true;
 
-            if (Objects.equals(tiles.get(1), tiles.get(3))) return true;
+            if(Objects.equals(tiles.get(0), tiles.get(2)) && Objects.equals(tiles.get(1), tiles.get(3))) return true;
 
-            return false;
+            if (Objects.equals(tiles.get(0), tiles.get(2))) return false;
+
+            return !Objects.equals(tiles.get(1), tiles.get(3));
+
         } else if (tiles.size() == 2) {
-            return true;
+            return client.getModel().getBoard().getTileByCoord(tiles.get(0), tiles.get(1)).equals(Tile.NOTAVAILABLE)
+                    || client.getModel().getBoard().getTileByCoord(tiles.get(0), tiles.get(1)).equals(Tile.EMPTY);
         }
 
+        return true;
+    }
+
+    private boolean checkCatchable(List<Integer> tile){
+
+        if(tile.get(0)!=8) {
+            if (client.getModel().getBoard().getTileByCoord(tile.get(0) + 1, tile.get(1)).equals(Tile.NOTAVAILABLE)
+                    || client.getModel().getBoard().getTileByCoord(tile.get(0) + 1, tile.get(1)).equals(Tile.EMPTY))
+                return true;
+        }
+
+        if(tile.get(0)!=0){
+            if (client.getModel().getBoard().getTileByCoord(tile.get(0) - 1, tile.get(1)).equals(Tile.NOTAVAILABLE)
+                    || client.getModel().getBoard().getTileByCoord(tile.get(0) - 1, tile.get(1)).equals(Tile.EMPTY))
+                return true;
+        }
+
+        if(tile.get(1)!=8 ) {
+            if (client.getModel().getBoard().getTileByCoord(tile.get(0), tile.get(1) + 1).equals(Tile.NOTAVAILABLE)
+                    || client.getModel().getBoard().getTileByCoord(tile.get(0), tile.get(1) + 1).equals(Tile.EMPTY))
+                return true;
+        }
+
+        if(tile.get(1)!=0){
+            return client.getModel().getBoard().getTileByCoord(tile.get(0), tile.get(1) - 1).equals(Tile.NOTAVAILABLE)
+                    || client.getModel().getBoard().getTileByCoord(tile.get(0), tile.get(1) - 1).equals(Tile.EMPTY);
+        }
+
+        return false;
+    }
+
+    private boolean checkColumn(int column){
+        if(coord.size()==2) return client.getModel().getMyBookshelf().getTileByCoord(5, column).equals(Tile.EMPTY);
+        if(coord.size()==4) return client.getModel().getMyBookshelf().getTileByCoord(4, column).equals(Tile.EMPTY);
+        if(coord.size()==6) return client.getModel().getMyBookshelf().getTileByCoord(3, column).equals(Tile.EMPTY);
         return false;
     }
 
@@ -690,15 +796,47 @@ public class TUI extends View {
             Future<String> future = executor.submit(scanner::nextLine);
 
             // Imposta il timeout
-            String input = future.get(30, TimeUnit.SECONDS);
-            return input;
+            return future.get(30, TimeUnit.SECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             // Se si verifica un'eccezione, restituisce una stringa vuota
             return "";
         }
     }
 
-    public void commandListener() {
+    private void stopTurn(){
+        if(TurnTimer){
+            try{
+                client.endYourTurn();
+                client.askPassMyTurn();
+            }catch (RemoteException e){
+                out.println("RemoteException trying to end turn!");
+            }
+        }
+    }
+
+    private void printChat(){
+        ColorCLI color = null;
+        ArrayList<ArrayList<String>> chat = client.getModel().getMyChat().getConversation();
+
+        Set<String> otherPlayers = client.getModel().getOtherPlayers().keySet();
+        List<String> player = otherPlayers.stream().toList();
+
+        for(ArrayList<String> message : chat){
+            StringBuilder strSender = new StringBuilder();
+
+            if(message.get(0).equals(player.get(0))){
+                color = ColorCLI.GREEN;
+            } else if (message.get(0).equals(player.get(1))) {
+                color = ColorCLI.BLUE;
+            } else if (message.get(0).equals(player.get(2))) {
+                color = ColorCLI.PINK;
+            }
+            strSender.append(color).append(message.get(0)).append(ColorCLI.RESET);
+            out.println(strSender + ": " + message.get(1));
+        }
+    }
+
+    private void commandListener() {
 
         Scanner scan = new Scanner(System.in);
         String action;
@@ -727,6 +865,7 @@ public class TUI extends View {
 
                 case "/pgc" -> {
                     plotPGC();
+                    stopTurn();
                 }
 
                 case "/cgc" -> {
@@ -735,23 +874,28 @@ public class TUI extends View {
                     if (client.getModel().getOtherPlayers().size() > 2) {
                         out.println(client.getModel().getCgc2().getDescription());
                     }
+                    stopTurn();
                 }
 
                 case "/score" -> {
                     out.println("This is your score at the moment: ");
                     out.println(client.getModel().getMyScore());
+                    stopTurn();
                 }
 
                 case "/others" -> {
                     plotOtherPlayersShelf();
+                    stopTurn();
                 }
 
                 case "/myShelf" -> {
                     plotMatrixShelf(client.getModel().getMyBookshelf());
+                    stopTurn();
                 }
 
                 case "/board" -> {
                     plotBoard();
+                    stopTurn();
                 }
 
                 case "/tiles" -> {
@@ -763,40 +907,111 @@ public class TUI extends View {
                 }
 
                 case "/chat"->{
+                    ArrayList<String> recipient = new ArrayList<>();
+                    Set<String> otherPlayers = client.getModel().getOtherPlayers().keySet();
+                    List<String> players = otherPlayers.stream().toList();
+                    int num = players.size();
+
                     insideChat=true;
+                    boolean sent=false;
                     boolean c=false;
                     out.println("type something and press 'enter'");
-                    out.println("to leave the chat /qChat ");
+                    out.println("to leave the chat /qChat");
+                    out.println("the chat is now broadcast!");
+                    out.println("to send a message to a specific player, write at the end /player");
                     scan.nextLine();
 
                     do {
                         String mex = scan.nextLine();
 
-                        if(mex.equals("/qChat")) {
-                            insideChat=false;
-                            c = true;
-                        }else if(mex.equals("")){
-                            out.println("You have tried sending an empty message");
-                        }else {
-                            client.askPostMessage(mex, new ArrayList(client.getModel().getOtherPlayers().keySet()));
+                        if(mex.contains("/")) {
+                            if(mex.equals("/qChat")) {
+                                insideChat = false;
+                                sent=true;
+                                c = true;
+                            }else if (mex.substring(mex.indexOf("/")+1).equals(players.get(0))){
+                                recipient.add(players.get(0));
+                                client.askPostMessage(mex.substring(0,mex.indexOf("/")), recipient);
+                                sent=true;
+                                recipient.clear();
+                            } else if (num==2) {
+                                if (mex.substring(mex.indexOf("/")+1).equals(players.get(1))){
+                                    recipient.add(players.get(1));
+                                    client.askPostMessage(mex.substring(0,mex.indexOf("/")), recipient);
+                                    sent=true;
+                                    recipient.clear();
+                                }
+                            } else if (num==3) {
+                                if (mex.substring(mex.indexOf("/")+1).equals(players.get(1))){
+                                    recipient.add(players.get(1));
+                                    client.askPostMessage(mex.substring(0,mex.indexOf("/")), recipient);
+                                    sent=true;
+                                    recipient.clear();
+                                }
+
+                                if (mex.substring(mex.indexOf("/")+1).equals(players.get(2))) {
+                                    recipient.add(players.get(2));
+                                    client.askPostMessage(mex.substring(0,mex.indexOf("/")), recipient);
+                                    sent=true;
+                                    recipient.clear();
+                                }
+                            }
                         }
+
+                        if(mex.equals("")){
+                            out.println("You have tried sending an empty message");
+                        }else if(!sent){
+                            recipient.add(players.get(0));
+                            if(num==2 || num==3) recipient.add(players.get(1));
+                            if(num==3) recipient.add(players.get(2));
+                            client.askPostMessage(mex, recipient);
+                            recipient.clear();
+                        }
+                        sent=false;
+
                     }while (!c);
+                    stopTurn();
                 }
 
                 case "/showChat"->{
                     out.println("These are your last messages: ");
-                    out.println(client.getModel().getMyChat().getConversation());
+                    printChat();
+                    stopTurn();
                 }
 
                 case "/q" -> {
-                    try {
-                        client.askLeaveGame();
-                        serverEndedGame = true;
-                    } catch (LoginException e) {
-                        e.getMessage();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if(!gameEnded) {
+                        try {
+                            client.askLeaveGame();
+                            serverEndedGame = true;
+                        } catch (LoginException e) {
+                            out.println("LoginException trying to leave the game!");
+                        } catch (IOException e) {
+                            out.println("IOException trying to leave the game!");
+                        }
+                    }else{
+                        System.exit(0);
                     }
+                }
+
+                case "y" ->{
+                    if(gameEnded){
+                        try{
+                            out.println("You are leaving the game...");
+                            client.askLeaveGame();
+                            out.println("See you soon!");
+                            System.exit(0);
+                        } catch (LoginException e) {
+                            out.println("LoginException occurred trying to leave the game (game ended)!");
+                        } catch (IOException e) {
+                            out.println("IOException occurred trying to leave the game (game ended)!");
+                        }
+
+                    }
+                }
+
+                case "n" ->{
+                    if(gameEnded) out.println("You are still in the game! Do whatever you want...");
                 }
 
                 case "/info" -> {
