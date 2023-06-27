@@ -357,18 +357,6 @@ public abstract class Lobby implements  ClientServerHandler {
 
         System.out.println("--> player "+ nickname+ " wants to leave the Game ID="+ID);
 
-        /*
-        if( !myGame.getGameStatus().equals(GameStatus.SUSPENDED)) quitGameIDandNotify(myGame);
-        else{
-            myGame.removePlayer(myPlayer);
-            myPlayer.getPingClass().stopPingProcess();
-            if(myGame.getPlayers().size()<2){
-                myGame.removePlayer(myGame.getPlayers().get(0));
-                myPlayer.getPingClass().stopPingProcess();
-                games.remove(myGame);
-            }
-        }*/
-
         switch (myGame.getGameStatus()){
 
             case PLAYING, SUSPENDED: {

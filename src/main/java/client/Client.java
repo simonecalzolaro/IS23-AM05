@@ -51,8 +51,8 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
     /**
      * initialize client's parameters
-     * @throws IOException
-     * @throws NotBoundException
+     * @throws IOException w
+     * @throws NotBoundException when the client cant bind the server's stub
      */
     abstract public void initializeClient() throws  IOException, NotBoundException;
 
@@ -217,8 +217,10 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
      */
     @Override
     public void receiveMessage(String sender, String message) throws RemoteException{
+
         model.getMyChat().addMessage(sender, message);
         view.plotNewMessage(sender, message );
+        System.out.println("u recived a message!!!!!!!!!!!!!!!!!!!!");
     }
 
 
@@ -250,9 +252,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
            throw new RuntimeException(e);
        }
     }
-
-
-
 
     /**
      * set up the servers' ports and hostname

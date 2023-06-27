@@ -47,6 +47,11 @@ public class Game implements Serializable {
 
     private final Chat chatRoom;
 
+    public Game(){
+        board=null;
+        chatRoom=null;
+        gameID=-999;
+    }
 
     /**
      * Assign GameID and increase game count
@@ -208,6 +213,26 @@ public class Game implements Serializable {
             res.put(players.get(i).getPlayerNickname(), players.get(i).getBookshelf().getMyScore());
         }
 
+        Map<String, Integer> sortedMap = sortMapByValue(res);
+
+        //if the game is not ended and I'm pushing this map because someone left the game I'll set all the scores to their negative module
+        if(getGameStatus().equals(GameStatus.END_GAME)) return sortedMap;
+
+        res= new HashMap<>();
+        //setting everything to negatives
+        for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
+            res.put(entry.getKey(), - entry.getValue());
+        }
+
+        return res;
+    }
+
+    /**
+     * @param res : map to sort
+     * @return sorted map by values
+     */
+    public Map<String, Integer> sortMapByValue( Map<String, Integer> res){
+
         // Create a list of map entries
         List<Map.Entry<String, Integer>> entryList = new ArrayList<>(res.entrySet());
 
@@ -222,16 +247,7 @@ public class Game implements Serializable {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
 
-        //if the game is not ended and I'm pushing this map because someone left the game I'll set all the scores to their negative module
-        if(getGameStatus().equals(GameStatus.END_GAME)) return sortedMap;
-
-        res= new HashMap<>();
-        //setting everything to negatives
-        for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
-            res.put(entry.getKey(), - entry.getValue());
-        }
-
-        return res;
+        return sortedMap;
     }
 
     public void setGameStatus(GameStatus gs){
