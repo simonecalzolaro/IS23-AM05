@@ -6,54 +6,27 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
+
 import javafx.stage.Stage;
 import myShelfieException.LoginException;
 
-import java.awt.*;
+
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class LoginController extends GUIController {
-    @FXML
-    private Label waitingLabel;
-    @FXML
-    private Button rmiButton;
-    @FXML
-    private Button socketButton;
-    @FXML
-    private Label chooseLabel;
-    @FXML
-    private Label enterNicknameLabel;
-    @FXML
-    private TextField nameField;
-    @FXML
-    private Button loginButton;
-    @FXML
-    private Label loginExceptionLabel;
-    @FXML
-    private Button numButton;
-    @FXML
-    private TextField numField;
-    @FXML
-    private ImageView image1;
-    @FXML
-    private ImageView image2;
-    @FXML
-    private ImageView image3;
-    @FXML
-    private ImageView image4;
-
     private Timer timer1;
     private Timer timer2;
 
     private Timer enterNumTimer;
+
 
     private void timer(){
         timer1 = new Timer();
@@ -64,14 +37,18 @@ public class LoginController extends GUIController {
             @Override
             public void run() {
                 switch (n%4) {
-                    case 0 -> Platform.runLater(() -> {image1.setVisible(false);
-                        image2.setVisible(true);});
-                    case 1 -> Platform.runLater(() -> {image2.setVisible(false);
-                        image3.setVisible(true);});
-                    case 2 -> Platform.runLater(() -> {image3.setVisible(false);
-                        image4.setVisible(true);});
-                    case 3 -> Platform.runLater(() -> {image4.setVisible(false);
-                                           image1.setVisible(true);});
+                    case 0 -> Platform.runLater(() -> {
+                        root.lookup("#image1").setVisible(false);
+                        root.lookup("#image2").setVisible(true);});
+                    case 1 -> Platform.runLater(() -> {
+                        root.lookup("#image2").setVisible(false);
+                        root.lookup("#image3").setVisible(true);});
+                    case 2 -> Platform.runLater(() -> {
+                        root.lookup("#image3").setVisible(false);
+                        root.lookup("#image4").setVisible(true);});
+                    case 3 -> Platform.runLater(() -> {
+                        root.lookup("#image4").setVisible(false);
+                        root.lookup("#image1").setVisible(true);});
                 }
                 n++;
                 if(n==200) timer1.cancel();
@@ -82,10 +59,10 @@ public class LoginController extends GUIController {
             @Override
             public void run() {
                 switch (num%4){
-                    case 0 -> Platform.runLater(() -> waitingLabel.setText("Waiting for players"));
-                    case 1 -> Platform.runLater(() -> waitingLabel.setText("Waiting for players."));
-                    case 2 -> Platform.runLater(() -> waitingLabel.setText("Waiting for players.."));
-                    case 3 -> Platform.runLater(() -> waitingLabel.setText("Waiting for players..."));
+                    case 0 -> Platform.runLater(() -> ((Label) root.lookup("#waitingLabel")).setText("Waiting for players"));
+                    case 1 -> Platform.runLater(() -> ((Label) root.lookup("#waitingLabel")).setText("Waiting for players."));
+                    case 2 -> Platform.runLater(() -> ((Label) root.lookup("#waitingLabel")).setText("Waiting for players.."));
+                    case 3 -> Platform.runLater(() -> ((Label) root.lookup("#waitingLabel")).setText("Waiting for players..."));
                 }
                 num++;
                 if(num==800) timer2.cancel();
@@ -111,11 +88,11 @@ public class LoginController extends GUIController {
     @FXML
     private void chooseProtocol(ActionEvent actionEvent) {
 
-        loginExceptionLabel.setDisable(true);
-        loginExceptionLabel.setVisible(false);
+        root.lookup("#loginExceptionLabel").setDisable(true);
+        root.lookup("#loginExceptionLabel").setVisible(false);
 
         try{
-            if(actionEvent.getSource().equals(rmiButton)){
+            if(actionEvent.getSource().equals(root.lookup("#rmiButton"))){
 
                 client = new RMIClient();
                 RMIClient.setView(gui);
@@ -132,12 +109,12 @@ public class LoginController extends GUIController {
         }
 
 
-        rmiButton.isDisable();
-        socketButton.isDisable();
-        rmiButton.setVisible(false);
-        socketButton.setVisible(false);
-        chooseLabel.isDisable();
-        chooseLabel.setVisible(false);
+        root.lookup("#rmiButton").isDisable();
+        root.lookup("#socketButton").isDisable();
+        root.lookup("#rmiButton").setVisible(false);
+        root.lookup("#socketButton").setVisible(false);
+        root.lookup("#chooseLabel").isDisable();
+        root.lookup("#chooseLabel").setVisible(false);
 
         showEnterNickname();
 
@@ -146,25 +123,25 @@ public class LoginController extends GUIController {
     private void showEnterNickname(){
 
         hideWaitingScene();
-        image1.setVisible(false);
-        enterNicknameLabel.setText("Enter your nickname:");
-        enterNicknameLabel.setVisible(true);
-        enterNicknameLabel.setDisable(false);
-        nameField.setDisable(false);
-        nameField.setVisible(true);
-        loginButton.setDisable(false);
-        loginButton.setVisible(true);
-        numField.setVisible(false);
-        numField.setDisable(true);
-        numButton.setDisable(true);
-        numButton.setVisible(false);
+        root.lookup("#image1").setVisible(false);
+        ((Label) root.lookup("#enterNicknameLabel")).setText("Enter your nickname:");
+        root.lookup("#enterNicknameLabel").setVisible(true);
+        root.lookup("#enterNicknameLabel").setDisable(false);
+        root.lookup("#nameField").setDisable(false);
+        root.lookup("#nameField").setVisible(true);
+        root.lookup("#loginButton").setDisable(false);
+        root.lookup("#loginButton").setVisible(true);
+        root.lookup("#numField").setVisible(false);
+        root.lookup("#numField").setDisable(true);
+        root.lookup("#numButton").setDisable(true);
+        root.lookup("#numButton").setVisible(false);
     }
     @FXML
     private void enterNickname(ActionEvent actionEvent){
-        loginExceptionLabel.setDisable(true);
-        loginExceptionLabel.setVisible(false);
-        String nickname = nameField.getText();
-        nameField.clear();
+        root.lookup("#loginExceptionLabel").setDisable(true);
+        root.lookup("#loginExceptionLabel").setVisible(false);
+        String nickname = ((TextField) root.lookup("#nameField")).getText();
+        ((TextField) root.lookup("#nameField")).clear();
         try{
             client.getModel().setNickname(nickname);
             client.askLogin(nickname);
@@ -184,20 +161,20 @@ public class LoginController extends GUIController {
 
         hideWaitingScene();
 
-        enterNicknameLabel.setVisible(true);
-        enterNicknameLabel.setDisable(false);
-        loginExceptionLabel.setDisable(true);
-        loginExceptionLabel.setVisible(false);
-        enterNicknameLabel.setText("Enter number of player to create a new game:");
-        nameField.setDisable(true);
-        nameField.setVisible(false);
-        loginButton.setDisable(true);
-        loginButton.setVisible(false);
+        root.lookup("#enterNicknameLabel").setVisible(true);
+        root.lookup("#enterNicknameLabel").setDisable(false);
+        root.lookup("#loginExceptionLabel").setDisable(true);
+        root.lookup("#loginExceptionLabel").setVisible(false);
+        ((Label) root.lookup("#enterNicknameLabel")).setText("Enter number of player to create a new game:");
+        root.lookup("#nameField").setDisable(true);
+        root.lookup("#nameField").setVisible(false);
+        root.lookup("#loginButton").setDisable(true);
+        root.lookup("#loginButton").setVisible(false);
 
-        numField.setDisable(false);
-        numField.setVisible(true);
-        numButton.setDisable(false);
-        numButton.setVisible(true);
+        root.lookup("#numField").setDisable(false);
+        root.lookup("#numField").setVisible(true);
+        root.lookup("#numButton").setDisable(false);
+        root.lookup("#numButton").setVisible(true);
 
 
         if(enterNumTimer!=null){
@@ -228,9 +205,9 @@ public class LoginController extends GUIController {
                 enterNumTimer.cancel();
                 enterNumTimer=null;
             }
-            loginExceptionLabel.setDisable(true);
-            loginExceptionLabel.setVisible(false);
-            int n=Integer.parseInt(numField.getText());
+        root.lookup("#loginExceptionLabel").setDisable(true);
+        root.lookup("#loginExceptionLabel").setVisible(false);
+            int n=Integer.parseInt(((TextField) root.lookup("#numField")).getText());
             if(n>1&&n<=4){
                 client.askSetNumberOfPlayers(n, client.getModel().getNickname());
             } else {
@@ -246,35 +223,35 @@ public class LoginController extends GUIController {
      * Method invoked to show the user that the game is waiting for other players
      */
     public void showWaitingScene() {
-        chooseLabel.setVisible(false);
-        chooseLabel.setDisable(true);
+        root.lookup("#chooseLabel").setVisible(false);
+        root.lookup("#chooseLabel").setDisable(true);
 
-        nameField.setVisible(false);
-        nameField.setDisable(true);
+        root.lookup("#nameField").setVisible(false);
+        root.lookup("#nameField").setDisable(true);
 
-        rmiButton.setVisible(false);
-        rmiButton.setDisable(true);
+        root.lookup("#rmiButton").setVisible(false);
+        root.lookup("#rmiButton").setDisable(true);
 
-        socketButton.setVisible(false);
-        socketButton.setDisable(true);
+        root.lookup("#socketButton").setVisible(false);
+        root.lookup("#socketButton").setDisable(true);
 
-        enterNicknameLabel.setVisible(false);
-        enterNicknameLabel.setDisable(true);
-        nameField.setVisible(false);
-        nameField.isDisable();
+        root.lookup("#enterNicknameLabel").setVisible(false);
+        root.lookup("#enterNicknameLabel").setDisable(true);
+        root.lookup("#nameField").setVisible(false);
+        root.lookup("#nameField").isDisable();
 
-        loginButton.setVisible(false);
-        loginButton.isDisable();
+        root.lookup("#loginButton").setVisible(false);
+        root.lookup("#loginButton").isDisable();
 
-        numButton.isDisable();
-        numButton.setVisible(false);
+        root.lookup("#numButton").isDisable();
+        root.lookup("#numButton").setVisible(false);
 
-        numField.setVisible(false);
-        numField.setDisable(true);
+        root.lookup("#numField").setVisible(false);
+        root.lookup("#numField").setDisable(true);
 
-        image1.setVisible(true);
-        waitingLabel.setVisible(true);
-        waitingLabel.setDisable(false);
+        root.lookup("#image1").setVisible(true);
+        root.lookup("#waitingLabel").setVisible(true);
+        root.lookup("#waitingLabel").setDisable(false);
 
         timer();
     }
@@ -288,20 +265,20 @@ public class LoginController extends GUIController {
         }
 
 
-        waitingLabel.setVisible(false);
-        waitingLabel.setDisable(true);
+        root.lookup("#waitingLabel").setVisible(false);
+        root.lookup("#waitingLabel").setDisable(true);
 
     }
     @Override
     public void showException(String e){
-        loginExceptionLabel.setDisable(false);
-        loginExceptionLabel.setVisible(true);
-        loginExceptionLabel.setText(e);
+        root.lookup("#loginExceptionLabel").setDisable(false);
+        root.lookup("#loginExceptionLabel").setVisible(true);
+        ((Label) root.lookup("#loginExceptionLabel")).setText(e);
     }
 
     /**
      * Method invoked by the GUI View when the game start. The Game Scene is shown.
-     * @throws IOException
+     * @throws IOException from FXMLLoader load
      */
     public void showGameScene() throws IOException {
         if(timer1!=null){
@@ -310,9 +287,11 @@ public class LoginController extends GUIController {
         }
 
         FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("game.fxml"));
-        Scene scene = new Scene(fxmlLoader1.load(), 1250,650);
+        Parent root= fxmlLoader1.load();
+        Scene scene = new Scene(root, 1250,650);
         GameController gameController=fxmlLoader1.getController();
         gameController.setClient(client);
+        gameController.setRoot(root);
         gameController.setScene(gui,stage);
         gui.setGameController(gameController);
         stage.setScene(scene);

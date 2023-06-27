@@ -6,16 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Scene;
+
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import myShelfieException.LoginException;
 
 import java.io.IOException;
 import java.util.Map;
 
-import static javafx.application.Platform.exit;
-import static javafx.application.Platform.isFxApplicationThread;
 
 public class RankController extends GUIController {
     @FXML
@@ -50,32 +47,16 @@ public class RankController extends GUIController {
         super.setScene(gui, stage);
 
         switch (client.getModel().getOtherPlayers().size()){
-            case 0:  player2Group.setVisible(false);
-            case 1:  player3Group.setVisible(false);
-            case 2:  player4Group.setVisible(false);
+            case 0:  root.lookup("#player2Group").setVisible(false);
+            case 1:  root.lookup("#player3Group").setVisible(false);
+            case 2:  root.lookup("#player4Group").setVisible(false);
         }
     }
     @FXML
     private void askExit(ActionEvent actionEvent) {
         System.exit(0);
     }
-    @FXML
-    private void startNewGame(ActionEvent actionEvent) throws IOException {
 
-
-        /*FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1250,650);
-        stage.setScene(scene);
-        LoginController controller=fxmlLoader.getController();
-        gui.setLoginController(controller);
-        controller.setScene(gui,stage);
-        controller.showWaitingScene();
-        try {
-            client.askLogin(client.getModel().getNickname());
-        } catch (LoginException e) {
-            controller.showLoginScene();
-        }*/
-    }
 
     /**
      * Method invoked by the GUI View to set the final rank.
@@ -86,20 +67,20 @@ public class RankController extends GUIController {
         for (String name: results.keySet()){
             switch (i){
                 case (0)-> {
-                    player1Label.setText(name);
-                    score1Label.setText(Integer.toString(results.get(name)));
+                    ((Label) root.lookup("#player1Label")).setText(name);
+                    ((Label) root.lookup("#score1Label")).setText(Integer.toString(results.get(name)));
                 }
                 case (1)-> {
-                    player2Label.setText(name);
-                    score2Label.setText(Integer.toString(results.get(name)));
+                    ((Label) root.lookup("#player2Label")).setText(name);
+                    ((Label) root.lookup("#score2Label")).setText(Integer.toString(results.get(name)));
                 }
                 case (2)-> {
-                    player3Label.setText(name);
-                    score3Label.setText(Integer.toString(results.get(name)));
+                    ((Label) root.lookup("#player3Label")).setText(name);
+                    ((Label) root.lookup("#score3Label")).setText(Integer.toString(results.get(name)));
                 }
                 case (3)-> {
-                    player4Label.setText(name);
-                    score4Label.setText(Integer.toString(results.get(name)));
+                    ((Label) root.lookup("#player4Label")).setText(name);
+                    ((Label) root.lookup("#score4Label")).setText(Integer.toString(results.get(name)));
                 }
             }
             i++;

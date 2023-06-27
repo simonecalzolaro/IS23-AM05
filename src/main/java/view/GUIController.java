@@ -1,26 +1,21 @@
 package view;
 
 import client.Client;
-import client.ClientApp;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import myShelfieException.LoginException;
 
-import java.io.IOException;
-import java.rmi.NotBoundException;
-
-import static com.sun.javafx.application.PlatformImpl.exit;
 
 public abstract class GUIController {
     protected GUI gui;
     protected Stage stage;
     protected Client client;
 
+    protected Parent root;
     /**
      * Initialization of a new scene
      * @param gui GUI view
@@ -57,5 +52,9 @@ public abstract class GUIController {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public void setRoot(Parent root) {
+        this.root = root;
     }
 }

@@ -2,6 +2,7 @@ package view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -15,11 +16,13 @@ public class GUIApplication extends Application {
     public void start(Stage stage) throws Exception {
 
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1250,650);
+        Parent root= fxmlLoader.load();
+        Scene scene = new Scene(root, 1250,650);
         stage.setScene(scene);
         stage.setTitle("MyShelfie");
         //stage.setMaximized(true);
         LoginController controller=fxmlLoader.getController();
+        controller.setRoot(root);
         GUI gui=new GUI();
         gui.setArgs(args);
         stage.setOnHidden(event->System.exit(0));
@@ -43,7 +46,6 @@ public class GUIApplication extends Application {
     public static void main(String[] args) {
         GUIApplication.args=args;
         launch();
-
     }
 
 }

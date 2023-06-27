@@ -144,7 +144,7 @@ public class ChatController extends GUIController{
 
             i++;
         }
-
+        
     }
 
 
