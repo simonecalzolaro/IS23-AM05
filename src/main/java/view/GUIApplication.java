@@ -20,7 +20,6 @@ public class GUIApplication extends Application {
         Scene scene = new Scene(root, 1250,650);
         stage.setScene(scene);
         stage.setTitle("MyShelfie");
-        //stage.setMaximized(true);
         LoginController controller=fxmlLoader.getController();
         controller.setRoot(root);
         GUI gui=new GUI();

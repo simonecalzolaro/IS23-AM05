@@ -103,10 +103,10 @@ public class GameController extends GUIController {
      */
     public void endGame(Map<String, Integer> results) throws IOException {
         FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("rank.fxml"));
-        Parent root= fxmlLoader1.load();
-        Scene scene = new Scene(root, 1250,650);
+        Parent root1= fxmlLoader1.load();
+        Scene scene = new Scene(root1, 1250,650);
         RankController rankController=fxmlLoader1.getController();
-        rankController.setRoot(root);
+        rankController.setRoot(root1);
         rankController.setClient(client);
         rankController.setScene(gui,stage);
         rankController.setRank(results);
