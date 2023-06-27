@@ -15,6 +15,10 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.*;
 
+/**
+ * this class extends the mor generic class Client, overriding its methods
+ * to an RMI connection type.
+ */
 public class RMIClient extends Client {
 
 
@@ -34,6 +38,7 @@ public class RMIClient extends Client {
         model.setConnectionType(false);
 
     }
+
 
     @Override
     public void initializeClient() throws IOException, NotBoundException {

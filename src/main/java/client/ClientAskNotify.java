@@ -11,36 +11,30 @@ public interface ClientAskNotify {
 
     /**
      * asks the server to log in, is implemented in RMI and socket
-     * @return GameHandler interface
-     * @throws LoginException
-     * @throws IOException
-     * @throws RemoteException
+     * @throws RemoteException RMI error
      */
     void askLogin(String nick) throws LoginException, IOException, RemoteException;
 
     /**
      * asks the server to continue a game, is implemented in RMI and socket
-     * @return GameHandler interface
-     * @throws LoginException
-     * @throws RemoteException
+     * @throws RemoteException RMI error
      */
     void askContinueGame() throws LoginException, IOException;
 
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
-     * @return true if everything went fine
-     * @throws RemoteException
+     * @throws RemoteException RMI error
      */
     void askLeaveGame() throws IOException, LoginException;
 
     /**
      * asks the server to leave the game I'm playing, is implemented in RMI and socket
-     * @param coord
-     * @throws InvalidChoiceException
-     * @throws NotConnectedException
-     * @throws InvalidParametersException
-     * @throws RemoteException
-     * @throws NotMyTurnException
+     * @param coord: board coordinates of the chosen tiles
+     * @throws InvalidChoiceException when the chosen tiles are not valid
+     * @throws NotConnectedException when can't find the server
+     * @throws InvalidParametersException wrong parameters
+     * @throws RemoteException RMI error
+     * @throws NotMyTurnException when is not your turn
      */
     void askBoardTiles( List<Integer> coord) throws InvalidChoiceException, NotConnectedException, InvalidParametersException, IOException, NotMyTurnException;
 
@@ -48,11 +42,11 @@ public interface ClientAskNotify {
      * asks the server to insert some tiles in my shelf, is implemented in RMI and socket
      * @param choosenColumn is the column where to insert the tiles
      * @param coord board coordinates
-     * @throws IOException
-     * @throws NotConnectedException
-     * @throws NotMyTurnException
-     * @throws InvalidChoiceException
-     * @throws InvalidLenghtException
+     * @throws IOException RMI exception
+     * @throws NotConnectedException when can't find the server
+     * @throws NotMyTurnException when is not your turn
+     * @throws InvalidChoiceException when the chosen tiles are not valid
+     * @throws InvalidLenghtException when you choose more than 3 tiles
      */
     void askInsertShelfTiles( int choosenColumn, List<Integer> coord) throws IOException, NotConnectedException, NotMyTurnException, InvalidChoiceException, InvalidLenghtException;
 
@@ -70,14 +64,14 @@ public interface ClientAskNotify {
 
     /**
      * tells the client that a ping has been received
-     * @throws RemoteException
+     * @throws RemoteException RMI exception
      */
     void notifyPong() throws RemoteException;
 
     /**
      * asks the server to post a message in the chat
-     * @param Message
-     * @param recipients
+     * @param Message: text message
+     * @param recipients: nickname of the people who receive the message
      */
     void askPostMessage(String Message, ArrayList<String> recipients);
 

@@ -41,7 +41,7 @@ public interface ClientServerHandler extends Remote {
 
     /**
      * method called by the client after the server's ping to confirm the connection
-     * @throws RemoteException
+     * @throws RemoteException RMI exception
      */
     void pong(String nickname, int gameID) throws RemoteException;
 

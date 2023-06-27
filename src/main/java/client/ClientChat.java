@@ -32,6 +32,7 @@ public class ClientChat {
         ArrayList<ArrayList <String>> conv= new ArrayList<>();
 
         for(int i=lastReadMessage; i< conversation.size(); i++){
+
             Message m= conversation.get(i);
             conv.add(new ArrayList<>());
             conv.get(i).add(m.getSender());
@@ -54,6 +55,9 @@ public class ClientChat {
 
 }
 
+/**
+ * contains the details of a message
+ */
 class Message{
 
     private final String sender;

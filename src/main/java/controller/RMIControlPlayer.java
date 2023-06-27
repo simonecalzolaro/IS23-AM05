@@ -5,7 +5,6 @@ import model.Tile;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -162,6 +161,7 @@ public class RMIControlPlayer extends ControlPlayer{
 
         if( !playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
             try {
+                System.out.println("----------------------send message to "+nickname);
                 ch.receiveMessage(nick, message);
             }catch (RemoteException e){
                 System.out.println("---error: something went wrong while notifyNewMessage() to "+ nickname);

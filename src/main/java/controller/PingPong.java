@@ -83,6 +83,9 @@ public class PingPong implements Runnable{
 
     }
 
+    /**
+     * verify if the game needs to be suspended due to a lack of players
+     */
     public void gameSuspension(){
 
         synchronized (gameSusp){
