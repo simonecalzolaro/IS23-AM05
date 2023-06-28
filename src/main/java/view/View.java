@@ -106,7 +106,7 @@ public abstract class View {
         }
     }
 
-    protected boolean backupLogin(){
+    public boolean backupLogin(){
 
         JSONObject j = new JSONObject();
 

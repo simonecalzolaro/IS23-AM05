@@ -25,7 +25,7 @@ public class ClientChat {
     }
 
     /**
-     * @return all the conversation as a Map<sender, message>
+     * @return all the conversation as a Map
      */
     public ArrayList<ArrayList <String>> getConversation() {
 

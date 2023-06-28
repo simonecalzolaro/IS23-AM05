@@ -95,7 +95,7 @@ public class Stream {
 
 
         if(code == 1) {
-            JSONObject jo = new JSONObject();
+            JSONObject jo;
             jo = (JSONObject) in.readObject();
             return jo;
         }

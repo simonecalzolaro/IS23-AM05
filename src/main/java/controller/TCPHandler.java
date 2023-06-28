@@ -9,15 +9,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class TCPHandler {
 
-    private String hostname;
-    private Long PORT_pre;
     private int PORT;
 
     public Lobby lobby;
@@ -42,7 +39,7 @@ public class TCPHandler {
         System.out.println("--- TCPHandler ready ---");
 
         ExecutorService executor = Executors.newCachedThreadPool();
-        ServerSocket serverSocket = null;
+        ServerSocket serverSocket;
 
         try{
             serverSocket = new ServerSocket(PORT);
@@ -64,20 +61,14 @@ public class TCPHandler {
 
     }
 
-
-
-
-    /**
-     * This method set the server properties set the PORT where the server wants to receive the request from the client
-     */
-    protected void getServerSettings() {
+    private void getServerSettings() {
         try{
+            Long PORT_pre;
             Object o = new JSONParser().parse(new FileReader(System.getProperty("user.dir")+"/config/header.json"));
             JSONObject j =(JSONObject) o;
-            Map arg = new LinkedHashMap();
+            Map arg;
             arg = (Map) j.get("serverSettings");
 
-            hostname = (String) arg.get("hostname");
             PORT_pre = (Long) arg.get("TCPPORT");
 
             PORT = PORT_pre.intValue();

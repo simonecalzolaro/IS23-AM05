@@ -58,7 +58,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
     /**
      * method called by the server to ask the first player to entre the number of players he wants in his match
-     * @return the chosen number of players
      * @throws RemoteException
      */
     @Override

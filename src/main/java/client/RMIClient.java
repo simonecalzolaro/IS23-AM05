@@ -102,7 +102,6 @@ public class RMIClient extends Client {
 
     /**
      * asks the server to log in, is divided in RMI and socket
-     * @return GameHandler interface
      * @throws LoginException
      * @throws IOException
      * @throws RemoteException
@@ -124,7 +123,6 @@ public class RMIClient extends Client {
 
     /**
      * asks the server to continue a game, is divided in RMI and socket
-     * @return GameHandler interface
      * @throws LoginException
      * @throws RemoteException
      */
@@ -140,7 +138,6 @@ public class RMIClient extends Client {
 
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
-     * @return true if everything went fine
      * @throws RemoteException
      */
     @Override
@@ -156,7 +153,6 @@ public class RMIClient extends Client {
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
      * @param coord
-     * @return true if everything went fine
      * @throws InvalidChoiceException
      * @throws NotConnectedException
      * @throws InvalidParametersException

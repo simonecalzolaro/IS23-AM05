@@ -46,7 +46,7 @@ public class Chat {
     }
 
     /**
-     * listen to the ArrayList<Message> conversation, every time there's a new message, the addition of new messages
+     * listen to the ArrayList conversation, every time there's a new message, the addition of new messages
      * is suspended and the last message is sent
      */
     public synchronized void newMessageListener(){

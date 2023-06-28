@@ -68,7 +68,7 @@ public class SocketControlPlayer extends ControlPlayer {
      * This method tells the client to end its turn
      */
     @Override
-    public synchronized void notifyEndYourTurn() throws IOException {
+    public synchronized void notifyEndYourTurn() {
 
        if(!playerStatus.equals(PlayerStatus.NOT_ONLINE)){
            JSONObject object = new JSONObject();
@@ -122,7 +122,6 @@ public class SocketControlPlayer extends ControlPlayer {
             object.put("Param2",this.bookshelf.getShelf());
             object.put("Param3",map);
             object.put("Param4",bookshelf.getMyScore());
-            object.put("Param5",game.getGameID());
 
             try{
                 outCP.reset();
@@ -195,7 +194,7 @@ public class SocketControlPlayer extends ControlPlayer {
      * @throws RemoteException thrown when a network error occurs
      */
     @Override
-    public synchronized void notifyStartPlaying() throws RemoteException, FatalException {
+    public synchronized void notifyStartPlaying() throws RemoteException {
 
 
             if(!playerStatus.equals(PlayerStatus.NOT_ONLINE)){
@@ -278,7 +277,7 @@ public class SocketControlPlayer extends ControlPlayer {
      * This method sends the ping to the client in order to verify if it's online or not
      */
     @Override
-    public synchronized void askPing() throws IOException {
+    public synchronized void askPing() {
 
         //System.out.println("*** soket askPing()");
 
@@ -322,7 +321,7 @@ public class SocketControlPlayer extends ControlPlayer {
      * @param message: text message
      */
     @Override
-    public synchronized void notifyNewMessage(String nick, String message) throws IOException {
+    public synchronized void notifyNewMessage(String nick, String message) {
 
 
        if(!playerStatus.equals(PlayerStatus.NOT_ONLINE)){

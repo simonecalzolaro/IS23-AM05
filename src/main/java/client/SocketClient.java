@@ -17,15 +17,12 @@ public class SocketClient extends Client{
     private Stream outClient;
     private Stream inClient;
 
-    static JSONObject jsonIn = null;
-
-    private boolean isPaused;
 
 
     /**
      * constructor of SocketClient
      *
-     * @throws RemoteException
+     * @throws RemoteException never thrown in socket
      */
     public SocketClient() throws RemoteException {
 
@@ -47,7 +44,6 @@ public class SocketClient extends Client{
 
         //Getting server's information about IPAddress and PORT
         getServerSettings();
-        isPaused = false;
         boolean goon = false;
         boolean firstAttempt = true;
 
@@ -90,7 +86,6 @@ public class SocketClient extends Client{
 
     /**
      * asks the server to log in, is divided in RMI and socket
-     * @return GameHandler interface
      * @throws IOException when the streams are corrupted
      * @throws RemoteException occurs in SocketClient
      */
@@ -123,7 +118,6 @@ public class SocketClient extends Client{
 
     /**
      * asks the server to continue a game, is divided in RMI and socket
-     * @return GameHandler interface
      */
 
     @Override
@@ -177,13 +171,9 @@ public class SocketClient extends Client{
 
     /**
      * asks the server to leave the game I'm playing, is divided in RMI and socket
-     * @param coord
-     * @return true if everything went fine
-     * @throws InvalidChoiceException
-     * @throws NotConnectedException
-     * @throws InvalidParametersException
-     * @throws RemoteException
-     * @throws NotMyTurnException
+     * @param coord coordinates of the tiles that are taken from the board
+     * @throws RemoteException never thrown in socket
+
      */
 
     @Override
@@ -194,7 +184,7 @@ public class SocketClient extends Client{
         object.put("Interface","GameHandler");
         object.put("Action","chooseBoardTiles");
         object.put("Param1",coord);
-      ;
+
 
         try{
             outClient.reset();
@@ -318,7 +308,7 @@ public class SocketClient extends Client{
     /**
      * Send the message to the server which will deliver it to the right client/clients
      * @param Message string to send to the
-     * @param recipients 
+     * @param recipients pool of messages
      */
     @Override
     public void askPostMessage(String Message, ArrayList<String> recipients) {
@@ -348,7 +338,7 @@ public class SocketClient extends Client{
             Long PORT_pre;
             Object o = new JSONParser().parse(new FileReader(System.getProperty("user.dir")+"/config/header.json"));
             JSONObject j =(JSONObject) o;
-            Map arg = new LinkedHashMap();
+            Map arg;
             arg = (Map) j.get("serverSettings");
 
             hostname = (String) arg.get("hostname");

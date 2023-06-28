@@ -19,7 +19,7 @@ target/
 
 #JAR FILE
 
-*.jar
+#*.jar
 
 # Log file
 *.log

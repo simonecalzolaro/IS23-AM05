@@ -327,7 +327,6 @@ public abstract class Lobby implements  ClientServerHandler {
      * -check if exists a player called "nickname" now offline inside Game ID
      *  -if the game is suspended or active, the game is finished and all the players are notified
      *  -if the game is ended the player is removed from the lobby and if there are less than 2 players the game is finished
-     * @return true if the client nickname left the game correctly
      */
     @Override
     public synchronized void leaveGame(String nickname, int ID) throws LoginException, RemoteException {

@@ -22,8 +22,8 @@ public class Stream {
      * @param code indicates the direction of the stream
      *             ==> code = 1: input
      *             ==> code = 0: output
-     * @throws IOException
-     * @throws InvalidParametersException
+     * @throws IOException when the socket interrupr its connection
+     * @throws InvalidParametersException when an invalid code is passed to the constructot
      */
 
     public Stream(Socket socket, int code) throws IOException, InvalidParametersException {
@@ -74,8 +74,12 @@ public class Stream {
     public void write(JSONObject jo) throws IOException, InvalidOperationException {
 
         if(code == 0){
+            
+
             out.writeObject(jo);
             out.flush();
+
+
         }
         else throw new InvalidOperationException();
     }
@@ -85,7 +89,7 @@ public class Stream {
      * Read the object coming from the network and return it to the users
      * @return JSONObject from the network
      * @throws IOException thrown if the method is not able to read the object from the network
-     * @throws ClassNotFoundException
+     * @throws ClassNotFoundException when the method tries to access a class that doesn't exists
      * @throws InvalidOperationException thrown when the stream had been built has an output stream ,i.e, code = 0
      */
 
@@ -93,7 +97,8 @@ public class Stream {
 
 
         if(code == 1) {
-            JSONObject jo = new JSONObject();
+            JSONObject jo;
+
             jo = (JSONObject) in.readObject();
             return jo;
         }
@@ -105,7 +110,7 @@ public class Stream {
     /**
      * Reset the stream
      *
-     * @throws IOException
+     * @throws IOException when the stream is closed
      * @throws InvalidOperationException thrown when the stream had been built has an input stream ,i.e, code = 1
      */
 

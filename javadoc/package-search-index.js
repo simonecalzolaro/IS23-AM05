@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"client"},{"l":"controller"},{"l":"controller.chatPackage"},{"l":"model"},{"l":"myShelfieException"},{"l":"org.example"},{"l":"view"}];updateSearchResults();

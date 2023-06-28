@@ -20,26 +20,26 @@ public interface ClientHandler extends Remote {
      * @param myShelf: your updated shelf
      * @param otherShelf: other's shelf
      * @param myScore: your updated score
-     * @throws RemoteException: RMI error
+     * @throws RemoteException caused by an interruption of the connection
      */
     void updateBoard(Tile[][] board, Tile[][] myShelf, Map<String, Tile[][]> otherShelf, int myScore) throws RemoteException;
 
     /**
      * method called by the server to notify the end of a game
      * @param results: ranking of the participants
-     * @throws RemoteException: RMI error
+     * @throws RemoteException caused by an interruption of the connection
      */
     void theGameEnd(Map<String, Integer> results) throws RemoteException;
 
     /**
      * method called by the server to tell the user to start his turn
-     * @throws RemoteException: RMI error
+     * @throws RemoteException caused by an interruption of the connection
      */
     void startYourTurn() throws RemoteException;
 
     /**
      * method called by the server to tell the user to end his turn
-     * @throws RemoteException: RMI error
+     * @throws RemoteException caused by an interruption of the connection
      */
     void endYourTurn() throws RemoteException;
 
@@ -56,7 +56,7 @@ public interface ClientHandler extends Remote {
 
     /**
      * method called by the server to ping this client, the client will then call a pong() on the server
-     * @throws RemoteException: RMI error
+     * @throws RemoteException RMI error
      */
     void ping() throws RemoteException;
 
@@ -64,7 +64,7 @@ public interface ClientHandler extends Remote {
      * method called by the server to add a message to user's conversation
      * @param sender: nickname of the player who sent the message
      * @param message: text message
-     * @throws RemoteException: RMI error
+     * @throws RemoteException RMI error
      */
     void receiveMessage(String sender, String message) throws RemoteException;
 
@@ -79,7 +79,7 @@ public interface ClientHandler extends Remote {
      * @param pgcMap: map representing the personal goal card tile's disposition
      * @param cgc1num: first common goal card number
      * @param cgc2num: second common goal card number
-     * @throws RemoteException: RMI error
+     * @throws RemoteException RMI error
      */
     void restoreSession(model.Tile[][] board, model.Tile[][] myShelf, Map<String, model.Tile[][]> otherShelf, int myScore,int gameID, int pgcNum, Map<model.Tile, Integer[]> pgcMap, int cgc1num, int cgc2num) throws RemoteException;
 
