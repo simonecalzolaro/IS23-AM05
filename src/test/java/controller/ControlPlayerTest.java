@@ -2,18 +2,18 @@ package controller;
 
 import client.ClientHandler;
 import client.RMIClient;
+import client.SocketClient;
 import model.Board;
+import model.Bookshelf;
 import model.Tile;
-import myShelfieException.InvalidChoiceException;
-import myShelfieException.InvalidLenghtException;
-import myShelfieException.NotConnectedException;
-import myShelfieException.NotMyTurnException;
+import myShelfieException.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import view.TUI;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,75 +37,188 @@ class ControlPlayerTest {
 
 
     @Test
-    void insertTiles() throws NotConnectedException, InvalidChoiceException, NotMyTurnException, InvalidLenghtException, RemoteException {
-        Board board = new Board();
-        board.initializeBoard(4);
-        ControlPlayer cp = new RMIControlPlayer("Tony", ch);
-        cp.initializeControlPlayer(board);
-
-        ArrayList<Tile> arr1= new ArrayList<>(){{add(Tile.BLUE); add(Tile.GREEN); add(Tile.WHITE);}};
+    void catchTile() throws RemoteException {
 
 
-        ArrayList<Tile> arr0= new ArrayList<>(){{}};
-        ArrayList<Tile> arrEx= new ArrayList<>(){{add(Tile.BLUE); add(Tile.GREEN); add(Tile.WHITE);add(Tile.GREEN);}};
+        ControlPlayer cp = new RMIControlPlayer("Ciro",new RMIClient());
 
-        //case NotMyturnException
+        cp.setPlayerStatus(PlayerStatus.NOT_MY_TURN);
+        List<Integer> coord = new ArrayList<>();
+        coord.add(1);
+        coord.add(2);
 
-        Assertions.assertThrows(NotMyTurnException.class, () -> {
-            cp.insertTiles(arr1,1);
+        Assertions.assertThrows(NotMyTurnException.class, ()->{
+            cp.catchTile(coord);
         });
-
-        //case NotConnectedException
 
         cp.setPlayerStatus(PlayerStatus.NOT_ONLINE);
 
-        Assertions.assertThrows(NotConnectedException.class, () -> {
-            cp.insertTiles(arr1,0);
+        Assertions.assertThrows(NotConnectedException.class, ()->{
+            cp.catchTile(coord);
         });
 
-        //inserimento di stream_tiles di lunghezza non accettabile
+
+
+    }
+
+
+    @Test
+    void chooseBoardTiles() throws InvalidChoiceException, NotConnectedException, InvalidParametersException, NotMyTurnException, RemoteException {
+
+        ControlPlayer cp = new RMIControlPlayer("Ciro",new RMIClient());
+
+        cp.setPlayerStatus(PlayerStatus.NOT_MY_TURN);
+        List<Integer> coord = new ArrayList<>();
+        coord.add(1);
+        coord.add(2);
+
+        Assertions.assertThrows(NotMyTurnException.class, ()->{
+            cp.catchTile(coord);
+        });
+
+        cp.setPlayerStatus(PlayerStatus.NOT_ONLINE);
+
+        Assertions.assertThrows(NotConnectedException.class, ()->{
+            cp.catchTile(coord);
+        });
+
+
+    }
+
+
+
+
+    @Test
+    void insertTiles() throws RemoteException {
+        Board board = new Board();
+        board.initializeBoard(4);
+
+
+        ControlPlayer cp = new RMIControlPlayer("Ciro",new RMIClient());
+
+        cp.initializeControlPlayer(board);
+
+        ArrayList<Tile> tiles = new ArrayList<>();
+        tiles.add(Tile.BLUE);
+        tiles.add(Tile.BLUE);
+
+        tiles.add(Tile.BLUE);
+        tiles.add(Tile.BLUE);
+
 
         cp.setPlayerStatus(PlayerStatus.MY_TURN);
 
-        Assertions.assertThrows(InvalidLenghtException.class, ()->{
-            cp.insertTiles(arr0,1);
-        });
+        tiles.add(Tile.BLUE);
+        tiles.add(Tile.BLUE);
 
         Assertions.assertThrows(InvalidLenghtException.class, ()->{
-            cp.insertTiles(arrEx,0);
-        });
-
-        //caso colonna selezionata piena
-        Assertions.assertThrows(InvalidChoiceException.class, ()->{
-            cp.insertTiles(arr1,3);
-            cp.insertTiles(arr1,3);
-            cp.insertTiles(arr1,3);
+            cp.insertTiles(tiles,0);
         });
 
 
-        //caso colonna di indice non valido
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
-            cp.insertTiles(arr1,-1);
+        tiles.clear();
+        assertEquals(tiles.size(),0);
+
+        Assertions.assertThrows(InvalidLenghtException.class, ()->{
+            cp.insertTiles(tiles,0);
         });
 
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
-            cp.insertTiles(arr1,5);
+        Assertions.assertThrows(InvalidLenghtException.class, ()->{
+            cp.insertTiles(tiles,5);
         });
 
-        //inserimento corretto
-        assertTrue(cp.insertTiles(arr1,4));
+
+        Assertions.assertThrows(InvalidLenghtException.class, ()->{
+            cp.insertTiles(tiles,-1);
+        });
+
+
+
+
+
+        cp.setPlayerStatus(PlayerStatus.NOT_MY_TURN);
+
+        Assertions.assertThrows(NotMyTurnException.class, ()->{
+            cp.insertTiles(tiles,0);
+        });
+
+        cp.setPlayerStatus(PlayerStatus.NOT_ONLINE);
+
+        Assertions.assertThrows(NotConnectedException.class, ()->{
+            cp.insertTiles(tiles,0);
+        });
 
     }
+
 
     @Test
-    void catchTile() {
+    void insertShelfTiles() throws RemoteException {
+
+
+        Board board = new Board();
+        board.initializeBoard(4);
+
+
+        ControlPlayer cp = new RMIControlPlayer("Ciro",new RMIClient());
+
+        cp.initializeControlPlayer(board);
+
+        ArrayList<Integer> coord = new ArrayList<>();
+
+
+
+
+
+        cp.setPlayerStatus(PlayerStatus.MY_TURN);
+
+
+
+        Assertions.assertThrows(InvalidLenghtException.class, ()->{
+            cp.insertShelfTiles(0,coord);
+        });
+
+
+        coord.clear();
+        assertEquals(coord.size(),0);
+
+        Assertions.assertThrows(InvalidLenghtException.class, ()->{
+            cp.insertShelfTiles(0,coord);
+        });
+
+        Assertions.assertThrows(InvalidLenghtException.class, ()->{
+            cp.insertShelfTiles(5,coord);
+        });
+
+
+        Assertions.assertThrows(InvalidLenghtException.class, ()->{
+            cp.insertShelfTiles(-1,coord);
+        });
+
+
+
+
+
+        cp.setPlayerStatus(PlayerStatus.NOT_MY_TURN);
+
+        Assertions.assertThrows(NotMyTurnException.class, ()->{
+            cp.insertShelfTiles(0,coord);
+        });
+
+        cp.setPlayerStatus(PlayerStatus.NOT_ONLINE);
+
+        Assertions.assertThrows(NotConnectedException.class, ()->{
+            cp.insertShelfTiles(0,coord);
+        });
+
+
+        assertTrue(!cp.getPlayerStatus().equals(PlayerStatus.NOT_MY_TURN));
+
+
+
 
     }
 
-    @Test
-    void updateScore() {
 
-    }
 
 
     /*
