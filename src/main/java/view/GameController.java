@@ -111,7 +111,6 @@ public class GameController extends GUIController {
         rankController.setScene(gui,stage);
         rankController.setRank(results);
         stage.setScene(scene);
-
     }
 
     /**

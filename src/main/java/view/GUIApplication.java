@@ -32,15 +32,20 @@ public class GUIApplication extends Application {
 
         FXMLLoader fxmlLoader1 = new FXMLLoader(GUIApplication.class.getResource("chat.fxml"));
         Stage stage1=new Stage();
-        Scene scene1 = new Scene(fxmlLoader1.load(), 250,300);
+        Parent root1= fxmlLoader1.load();
+        Scene scene1 = new Scene(root1, 250,300);
+        ChatController chatController= fxmlLoader1.getController();
         stage1.setScene(scene1);
         stage1.setTitle("Chat");
         stage1.initOwner(stage);
-        ChatController chatController= fxmlLoader1.getController();
+        chatController.setRoot(root1);
         chatController.setScene(gui, stage1);
+        stage1.getIcons().add(new Image(getClass().getResource("/view/17_MyShelfie_BGA/publisher_material/Icon 50x50px.png").toString()));
+
         gui.setChatController(chatController);
 
         gui.setChatStage(stage1);
+
     }
     public static void main(String[] args) {
         GUIApplication.args=args;
