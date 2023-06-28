@@ -255,10 +255,10 @@ public class TUI extends View {
                 goon = true;
 
             } catch (LoginException e) {
-                out.println("LoginException occured trying to log in!");
+                out.println("LoginException occurred trying to log in!");
 
             } catch (IOException e) {
-                out.println("IOException occured trying to log in!");
+                out.println("IOException occurred trying to log in!");
             }
         } while (!goon);
 
@@ -609,6 +609,11 @@ public class TUI extends View {
 
                 } while (checkTiles(coord) || !ok);
 
+                if(getSpacesAvailableShelf()==(coord.size()/2)){
+                    if( coord.size()/2 != 3 ) out.println("This is the max number of tiles you can get!");
+                    break;
+                }
+
                 if (round == 3) break;
 
                 do {
@@ -710,6 +715,25 @@ public class TUI extends View {
 
         } while (!goon);
 
+    }
+
+    private int getSpacesAvailableShelf(){
+        int spaces=1;
+        int temp;
+        Matrix shelf;
+
+        shelf = client.getModel().getMyBookshelf();
+
+        for(int col=0;col<5;col++){
+            for(int row=0;row<6;row++){
+               if( shelf.getMatr()[row][col].equals(Tile.EMPTY) ) {
+                   temp = 6-row;
+                   if(temp>=spaces) spaces=temp;
+               }
+            }
+        }
+
+        return spaces;
     }
 
     private boolean checkTiles(List<Integer> tiles) {
