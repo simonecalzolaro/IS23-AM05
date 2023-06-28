@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +12,7 @@ public class PersonalGoalCard implements Card, Serializable {
     Map<Tile, int[]> map = new HashMap<>();
 
     private int cardNumber;
+
     /**
      * creation of a specific PersonalGoalCard
      * @param card indicates the type of PersonalGoalCard you want to create
@@ -151,6 +151,10 @@ public class PersonalGoalCard implements Card, Serializable {
     }
 
 
+    /**
+     *
+     * @return the map of a PersonalGoalCard
+     */
     public Map<Tile, Integer[]> getCardMap() {
 
         Map<Tile, Integer[]> newMap = new HashMap<>();
@@ -186,6 +190,10 @@ public class PersonalGoalCard implements Card, Serializable {
         if(goal == 6) score=12;
     }
 
+    /**
+     * check if the shelf is correctly filled, it means that is impossible to have "floating" Tiles
+     * @param shelf
+     */
     public void goodShelf(Tile[][] shelf){
 
         //for each column I check that "EMPTY" tiles are ONLY at the end;
@@ -200,7 +208,7 @@ public class PersonalGoalCard implements Card, Serializable {
 
                 if (shelf[row][col].equals(Tile.EMPTY)) emptyTilesFound=true ;
                 else{
-                    if ( emptyTilesFound ) throw new IllegalArgumentException(" The shelf is not filled properly ");;
+                    if ( emptyTilesFound ) throw new IllegalArgumentException(" The shelf is not filled properly ");
                 }
             }
         }

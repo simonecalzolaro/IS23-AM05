@@ -13,6 +13,9 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Map;
 
+/**
+ * generic representation of the view
+ */
 public abstract class View {
 
     protected boolean connectionType;

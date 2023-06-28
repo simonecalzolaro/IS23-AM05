@@ -1,8 +1,8 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Map;
-
+/**
+ * generic representation of a card (interface)
+ */
 public interface Card {
 
     /**

@@ -3,6 +3,9 @@ package model;
 
 import java.io.Serializable;
 
+/**
+ * generic representation of a Tile
+ */
 public enum Tile implements Serializable {
 
     GREEN,
@@ -14,6 +17,11 @@ public enum Tile implements Serializable {
     EMPTY,
     NOTAVAILABLE;
 
+    /**
+     *
+     * @param tileNumb represents the enum related to the tile
+     * @return a Tile
+     */
     public static Tile getTile(int tileNumb){
 
         switch (tileNumb % 12) {

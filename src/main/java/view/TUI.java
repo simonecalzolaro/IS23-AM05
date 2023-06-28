@@ -15,6 +15,9 @@ import java.util.concurrent.*;
 
 import static java.lang.Math.abs;
 
+/**
+ * it represents all the necessary methods to play with TUI
+ */
 public class TUI extends View {
 
     private boolean TurnTimer=false;
@@ -144,7 +147,7 @@ public class TUI extends View {
                 }
             };
 
-            int limitTime = 120;
+            int limitTime = 180;
             timer.schedule(task, limitTime*1000);
         }
 
@@ -337,6 +340,9 @@ public class TUI extends View {
 
     //-------------------------------- other methods --------------------------------
 
+    /**
+     * represents every color to use in visual methods in TUI
+     */
     private enum ColorCLI {
         RESET("\u001B[0m"),
 
@@ -662,14 +668,15 @@ public class TUI extends View {
                     out.println("NumberFormatException trying to choose the column of your bookshelf!");
                     out.println("Try again: ");
                 }
-                if(chosenColumn>4) {
+                if(chosenColumn<0 || chosenColumn>4) {
                     ok=false;
                     out.println("You have chosen a column that doesn't exist!\nTry again: ");
-                }
+                }else {
 
-                if(!checkColumn(chosenColumn)){
-                    ok=false;
-                    out.println("You have chosen a full column OR you have chosen too many tiles for this column!\nTry again: ");
+                    if (!checkColumn(chosenColumn)) {
+                        ok = false;
+                        out.println("You have chosen a full column OR you have chosen too many tiles for this column!\nTry again: ");
+                    }
                 }
 
             }while (!ok);
@@ -784,6 +791,9 @@ public class TUI extends View {
     }
 
     private boolean checkColumn(int column){
+
+        if(column<0 || column>4) return false;
+
         if(coord.size()==2) return client.getModel().getMyBookshelf().getTileByCoord(5, column).equals(Tile.EMPTY);
         if(coord.size()==4) return client.getModel().getMyBookshelf().getTileByCoord(4, column).equals(Tile.EMPTY);
         if(coord.size()==6) return client.getModel().getMyBookshelf().getTileByCoord(3, column).equals(Tile.EMPTY);
