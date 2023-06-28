@@ -212,7 +212,60 @@ public class GameController extends GUIController {
         }
     }
 
+    private void updateOtherBookshelf() {
+        int i = 0;
+        for (Matrix m : client.getModel().getOtherPlayers().values()) {
+            if(i<client.getModel().getOtherPlayers().size()){
+                switch (i) {
+                    case 0 -> {
+                        updateBookshelf(bookshelf1, m);
+                        updateBookshelf(showBookshelf1, bookshelf1);
+                    }
+                    case 1 -> {
+                        updateBookshelf(bookshelf2, m);
+                        updateBookshelf(showBookshelf2, bookshelf2);
+                    }
+                    case 2 -> {
+                        updateBookshelf(bookshelf3, m);
+                        updateBookshelf(showBookshelf3, bookshelf3);
+                    }
+                    default -> {
+                        return;
+                    }
+                }
+            }
+            i++;
 
+
+        }
+
+    }
+
+    private void updateBoard(){
+        int checkRefill=0;
+        for (int i = 0; i<9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (boardGroups[j][i]!=null&&boardImages[j][i].getImage()==null&&client.getModel().getBoard().getTileByCoord(i,j)!=Tile.NOTAVAILABLE&&client.getModel().getBoard().getTileByCoord(i,j)!=Tile.EMPTY) {
+                    checkRefill=1;
+                    break;
+                }
+            }
+            if (checkRefill==1) break;
+        }
+        for (int i = 0; i<9; i++){
+            for (int j = 0; j<9; j++){
+                if(checkRefill==1&&boardGroups[j][i]!=null)  boardImages[j][i].setImage(null);
+                if(boardGroups[j][i]!=null&&(client.getModel().getBoard().getTileByCoord(i,j)==Tile.EMPTY||boardImages[j][i].getImage()==null)){
+                    Tile tile=client.getModel().getBoard().getTileByCoord(i,j);
+                    if (tile==Tile.EMPTY||tile==Tile.NOTAVAILABLE) boardImages[j][i].setImage(null);
+                    else {
+                        String image = tileImages.getImage(tile);
+                        if(image!=null) boardImages[j][i].setImage(new Image(image));
+                    }
+                }
+            }
+        }
+    }
 
     //------------------------------------------------------------Client vs Server-----------------------------------
 
@@ -629,60 +682,7 @@ public class GameController extends GUIController {
             }
     }
 
-    private void updateOtherBookshelf() {
-        int i = 0;
-        for (Matrix m : client.getModel().getOtherPlayers().values()) {
-            if(i<client.getModel().getOtherPlayers().size()){
-                switch (i) {
-                    case 0 -> {
-                        updateBookshelf(bookshelf1, m);
-                        updateBookshelf(showBookshelf1, bookshelf1);
-                    }
-                    case 1 -> {
-                        updateBookshelf(bookshelf2, m);
-                        updateBookshelf(showBookshelf2, bookshelf2);
-                    }
-                    case 2 -> {
-                        updateBookshelf(bookshelf3, m);
-                        updateBookshelf(showBookshelf3, bookshelf3);
-                    }
-                    default -> {
-                        return;
-                    }
-                }
-            }
-            i++;
 
-
-        }
-
-    }
-
-    private void updateBoard(){
-        int checkRefill=0;
-        for (int i = 0; i<9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (boardGroups[j][i]!=null&&boardImages[j][i].getImage()==null&&client.getModel().getBoard().getTileByCoord(i,j)!=Tile.NOTAVAILABLE&&client.getModel().getBoard().getTileByCoord(i,j)!=Tile.EMPTY) {
-                    checkRefill=1;
-                    break;
-                }
-            }
-            if (checkRefill==1) break;
-        }
-        for (int i = 0; i<9; i++){
-            for (int j = 0; j<9; j++){
-                if(checkRefill==1&&boardGroups[j][i]!=null)  boardImages[j][i].setImage(null);
-                if(boardGroups[j][i]!=null&&(client.getModel().getBoard().getTileByCoord(i,j)==Tile.EMPTY||boardImages[j][i].getImage()==null)){
-                    Tile tile=client.getModel().getBoard().getTileByCoord(i,j);
-                    if (tile==Tile.EMPTY||tile==Tile.NOTAVAILABLE) boardImages[j][i].setImage(null);
-                    else {
-                        String image = tileImages.getImage(tile);
-                        if(image!=null) boardImages[j][i].setImage(new Image(image));
-                    }
-                }
-            }
-        }
-    }
 
     private void setBoardButton(){
         for (int i=0; i<9; i++){

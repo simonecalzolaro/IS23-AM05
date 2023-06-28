@@ -1,11 +1,9 @@
 package view;
 
-import client.ClientChat;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -33,9 +31,9 @@ public class ChatController extends GUIController{
         if(((CheckBox) root.lookup("#broadcastCheckBox")).isSelected()){
             recipients.addAll(client.getModel().getOtherPlayers().keySet());
         } else {
-            if (((CheckBox) root.lookup("#player1CheckBox")).isSelected()&&!((CheckBox) root.lookup("#player1CheckBox")).isDisabled()) recipients.add(((CheckBox) root.lookup("#player1CheckBox")).getText());
-            if (((CheckBox) root.lookup("#player2CheckBox")).isSelected()&&!((CheckBox) root.lookup("#player2CheckBox")).isDisabled()) recipients.add(((CheckBox) root.lookup("#player2CheckBox")).getText());
-            if (((CheckBox) root.lookup("#player3CheckBox")).isSelected()&&!((CheckBox) root.lookup("#player3CheckBox")).isDisabled()) recipients.add(((CheckBox) root.lookup("#player3CheckBox")).getText());
+            if (((CheckBox) root.lookup("#player1CheckBox")).isSelected()&&!root.lookup("#player1CheckBox").isDisabled()) recipients.add(((CheckBox) root.lookup("#player1CheckBox")).getText());
+            if (((CheckBox) root.lookup("#player2CheckBox")).isSelected()&&!root.lookup("#player2CheckBox").isDisabled()) recipients.add(((CheckBox) root.lookup("#player2CheckBox")).getText());
+            if (((CheckBox) root.lookup("#player3CheckBox")).isSelected()&&!root.lookup("#player3CheckBox").isDisabled()) recipients.add(((CheckBox) root.lookup("#player3CheckBox")).getText());
         }
 
         try {
@@ -80,7 +78,7 @@ public class ChatController extends GUIController{
     }
     @FXML
     private void setRecipient(ActionEvent event){
-            if(event.getSource()==((CheckBox) root.lookup("#broadcastCheckBox"))){
+            if(event.getSource()== root.lookup("#broadcastCheckBox")){
                 ((CheckBox) root.lookup("#player1CheckBox")).setSelected(false);
                 ((CheckBox) root.lookup("#player2CheckBox")).setSelected(false);
                 ((CheckBox) root.lookup("#player3CheckBox")).setSelected(false);
@@ -96,7 +94,7 @@ public class ChatController extends GUIController{
 
     @FXML
     private void setTextField(InputMethodEvent event){
-        ((Button) root.lookup("#enterButton")).setDisable(Objects.equals(((TextField) root.lookup("#textField")).getText(), ""));
+        root.lookup("#enterButton").setDisable(Objects.equals(((TextField) root.lookup("#textField")).getText(), ""));
     }
 
     @Override
@@ -110,14 +108,14 @@ public class ChatController extends GUIController{
     protected void initializeChat(){
         switch (client.getModel().getNumOtherPlayers()){
             case 1:{
-                ((CheckBox) root.lookup("#player2CheckBox")).setVisible(false);
-                ((CheckBox) root.lookup("#player2CheckBox")).setDisable(true);
+                root.lookup("#player2CheckBox").setVisible(false);
+                root.lookup("#player2CheckBox").setDisable(true);
 
             }
 
             case 2: {
-                ((CheckBox) root.lookup("#player3CheckBox")).setDisable(true);
-                ((CheckBox) root.lookup("#player3CheckBox")).setVisible(false);
+                root.lookup("#player3CheckBox").setDisable(true);
+                root.lookup("#player3CheckBox").setVisible(false);
             }
         }
         int i=0;

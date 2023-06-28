@@ -1,42 +1,15 @@
 package view;
 
 import client.Client;
-import javafx.application.Platform;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 import java.util.Map;
 
 
 public class RankController extends GUIController {
-    @FXML
-    private Label score1Label;
-    @FXML
-    private Label score2Label;
-    @FXML
-    private Label score3Label;
-    @FXML
-    private Label score4Label;
-    @FXML
-    private Label player1Label;
-    @FXML
-    private Label player2Label;
-    @FXML
-    private Label player3Label;
-    @FXML
-    private Label player4Label;
-    @FXML
-    private Group player2Group;
-    @FXML
-    private Group player3Group;
-    @FXML
-    private Group player4Group;
 
     public void setClient(Client client) {
         this.client=client;
