@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 
 import static javafx.application.Platform.exit;
 
+/**
+ * Runnable class for the GUI
+ */
 public class GUIApplication extends Application {
 
     private static String[] args;

@@ -8,7 +8,9 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.util.Map;
 
-
+/**
+ * GuiController for the rank scene
+ */
 public class RankController extends GUIController {
 
     public void setClient(Client client) {

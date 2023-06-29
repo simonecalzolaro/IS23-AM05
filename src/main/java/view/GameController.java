@@ -694,12 +694,15 @@ public class GameController extends GUIController {
             }
         }
         root.lookup("#enterTilesButton").setDisable(true);
+
         for(int h=0; h<9; h++){
             for(int k=0; k<9; k++){
                 if(boardButtons[h][k]!=null){
                     if(boardButtons[h][k].getOnMouseEntered()==null){
-                        setButtonsOnSelect(h, k);
                         root.lookup("#enterTilesButton").setDisable(false);
+                        setButtonsOnSelect(h, k);
+
+
                     }
                 }
             }
