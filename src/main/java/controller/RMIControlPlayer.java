@@ -33,17 +33,6 @@ public class RMIControlPlayer extends ControlPlayer{
 
         super(nickname);
         ch=clientHandler;
-        /* ----------------------------
-
-        stub = (GameHandler) UnicastRemoteObject.exportObject(this, Settings.PORT);
-        registry = LocateRegistry.createRegistry(Settings.PORT);
-        try {
-            registry.bind(nickname+"playerService" , stub);
-        } catch (AlreadyBoundException e) {
-            throw new RuntimeException(e);
-        }
-
-         */
 
         System.out.println("----RMIControlPlayer ready----");
 
