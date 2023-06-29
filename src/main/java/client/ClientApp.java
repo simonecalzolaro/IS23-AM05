@@ -14,7 +14,9 @@ import java.rmi.RemoteException;
 
 import java.util.Scanner;
 
-
+/**
+ * Client-side main class
+ */
 public class ClientApp {
 
 

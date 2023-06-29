@@ -7,6 +7,10 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
+/**
+ * this class represents all the common goal cards of the game, in its constructor we pass the representative number of
+ * the card we want to play with and the number of players in the current game
+ */
 public class CommonGoalCard implements Card, Serializable {
     private Stack<Token> stackTiles;
     private final int CGCnumber;

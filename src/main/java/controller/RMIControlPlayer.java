@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * RMI implementation of class ControlPlayer
+ */
 public class RMIControlPlayer extends ControlPlayer{
 
     private ClientHandler ch;

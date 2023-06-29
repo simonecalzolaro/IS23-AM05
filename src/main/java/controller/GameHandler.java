@@ -8,6 +8,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * interface containing all the remote methods to make and action in the game
+ */
 public interface GameHandler extends Remote {
 
     /**

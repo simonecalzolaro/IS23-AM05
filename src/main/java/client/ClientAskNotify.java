@@ -7,6 +7,10 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * thi interface contains all the method that can be called by the view to communicate with the server.
+ * Exist two type of implementations, RMI and SOCKET
+ */
 public interface ClientAskNotify {
 
     /**

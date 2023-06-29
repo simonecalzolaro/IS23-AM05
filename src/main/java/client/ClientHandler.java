@@ -7,6 +7,9 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Map;
 
+/**
+ * Interface containing all the remote methods the server can call one the client
+ */
 public interface ClientHandler extends Remote {
 
     /**

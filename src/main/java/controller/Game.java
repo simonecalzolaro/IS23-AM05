@@ -10,7 +10,10 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * class representing a game match. It contains detail about the state of the game, its players, the chat.
+ * It's like a game dashboard.
+ */
 public class Game implements Serializable {
 
     /**

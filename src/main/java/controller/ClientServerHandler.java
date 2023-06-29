@@ -1,13 +1,14 @@
 package controller;
 
-import client.ClientHandler;
 import myShelfieException.LoginException;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+/**
+ * interface containing all the remote methods that can be called by a client
+ */
 public interface ClientServerHandler extends Remote {
 
     /**
