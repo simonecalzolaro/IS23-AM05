@@ -565,6 +565,7 @@ public class TUI extends View {
                         } catch (NumberFormatException e) {
                             out.println("NumberFormatException trying to choose the x tile!");
                             out.println("Insert x: ");
+                            ok=false;
                         }
                     }while (!ok);
 
@@ -586,6 +587,7 @@ public class TUI extends View {
                         } catch (NumberFormatException e) {
                             out.println("NumberFormatException trying to choose the y tile!");
                             out.println("Insert y: ");
+                            ok=false;
                         }
                     }while (!ok);
 
@@ -739,7 +741,7 @@ public class TUI extends View {
     private boolean checkTiles(List<Integer> tiles) {
 
         for(Integer t: tiles){
-            if(t>=9) {
+            if(t>=9 || t<0) {
                 out.println("You're trying to get tiles that are not on the board!");
                 return true;
             }
@@ -788,27 +790,29 @@ public class TUI extends View {
 
     private boolean checkCatchable(List<Integer> tile){
 
-        if(tile.get(0)!=8) {
-            if (client.getModel().getBoard().getTileByCoord(tile.get(0) + 1, tile.get(1)).equals(Tile.NOTAVAILABLE)
-                    || client.getModel().getBoard().getTileByCoord(tile.get(0) + 1, tile.get(1)).equals(Tile.EMPTY))
-                return true;
-        }
+        if(tile.get(0)>0 && tile.get(1)>0 && tile.get(0)<9 && tile.get(1)<9) {
+            if (tile.get(0) != 8) {
+                if (client.getModel().getBoard().getTileByCoord(tile.get(0) + 1, tile.get(1)).equals(Tile.NOTAVAILABLE)
+                        || client.getModel().getBoard().getTileByCoord(tile.get(0) + 1, tile.get(1)).equals(Tile.EMPTY))
+                    return true;
+            }
 
-        if(tile.get(0)!=0){
-            if (client.getModel().getBoard().getTileByCoord(tile.get(0) - 1, tile.get(1)).equals(Tile.NOTAVAILABLE)
-                    || client.getModel().getBoard().getTileByCoord(tile.get(0) - 1, tile.get(1)).equals(Tile.EMPTY))
-                return true;
-        }
+            if (tile.get(0) != 0) {
+                if (client.getModel().getBoard().getTileByCoord(tile.get(0) - 1, tile.get(1)).equals(Tile.NOTAVAILABLE)
+                        || client.getModel().getBoard().getTileByCoord(tile.get(0) - 1, tile.get(1)).equals(Tile.EMPTY))
+                    return true;
+            }
 
-        if(tile.get(1)!=8 ) {
-            if (client.getModel().getBoard().getTileByCoord(tile.get(0), tile.get(1) + 1).equals(Tile.NOTAVAILABLE)
-                    || client.getModel().getBoard().getTileByCoord(tile.get(0), tile.get(1) + 1).equals(Tile.EMPTY))
-                return true;
-        }
+            if (tile.get(1) != 8) {
+                if (client.getModel().getBoard().getTileByCoord(tile.get(0), tile.get(1) + 1).equals(Tile.NOTAVAILABLE)
+                        || client.getModel().getBoard().getTileByCoord(tile.get(0), tile.get(1) + 1).equals(Tile.EMPTY))
+                    return true;
+            }
 
-        if(tile.get(1)!=0){
-            return client.getModel().getBoard().getTileByCoord(tile.get(0), tile.get(1) - 1).equals(Tile.NOTAVAILABLE)
-                    || client.getModel().getBoard().getTileByCoord(tile.get(0), tile.get(1) - 1).equals(Tile.EMPTY);
+            if (tile.get(1) != 0) {
+                return client.getModel().getBoard().getTileByCoord(tile.get(0), tile.get(1) - 1).equals(Tile.NOTAVAILABLE)
+                        || client.getModel().getBoard().getTileByCoord(tile.get(0), tile.get(1) - 1).equals(Tile.EMPTY);
+            }
         }
 
         return false;
