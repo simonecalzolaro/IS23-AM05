@@ -6,6 +6,10 @@ import client.SocketClient;
 
 import java.io.File;
 
+
+/**
+ * Handles particular exception thrown socket communicating server
+ */
 public class ExceptionHandler {
 
 

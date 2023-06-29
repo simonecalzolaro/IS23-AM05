@@ -8,6 +8,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
+/**
+ * Abstraction of the physical shelf of MyShelfie
+ */
 public class Bookshelf implements Serializable {
     /**
      * shelf attribute represent the game bookshelf. Here is implemented with a 6x5 matrix

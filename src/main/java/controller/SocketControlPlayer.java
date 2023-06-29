@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * Receive requests from the SocketClient in order to perform game's actions
+ */
 public class SocketControlPlayer extends ControlPlayer {
 
     Stream outCP;

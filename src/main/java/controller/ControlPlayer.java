@@ -11,6 +11,10 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Superclass of SockerControlPlayer and RMIControlPlayer
+ */
 public abstract class ControlPlayer extends UnicastRemoteObject implements GameHandler, ControllerAskNotify, Serializable {
 
     /**
@@ -356,6 +360,9 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         }
     }
 
+    public String getNickname(){
+        return nickname;
+    }
 
     abstract public void setClientHandler(ClientHandler cliHnd);
 

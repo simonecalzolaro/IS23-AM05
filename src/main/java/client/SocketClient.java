@@ -10,6 +10,13 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.*;
 
+
+/**
+ * Extends the Client class
+ * Generated when the user wants to communicate with socket
+ * Client-Server communication performed through socket TCP connections
+ */
+
 public class SocketClient extends Client{
 
     Socket socketClient;

@@ -6,6 +6,10 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
+
+/**
+ * Main class of the server
+ */
 public class ServerApp {
 
     public static TCPHandler client_server_bridge;

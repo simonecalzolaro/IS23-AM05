@@ -10,6 +10,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Receive the request from the SocketClient
+ */
 public class SocketLobby implements Runnable{
 
     Socket socketServer;

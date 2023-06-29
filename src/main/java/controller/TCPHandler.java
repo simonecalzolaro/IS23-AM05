@@ -13,6 +13,11 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
+/**
+ * Crucial component of the server architecture
+ * It waits for socket TCP connection from the client in order to create a new SocketClient for every connection
+ */
 public class TCPHandler {
 
     private int PORT;

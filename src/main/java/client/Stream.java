@@ -9,6 +9,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * This class is an abstraction of socket output/input streams
+ * Makes the operations easier to perform
+ */
 public class Stream {
 
     Socket socket;
