@@ -270,9 +270,6 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
         this.game.getChatRoom().addMessage(this, message, getters);
 
     }
-    //-------------------------------------- RMI vs Socket layer --------------------------------------
-
-
 
 
     //-------------------------------------- getter and setter methods --------------------------------------

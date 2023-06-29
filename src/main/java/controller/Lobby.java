@@ -22,7 +22,6 @@ public abstract class Lobby implements  ClientServerHandler {
     static int PORT;
     static int currNoP=0;
 
-    private static Object nowLoggingClient;
     private static ArrayList<ControlPlayer> clients;
     private static ArrayList< Game > games;
     private static int attendedPlayers;
@@ -36,7 +35,7 @@ public abstract class Lobby implements  ClientServerHandler {
 
     /**
      * constructor for the ServerApp
-     * @throws RemoteException
+     * @throws RemoteException: RMI exception
      */
     protected Lobby() throws RemoteException {
         super();
@@ -83,8 +82,6 @@ public abstract class Lobby implements  ClientServerHandler {
                 throw new RuntimeException(e);
             }
         }
-
-        nowLoggingClient=client;
 
         //check if the nickname is available
         if (tempPlayers.stream().map(x -> x.getPlayerNickname()).toList().contains(nickname))

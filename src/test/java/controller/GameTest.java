@@ -40,13 +40,28 @@ class GameTest {
 
 
         }
-
-
-
-
     }
 
 
+    @Test
+    public void removePlayer() throws IOException {
+
+        ArrayList<ControlPlayer> pls= new ArrayList<>();
+        ControlPlayer mario=new RMIControlPlayer("mario", new RMIClient());
+        pls.add(mario);
+        pls.add(new RMIControlPlayer("marino", new RMIClient()));
+        pls.add(new RMIControlPlayer("mariano", new RMIClient()));
+
+
+        Game g=new Game(pls, new Board());
+
+        assertEquals(g.getPlayers().size(), 3);
+
+        g.removePlayer(mario);
+
+        assertEquals(g.getPlayers().size(), 2);
+
+    }
 
 
 }

@@ -164,7 +164,7 @@ public class RMIControlPlayer extends ControlPlayer{
 
         if( !playerStatus.equals(PlayerStatus.NOT_ONLINE)) {
             try {
-                System.out.println("----------------------send message to "+nickname);
+
                 ch.receiveMessage(nick, message);
             }catch (RemoteException e){
                 System.out.println("---error: something went wrong while notifyNewMessage() to "+ nickname);

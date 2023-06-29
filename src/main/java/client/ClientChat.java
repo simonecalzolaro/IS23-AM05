@@ -13,14 +13,12 @@ import java.util.Set;
 public class ClientChat {
 
     private ArrayList<Message> conversation;
-    private int lastReadMessage;
 
     /**
      * constructor method
      */
     public ClientChat() {
         conversation=new ArrayList<>();
-        lastReadMessage=0;
 
     }
 
@@ -31,13 +29,15 @@ public class ClientChat {
 
         ArrayList<ArrayList <String>> conv= new ArrayList<>();
 
-        for(int i=lastReadMessage; i< conversation.size(); i++){
+        for(Message m: conversation){
 
-            Message m= conversation.get(i);
-            conv.add(new ArrayList<>());
-            conv.get(i).add(m.getSender());
-            conv.get(i).add(m.getMessage());
-            lastReadMessage++;
+            ArrayList <String> convElem= new ArrayList<>();
+
+            convElem.add(m.getSender());
+            convElem.add(m.getMessage());
+
+            conv.add(convElem);
+            
         }
 
         return conv;

@@ -18,9 +18,7 @@ public class Game implements Serializable {
 
     /**
      * Unique Game ID
-     *
      */
-
     private final int gameID;
 
     /**

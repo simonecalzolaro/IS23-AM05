@@ -38,11 +38,9 @@ public class Chat {
         }
 
         conversation.add(new Message(sender, message, recipients ));
-        System.out.println("---------added a new message, recipients: "+ recipients.toString());
         flagNewMessageReceived=true;
         flagNewMessageToSend=false;
         notifyAll();
-
     }
 
     /**
@@ -67,7 +65,6 @@ public class Chat {
             for(ControlPlayer cp: lastMessage.getRecipients()){
 
                 try {
-                    System.out.println("--------SENDING TO "+cp.getPlayerNickname());
                     cp.notifyNewMessage(lastMessage.getSender().getPlayerNickname(), lastMessage.getMessage());
                 } catch (IOException e) {
                     throw new RuntimeException(e);

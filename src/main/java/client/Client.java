@@ -219,7 +219,6 @@ public abstract class Client extends UnicastRemoteObject implements ClientHandle
 
         model.getMyChat().addMessage(sender, message);
         view.plotNewMessage(sender, message );
-        System.out.println("u recived a message!!!!!!!!!!!!!!!!!!!!");
     }
 
 
