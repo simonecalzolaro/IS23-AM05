@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Timer;
 
+/**
+ * View implementation for the GUI
+ */
 public class GUI extends View {
 
     private LoginController loginController;

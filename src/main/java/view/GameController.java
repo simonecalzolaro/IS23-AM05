@@ -20,7 +20,10 @@ import myShelfieException.*;
 import java.io.IOException;
 import java.util.*;
 
-
+/**
+ *
+ * Gui controller for the game scene
+ */
 
 public class GameController extends GUIController {
     Timer timer;

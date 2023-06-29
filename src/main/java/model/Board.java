@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Representation of the board
+ */
 public class Board implements Serializable {
     private final Tile[][] board;
     private final boolean[][] catchableTiles;

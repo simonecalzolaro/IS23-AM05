@@ -9,7 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-
+/**
+ * Generic GUI controller
+ */
 public abstract class GUIController {
     protected GUI gui;
     protected Stage stage;

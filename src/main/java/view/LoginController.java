@@ -20,7 +20,9 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/**
+ * GuiController for the login scene
+ */
 public class LoginController extends GUIController {
     private Timer timer1;
     private Timer timer2;

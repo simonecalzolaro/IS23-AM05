@@ -6,6 +6,9 @@ import java.util.List;
 
 import static java.util.Collections.shuffle;
 
+/**
+ * Representation of the tiles bag
+ */
 public class Bag implements Serializable {
 
     private List<Tile> tilesBag;

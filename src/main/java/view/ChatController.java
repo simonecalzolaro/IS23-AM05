@@ -16,6 +16,9 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * GuiController for the chat scene
+ */
 public class ChatController extends GUIController{
     @FXML
     private AnchorPane chatPane;
