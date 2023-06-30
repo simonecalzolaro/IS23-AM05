@@ -1,5 +1,6 @@
 package view;
 
+import client.Client;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -154,4 +155,5 @@ public class GUI extends View {
     public String[] getArgs(){
         return args;
     };
+
 }

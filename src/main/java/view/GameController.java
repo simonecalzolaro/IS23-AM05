@@ -173,7 +173,6 @@ public class GameController extends GUIController {
         if(exception.equals("---you are online again")) {
             passTurn();
         }
-
     }
 
 
@@ -193,8 +192,8 @@ public class GameController extends GUIController {
             int h=5;
             for(int i=0; i<6;i++){
                 for(int j=0; j<5; j++){
+                    Tile tile=reference.getTileByCoord(h, j);
                     if(bookshelf[i][j].getImage()==null){
-                        Tile tile=reference.getTileByCoord(h, j);
                         if(tile==Tile.NOTAVAILABLE||tile==Tile.EMPTY||tile==null) {
                             bookshelf[i][j].setImage(null);
                         }
@@ -202,6 +201,8 @@ public class GameController extends GUIController {
                             Image image=new Image(tileImages.getImage(tile));
                             bookshelf[i][j].setImage(image);
                         }
+                    } else {
+                        if(tile==Tile.NOTAVAILABLE||tile==Tile.EMPTY||tile==null) bookshelf[i][j].setImage(null);
                     }
 
                 }
