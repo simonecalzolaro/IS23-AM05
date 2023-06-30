@@ -4,6 +4,8 @@
 Software engineering final project 2023 Politecnico di Milano
 Digital version of the Cranio Games's board game MyShelfie
 
+![BANNER_MYSHELFIE](https://github.com/simonecalzolaro/IS23-AM05/assets/92320303/51df4b8a-bb53-4980-8dc7-6b203583e031)
+
 
 # Project description
 The entire project is written in Java. Users can choose to play with a graphical interface (GUI) or with the command line (TUI),
