@@ -1,0 +1,10 @@
+
+{
+	"serverSettings":{
+
+		"hostname":"10.42.0.1",
+		"RMIPORT":2000,
+		"TCPPORT":3000
+
+	}
+}
