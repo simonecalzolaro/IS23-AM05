@@ -211,37 +211,44 @@ public abstract class ControlPlayer extends UnicastRemoteObject implements GameH
     @Override
     public void passMyTurn() throws RemoteException{
 
+        if(playerStatus==PlayerStatus.MY_TURN) {
 
-        System.out.println("      "+nickname+" called passMyTurn()");
 
-        try {
-            game.getPlayers().get(game.getCurrPlayer()).notifyEndYourTurn();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            System.out.println("      " + nickname + " called passMyTurn()");
 
-        game.endTurn();
-
-        if( ! game.getGameStatus().equals(GameStatus.END_GAME)){
-
-            //notify the updated board to all the clients participating in the same game of ch
             try {
+                game.getPlayers().get(game.getCurrPlayer()).notifyEndYourTurn();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-                for(ControlPlayer cp: game.getPlayers()){
-                    //if player cp is online ill update his board
-                    if(!cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)) cp.notifyUpdatedBoard();
+            game.endTurn();
+
+            if (!game.getGameStatus().equals(GameStatus.END_GAME)) {
+
+                //notify the updated board to all the clients participating in the same game of ch
+                try {
+
+                    for (ControlPlayer cp : game.getPlayers()) {
+                        //if player cp is online ill update his board
+                        if (!cp.getPlayerStatus().equals(PlayerStatus.NOT_ONLINE)) cp.notifyUpdatedBoard();
+                    }
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
 
-            } catch (IOException e) { throw new RuntimeException(e); }
 
+                //tell the next player to start his turn
+                try {
+                    ControlPlayer nextPlayer = game.getPlayers().get(game.getCurrPlayer());
+                    System.out.println("      notifyStartYourTurn() to " + nextPlayer.getPlayerNickname() + " ");
+                    nextPlayer.notifyStartYourTurn();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
-            //tell the next player to start his turn
-            try {
-                ControlPlayer nextPlayer= game.getPlayers().get(game.getCurrPlayer());
-                System.out.println("      notifyStartYourTurn() to "+nextPlayer.getPlayerNickname()+" ");
-                nextPlayer.notifyStartYourTurn();
-            } catch (IOException e) { throw new RuntimeException(e); }
-
+            }
         }
 
     }
