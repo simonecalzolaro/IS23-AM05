@@ -170,6 +170,10 @@ public class GameController extends GUIController {
         timerExc = new Timer();
         timerExc.schedule(taskExc, 3000);
 
+        if(exception.equals("---you are online again")) {
+            passTurn();
+        }
+
     }
 
 
