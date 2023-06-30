@@ -80,8 +80,12 @@ public class Stream {
         if(code == 0){
             
 
-            out.writeObject(jo);
-            out.flush();
+            try{
+                out.writeObject(jo);
+                out.flush();
+            } catch (Exception e) {
+                System.out.println("Unable to flush the object");
+            }
 
 
         }
@@ -100,14 +104,21 @@ public class Stream {
     public JSONObject read() throws IOException, ClassNotFoundException, InvalidOperationException {
 
 
+        JSONObject jo = null;
         if(code == 1) {
-            JSONObject jo;
 
-            jo = (JSONObject) in.readObject();
-            return jo;
+
+            try {
+                jo = (JSONObject) in.readObject();
+
+            }catch (Exception e){
+                System.out.println("");
+            }
+
         }
         else throw new InvalidOperationException();
 
+        return jo;
     }
 
 
@@ -120,7 +131,14 @@ public class Stream {
 
     public void reset() throws IOException, InvalidOperationException {
 
-        if(code == 0) out.reset();
+        if(code == 0){
+            try{
+                out.reset();
+            } catch (Exception e) {
+                System.out.println("");
+            }
+
+        }
         else throw new InvalidOperationException();
 
     }

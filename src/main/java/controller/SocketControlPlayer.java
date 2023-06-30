@@ -295,10 +295,8 @@ public class SocketControlPlayer extends ControlPlayer {
             System.out.println("SocketControlPlayer --- InvalidOperationException occurred in trying to reset/write the stream");
             System.out.println("---> Maybe you're trying to reset/write an input stream");
         } catch (IOException e) {
-            System.out.println("SocketControlPlayer --- IOException occurred in askPing");
             contPing++;
             if(contPing == 13){
-                pingClass.stopPingProcess();
                 contPing = 0;
 
             }
